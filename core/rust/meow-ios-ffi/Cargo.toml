@@ -186,6 +186,14 @@ meow-common = { git = "https://github.com/madeye/meow-rs", rev = "a663364469b3b7
 # the lwip tun2socks path; would drag netstack-smoltcp/tun-rs dead weight
 # into the NE binary) and `external-ui-download` (force-disabled at compile
 # time on iOS; would only add the zip crate).
+#
+# meow-proxy's default `ss` feature pulls shadowsocks-rust, whose
+# `net/sys/unix/bsd/mod.rs` routes tvos/watchos to the macOS impl — but that
+# impl unconditionally imports `BatchRecvMessage` / `BatchSendMessage`, which
+# `net/udp.rs` cfg-gates to a narrower OS list. The two lists disagree, so
+# the crate doesn't compile for tvOS at all. Fixed upstream in
+# shadowsocks/shadowsocks-rust#2162; see the `[patch.crates-io]` note below
+# for why we still carry a git pin.
 meow-config = { git = "https://github.com/madeye/meow-rs", rev = "a663364469b3b7dc2b46d2e0f4530e50a54108ee", features = ["boring-tls", "anytls"] }
 meow-dns = { git = "https://github.com/madeye/meow-rs", rev = "a663364469b3b7dc2b46d2e0f4530e50a54108ee" }
 meow-tunnel = { git = "https://github.com/madeye/meow-rs", rev = "a663364469b3b7dc2b46d2e0f4530e50a54108ee" }
@@ -246,3 +254,13 @@ panic = "abort"
 # take it.
 [patch.crates-io]
 lwip = { git = "https://github.com/madeye/lwip", rev = "5f6f0dfe025c967157ff328d94efe488852d8755" }
+# shadowsocks/shadowsocks-rust#2162 (the tvOS/watchOS cfg fix described above)
+# merged on 2026-08-08, but crates.io still ships 1.24.0 (2025-12-11) which
+# predates the fix. Pin the merge commit until 1.25.0 ships, then drop this
+# line and let meow-proxy resolve from the registry again.
+#
+# Not tvOS-only: 1.24 -> 1.25 also moves shadowsocks-crypto 0.6 -> 0.7, which
+# swaps the AEAD stack (new aes / cipher / hmac / sha1 majors) for iOS as well.
+# Re-test Shadowsocks throughput and all three cipher families on device after
+# touching this pin.
+shadowsocks = { git = "https://github.com/shadowsocks/shadowsocks-rust", rev = "db65eaa8244603e5ef7c5fbc60add10e41a5477a" }
