@@ -1,0 +1,10 @@
+Build 2026090901 (1.7.0)
+
+• Proxy engine updated to meow-rs 0.21.2 + main: BoringSSL is now the only TLS/crypto stack (rustls removed, Hysteria2 on quiche), which trims the tunnel extension binary.
+• DNS: proxy-server hostnames now resolve when a config points its own nameservers at its dns.listen port (Nexitally-style subscriptions no longer fail every node with "no address for …").
+• DNS: IPv4-first lookups with per-family cache, pooled tcp:// upstreams, and rule-set: patterns in nameserver-policy.
+• Every outbound dial is bounded by a global timeout; failing group members are marked dead the way mihomo does, so url-test/fallback groups skip them faster.
+• GLOBAL mode picks the primary outbound instead of the alphabetically first one.
+• Deleting a connection (or reloading the profile) now cancels the live TCP stream; UDP DNS on port 53 honours routing rules; SOCKS5 UDP keeps the authenticated identity.
+• AnyTLS honours server-pushed padding schemes; Snell connection reuse fixed; Hysteria2 fingerprint pinning actually pins; new XHTTP transport for VLESS/Trojan.
+• Please test: a subscription whose DNS points at 127.0.0.1:<port>; AnyTLS, Snell and Hysteria2 nodes if you have them; GLOBAL mode; leave the VPN connected overnight and check the Memory screen under Settings → About.

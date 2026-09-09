@@ -1,8 +1,9 @@
-• Proxy engine updated to meow-rs 0.21.0, adding multiplexing (sing-mux, yamux, h2mux, Mux.Cool) plus fake-IP, UDP NAT, and REALITY/h2 reliability fixes
-• Desktop-exported configs with absolute rule- or proxy-provider paths now start on iOS
-• dns.proxy-server-nameserver is honoured when set
-• Hung DIRECT connections time out in 10 seconds instead of hanging
-• The tunnel waits for the app's first TCP payload before opening a proxy connection, so port probes no longer create phantom sessions
-• One UDP ASSOCIATE per app source port, so P2P/BitTorrent swarms no longer starve HTTPS
+• Proxy engine updated to meow-rs 0.21.2: BoringSSL is now the only TLS stack, Hysteria2 runs on quiche, and the tunnel extension is smaller
+• Configs whose nameservers point at their own dns.listen port now resolve proxy servers correctly
+• DNS prefers IPv4 with a per-family cache, reuses tcp:// upstream connections, and accepts rule-set: patterns in nameserver-policy
+• Every outbound dial has a global timeout and failing group members are skipped faster
+• GLOBAL mode uses the primary outbound
+• Deleting a connection or reloading the profile cancels the live stream; UDP DNS honours routing rules
+• AnyTLS, Snell and Hysteria2 reliability fixes; new XHTTP transport
 
 Issues and feedback: https://github.com/meow-rs/meow-ios/issues

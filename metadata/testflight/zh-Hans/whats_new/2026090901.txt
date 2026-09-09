@@ -1,0 +1,10 @@
+构建 2026090901 (1.7.0)
+
+• 代理引擎升级到 meow-rs 0.21.2 + main：TLS/加密栈统一为 BoringSSL（移除 rustls，Hysteria2 改用 quiche），隧道扩展体积更小。
+• DNS：配置把自己的 nameserver 指向 dns.listen 端口时（Nexitally 类订阅），代理服务器域名现在可以正常解析，不再所有节点报 "no address for …"。
+• DNS：优先 IPv4 查询并按地址族分别缓存，tcp:// 上游复用连接，nameserver-policy 支持 rule-set: 匹配。
+• 所有出站连接都有全局超时；失败的组成员会像 mihomo 一样标记为不可用，url-test/fallback 组能更快跳过它们。
+• GLOBAL 模式会选择主出站，而不是按字母排序的第一个。
+• 删除连接（或重载配置）会真正断开对应的 TCP 流；53 端口的 UDP DNS 遵循路由规则；SOCKS5 UDP 保留已认证身份。
+• AnyTLS 支持服务端下发的 padding 方案；修复 Snell 连接复用；Hysteria2 指纹校验真正生效；新增 XHTTP 传输（VLESS/Trojan）。
+• 请测试：DNS 指向 127.0.0.1:<端口> 的订阅；AnyTLS、Snell、Hysteria2 节点（如有）；GLOBAL 模式；让 VPN 连接过夜并在 设置 → 关于 → 内存 查看占用。

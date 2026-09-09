@@ -1,8 +1,9 @@
-• 代理引擎升级到 meow-rs 0.21.0，新增多路复用（sing-mux、yamux、h2mux、Mux.Cool），并修复 fake-IP、UDP NAT 与 REALITY/h2 稳定性问题
-• 从桌面端导出、带绝对路径规则/代理提供者的配置现在可以在 iOS 上启动
-• 配置了 dns.proxy-server-nameserver 时会生效
-• 卡住的 DIRECT 连接会在 10 秒超时，而不再一直挂起
-• 隧道会等应用发出第一个 TCP 数据包再建立代理连接，端口探测不再产生幽灵会话
-• 每个应用源端口共用一条 UDP ASSOCIATE，P2P/BitTorrent 集群不会再挤占 HTTPS
+• 代理引擎升级到 meow-rs 0.21.2：TLS 栈统一为 BoringSSL，Hysteria2 改用 quiche，隧道扩展体积更小
+• nameserver 指向自身 dns.listen 端口的配置现在可以正确解析代理服务器
+• DNS 优先 IPv4 并按地址族缓存，tcp:// 上游复用连接，nameserver-policy 支持 rule-set: 匹配
+• 所有出站连接都有全局超时，失败的组成员会被更快跳过
+• GLOBAL 模式使用主出站
+• 删除连接或重载配置会真正断开对应的流；UDP DNS 遵循路由规则
+• AnyTLS、Snell、Hysteria2 稳定性修复；新增 XHTTP 传输
 
 问题与反馈：https://github.com/meow-rs/meow-ios/issues
