@@ -443,10 +443,10 @@ pub fn start(config_path: &str) -> Result<()> {
     for nl in &cfg.listeners.named {
         let addr = bind_socket_addr(&nl.listen, nl.port)
             .with_context(|| format!("listener '{}'", nl.name))?;
-        match nl.listener_type {
-            meow_config::ListenerType::Mixed
-            | meow_config::ListenerType::Http
-            | meow_config::ListenerType::Socks5 => {
+        match &nl.spec {
+            meow_config::ListenerSpec::Mixed
+            | meow_config::ListenerSpec::Http
+            | meow_config::ListenerSpec::Socks5 => {
                 let listener = MixedListener::new(tunnel.clone(), addr, nl.name.clone())
                     .with_sniffer(sniffer_runtime.clone())
                     .with_auth(auth.clone())
@@ -457,8 +457,16 @@ pub fn start(config_path: &str) -> Result<()> {
                     }
                 }));
             }
-            meow_config::ListenerType::TProxy => {
+            meow_config::ListenerSpec::TProxy { .. } => {
                 // iOS deliberately does not start transparent-proxy listeners.
+            }
+            meow_config::ListenerSpec::Shadowsocks(_) => {
+                // Server-side inbound (needs `listener-shadowsocks`, which the
+                // NE does not enable); nothing to serve on iOS.
+                tracing::warn!(
+                    "listener '{}': type shadowsocks is not supported on iOS; skipping",
+                    nl.name
+                );
             }
         }
     }

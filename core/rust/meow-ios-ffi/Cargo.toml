@@ -68,12 +68,46 @@ lwip = "0.3"
 # to a release tag normally; bump deliberately rather than tracking main.
 # Each crate is a workspace member of madeye/meow-rs.
 #
-# HEAD: bc38424b — meow-rs v0.21.1. Adds the AnyTLS handshake fix
-# (#469): auth used to go out as three TLS records; anytls-go / sing-box
-# / sing-anytls read it in one shot, saw only the 32-byte password hash,
-# and EOF'd on padding length — every AnyTLS node failed handshake
-# against those servers. 0.21.1 coalesces the record. Also a Windows-only
-# meow-lwip bindgen bump, behind `listener-tun` which we do not enable.
+# HEAD: a663364 — meow-rs main 2026-09-07 (workspace version 0.21.2;
+# the v0.21.2 tag itself is a docs/version bump directly on 0.21.1, so
+# everything below is post-tag main). Bumped deliberately for the iOS
+# 1.7.0 TestFlight cut.
+#
+# What the 0.21.1 → a663364 range changes for this crate:
+# - TLS: BoringSSL is now the ONLY crypto library (#500). rustls, quinn,
+#   reqwest and the rcgen/x509-parser test stack are gone from the NE
+#   binary; hysteria2 moved onto quiche (BoringSSL-native QUIC + HTTP/3).
+#   `boring-tls` survives as a no-op alias for `tls` + `reality`, so the
+#   feature list below is unchanged. tokio-boring pinned back to 4.x.
+# - DNS: loopback upstreams are dialed from a loopback-bound socket
+#   (a7836e7) — the engine-side half of the self-referential
+#   `dns.listen` fix in lib.rs (`rewrite_self_referential_nameservers`);
+#   a wildcard-bound UDP socket cannot reach 127.0.0.1 inside the NE.
+#   Also prefer-IPv4 lookup + per-family cache + single-flight (#463),
+#   pooled plain `tcp://` exchanges (#462), `rule-set:` patterns in
+#   nameserver-policy (#465).
+# - Tunnel/proxy: every outbound dial bounded by a global timeout (#504),
+#   failing group members marked dead like mihomo onDialFailed (#488),
+#   dialer-proxy chaining via pluggable TcpDialer (Phase 1, #490),
+#   primary outbound chosen for GLOBAL (#501 — same problem
+#   meow_patch_config's GLOBAL head fix works around), live TCP streams
+#   cancelled on /connections deletion and reload (#509), UDP port-53
+#   traffic honours routing policy (#507), SOCKS5 UDP associations keep
+#   the authenticated identity (#508), idle control-plane work suspended
+#   (#483).
+# - Protocol fixes: AnyTLS server-pushed padding schemes + cancellation-
+#   safe session writes (#502/#503), Snell reuse lifecycle (#496),
+#   hysteria2 fingerprint pinning + transport hardening (#505).
+# - New: XHTTP transport with safe H2 shutdown (#512).
+# - Config API: `NamedListener.listener_type: ListenerType` became
+#   `spec: ListenerSpec` (#480); engine.rs matches on the enum and skips
+#   the new server-only `Shadowsocks` inbound (needs
+#   `listener-shadowsocks`, which the NE does not enable).
+#
+# v0.21.1 (bc38424b) added the AnyTLS handshake fix (#469): auth used to
+# go out as three TLS records; anytls-go / sing-box / sing-anytls read it
+# in one shot, saw only the 32-byte password hash, and EOF'd on padding
+# length. 0.21.1 coalesces the record.
 #
 # v0.21.0 retired the `ios/connect-timeout-0.20.1` side branch: its one
 # commit (the global `tcp-connect-timeout:` field wired into
@@ -135,7 +169,7 @@ lwip = "0.3"
 # VMess AEAD interop fix. meow-dns runs in fake-ip mode: the FFI config
 # parser pins `enhanced-mode: fake-ip` with `fake-ip-range: 28.0.0.0/8`
 # (the 2026-07-17 redir-host/DoT switch was reverted in PR #321).
-meow-common = { git = "https://github.com/madeye/meow-rs", rev = "bc38424bcea5efad18b4dbb2ebd679f54fc68531" }
+meow-common = { git = "https://github.com/madeye/meow-rs", rev = "a663364469b3b7dc2b46d2e0f4530e50a54108ee" }
 # `boring-tls` activates BoringSSL-backed TLS in meow-transport so ECH
 # (RFC 9460 SVCB / HTTPS ECHConfigList) and uTLS fingerprinting work for
 # proxy outbound. Without it, any proxy entry with `ech-opts:` set is
@@ -152,12 +186,12 @@ meow-common = { git = "https://github.com/madeye/meow-rs", rev = "bc38424bcea5ef
 # the lwip tun2socks path; would drag netstack-smoltcp/tun-rs dead weight
 # into the NE binary) and `external-ui-download` (force-disabled at compile
 # time on iOS; would only add the zip crate).
-meow-config = { git = "https://github.com/madeye/meow-rs", rev = "bc38424bcea5efad18b4dbb2ebd679f54fc68531", features = ["boring-tls", "anytls"] }
-meow-dns = { git = "https://github.com/madeye/meow-rs", rev = "bc38424bcea5efad18b4dbb2ebd679f54fc68531" }
-meow-tunnel = { git = "https://github.com/madeye/meow-rs", rev = "bc38424bcea5efad18b4dbb2ebd679f54fc68531" }
-meow-listener = { git = "https://github.com/madeye/meow-rs", rev = "bc38424bcea5efad18b4dbb2ebd679f54fc68531", default-features = false, features = ["listener-mixed"] }
-meow-api = { git = "https://github.com/madeye/meow-rs", rev = "bc38424bcea5efad18b4dbb2ebd679f54fc68531" }
-meow-proxy = { git = "https://github.com/madeye/meow-rs", rev = "bc38424bcea5efad18b4dbb2ebd679f54fc68531" }
+meow-config = { git = "https://github.com/madeye/meow-rs", rev = "a663364469b3b7dc2b46d2e0f4530e50a54108ee", features = ["boring-tls", "anytls"] }
+meow-dns = { git = "https://github.com/madeye/meow-rs", rev = "a663364469b3b7dc2b46d2e0f4530e50a54108ee" }
+meow-tunnel = { git = "https://github.com/madeye/meow-rs", rev = "a663364469b3b7dc2b46d2e0f4530e50a54108ee" }
+meow-listener = { git = "https://github.com/madeye/meow-rs", rev = "a663364469b3b7dc2b46d2e0f4530e50a54108ee", default-features = false, features = ["listener-mixed"] }
+meow-api = { git = "https://github.com/madeye/meow-rs", rev = "a663364469b3b7dc2b46d2e0f4530e50a54108ee" }
+meow-proxy = { git = "https://github.com/madeye/meow-rs", rev = "a663364469b3b7dc2b46d2e0f4530e50a54108ee" }
 
 [build-dependencies]
 cbindgen = "0.28"
