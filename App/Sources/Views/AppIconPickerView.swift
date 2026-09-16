@@ -49,6 +49,7 @@ struct AppIconPickerView: View {
             }
         }
         .scrollContentBackground(.hidden)
+        .readableColumn()
     }
 
     private var unsupported: some View {

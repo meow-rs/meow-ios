@@ -9,6 +9,7 @@ struct EngineOverviewSection: View {
     @Environment(VpnManager.self) private var vpnManager
     @Environment(AppIPCBridge.self) private var ipcBridge
     @Environment(MeowAPI.self) private var meowAPI
+    @Environment(\.horizontalSizeClass) private var sizeClass
     @Query(filter: #Predicate<Profile> { $0.isSelected }) private var selected: [Profile]
 
     @State private var auxiliaryDestination: EngineAuxiliaryDestination?
@@ -24,8 +25,28 @@ struct EngineOverviewSection: View {
                 primaryCard
                 trafficRow
             }
-            routeModeRow
-            auxiliaryNavSection
+            // Side by side at regular width, stacked at compact width. The
+            // destination binding stays on this view (outside the lazy
+            // grid) so a pushed screen survives a resize or fold.
+            LazyVGrid(columns: AppLayout.gridColumns(for: sizeClass, spacing: 16), alignment: .leading, spacing: 16) {
+                routeModeRow
+                auxiliaryNavSection
+            }
+        }
+        .navigationDestination(item: $auxiliaryDestination) { destination in
+            switch destination {
+            case .connections:
+                ConnectionsView()
+            case .rules:
+                RulesView()
+            case .providers:
+                ProvidersView()
+            case .diagnostics:
+                DiagnosticsPanelView()
+                    .ignoresSafeArea(edges: .bottom)
+                    .navigationTitle("home.nav.diagnostics")
+                    .navigationBarTitleDisplayMode(.inline)
+            }
         }
         .task(id: vpnManager.stage) {
             await refreshRouteMode()
@@ -170,21 +191,6 @@ struct EngineOverviewSection: View {
                     systemImage: "stethoscope",
                     identifier: "home.nav.diagnostics",
                 ) { auxiliaryDestination = .diagnostics }
-            }
-        }
-        .navigationDestination(item: $auxiliaryDestination) { destination in
-            switch destination {
-            case .connections:
-                ConnectionsView()
-            case .rules:
-                RulesView()
-            case .providers:
-                ProvidersView()
-            case .diagnostics:
-                DiagnosticsPanelView()
-                    .ignoresSafeArea(edges: .bottom)
-                    .navigationTitle("home.nav.diagnostics")
-                    .navigationBarTitleDisplayMode(.inline)
             }
         }
     }

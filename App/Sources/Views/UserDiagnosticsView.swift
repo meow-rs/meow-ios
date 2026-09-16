@@ -37,6 +37,7 @@ struct UserDiagnosticsView: View {
                 vpnRequiredSection
             }
         }
+        .readableColumn()
         .safeAreaInset(edge: .top) {
             if let error {
                 errorBanner(error)

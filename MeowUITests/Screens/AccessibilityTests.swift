@@ -17,8 +17,4 @@ final class AccessibilityTests: XCTestCase {
     func testDarkModeRendersGlassCardsReadably() throws {
         throw XCTSkip("blocked on T6.1 glass UI pass")
     }
-
-    func testIpadSidebarLayout() throws {
-        throw XCTSkip("blocked on T5.1 iPad split layout")
-    }
 }

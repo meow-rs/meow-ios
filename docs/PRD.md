@@ -41,7 +41,7 @@ meow-ios offers the full power of the meow-rs proxy engine in a native iOS app w
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│              SwiftUI App (iOS 17+, material UI)          │
+│              SwiftUI App (iOS 18+, material UI)          │
 │         Tab bar · Cards · Native controls · SwiftData    │
 └─────────────────────┬───────────────────────────────────┘
                       │ App ↔ Extension IPC
@@ -70,7 +70,7 @@ meow-ios offers the full power of the meow-rs proxy engine in a native iOS app w
 
 | Layer | Technology | Responsibility |
 |-------|-----------|----------------|
-| UI | SwiftUI + iOS 17+ | All screens, navigation, state presentation |
+| UI | SwiftUI + iOS 18+ | All screens, navigation, state presentation |
 | App ↔ Extension IPC | CFNotificationCenter + App Group container | Commands (connect/disconnect) and state/traffic events |
 | Packet Tunnel Provider | NEPacketTunnelProvider | VPN lifecycle, TUN fd management |
 | MeowCore (Rust) | Rust, cbindgen C header, single XCFramework | tun2socks (netstack-smoltcp), DoH, full proxy engine (meow-rs), REST controller at 127.0.0.1:9090 |
@@ -221,7 +221,7 @@ meow-ios adopts a **SwiftUI material design** throughout:
 - SF Symbols iconography
 - Large title navigation where appropriate
 
-Minimum deployment target is iOS 17. On iOS 26 the system upgrades materials with Liquid Glass automatically; no app-side opt-in is required.
+Minimum deployment target is iOS 18. On iOS 26 the system upgrades materials with Liquid Glass automatically; no app-side opt-in is required.
 
 ### 4.2 Navigation Structure
 
@@ -617,7 +617,7 @@ Both app target and PacketTunnel extension must share:
 
 ### Milestone 1.5: Manual Smoke Passes (End of Week 3)
 - T2.6 (Debug Diagnostics Panel) complete; all 4 checks rendering on device with `MEOW_DEBUG=1`
-- User runs manual smoke on their iPhone (iOS 17+ real device) and confirms all 4 checks read `PASS`
+- User runs manual smoke on their iPhone (iOS 18+ real device) and confirms all 4 checks read `PASS`
 - Gate is user sign-off, not an automated assertion; vphone-cli nightly harness is retired (v1.4)
 
 ### Milestone 2: VPN Toggle + Basic UI (Weeks 4–5)
@@ -648,7 +648,7 @@ Both app target and PacketTunnel extension must share:
 - App icons, launch screen
 
 ### Milestone 6: Testing & App Store Submission (Weeks 11–12)
-- Full regression test pass on physical devices (iPhone running iOS 17+)
+- Full regression test pass on physical devices (iPhone running iOS 18+)
 - Performance profiling
 - App Store metadata, screenshots, privacy policy
 - TestFlight beta

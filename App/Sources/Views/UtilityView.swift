@@ -39,6 +39,7 @@ struct UtilityView: View {
                 }
             }
             .padding(16)
+            .readableColumn()
         }
         .background(AppTheme.screenBackground)
         .scrollContentBackground(.hidden)

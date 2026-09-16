@@ -147,6 +147,7 @@ struct SubscriptionsView: View {
         }
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
+        .readableColumn()
         .background(AppTheme.screenBackground)
         .navigationTitle("subscriptions.nav.title")
         .navigationBarTitleDisplayMode(.inline)

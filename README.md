@@ -13,7 +13,7 @@ Available on the App Store:
 <https://apps.apple.com/us/app/meow-smart-vpn/id6778303404>. Want the latest
 builds early? The public beta is open on TestFlight:
 <https://testflight.apple.com/join/HSptQN3h>.
-Requires iOS 17 or later (iPhone and iPad). Bring your own Mihomo / Clash
+Requires iOS 18 or later (iPhone, iPad, and iPhone Duo). Bring your own Mihomo / Clash
 subscription — meow does not provide proxy servers.
 
 Latest version: **v1.4.0** (July 2026) — dark mode across the app, QR-code

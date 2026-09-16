@@ -7,6 +7,7 @@ struct ProxyGroupsView: View {
     @Environment(MeowAPI.self) private var meowAPI
     @Environment(\.modelContext) private var modelContext
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.horizontalSizeClass) private var sizeClass
     @Query(filter: #Predicate<Profile> { $0.isSelected }) private var selected: [Profile]
 
     @State private var groups: [ProxyGroupModel] = []
@@ -39,27 +40,37 @@ struct ProxyGroupsView: View {
                         }
                     }
                 } else {
-                    ForEach(groups) { group in
-                        ProxyGroupCard(
-                            group: group,
-                            isExpanded: expandedGroupID == group.id,
-                            inflight: inflightDelay,
-                            isTestingGroup: inflightGroupTest.contains(group.name),
-                            onToggleExpand: {
-                                withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.2)) {
-                                    expandedGroupID = expandedGroupID == group.id ? nil : group.id
-                                }
-                            },
-                            onSelect: { proxy in
-                                Task { await select(group: group.name, proxy: proxy) }
-                            },
-                            onPing: { proxy in
-                                Task { await ping(proxy: proxy) }
-                            },
-                            onPingGroup: {
-                                Task { await pingGroup(group) }
-                            },
-                        )
+                    // One column at compact width, two at regular width. The
+                    // container never changes, only its columns, so expanded
+                    // cards keep their state when the window resizes or the
+                    // device folds.
+                    LazyVGrid(
+                        columns: AppLayout.gridColumns(for: sizeClass, spacing: 10),
+                        alignment: .leading,
+                        spacing: 10,
+                    ) {
+                        ForEach(groups) { group in
+                            ProxyGroupCard(
+                                group: group,
+                                isExpanded: expandedGroupID == group.id,
+                                inflight: inflightDelay,
+                                isTestingGroup: inflightGroupTest.contains(group.name),
+                                onToggleExpand: {
+                                    withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.2)) {
+                                        expandedGroupID = expandedGroupID == group.id ? nil : group.id
+                                    }
+                                },
+                                onSelect: { proxy in
+                                    Task { await select(group: group.name, proxy: proxy) }
+                                },
+                                onPing: { proxy in
+                                    Task { await ping(proxy: proxy) }
+                                },
+                                onPingGroup: {
+                                    Task { await pingGroup(group) }
+                                },
+                            )
+                        }
                     }
                 }
             }

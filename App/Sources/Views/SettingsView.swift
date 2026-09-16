@@ -133,6 +133,7 @@ struct SettingsView: View {
             #endif
         }
         .scrollContentBackground(.hidden)
+        .readableColumn()
         .background(AppTheme.screenBackground)
         .navigationTitle("settings.nav.title")
         .navigationBarTitleDisplayMode(.inline)

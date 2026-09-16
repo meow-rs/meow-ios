@@ -25,24 +25,30 @@ struct ContentView: View {
         VStack(spacing: 0) {
             GlobalVpnSwitchBar()
 
+            // Sidebar-adaptable: a tab bar at compact width (iPhone, the
+            // iPhone Duo outer display, iPad Split View) and a system sidebar
+            // toggle at regular width (iPad, the Duo inner display). The
+            // system re-flows it across fold poses; nothing here keys off
+            // orientation or idiom.
             TabView(selection: $selectedTab) {
-                NavigationStack { SubscriptionsView() }
-                    .tabItem { Label("tabs.subscriptions", systemImage: "text.document.fill") }
-                    .accessibilityIdentifier("Subscriptions")
-                    .tag(ContentTab.subscriptions)
-                NavigationStack { ProxyGroupsView() }
-                    .tabItem { Label("tabs.proxyGroups", systemImage: "rectangle.stack.fill") }
-                    .accessibilityIdentifier("Proxy Groups")
-                    .tag(ContentTab.proxyGroups)
-                NavigationStack { UtilityView() }
-                    .tabItem { Label("tabs.utility", systemImage: "wrench.and.screwdriver.fill") }
-                    .accessibilityIdentifier("Utility")
-                    .tag(ContentTab.utility)
-                NavigationStack { SettingsView() }
-                    .tabItem { Label("tabs.settings", systemImage: "gearshape.fill") }
-                    .accessibilityIdentifier("Settings")
-                    .tag(ContentTab.settings)
+                Tab("tabs.subscriptions", systemImage: "text.document.fill", value: ContentTab.subscriptions) {
+                    NavigationStack { SubscriptionsView() }
+                        .accessibilityIdentifier("Subscriptions")
+                }
+                Tab("tabs.proxyGroups", systemImage: "rectangle.stack.fill", value: ContentTab.proxyGroups) {
+                    NavigationStack { ProxyGroupsView() }
+                        .accessibilityIdentifier("Proxy Groups")
+                }
+                Tab("tabs.utility", systemImage: "wrench.and.screwdriver.fill", value: ContentTab.utility) {
+                    NavigationStack { UtilityView() }
+                        .accessibilityIdentifier("Utility")
+                }
+                Tab("tabs.settings", systemImage: "gearshape.fill", value: ContentTab.settings) {
+                    NavigationStack { SettingsView() }
+                        .accessibilityIdentifier("Settings")
+                }
             }
+            .tabViewStyle(.sidebarAdaptable)
         }
         .background(AppTheme.screenBackground)
         .tint(AppTheme.accent)

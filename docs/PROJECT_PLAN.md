@@ -376,7 +376,8 @@ This plan translates the PRD milestones into a concrete, dependency-ordered task
 | iPhone 16 Pro | iOS 26.0 | Primary test device |
 | iPhone 15 | iOS 26.0 | Secondary |
 | iPhone 14 | iOS 26.0 | Minimum target |
-| iPad Pro M4 | iOS 26.0 | Tablet layout verification |
+| iPad Pro M4 | iOS 26.0 | Tablet layout verification (regular width: sidebar-adaptable tabs, 2-column grids, readable columns) |
+| iPhone Duo (simulator) | iOS 27.1 | Fold/unfold = regular↔compact resize; blocked on the Xcode 27.1 beta simulator |
 | iOS Simulator (arm64) | iOS 26.0 | CI smoke tests |
 
 ---

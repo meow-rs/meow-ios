@@ -47,3 +47,10 @@ Caveats:
 - Swift / Rust / project.yml / Podfile → Path B, with attestation.
 - Mixed (docs + code in one PR) → run full CI. (Consider splitting the PR if the docs half is blocking.)
 - Workflow files (alone or mixed) → run full CI. Always.
+
+## UI layout rules (iPad + iPhone Duo)
+
+- Branch layout only on `@Environment(\.horizontalSizeClass)`. Never on orientation, `UIDevice.userInterfaceIdiom`, or `UIScreen`: the iPhone Duo inner display ignores supported orientations, and iPad Split View already puts the app in compact width.
+- Never swap view trees on size class. A fold/unfold or Split View resize is a live resize of the same scene, so vary parameters of the *same* container (a `LazyVGrid` columns array, a `maxWidth`) and keep `@State` / `navigationDestination` bindings outside lazy containers.
+- Reuse `AppLayout.gridColumns(for:)` (1 column compact, 2 regular; even counts split cleanly at the fold) and `.readableColumn()` (`App/Sources/Views/AdaptiveLayout.swift`) instead of new fixed widths.
+- Verify regular-width changes on `iPad Pro 13-inch (M5)`, not only iPhone; `AppShellTests.testRegularWidthShellKeepsTabsAndGlobalToggle` skips itself on phones.

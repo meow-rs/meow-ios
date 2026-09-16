@@ -22,19 +22,19 @@ struct MeowApp {
 
     /// Tab navigation
     var subscriptionsTab: XCUIElement {
-        app.tabBars.buttons["Configs"]
+        app.tab("Configs")
     }
 
     var proxyGroupsTab: XCUIElement {
-        app.tabBars.buttons["Proxy Groups"]
+        app.tab("Proxy Groups")
     }
 
     var utilityTab: XCUIElement {
-        app.tabBars.buttons["Utility"]
+        app.tab("Utility")
     }
 
     var settingsTab: XCUIElement {
-        app.tabBars.buttons["Settings"]
+        app.tab("Settings")
     }
 
     /// Page objects — thin wrappers; fill in as views land.
@@ -44,6 +44,23 @@ struct MeowApp {
 
     var subscriptions: SubscriptionsScreen {
         SubscriptionsScreen(app: app)
+    }
+}
+
+extension XCUIApplication {
+    /// A top-level tab by its label. At compact width the tab bar is a
+    /// classic `TabBar` of buttons; at regular width (iPad, and the iPhone
+    /// Duo inner display) iOS 26's floating tab bar exposes its items as
+    /// cells with no `TabBar` ancestor, so match on label and type instead
+    /// of on the container.
+    func tab(_ label: String) -> XCUIElement {
+        let predicate = NSPredicate(
+            format: "label == %@ AND (elementType == %d OR elementType == %d)",
+            label,
+            XCUIElement.ElementType.button.rawValue,
+            XCUIElement.ElementType.cell.rawValue,
+        )
+        return descendants(matching: .any).matching(predicate).firstMatch
     }
 }
 
