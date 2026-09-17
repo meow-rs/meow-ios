@@ -5,5 +5,7 @@
 • GLOBAL mode uses the primary outbound
 • Deleting a connection or reloading the profile cancels the live stream; UDP DNS honours routing rules
 • AnyTLS, Snell and Hysteria2 reliability fixes; new XHTTP transport
+• iPad and iPhone Duo: sidebar tabs, two-column Proxy Groups and Engine layouts, and readable-width forms on wide displays
+• Requires iOS 18 or later
 
 Issues and feedback: https://github.com/meow-rs/meow-ios/issues

@@ -1,0 +1,7 @@
+Build 2026091701 (1.7.0)
+
+• iPad: the app now adapts to wide displays. Tabs gain a sidebar toggle, Proxy Groups and the Engine section lay out in two columns, and forms centre at a readable width instead of stretching across the screen.
+• iPhone Duo ready: the same size-class-driven layout is what Apple's foldable uses for its inner display, so the app expands when opened and collapses when closed without losing your place.
+• Minimum iOS is now 18. iOS 17 devices cannot install this build; the previous 1.7.0 build stays available to them until it expires.
+• Same proxy engine as build 2026090901 (meow-rs 0.21.2 + main).
+• Please test on iPad: switch tabs with the sidebar toggle, expand a proxy group, open Engine → Connections, then enter Split View or rotate and confirm nothing is lost. On iPhone, confirm the layout is unchanged.

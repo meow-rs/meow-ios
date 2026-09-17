@@ -5,5 +5,7 @@
 • GLOBAL 模式使用主出站
 • 删除连接或重载配置会真正断开对应的流；UDP DNS 遵循路由规则
 • AnyTLS、Snell、Hysteria2 稳定性修复；新增 XHTTP 传输
+• iPad 与 iPhone Duo：侧边栏标签、代理组与引擎双列布局，宽屏上表单以适合阅读的宽度显示
+• 需要 iOS 18 或更高版本
 
 问题与反馈：https://github.com/meow-rs/meow-ios/issues
