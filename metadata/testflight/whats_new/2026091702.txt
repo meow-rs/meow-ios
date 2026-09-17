@@ -1,0 +1,7 @@
+Build 2026091702 (1.5.0, Apple TV)
+
+• First Apple TV build, from pull request #364. Same bundle as the iPhone app (universal purchase), separate tvOS binary.
+• One screen: pick a subscription profile with the remote, connect, and see the tunnel state. No QR scanning and no settings screen on tvOS; switching profiles while connected reloads the engine in place.
+• Engine: the pull request's meow-rs pin (1.5.0-era) with the shadowsocks 1.25 pre-release and BoringSSL v5.2.0 pins the tvOS port needs. It is older than the current iPhone build.
+• Known gaps: no tvOS icon or Top Shelf artwork yet; untested on real Apple TV hardware, which is exactly what this build is for.
+• Please test on a real Apple TV: install the VPN profile, connect, browse in a few apps, then disconnect. Report whether the tunnel actually carries traffic and anything that crashes.
