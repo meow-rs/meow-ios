@@ -154,8 +154,17 @@ enum AppModelContainer {
     """
 
     private static func storeURL() throws -> URL {
+        // tvOS has no writable Application Support directory — the only
+        // local store that FileManager will create is Caches. iOS keeps the
+        // store in Application Support so it survives cache purges.
+        let searchPath: FileManager.SearchPathDirectory
+        #if os(tvOS)
+            searchPath = .cachesDirectory
+        #else
+            searchPath = .applicationSupportDirectory
+        #endif
         let dir = try FileManager.default
-            .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            .url(for: searchPath, in: .userDomainMask, appropriateFor: nil, create: true)
             .appending(path: "meow")
         try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         var dirURL = dir
