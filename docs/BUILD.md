@@ -85,6 +85,14 @@ The XCFramework carries four slices — `aarch64-apple-ios{,-sim}` and
 `aarch64-apple-tvos{,-sim}` — built in that order, so a break on the newer
 tvOS pair can't silently cost the shipping iOS platform.
 
+The tvOS slices carry two environment-level workarounds for boring-sys 4.x
+(which predates tvOS): `BORING_BSSL_RUST_CPPLIB=c++` so the link asks for
+libc++ rather than a libstdc++ Apple SDKs don't ship, and a simulator-only
+CMake toolchain file (`core/rust/meow-ios-ffi/cmake/tvos-simulator.cmake`)
+so BoringSSL is configured against the simulator SDK instead of CMake's
+device default. Both live in `scripts/build-rust.sh` with the exit condition
+(boring-sys ≥ 5 in the tree) spelled out next to them.
+
 ```sh
 ./scripts/build-rust.sh   # → MeowCore.xcframework
 ```

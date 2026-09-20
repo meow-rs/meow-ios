@@ -41,15 +41,48 @@ done
 
 cd "$CRATE_DIR"
 
+# boring-sys 4.x (pinned through quiche, which meow-rs uses for hysteria2)
+# predates tvOS support, and two of its gaps bite the tvOS slices. Both are
+# closed from the environment rather than by forking the crate:
+#
+#   * Its C++-runtime table knows macos/ios/freebsd and answers "stdc++" for
+#     everything else, so a tvOS build emits -lstdc++ and the link dies with
+#     "library 'stdc++' not found" (Apple SDKs ship libc++ only).
+#     BORING_BSSL_RUST_CPPLIB overrides that answer.
+#   * Its CMake table has no tvOS rows, so CMake falls back to the platform
+#     default SDK for CMAKE_SYSTEM_NAME=tvOS, which is the *device* SDK even
+#     when the simulator is being built. cmake/tvos-simulator.cmake pins the
+#     simulator SDK instead. boring-sys, the cmake crate and aws-lc-sys all
+#     honor CMAKE_TOOLCHAIN_FILE_<target_with_underscores>, so the variable is
+#     scoped to the simulator slice and the device slice keeps the stock path.
+#
+# Drop both once the tree resolves boring-sys >= 5 (boring 5.x supports tvOS
+# natively; waiting on quiche to move off boring ^4).
+TVOS_SIM_TOOLCHAIN="$CRATE_DIR/cmake/tvos-simulator.cmake"
+
 LIBS=()
 for target in "${TARGETS_REQUIRED[@]}"; do
     case "$target" in
-        *-apple-tvos*) deployment_env=("TVOS_DEPLOYMENT_TARGET=$TVOS_MIN") ;;
-        *) deployment_env=("IPHONEOS_DEPLOYMENT_TARGET=$IPHONEOS_MIN") ;;
+        aarch64-apple-tvos-sim)
+            build_env=(
+                "TVOS_DEPLOYMENT_TARGET=$TVOS_MIN"
+                "BORING_BSSL_RUST_CPPLIB=c++"
+                "CMAKE_TOOLCHAIN_FILE_aarch64_apple_tvos_sim=$TVOS_SIM_TOOLCHAIN"
+            )
+            ;;
+        *-apple-tvos*)
+            build_env=(
+                "TVOS_DEPLOYMENT_TARGET=$TVOS_MIN"
+                "BORING_BSSL_RUST_CPPLIB=c++"
+            )
+            ;;
+        *)
+            build_env=("IPHONEOS_DEPLOYMENT_TARGET=$IPHONEOS_MIN")
+            ;;
     esac
 
-    echo "==> cargo build --target $target (${deployment_env[0]})"
-    env "${deployment_env[@]}" cargo build --release --target "$target"
+    echo "==> cargo build --target $target (${build_env[*]})"
+    env "${build_env[@]}" cargo build --release --target "$target"
 
     lib="$CRATE_DIR/target/$target/$PROFILE/libmeow_ios_ffi.a"
     if [[ ! -f "$lib" ]]; then

@@ -264,3 +264,11 @@ lwip = { git = "https://github.com/madeye/lwip", rev = "5f6f0dfe025c967157ff328d
 # Re-test Shadowsocks throughput and all three cipher families on device after
 # touching this pin.
 shadowsocks = { git = "https://github.com/shadowsocks/shadowsocks-rust", rev = "db65eaa8244603e5ef7c5fbc60add10e41a5477a" }
+
+# No boring pin, on purpose. boring 5.x is the first line with tvOS support,
+# but quiche 0.29 (hysteria2's QUIC stack since #500) requires boring ^4, so
+# a 5.x pin here would break resolution. The two boring-sys 4.x tvOS gaps —
+# `-lstdc++` on link and the device SDK being chosen for the simulator — are
+# closed from the environment instead: see the tvOS case in
+# scripts/build-rust.sh and cmake/tvos-simulator.cmake. Once quiche moves to
+# boring 5, bump and delete both workarounds.
