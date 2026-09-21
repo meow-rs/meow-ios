@@ -52,6 +52,7 @@ struct ContentView: View {
         }
         .background(AppTheme.screenBackground)
         .tint(AppTheme.accent)
+        .providesFoldDivider()
         .onOpenURL { url in
             if url.scheme == "meow", url.host == "diagnostics" {
                 showDiagnostics = true
