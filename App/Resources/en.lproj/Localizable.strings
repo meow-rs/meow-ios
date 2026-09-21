@@ -77,7 +77,7 @@
 "subscriptions.editInfo.button.save" = "Save";
 "subscriptions.editInfo.footer" = "Changes to the URL take effect on the next refresh.";
 "subscriptions.import.errorTitle" = "Couldn't import config";
-"subscriptions.row.updatedAgo %@" = "Updated %@ ago";
+"subscriptions.row.updated %@" = "Updated %@";
 "subscriptions.row.a11y.edit %@" = "Edit YAML for %@";
 "subscriptions.row.a11y.refresh %@" = "Refresh %@";
 "subscriptions.row.a11y.editInfo %@" = "Rename or edit info for %@";

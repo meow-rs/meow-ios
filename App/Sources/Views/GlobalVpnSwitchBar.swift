@@ -60,15 +60,21 @@ struct GlobalVpnSwitchBar: View {
             .padding(.horizontal, 16)
             .padding(.vertical, 10)
         }
+        // The bar's content stays inside the safe area, but its surface runs
+        // edge to edge: on the iPhone Duo outer display the system parks the
+        // tab bar in a side strip that is a horizontal safe-area inset, and a
+        // gradient that stopped at that edge read as a layout gap.
         .background(
             LinearGradient(
                 colors: [AppTheme.panelRaised, AppTheme.canvas],
                 startPoint: .leading,
                 endPoint: .trailing,
-            ),
+            )
+            .ignoresSafeArea(edges: .horizontal),
         )
         .overlay(alignment: .bottom) {
             AppTheme.border.frame(height: 1)
+                .ignoresSafeArea(edges: .horizontal)
         }
     }
 

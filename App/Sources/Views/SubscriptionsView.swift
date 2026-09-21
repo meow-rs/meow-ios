@@ -13,6 +13,11 @@ struct SubscriptionsView: View {
     @State private var exporting: Profile?
     @State private var error: String?
 
+    /// Single abbreviated unit with the "ago" wording built in, so the row
+    /// subtitle stays on one line even on the narrowest compact widths.
+    private static let updatedFormat: Date.RelativeFormatStyle =
+        .relative(presentation: .named, unitsStyle: .abbreviated)
+
     var body: some View {
         List {
             Section {
@@ -39,12 +44,14 @@ struct SubscriptionsView: View {
                                         .accessibilityHidden(true)
                                     VStack(alignment: .leading, spacing: 4) {
                                         Text(profile.name).font(.headline)
-                                        Text(
-                                            "subscriptions.row.updatedAgo \(profile.lastUpdated, style: .relative)",
-                                            comment: "Subscription row subtitle; %@ = relative time since last update",
-                                        )
-                                        .font(.caption)
-                                        .foregroundStyle(.secondary)
+                                        // One abbreviated unit ("25 min. ago"), one line: the
+                                        // two-unit `.relative` style wrapped on the iPhone Duo
+                                        // outer display once the side control strip took its
+                                        // share of the width.
+                                        updatedSubtitle(profile)
+                                            .font(.caption)
+                                            .foregroundStyle(.secondary)
+                                            .lineLimit(1)
                                     }
                                     Spacer(minLength: 0)
                                 }
@@ -185,6 +192,13 @@ struct SubscriptionsView: View {
         } message: {
             Text(error ?? "")
         }
+    }
+
+    private func updatedSubtitle(_ profile: Profile) -> Text {
+        Text(
+            "subscriptions.row.updated \(profile.lastUpdated, format: Self.updatedFormat)",
+            comment: "Subscription row subtitle; %@ = relative time, e.g. '25 min. ago'",
+        )
     }
 
     private var emptySubscriptionCard: some View {
