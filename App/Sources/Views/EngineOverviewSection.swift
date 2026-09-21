@@ -2,21 +2,30 @@ import MeowModels
 import SwiftData
 import SwiftUI
 
+/// Route-mode picker plus the engine's auxiliary screens. The owner holds
+/// `routeMode` and `auxiliaryDestination` and attaches the
+/// `navigationDestination`: this section moves between a `List` row (compact
+/// width) and its own column (regular width) as the device folds, and state
+/// kept here would reset on every move — popping a pushed screen mid-fold.
 struct EngineOverviewSection: View {
     let showsStatusSummary: Bool
+    @Binding var routeMode: RouteMode
+    @Binding var auxiliaryDestination: EngineAuxiliaryDestination?
 
     @Environment(AppModel.self) private var appModel
     @Environment(VpnManager.self) private var vpnManager
     @Environment(AppIPCBridge.self) private var ipcBridge
     @Environment(MeowAPI.self) private var meowAPI
-    @Environment(\.horizontalSizeClass) private var sizeClass
     @Query(filter: #Predicate<Profile> { $0.isSelected }) private var selected: [Profile]
 
-    @State private var auxiliaryDestination: EngineAuxiliaryDestination?
-    @State private var routeMode: RouteMode = .rule
-
-    init(showsStatusSummary: Bool = true) {
+    init(
+        showsStatusSummary: Bool = true,
+        routeMode: Binding<RouteMode>,
+        auxiliaryDestination: Binding<EngineAuxiliaryDestination?>,
+    ) {
         self.showsStatusSummary = showsStatusSummary
+        _routeMode = routeMode
+        _auxiliaryDestination = auxiliaryDestination
     }
 
     var body: some View {
@@ -25,28 +34,8 @@ struct EngineOverviewSection: View {
                 primaryCard
                 trafficRow
             }
-            // Side by side at regular width, stacked at compact width. The
-            // destination binding stays on this view (outside the lazy
-            // grid) so a pushed screen survives a resize or fold.
-            LazyVGrid(columns: AppLayout.gridColumns(for: sizeClass, spacing: 16), alignment: .leading, spacing: 16) {
-                routeModeRow
-                auxiliaryNavSection
-            }
-        }
-        .navigationDestination(item: $auxiliaryDestination) { destination in
-            switch destination {
-            case .connections:
-                ConnectionsView()
-            case .rules:
-                RulesView()
-            case .providers:
-                ProvidersView()
-            case .diagnostics:
-                DiagnosticsPanelView()
-                    .ignoresSafeArea(edges: .bottom)
-                    .navigationTitle("home.nav.diagnostics")
-                    .navigationBarTitleDisplayMode(.inline)
-            }
+            routeModeRow
+            auxiliaryNavSection
         }
         .task(id: vpnManager.stage) {
             await refreshRouteMode()
@@ -289,7 +278,7 @@ enum RouteMode: String, CaseIterable, Identifiable {
     }
 }
 
-private enum EngineAuxiliaryDestination: Identifiable {
+enum EngineAuxiliaryDestination: Identifiable {
     case connections
     case rules
     case providers
@@ -297,6 +286,29 @@ private enum EngineAuxiliaryDestination: Identifiable {
 
     var id: Self {
         self
+    }
+}
+
+/// The pushed screen for an `EngineAuxiliaryDestination`. Attach via
+/// `.navigationDestination(item:)` on a stable ancestor, never inside a lazy
+/// container.
+struct EngineAuxiliaryDestinationView: View {
+    let destination: EngineAuxiliaryDestination
+
+    var body: some View {
+        switch destination {
+        case .connections:
+            ConnectionsView()
+        case .rules:
+            RulesView()
+        case .providers:
+            ProvidersView()
+        case .diagnostics:
+            DiagnosticsPanelView()
+                .ignoresSafeArea(edges: .bottom)
+                .navigationTitle("home.nav.diagnostics")
+                .navigationBarTitleDisplayMode(.inline)
+        }
     }
 }
 

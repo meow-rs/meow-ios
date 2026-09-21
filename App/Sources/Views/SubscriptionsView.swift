@@ -12,6 +12,11 @@ struct SubscriptionsView: View {
     @State private var editingInfo: Profile?
     @State private var exporting: Profile?
     @State private var error: String?
+    // Owned here, not by `EngineOverviewSection`: the section changes
+    // container on a fold and would otherwise reset (popping a pushed screen).
+    @State private var routeMode: RouteMode = .rule
+    @State private var auxiliaryDestination: EngineAuxiliaryDestination?
+    @Environment(\.horizontalSizeClass) private var sizeClass
 
     /// Single abbreviated unit with the "ago" wording built in, so the row
     /// subtitle stays on one line even on the narrowest compact widths.
@@ -19,6 +24,78 @@ struct SubscriptionsView: View {
         .relative(presentation: .named, unitsStyle: .abbreviated)
 
     var body: some View {
+        // Profiles list first in both poses so its identity (scroll position,
+        // swipe state) survives a fold; the Engine column only joins at
+        // regular width, with the gutter on the fold divider.
+        AdaptiveGrid(spacing: 0, fillsHeight: true) {
+            profilesList
+            if sizeClass == .regular {
+                engineColumn
+            }
+        }
+        .background(AppTheme.screenBackground)
+        .navigationDestination(item: $auxiliaryDestination) { destination in
+            EngineAuxiliaryDestinationView(destination: destination)
+        }
+        .navigationTitle("subscriptions.nav.title")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                addSubscriptionMenu(identifier: "subscriptions.toolbar.add")
+            }
+        }
+        .sheet(isPresented: $showingAdd) {
+            AddSubscriptionSheet(error: $error)
+        }
+        .sheet(isPresented: $showingAddShadowsocks) {
+            AddShadowsocksSheet(error: $error)
+        }
+        .fileImporter(
+            isPresented: $showingImporter,
+            allowedContentTypes: yamlContentTypes(),
+            allowsMultipleSelection: false,
+        ) { result in
+            handleImport(result)
+        }
+        .sheet(item: $editing) { profile in
+            NavigationStack {
+                YamlEditorView(profile: profile)
+            }
+        }
+        .sheet(item: $editingInfo) { profile in
+            EditSubscriptionInfoSheet(profile: profile, error: $error)
+        }
+        .sheet(item: $exporting) { profile in
+            QRExportSheet(kind: exportKind(profile), payloads: exportPayloads(profile))
+        }
+        .alert("common.error", isPresented: .constant(error != nil)) {
+            Button("common.ok") { error = nil }
+        } message: {
+            Text(error ?? "")
+        }
+    }
+
+    private var engineSection: some View {
+        EngineOverviewSection(
+            showsStatusSummary: false,
+            routeMode: $routeMode,
+            auxiliaryDestination: $auxiliaryDestination,
+        )
+    }
+
+    private var engineColumn: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 10) {
+                SectionHeader("subscriptions.section.engine")
+                    .padding(.leading, 4)
+                engineSection
+            }
+            .padding(.horizontal, 16)
+            .padding(.top, 12)
+        }
+    }
+
+    private var profilesList: some View {
         List {
             Section {
                 if profiles.isEmpty {
@@ -142,58 +219,28 @@ struct SubscriptionsView: View {
                 SectionHeader("subscriptions.section.profiles")
             }
 
-            Section {
-                EngineOverviewSection(showsStatusSummary: false)
-                    .padding(.vertical, 4)
-                    .listRowBackground(Color.clear)
-                    .listRowSeparator(.hidden)
-                    .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
-            } header: {
-                SectionHeader("subscriptions.section.engine")
+            // At compact width the Engine section rides at the bottom of the
+            // list; at regular width it becomes its own column (see `body`).
+            if sizeClass != .regular {
+                Section {
+                    engineSection
+                        .padding(.vertical, 4)
+                        .listRowBackground(Color.clear)
+                        .listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+                } header: {
+                    SectionHeader("subscriptions.section.engine")
+                }
             }
         }
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
-        .readableColumn()
-        .background(AppTheme.screenBackground)
-        .navigationTitle("subscriptions.nav.title")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                addSubscriptionMenu(identifier: "subscriptions.toolbar.add")
-            }
-        }
-        .sheet(isPresented: $showingAdd) {
-            AddSubscriptionSheet(error: $error)
-        }
-        .sheet(isPresented: $showingAddShadowsocks) {
-            AddShadowsocksSheet(error: $error)
-        }
-        .fileImporter(
-            isPresented: $showingImporter,
-            allowedContentTypes: yamlContentTypes(),
-            allowsMultipleSelection: false,
-        ) { result in
-            handleImport(result)
-        }
-        .sheet(item: $editing) { profile in
-            NavigationStack {
-                YamlEditorView(profile: profile)
-            }
-        }
-        .sheet(item: $editingInfo) { profile in
-            EditSubscriptionInfoSheet(profile: profile, error: $error)
-        }
-        .sheet(item: $exporting) { profile in
-            QRExportSheet(kind: exportKind(profile), payloads: exportPayloads(profile))
-        }
-        .alert("common.error", isPresented: .constant(error != nil)) {
-            Button("common.ok") { error = nil }
-        } message: {
-            Text(error ?? "")
-        }
     }
+}
 
+// MARK: - Helpers
+
+private extension SubscriptionsView {
     private func updatedSubtitle(_ profile: Profile) -> Text {
         Text(
             "subscriptions.row.updated \(profile.lastUpdated, format: Self.updatedFormat)",

@@ -7,7 +7,6 @@ struct ProxyGroupsView: View {
     @Environment(MeowAPI.self) private var meowAPI
     @Environment(\.modelContext) private var modelContext
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.horizontalSizeClass) private var sizeClass
     @Query(filter: #Predicate<Profile> { $0.isSelected }) private var selected: [Profile]
 
     @State private var groups: [ProxyGroupModel] = []
@@ -40,15 +39,11 @@ struct ProxyGroupsView: View {
                         }
                     }
                 } else {
-                    // One column at compact width, two at regular width. The
-                    // container never changes, only its columns, so expanded
-                    // cards keep their state when the window resizes or the
-                    // device folds.
-                    LazyVGrid(
-                        columns: AppLayout.gridColumns(for: sizeClass, spacing: 10),
-                        alignment: .leading,
-                        spacing: 10,
-                    ) {
+                    // One column at compact width, two at regular width with
+                    // the gutter on the fold. The container never changes,
+                    // only its parameters, so expanded cards keep their state
+                    // when the window resizes or the device folds.
+                    AdaptiveGrid(spacing: 10) {
                         ForEach(groups) { group in
                             ProxyGroupCard(
                                 group: group,
