@@ -1,0 +1,7 @@
+Build 2026092301 (1.7.0, Apple TV)
+
+• Second Apple TV build from pull request #364, now rebased on the current engine (meow-rs 0.21.2 + main, the same as iPhone build 2026091701).
+• Fixes the instant crash on launch reported on a real Apple TV 4K: the SwiftData store now lives in Caches, where tvOS allows writes.
+• The tunnel extension is signed with the paid team's Network Extension entitlement in this build, so tapping Connect should raise the VPN. This is the first build where the tunnel itself can be exercised on hardware.
+• Still placeholder tvOS icon and Top Shelf artwork.
+• Please test on a real Apple TV: launch, pick a profile, connect, browse in a few apps, disconnect. Report whether the VPN prompt appears, whether traffic flows, and any crash.

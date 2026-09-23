@@ -1,0 +1,7 @@
+构建 2026092301 (1.7.0, Apple TV)
+
+• 来自 pull request #364 的第二个 Apple TV 构建，已变基到当前引擎（meow-rs 0.21.2 + main，与 iPhone 构建 2026091701 相同）。
+• 修复了在真实 Apple TV 4K 上启动即崩溃的问题：SwiftData 存储改放到 Caches 目录（tvOS 允许写入的位置）。
+• 本构建的隧道扩展使用付费团队的 Network Extension 权限签名，点击"连接"应能拉起 VPN。这是第一个可以在真机上实际测试隧道的构建。
+• tvOS 图标与 Top Shelf 素材仍为占位图。
+• 请在真实 Apple TV 上测试：启动、选择配置、连接、在几个应用里浏览、断开。请反馈是否出现 VPN 提示、流量是否通畅，以及任何崩溃。
