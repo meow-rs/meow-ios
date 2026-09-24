@@ -1,0 +1,7 @@
+Build 2026092401 (1.7.0, Apple TV)
+
+• Third Apple TV build from pull request #364, synced with the current main branch.
+• Fixes profile activation on real hardware: tvOS keeps the App Group container read-only except for its Caches folder, so the shared config could never be written and the app stayed on "No Profile". All shared files now live under Caches on tvOS, and the config is rewritten from the selected profile before every connect in case the system purges it.
+• Same engine as the iPhone build (meow-rs 0.21.2 + main); tunnel extension signed with the team's Network Extension entitlement.
+• Still placeholder tvOS icon and Top Shelf artwork.
+• Please test on a real Apple TV: add a subscription, select it, tap Connect, browse in a few apps, disconnect. Report whether the profile activates, whether the VPN prompt appears and traffic flows, and any crash.
