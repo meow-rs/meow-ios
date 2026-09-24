@@ -41,6 +41,13 @@ first config read. Change one, change both.
 
 - **tvOS 17.0 floor.** `NEPacketTunnelProvider` isn't available on Apple TV
   before it, and the whole app is the tunnel.
+- **Caches-only storage.** tvOS has no writable Application Support, and the
+  App Group container root is read-only — only its `Library/Caches` is
+  writable. `AppGroup.containerURL` / `MWAppGroup.containerURL` point there on
+  tvOS, so `config.yaml`, the engine's home dir, logs and IPC files all live
+  in Caches; the SwiftData store sits in the app's own Caches. The system may
+  purge either under storage pressure, which is why `TVContentView.toggle()`
+  rewrites `config.yaml` from the selected profile before every connect.
 - **No QR scan.** Apple TV has no camera. Subscriptions arrive by URL only.
 - **No alternate app icons.** `ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES`
   is iOS-only; `AppIcon.swift` still compiles (it's plain `Foundation`) but

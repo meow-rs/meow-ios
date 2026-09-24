@@ -4,11 +4,19 @@ import Foundation
 public enum AppGroup {
     public static let identifier = "group.com.tangzixiang.meow"
 
+    /// Root of every file the app and the extension share. On tvOS the App
+    /// Group container itself is read-only — only its `Library/Caches` is
+    /// writable — so the root moves one level down there. `MWAppGroup.m`
+    /// mirrors this so both processes resolve the same paths.
     public static var containerURL: URL {
         guard let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: identifier) else {
             fatalError("App Group container unavailable — entitlements missing '\(identifier)'")
         }
-        return url
+        #if os(tvOS)
+            return url.appending(path: "Library/Caches", directoryHint: .isDirectory)
+        #else
+            return url
+        #endif
     }
 
     /// User-visible Clash YAML — what the app writes from the active profile.

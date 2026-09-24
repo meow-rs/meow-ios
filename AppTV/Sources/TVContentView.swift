@@ -220,11 +220,25 @@ private extension TVContentView {
     /// Same ordering as `GlobalVpnSwitchBar.toggle()`: the IPC intent is
     /// queued BEFORE the tunnel call, so the extension already knows which
     /// profile to load by the time it starts.
+    ///
+    /// One tvOS-only step first: `config.yaml` lives under the App Group's
+    /// `Library/Caches` here (see `AppGroup.containerURL`), which the system
+    /// may purge while the selected profile survives in SwiftData. Rewriting
+    /// it from the profile keeps a purge from leaving the tunnel with no
+    /// config to read.
     func toggle() {
         if isConnected {
             ipcBridge.send(.stop)
             Task { await vpnManager.disconnect() }
         } else {
+            if let selectedProfile {
+                do {
+                    try subscriptionService.writeActiveConfig(selectedProfile)
+                } catch {
+                    importError = error.localizedDescription
+                    return
+                }
+            }
             ipcBridge.send(.start, profileID: selectedProfile?.id)
             Task { await vpnManager.connect() }
         }
