@@ -1,0 +1,6 @@
+构建 2026092501 (1.7.0, iPhone/iPad + Apple TV)
+
+• 新功能：通过 iCloud 云盘把配置发送到 Apple TV。在 iPhone 的“配置”中向右滑动一个配置，轻点“iCloud 云盘”，它会存入“iCloud 云盘 › meow”。也可以从 Mac 把 .yaml 文件放进这个文件夹。在 iPhone 上打开 meow 以便转发，然后在 Apple TV 上打开“iCloud 云盘”并选取即可。
+• 首次使用时会播放一段简短的动画引导。可在 iPhone 的“设置 › 帮助”或 Apple TV“iCloud 云盘”页面的“使用方法”中再次观看。
+• Apple TV 界面按 Apple 的 tvOS 设计规范重做：标准边距；配置列表不再裁切焦点效果；当前配置排在最前并带勾号；“连接”按钮始终可获得焦点；错误以提醒框显示；长按配置可刷新或删除；新增启动画面。
+• 请测试：在 iPhone 上把配置存入 iCloud 云盘，确认它出现在“文件 › iCloud 云盘 › meow”，然后在 Apple TV 上导入并连接。如果 TV 上始终看不到，或出现任何崩溃，请反馈。
