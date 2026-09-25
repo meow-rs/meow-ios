@@ -42,6 +42,52 @@ struct ICloudRelayTests {
         #expect(ICloudRelay.profileName(for: "a.b.yml") == "a.b")
     }
 
+    // MARK: - exportFileName
+
+    @Test
+    func `export file name appends yaml and round-trips to the profile name`() {
+        #expect(ICloudRelay.exportFileName(for: "Home Lab") == "Home Lab.yaml")
+        #expect(ICloudRelay.profileName(for: ICloudRelay.exportFileName(for: "Home Lab")) == "Home Lab")
+        #expect(ICloudRelay.exportFileName(for: "我的配置") == "我的配置.yaml")
+    }
+
+    @Test
+    func `export file name keeps an existing yaml extension`() {
+        #expect(ICloudRelay.exportFileName(for: "sub.yml") == "sub.yml")
+        #expect(ICloudRelay.exportFileName(for: "Office.YAML") == "Office.YAML")
+    }
+
+    @Test
+    func `export file name is always relayable`() {
+        for name in ["a/b:c", ".hidden", "..", "   ", "", "x\\y", "v1.2"] {
+            let fileName = ICloudRelay.exportFileName(for: name)
+            #expect(ICloudRelay.isRelayable(fileName: fileName), "\(name) -> \(fileName)")
+        }
+        #expect(ICloudRelay.exportFileName(for: "a/b:c") == "a-b-c.yaml")
+        #expect(ICloudRelay.exportFileName(for: ".hidden") == "hidden.yaml")
+        #expect(ICloudRelay.exportFileName(for: "  ") == "config.yaml")
+    }
+
+    // MARK: - ICloudDriveExporter.write
+
+    @Test
+    func `export writes the yaml and overwrites on re-export`() throws {
+        let folder = FileManager.default.temporaryDirectory
+            .appendingPathComponent("ICloudDriveExporterTests-\(UUID().uuidString)", isDirectory: true)
+        try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: folder) }
+
+        let first = try ICloudDriveExporter.write(yaml: "proxies: []\n", name: "Home", into: folder)
+        let second = try ICloudDriveExporter.write(yaml: "proxies: []\n# v2\n", name: "Home", into: folder)
+
+        #expect(first == "Home.yaml")
+        #expect(second == first)
+        let written = try String(contentsOf: folder.appendingPathComponent(first), encoding: .utf8)
+        #expect(written == "proxies: []\n# v2\n")
+        let entries = try FileManager.default.contentsOfDirectory(atPath: folder.path)
+        #expect(entries == ["Home.yaml"])
+    }
+
     // MARK: - ICloudRelayPlan
 
     @Test

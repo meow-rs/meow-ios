@@ -174,6 +174,7 @@
 		BA6EC811EDC00657072F8372 /* ClashConfigLinter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F582EC213C10F2BB97940B21 /* ClashConfigLinter.swift */; };
 		BA844D3302038958647DC227 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D5CF6C1DB2C326705BE75B5 /* SystemConfiguration.framework */; };
 		BB349570A0007E98FA1205B2 /* ICloudRelayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB2E1ADC6497BAC02DC29E5 /* ICloudRelayTests.swift */; };
+		BFE14D587EFAA1BC4CDDFD7E /* ICloudDriveExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7957678F8E4A3C18D3F2C5A /* ICloudDriveExporter.swift */; };
 		C05561AA0530BFF897CDEB8F /* MeowAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E114A82C37433E90AFEAD0E /* MeowAPI.swift */; };
 		C089C1713ACB294B9BB19091 /* MeowModels in Frameworks */ = {isa = PBXBuildFile; productRef = 631B5ADE84924A4D1A27E7F0 /* MeowModels */; };
 		C0EE6EDCE210308C46DE6856 /* RuleEditorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1711243E170547D1DA68FCD6 /* RuleEditorSheet.swift */; };
@@ -190,6 +191,7 @@
 		CF37C3706513F515FED5B6FC /* SettingsScreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD1BBDA36A305FAAF4B003E /* SettingsScreenTests.swift */; };
 		D0918A7D5C1B3C007EADE22E /* MeowIPC in Frameworks */ = {isa = PBXBuildFile; productRef = 027ADE8989FBD1E3F91B7209 /* MeowIPC */; };
 		D09A565179DB1D6C03527E69 /* AddShadowsocksSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B827CA25C7C1502C8AB3535 /* AddShadowsocksSheet.swift */; };
+		D275D8A0C9F8D010199C5425 /* ICloudDriveExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7957678F8E4A3C18D3F2C5A /* ICloudDriveExporter.swift */; };
 		D2FF19F899EE357591812068 /* ProxyGroupModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2EC54BA19FA9CC57BDD2AD /* ProxyGroupModelTests.swift */; };
 		D3105503E3C203986F81B1FD /* VpnManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930ED8C12FBC2859BCDC56E4 /* VpnManager.swift */; };
 		D49CAAAAB4878A24C8A7D52B /* ShadowsocksQRScannerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1871555B4BB947666ABD54B /* ShadowsocksQRScannerSheet.swift */; };
@@ -449,6 +451,7 @@
 		F58373225092C298E65BB090 /* geosite.mrs */ = {isa = PBXFileReference; path = geosite.mrs; sourceTree = "<group>"; };
 		F5B378E3EF2591C9CD059E98 /* ShadowsocksAddServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowsocksAddServiceTests.swift; sourceTree = "<group>"; };
 		F73DB7377F110302EA3E8B4B /* clash_emoji_groups_realworld.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = clash_emoji_groups_realworld.yaml; sourceTree = "<group>"; };
+		F7957678F8E4A3C18D3F2C5A /* ICloudDriveExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICloudDriveExporter.swift; sourceTree = "<group>"; };
 		F970EA608D1B86A217892A15 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA317DD319BE5DA6206036F1 /* MWEngineLog.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MWEngineLog.m; sourceTree = "<group>"; };
 		FA64C2503B8306CC64B9D23D /* MeowCoreBridgeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeowCoreBridgeTests.swift; sourceTree = "<group>"; };
@@ -738,6 +741,7 @@
 				664BEEB7B966973C3D0A5074 /* DailyTrafficAccumulator.swift */,
 				2583E90C66D44FFDC834DAB9 /* DeepLinkImportConfirmation.swift */,
 				20AB821D2884D05E4EA7E831 /* GeoAssetStager.swift */,
+				F7957678F8E4A3C18D3F2C5A /* ICloudDriveExporter.swift */,
 				CCE2AC85C91B47EDF654C19D /* ICloudRelay.swift */,
 				0151FEE700CDDCB95FD99AA4 /* ICloudRelayStore.swift */,
 				A60CDAC71354AF7E29155D32 /* ICloudRelayUploader.swift */,
@@ -1386,6 +1390,7 @@
 				88DC74D0DA14ED303ECB759F /* DeepLinkImportConfirmation.swift in Sources */,
 				865ED9E31F6FFCA7EF03996F /* EditableRule.swift in Sources */,
 				7BBAA67BDCCF6D97CA96775F /* GeoAssetStager.swift in Sources */,
+				D275D8A0C9F8D010199C5425 /* ICloudDriveExporter.swift in Sources */,
 				521EAD7DC811E208DD0E1D31 /* ICloudRelay.swift in Sources */,
 				FD2255767F60D30DA4D51A1F /* ICloudRelayStore.swift in Sources */,
 				D7FE9D016E4BBDE25D2FD9DC /* ICloudRelayUploader.swift in Sources */,
@@ -1540,6 +1545,7 @@
 				C1187CD2F55A4E1F99C1FB54 /* GeoAssetStager.swift in Sources */,
 				FC4878B603356FA17059AB46 /* GlassCard.swift in Sources */,
 				91159B9CB1EDFE43070C3A4E /* GlobalVpnSwitchBar.swift in Sources */,
+				BFE14D587EFAA1BC4CDDFD7E /* ICloudDriveExporter.swift in Sources */,
 				6E6C228991125641DCC0C8F3 /* ICloudRelay.swift in Sources */,
 				83187DDCE407E1CBCC936670 /* ICloudRelayStore.swift in Sources */,
 				99FCBD02DE55ED20126AD655 /* ICloudRelayUploader.swift in Sources */,
