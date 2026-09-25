@@ -466,3 +466,14 @@
 "a11y.userDiagnostics.result.success %@" = "Succeeded, %@ milliseconds";
 "a11y.userDiagnostics.result.failure %@" = "Failed: %@";
 "a11y.userDiagnostics.errorBanner %@" = "Error: %@";
+
+/* iCloud Drive export guide */
+"guide.icloudExport.title" = "Send a config to your Apple TV";
+"guide.icloudExport.subtitle" = "Save it to iCloud Drive from meow on your iPhone, and the Apple TV can import it.";
+"guide.icloudExport.step1" = "On your iPhone, open Configs and swipe right on a config.";
+"guide.icloudExport.step2" = "Tap iCloud Drive. The config is saved to iCloud Drive › meow.";
+"guide.icloudExport.step3" = "On your Apple TV, open iCloud Drive in meow and pick the config. Open meow on your iPhone first so it can send it.";
+"guide.icloudExport.done" = "Got It";
+"settings.section.help" = "Help";
+"settings.label.icloudGuide" = "Send Configs to Apple TV";
+"tv.icloud.howTo" = "How It Works";

@@ -8,6 +8,7 @@ import SwiftUI
 struct TVICloudImportView: View {
     @Environment(ICloudRelayStore.self) private var store
     @Environment(\.dismiss) private var dismiss
+    @State private var showingGuide = false
 
     let onImport: (RelayedConfig) -> Void
 
@@ -21,6 +22,18 @@ struct TVICloudImportView: View {
         // cover's content is transparent, so it needs its own backdrop.
         .background(.thickMaterial, ignoresSafeAreaEdges: .all)
         .task { await store.reload() }
+        // First visit: show how configs get here before the (likely empty)
+        // list. The TV has no Settings screen, so `guideButton` replays it.
+        .task {
+            guard ICloudExportGuide.shouldAutoPresent() else { return }
+            try? await Task.sleep(for: .seconds(0.5))
+            guard !Task.isCancelled else { return }
+            showingGuide = true
+        }
+        .fullScreenCover(isPresented: $showingGuide, onDismiss: markGuideSeen) {
+            ICloudExportGuideView()
+                .background(.thickMaterial, ignoresSafeAreaEdges: .all)
+        }
     }
 
     @ViewBuilder
@@ -64,6 +77,7 @@ struct TVICloudImportView: View {
                 Text("tv.icloud.instructions")
             }
             refreshButton
+            guideButton
         }
     }
 
@@ -83,7 +97,10 @@ struct TVICloudImportView: View {
                 .font(.callout)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
-            refreshButton
+            HStack(spacing: 40) {
+                refreshButton
+                guideButton
+            }
         }
         .frame(maxWidth: 1100)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -96,5 +113,18 @@ struct TVICloudImportView: View {
             Label("subscriptions.refresh.swipe", systemImage: "arrow.clockwise")
         }
         .accessibilityIdentifier("tv.icloud.refresh")
+    }
+
+    private func markGuideSeen() {
+        ICloudExportGuide.markSeen()
+    }
+
+    private var guideButton: some View {
+        Button {
+            showingGuide = true
+        } label: {
+            Label("tv.icloud.howTo", systemImage: "questionmark.circle")
+        }
+        .accessibilityIdentifier("tv.icloud.howTo")
     }
 }
