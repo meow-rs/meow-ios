@@ -12,6 +12,8 @@ import SwiftUI
 /// The duplicated stage labels below are the cost of that split — keep them
 /// in sync with `GlobalVpnSwitchBar`.
 ///
+/// Layout decisions against the tvOS HIG are listed in `AppTV/README.md`.
+///
 /// Styling note: no explicit `buttonStyle` anywhere. tvOS's default style is
 /// the one that gets the focus lift and parallax, which is what a remote
 /// control needs; `.bordered` / `.borderedProminent` only arrived in tvOS 17
@@ -26,23 +28,35 @@ struct TVContentView: View {
     @State private var subscriptionURL = ""
     @State private var isAdding = false
     @State private var importError: String?
+    @FocusState private var focusedField: Field?
 
+    private enum Field: Hashable {
+        case toggle
+        case subscriptionURL
+    }
+
+    /// No outer padding: SwiftUI already insets tvOS content by the TV safe
+    /// area (80 pt sides, 60 pt top/bottom), and adding the same again
+    /// doubled the margins and left the bottom third of the screen empty.
     var body: some View {
-        VStack(alignment: .leading, spacing: 28) {
+        VStack(alignment: .leading, spacing: 40) {
             header
-
-            if let message = importError ?? vpnManager.lastError {
-                errorBanner(message)
-            }
 
             HStack(alignment: .top, spacing: 60) {
                 connectionPanel
                 subscriptionPanel
             }
         }
-        .padding(.horizontal, 80)
-        .padding(.vertical, 60)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .defaultFocus($focusedField, .toggle)
+        // An alert rather than an inline banner: tvOS errors that need
+        // acknowledging are modal, and a banner pushed every control down
+        // and moved focus targets out from under the remote.
+        .alert("common.error", isPresented: isShowingError, presenting: errorMessage) { _ in
+            Button("common.ok", action: dismissError)
+        } message: { message in
+            Text(message)
+        }
     }
 
     // MARK: - Sections
@@ -70,16 +84,28 @@ struct TVContentView: View {
                 .font(.title2.weight(.semibold))
                 .accessibilityIdentifier("vpn.status")
 
+            // Never `.disabled`: a disabled control can't take focus on
+            // tvOS, so the one button on this side of the screen would be
+            // unreachable and the remote would have nowhere to land. With no
+            // profile it moves focus to the URL field instead (`toggle()`).
             Button(action: toggle) {
                 Text(toggleTitle)
                     .frame(maxWidth: .infinity)
             }
-            .disabled(toggleDisabled)
+            .focused($focusedField, equals: .toggle)
             .accessibilityIdentifier("vpn.toggle")
+
+            if needsProfile {
+                Text("tv.connect.hint.noProfile")
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+            }
         }
-        .frame(maxWidth: .infinity)
         .padding(40)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.regularMaterial, in: .rect(cornerRadius: 24))
+        .focusSection()
     }
 
     private var subscriptionPanel: some View {
@@ -89,7 +115,9 @@ struct TVContentView: View {
 
             TextField("tv.subscription.field.url", text: $subscriptionURL)
                 .keyboardType(.URL)
+                .textContentType(.URL)
                 .autocorrectionDisabled(true)
+                .focused($focusedField, equals: .subscriptionURL)
                 .onSubmit(addSubscription)
                 .accessibilityIdentifier("tv.subscription.url")
 
@@ -111,18 +139,18 @@ struct TVContentView: View {
                     .font(.body)
                     .foregroundStyle(.secondary)
             } else {
-                ScrollView {
-                    VStack(spacing: 8) {
-                        ForEach(profiles) { profile in
-                            profileRow(profile)
-                        }
-                    }
+                // `List`, not a `ScrollView` of buttons: a clipping scroll
+                // view cut the focused row's lift off flat, and `List` rows
+                // get the system focus treatment with room to grow.
+                List(orderedProfiles) { profile in
+                    profileRow(profile)
                 }
             }
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
         .padding(40)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(.regularMaterial, in: .rect(cornerRadius: 24))
+        .focusSection()
     }
 
     private func profileRow(_ profile: Profile) -> some View {
@@ -130,37 +158,45 @@ struct TVContentView: View {
             select(profile)
         } label: {
             HStack(spacing: 12) {
-                Image(systemName: profile.isSelected ? "largecircle.fill.circle" : "circle")
-                    .accessibilityHidden(true)
                 Text(profile.name)
                     .lineLimit(1)
                 Spacer(minLength: 0)
+                if profile.isSelected {
+                    Image(systemName: "checkmark")
+                        .accessibilityHidden(true)
+                }
             }
         }
+        .accessibilityAddTraits(profile.isSelected ? .isSelected : [])
         .accessibilityIdentifier("tv.profile.row.\(profile.name)")
-    }
-
-    private func errorBanner(_ message: String) -> some View {
-        HStack(spacing: 16) {
-            Text(message)
-                .font(.body)
-                .foregroundStyle(.red)
-                .lineLimit(3)
-            Spacer(minLength: 0)
-            Button("home.error.dismiss") {
-                importError = nil
-                vpnManager.clearError()
+        // Long-press on the remote: the tvOS home for the secondary actions
+        // iOS keeps in swipe actions.
+        .contextMenu {
+            if !profile.url.isEmpty {
+                Button {
+                    refresh(profile)
+                } label: {
+                    Label("subscriptions.refresh.swipe", systemImage: "arrow.clockwise")
+                }
+            }
+            Button(role: .destructive) {
+                delete(profile)
+            } label: {
+                Label("common.delete", systemImage: "trash")
             }
         }
-        .padding(24)
-        .background(.regularMaterial, in: .rect(cornerRadius: 16))
-        .accessibilityIdentifier("vpn.error.banner")
     }
 
     // MARK: - Derived state
 
     private var selectedProfile: Profile? {
         profiles.first(where: \.isSelected)
+    }
+
+    /// The active profile first, so it is never scrolled out of sight behind
+    /// profiles that merely refreshed more recently.
+    private var orderedProfiles: [Profile] {
+        profiles.filter(\.isSelected) + profiles.filter { !$0.isSelected }
     }
 
     private var trimmedURL: String {
@@ -174,6 +210,21 @@ struct TVContentView: View {
         )
     }
 
+    private var errorMessage: String? {
+        importError ?? vpnManager.lastError
+    }
+
+    private var isShowingError: Binding<Bool> {
+        Binding(
+            get: { errorMessage != nil },
+            set: { isPresented in
+                if !isPresented {
+                    dismissError()
+                }
+            },
+        )
+    }
+
     private var isConnected: Bool {
         vpnManager.stage == .connected
     }
@@ -181,6 +232,10 @@ struct TVContentView: View {
     private var isInFlight: Bool {
         let stage = vpnManager.stage
         return stage == .preparing || stage == .connecting || stage == .stopping
+    }
+
+    private var needsProfile: Bool {
+        !isConnected && !isInFlight && selectedProfile == nil
     }
 
     private var stageBadgeText: LocalizedStringKey {
@@ -202,16 +257,6 @@ struct TVContentView: View {
         default: "home.toggle.connect"
         }
     }
-
-    private var toggleDisabled: Bool {
-        if isInFlight {
-            return true
-        }
-        if isConnected {
-            return false
-        }
-        return selectedProfile == nil
-    }
 }
 
 // MARK: - Actions
@@ -227,6 +272,16 @@ private extension TVContentView {
     /// it from the profile keeps a purge from leaving the tunnel with no
     /// config to read.
     func toggle() {
+        // Stands in for `.disabled` (see `connectionPanel`): presses while a
+        // transition is running are ignored, and with nothing to connect to
+        // the press takes the user to the field that fixes that.
+        if isInFlight {
+            return
+        }
+        if needsProfile {
+            focusedField = .subscriptionURL
+            return
+        }
         if isConnected {
             ipcBridge.send(.stop)
             Task { await vpnManager.disconnect() }
@@ -294,6 +349,29 @@ private extension TVContentView {
         } catch {
             importError = error.localizedDescription
         }
+    }
+
+    func refresh(_ profile: Profile) {
+        Task {
+            do {
+                try await subscriptionService.refresh(profile)
+            } catch {
+                importError = error.localizedDescription
+            }
+        }
+    }
+
+    func delete(_ profile: Profile) {
+        do {
+            try subscriptionService.delete(profile)
+        } catch {
+            importError = error.localizedDescription
+        }
+    }
+
+    func dismissError() {
+        importError = nil
+        vpnManager.clearError()
     }
 
     /// `select` rewrites `config.yaml`, but a running engine has already read

@@ -250,6 +250,9 @@ targets:
       - path: App/Sources/Services
       - path: App/Sources/AppModel.swift
       - path: App/Sources/AppModelContainer.swift
+      # tvOS's own catalog: the accent and launch colors (copies of the iOS
+      # ones) and, once it ships, the Brand Assets stack.
+      - path: AppTV/Assets.xcassets
       # Localizable.strings and the GeoIP/geosite databases are shared;
       # Assets.xcassets is not — it holds iPhone Home Screen icon sets, and
       # tvOS wants a Brand Assets stack instead (not shipped in this MVP).
@@ -262,6 +265,8 @@ targets:
       path: AppTV/Info.plist
       properties:
         CFBundleDisplayName: meow
+        UILaunchScreen:
+          UIColorName: LaunchBackground
         CFBundleShortVersionString: "1.5.0"
         CFBundleVersion: "2026080601"
         NSAppTransportSecurity:
@@ -286,6 +291,7 @@ targets:
         TVOS_DEPLOYMENT_TARGET: "17.0"
         TARGETED_DEVICE_FAMILY: "3"
         SUPPORTED_PLATFORMS: "appletvos appletvsimulator"
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
         CODE_SIGN_ENTITLEMENTS: AppTV/AppTV.entitlements
         SWIFT_OBJC_BRIDGING_HEADER: App/Sources/BridgingHeader.h
         GENERATE_INFOPLIST_FILE: NO

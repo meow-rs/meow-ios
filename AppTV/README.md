@@ -30,7 +30,15 @@ Apple TV needs instead:
 
 - `MeowTVApp.swift` — `@main`, identical service graph to `MeowApp`.
 - `TVContentView.swift` — title, connect button, subscription-URL field,
-  profile list.
+  profile list (long-press a row to refresh or delete it).
+- `Assets.xcassets` — the tvOS accent and launch colors, copied from the iOS
+  catalog. The Brand Assets stack belongs here too.
+
+Layout follows the tvOS HIG: no padding beyond the system TV safe area, one
+`focusSection()` per panel, focus lands on Connect at launch, the connect
+button is never `.disabled` (a disabled control can't take focus; with no
+profile it sends focus to the URL field instead), and errors are alerts
+rather than inline banners.
 
 The connect/disconnect sequencing in `TVContentView.toggle()` is a deliberate
 copy of `GlobalVpnSwitchBar.toggle()`; the IPC intent must be queued before
@@ -55,8 +63,8 @@ first config read. Change one, change both.
 - **No `.switch` toggle style** on tvOS 17, so the VPN control is a focusable
   button, not a `Toggle`.
 - **No Brand Assets yet.** tvOS wants a layered App Icon + Top Shelf stack
-  rather than the iOS `.appiconset`s, which is why `Assets.xcassets` is
-  excluded from this target's sources. Required before App Store submission;
+  rather than the iOS `.appiconset`s, which is why `App/Resources/Assets.xcassets`
+  is excluded from this target's sources. Required before App Store submission;
   not in this MVP.
 
 ## Building
