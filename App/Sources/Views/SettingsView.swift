@@ -17,6 +17,7 @@ struct SettingsView: View {
     @State private var logExportDocument: LogExportDocument?
     @State private var showingLogExporter = false
     @State private var exportingLogs = false
+    @State private var showingICloudGuide = false
     #if DEBUG
         @State private var showDebugPanel = false
     #endif
@@ -97,6 +98,16 @@ struct SettingsView: View {
                 SectionHeader("settings.section.diagnostics")
             }
             Section {
+                Button {
+                    showingICloudGuide = true
+                } label: {
+                    Label("settings.label.icloudGuide", systemImage: "icloud.and.arrow.up")
+                }
+                .accessibilityIdentifier("settings.button.icloudGuide")
+            } header: {
+                SectionHeader("settings.section.help")
+            }
+            Section {
                 LabeledContent("settings.about.version", value: appVersion)
                     .contentShape(Rectangle())
                     .accessibilityIdentifier("settings.about.version")
@@ -137,8 +148,11 @@ struct SettingsView: View {
         .background(AppTheme.screenBackground)
         .navigationTitle("settings.nav.title")
         .navigationBarTitleDisplayMode(.inline)
+        .sheet(isPresented: $showingICloudGuide) {
+            ICloudExportGuideView()
+        }
         #if DEBUG
-            .navigationDestination(isPresented: $showDebugPanel) {
+        .navigationDestination(isPresented: $showDebugPanel) {
                 DiagnosticsPanelView()
                     .ignoresSafeArea(edges: .bottom)
                     .accessibilityIdentifier("settings.debug.diagnosticsPanel")
