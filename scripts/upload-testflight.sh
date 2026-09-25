@@ -100,7 +100,7 @@ ASC_KEY_PATH="${ASC_KEY_PATH:-$HOME/AuthKey_9FU24T97RY.p8}"
 # retired io.github.madeye.meow ids on team SK4GFF6AHN; uploads only kept
 # working because exportArchive silently fell back to the right profile by
 # entitlement match — fragile, so point them at the correct ones.
-APP_PROFILE="${APP_PROFILE:-836e9b24-7a09-486f-ac1f-7957ec360d78}"
+APP_PROFILE="${APP_PROFILE:-b5b9648e-96f2-4e04-8972-07852b06141d}"
 PT_PROFILE="${PT_PROFILE:-7a37f4c1-5743-4f03-ac11-64a0fca57b4a}"
 
 SKIP_RUST_BUILD=0

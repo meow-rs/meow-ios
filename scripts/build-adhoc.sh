@@ -72,8 +72,8 @@ EXPORT_PLIST="$ROOT/build/ExportOptions-adhoc.plist"
 # exports those for the App Store upload flow, and they would clobber the
 # Ad Hoc defaults here — exportArchive then fails with
 # "meow AppStore is not an iOS Ad Hoc profile".
-APP_PROFILE="${ADHOC_APP_PROFILE:-699c208a-87ed-4d21-a5c1-2c4e9ad9a4b9}"
-PT_PROFILE="${ADHOC_PT_PROFILE:-a10c12ac-cbb5-4ec4-bfb4-1208f7c35252}"
+APP_PROFILE="${ADHOC_APP_PROFILE:-6b66d5ed-8d04-495b-9ca9-9e3439409d17}"
+PT_PROFILE="${ADHOC_PT_PROFILE:-52586a3b-7214-4b07-9e51-bc790d4b7214}"
 
 # Production team id + ASC key come from prod.env (gitignored, sourced above).
 # The team id is intentionally not committed.
