@@ -104,6 +104,9 @@ targets:
       - target: PacketTunnel
         embed: true
         codeSign: true
+      - target: MeowWidgets
+        embed: true
+        codeSign: true
       - package: MeowShared
         product: MeowModels
       - package: MeowShared
@@ -237,6 +240,53 @@ targets:
           if [ "$CONFIGURATION" = "Release" ]; then
             /usr/bin/xcrun strip -Sx "$TARGET_BUILD_DIR/$EXECUTABLE_PATH"
           fi
+
+  MeowWidgets:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: Widgets/Sources
+      - path: Widgets/Resources
+      # The widgets reuse the app's strings (status badges, route-mode
+      # names) instead of keeping a second copy in sync. Only the .lproj
+      # folders — the app's asset catalog and GeoData stay app-only.
+      - path: App/Resources
+        excludes:
+          - "**/*.md"
+          - "Assets.xcassets"
+          - "Assets.xcassets/**"
+          - "GeoData"
+          - "GeoData/**"
+    info:
+      path: Widgets/Info.plist
+      properties:
+        CFBundleDisplayName: meow Widgets
+        CFBundleShortVersionString: "1.7.0"
+        CFBundleVersion: "2026091701"
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+        # The route-mode widget talks to the engine's REST API on 127.0.0.1.
+        NSAppTransportSecurity:
+          NSAllowsLocalNetworking: true
+    entitlements:
+      path: Widgets/Widgets.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.tangzixiang.meow
+        # Lets the widget load and start/stop the app's VPN configuration.
+        com.apple.developer.networking.networkextension:
+          - packet-tunnel-provider
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.tangzixiang.meow.Widgets
+        CODE_SIGN_ENTITLEMENTS: Widgets/Widgets.entitlements
+        GENERATE_INFOPLIST_FILE: NO
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+    dependencies:
+      - package: MeowShared
+        product: MeowModels
+      - package: MeowShared
+        product: MeowIPC
 
   meow-tvos:
     type: application
@@ -388,6 +438,7 @@ schemes:
       targets:
         meow-ios: all
         PacketTunnel: all
+        MeowWidgets: all
         MeowTests: [test]
         MeowUITests: [test]
         MeowIntegrationTests: [test]

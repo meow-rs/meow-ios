@@ -318,6 +318,21 @@
 "tv.profiles.empty" = "No profiles yet. Add a subscription URL to get started.";
 
 
+/* Home Screen widgets (Widgets/ — the extension ships this same file) */
+"widget.tunnel.name" = "VPN";
+"widget.tunnel.description" = "See whether meow is connected and turn it on or off.";
+"widget.routeMode.description" = "Switch how meow routes traffic while connected.";
+"widget.status.setup" = "Open meow to set up";
+"widget.routeMode.rule.long" = "Rule-Based Proxy";
+"widget.routeMode.all.long" = "Proxy All Traffic";
+"widget.routeMode.direct.long" = "Direct Connection";
+"widget.toggle.label" = "VPN";
+"widget.intent.toggle.title" = "Turn meow VPN On or Off";
+"widget.intent.toggle.value" = "On";
+"widget.intent.routeMode.title" = "Set Route Mode";
+"widget.intent.routeMode.mode" = "Mode";
+
+
 /* Fullscreen diagnostics overlay (ContentView) */
 "content.diagnostics.nav.title" = "Diagnostics";
 

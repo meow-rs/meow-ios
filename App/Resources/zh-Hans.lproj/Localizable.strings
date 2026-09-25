@@ -322,6 +322,21 @@
 "tv.profiles.empty" = "还没有配置。添加订阅地址即可开始。";
 
 
+/* Home Screen widgets (Widgets/ — the extension ships this same file) */
+"widget.tunnel.name" = "VPN";
+"widget.tunnel.description" = "查看 meow 是否已连接，并一键开关。";
+"widget.routeMode.description" = "连接时切换 meow 的路由模式。";
+"widget.status.setup" = "打开 meow 完成设置";
+"widget.routeMode.rule.long" = "规则代理";
+"widget.routeMode.all.long" = "全局代理";
+"widget.routeMode.direct.long" = "全部直连";
+"widget.toggle.label" = "VPN";
+"widget.intent.toggle.title" = "开关 meow VPN";
+"widget.intent.toggle.value" = "开启";
+"widget.intent.routeMode.title" = "设置路由模式";
+"widget.intent.routeMode.mode" = "模式";
+
+
 /* Fullscreen diagnostics overlay (ContentView) */
 "content.diagnostics.nav.title" = "诊断";
 

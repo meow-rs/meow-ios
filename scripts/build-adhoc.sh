@@ -74,6 +74,10 @@ EXPORT_PLIST="$ROOT/build/ExportOptions-adhoc.plist"
 # "meow AppStore is not an iOS Ad Hoc profile".
 APP_PROFILE="${ADHOC_APP_PROFILE:-699c208a-87ed-4d21-a5c1-2c4e9ad9a4b9}"
 PT_PROFILE="${ADHOC_PT_PROFILE:-a10c12ac-cbb5-4ec4-bfb4-1208f7c35252}"
+# Ad Hoc profile for the Home Screen widget extension
+# (com.tangzixiang.meow.Widgets — App Groups + Network Extensions). No
+# committed default until one is minted; set ADHOC_WIDGET_PROFILE in prod.env.
+WIDGET_PROFILE="${ADHOC_WIDGET_PROFILE:-}"
 
 # Production team id + ASC key come from prod.env (gitignored, sourced above).
 # The team id is intentionally not committed.
@@ -98,7 +102,14 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-check_profile_expiry "$APP_PROFILE" "$PT_PROFILE"
+# Fail before the long archive rather than at export.
+if [[ -z "$WIDGET_PROFILE" ]]; then
+    echo "error: ADHOC_WIDGET_PROFILE not set. Create an Ad Hoc profile for com.tangzixiang.meow.Widgets" >&2
+    echo "       (App Groups + Network Extensions) and set its UUID in prod.env." >&2
+    exit 1
+fi
+
+check_profile_expiry "$APP_PROFILE" "$PT_PROFILE" "$WIDGET_PROFILE"
 
 mkdir -p "$ROOT/build"
 rm -rf "$ARCHIVE_PATH" "$EXPORT_DIR"
@@ -128,6 +139,8 @@ cat >"$EXPORT_PLIST" <<EOF
         <string>$APP_PROFILE</string>
         <key>com.tangzixiang.meow.PacketTunnel</key>
         <string>$PT_PROFILE</string>
+        <key>com.tangzixiang.meow.Widgets</key>
+        <string>$WIDGET_PROFILE</string>
     </dict>
     <key>uploadSymbols</key>
     <true/>

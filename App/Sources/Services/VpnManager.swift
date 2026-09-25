@@ -9,7 +9,15 @@ import Observation
 @MainActor
 @Observable
 final class VpnManager {
-    private(set) var stage: VpnStage = .idle
+    private(set) var stage: VpnStage = .idle {
+        // The Home Screen widgets show this too; keep them current.
+        didSet {
+            if stage != oldValue {
+                WidgetReloader.stageDidChange(stage)
+            }
+        }
+    }
+
     private(set) var lastError: String?
 
     /// Fires each time `stage` transitions into `.connected`, including the
@@ -102,41 +110,10 @@ final class VpnManager {
         guard let manager else { return }
         do {
             let prefs = Preferences.load(from: AppGroup.defaults)
-            var dirty = false
-            if !manager.isEnabled {
-                manager.isEnabled = true
-                dirty = true
-            }
-            if (manager.onDemandRules ?? []).isEmpty {
-                manager.onDemandRules = [NEOnDemandRuleConnect()]
-                dirty = true
-            }
-            if manager.isOnDemandEnabled != prefs.onDemand {
-                manager.isOnDemandEnabled = prefs.onDemand
-                dirty = true
-            }
-            if dirty {
-                try await manager.saveToPreferences()
-                try await manager.loadFromPreferences()
-            }
-            try await startTunnel(manager)
+            try await TunnelControl.start(manager, onDemand: prefs.onDemand)
         } catch {
             lastError = error.localizedDescription
             stage = .error
-        }
-    }
-
-    /// Start the tunnel, reloading once and retrying if iOS reports the local
-    /// configuration is stale. Even after a fresh load, another VPN app
-    /// mutating the shared VPN preferences between our load and our
-    /// `startVPNTunnel()` call can leave the object stale; the documented
-    /// recovery is to reload from preferences and try again.
-    private func startTunnel(_ mgr: NETunnelProviderManager) async throws {
-        do {
-            try mgr.connection.startVPNTunnel()
-        } catch let error as NEVPNError where error.code == .configurationStale {
-            try await mgr.loadFromPreferences()
-            try mgr.connection.startVPNTunnel()
         }
     }
 
@@ -156,24 +133,18 @@ final class VpnManager {
             return
         }
         let status = manager.connection.status
-        guard Self.canStopTunnel(status) else {
+        guard TunnelControl.canStop(status) else {
             // If the app was replaced while the extension was running, the
             // persisted App-Group state can still say "connected" even though
             // iOS has already invalidated/disconnected the NE profile. A stop
             // request cannot produce a status notification in that state, so
             // repair the UI immediately and allow the next tap to connect.
-            if manager.isOnDemandEnabled {
-                manager.isOnDemandEnabled = false
-                try? await manager.saveToPreferences()
-            }
+            await TunnelControl.disableOnDemand(manager)
             clearStaleActiveExtensionState()
             applyConnectionStatus(status)
             return
         }
-        if manager.isOnDemandEnabled {
-            manager.isOnDemandEnabled = false
-            try? await manager.saveToPreferences()
-        }
+        await TunnelControl.disableOnDemand(manager)
         manager.connection.stopVPNTunnel()
     }
 
@@ -249,7 +220,7 @@ final class VpnManager {
     /// edge semantics directly without a real `NETunnelProviderManager`.
     func applyConnectionStatus(_ status: NEVPNStatus) {
         let previous = stage
-        let next = map(status)
+        let next = TunnelControl.stage(for: status)
         stage = next
         if next == .connected, previous != .connected {
             onConnected?()
@@ -319,29 +290,6 @@ final class VpnManager {
     private func clearStaleActiveExtensionState() {
         guard let state = SharedStore.readState(), state.stage.isActive else { return }
         try? SharedStore.writeState(VpnState(stage: .stopped))
-    }
-
-    private nonisolated static func canStopTunnel(_ status: NEVPNStatus) -> Bool {
-        switch status {
-        case .connected, .connecting, .reasserting, .disconnecting:
-            return true
-        case .invalid, .disconnected:
-            return false
-        @unknown default:
-            return false
-        }
-    }
-
-    private nonisolated func map(_ status: NEVPNStatus) -> VpnStage {
-        switch status {
-        case .invalid: return .idle
-        case .disconnected: return .stopped
-        case .connecting: return .connecting
-        case .connected: return .connected
-        case .reasserting: return .connecting
-        case .disconnecting: return .stopping
-        @unknown default: return .idle
-        }
     }
 }
 

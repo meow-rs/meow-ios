@@ -38,7 +38,8 @@ breakdown.
 ```
 App/              SwiftUI app target
 PacketTunnel/     NEPacketTunnelProvider extension target
-MeowShared/       Swift package shared between app and extension
+Widgets/          Home Screen widgets (WidgetKit extension target)
+MeowShared/       Swift package shared between the app and its extensions
 MeowCore/         Unified C header + XCFramework for the Rust native lib
 core/rust/        meow-ios-ffi (meow-rs engine + tun2socks + DoH)
 scripts/          Build scripts for the native lib and Xcode project

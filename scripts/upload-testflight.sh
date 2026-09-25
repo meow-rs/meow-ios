@@ -19,7 +19,8 @@
 # Signing uses signingStyle=manual during export with the App Store
 # provisioning profiles already installed on this Mac. Defaults match
 # the freshest profiles (created 2026-04-19, expire 2027-04-19) and can
-# be overridden via APP_PROFILE / PT_PROFILE env vars. This mirrors
+# be overridden via APP_PROFILE / PT_PROFILE env vars (WIDGET_PROFILE for
+# the widget extension, which has no committed default). This mirrors
 # scripts/build-adhoc.sh; automatic cloud signing was tried but the
 # ASC API key lacks the provisioning role required to mint new profiles
 # during export.
@@ -102,6 +103,10 @@ ASC_KEY_PATH="${ASC_KEY_PATH:-$HOME/AuthKey_9FU24T97RY.p8}"
 # entitlement match — fragile, so point them at the correct ones.
 APP_PROFILE="${APP_PROFILE:-836e9b24-7a09-486f-ac1f-7957ec360d78}"
 PT_PROFILE="${PT_PROFILE:-7a37f4c1-5743-4f03-ac11-64a0fca57b4a}"
+# App Store profile for the Home Screen widget extension
+# (com.tangzixiang.meow.Widgets — App Groups + Network Extensions). No
+# committed default until one is minted; set it in prod.env.
+WIDGET_PROFILE="${WIDGET_PROFILE:-}"
 
 SKIP_RUST_BUILD=0
 SKIP_ARCHIVE=0
@@ -125,7 +130,14 @@ if [[ ! -f "$ASC_KEY_PATH" ]]; then
     exit 1
 fi
 
-check_profile_expiry "$APP_PROFILE" "$PT_PROFILE"
+# Fail before the long archive rather than at export.
+if [[ "$SKIP_UPLOAD" -eq 0 && -z "$WIDGET_PROFILE" ]]; then
+    echo "error: WIDGET_PROFILE not set. Create an App Store profile for com.tangzixiang.meow.Widgets" >&2
+    echo "       (App Groups + Network Extensions) and set its UUID in prod.env." >&2
+    exit 1
+fi
+
+check_profile_expiry "$APP_PROFILE" "$PT_PROFILE" ${WIDGET_PROFILE:+"$WIDGET_PROFILE"}
 
 mkdir -p "$ROOT/build"
 rm -rf "$EXPORT_DIR"
@@ -162,6 +174,8 @@ cat >"$EXPORT_PLIST" <<EOF
         <string>$APP_PROFILE</string>
         <key>com.tangzixiang.meow.PacketTunnel</key>
         <string>$PT_PROFILE</string>
+        <key>com.tangzixiang.meow.Widgets</key>
+        <string>$WIDGET_PROFILE</string>
     </dict>
     <key>uploadSymbols</key>
     <true/>

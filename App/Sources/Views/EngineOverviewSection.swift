@@ -16,6 +16,7 @@ struct EngineOverviewSection: View {
     @Environment(VpnManager.self) private var vpnManager
     @Environment(AppIPCBridge.self) private var ipcBridge
     @Environment(MeowAPI.self) private var meowAPI
+    @Environment(\.scenePhase) private var scenePhase
     @Query(filter: #Predicate<Profile> { $0.isSelected }) private var selected: [Profile]
 
     init(
@@ -45,6 +46,12 @@ struct EngineOverviewSection: View {
         }
         .refreshable {
             await refreshRouteMode()
+        }
+        // The route-mode widget can switch modes while the app is in the
+        // background; re-sync the picker when the user comes back.
+        .onChange(of: scenePhase) { _, phase in
+            guard phase == .active else { return }
+            Task { await refreshRouteMode() }
         }
     }
 
@@ -221,6 +228,7 @@ private extension EngineOverviewSection {
             let resp = try await meowAPI.getConfigs()
             if let mode = RouteMode(wire: resp.mode) {
                 routeMode = mode
+                WidgetReloader.routeModeDidChange(mode)
             }
         } catch {
             // Leave the picker at its last known value — re-syncs on next refresh.
@@ -231,6 +239,7 @@ private extension EngineOverviewSection {
         guard vpnManager.stage == .connected else { return }
         do {
             try await meowAPI.setMode(mode.wire)
+            WidgetReloader.routeModeDidChange(mode)
         } catch {
             // Re-fetch to revert the segmented control if the engine rejected it.
             await refreshRouteMode()
@@ -240,35 +249,7 @@ private extension EngineOverviewSection {
 
 // MARK: - Route mode
 
-enum RouteMode: String, CaseIterable, Identifiable {
-    case rule
-    case all
-    case direct
-
-    var id: String {
-        rawValue
-    }
-
-    /// Wire value sent to meow's `PATCH /configs`. Meow calls the
-    /// "send everything through proxies" mode `global`; the UI uses `All`
-    /// to match how users describe it in this app.
-    var wire: String {
-        switch self {
-        case .rule: "rule"
-        case .all: "global"
-        case .direct: "direct"
-        }
-    }
-
-    init?(wire: String) {
-        switch wire.lowercased() {
-        case "rule": self = .rule
-        case "global": self = .all
-        case "direct": self = .direct
-        default: return nil
-        }
-    }
-
+extension RouteMode {
     var label: LocalizedStringKey {
         switch self {
         case .rule: "home.routeMode.rule"

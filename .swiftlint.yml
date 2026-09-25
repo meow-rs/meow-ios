@@ -4,6 +4,7 @@ included:
   # verbatim — so there is nothing extra to add for the tvOS extension.
   - AppTV
   - PacketTunnel
+  - Widgets
   - MeowShared/Sources
   - MeowShared/Tests
   - MeowCore/Sources

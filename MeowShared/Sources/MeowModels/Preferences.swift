@@ -17,6 +17,9 @@ public enum PreferenceKey {
     /// the app's local `UserDefaults.standard`) purely for durability
     /// alongside the rest of the shared state; no cross-process meaning.
     public static let trafficAccumulatorBaseline = "com.meow.trafficAccumulatorBaseline"
+    /// Shared by the app and the widget extension only (the packet-tunnel
+    /// extension never reads it); see `RouteMode.lastKnown(in:)`.
+    public static let lastRouteMode = "com.meow.lastRouteMode"
 }
 
 public enum PreferenceDefaults {
