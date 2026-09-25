@@ -22,6 +22,7 @@ struct MeowTVApp: App {
                 .environment(appModel.ipcBridge)
                 .environment(appModel.utilityTrafficChart)
                 .environment(appModel.utilityLogs)
+                .environment(appModel.iCloudRelayStore)
                 .task { await appModel.bootstrap() }
         }
         .modelContainer(AppModelContainer.shared.container)

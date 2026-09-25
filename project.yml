@@ -51,6 +51,14 @@ targets:
           UIApplicationSupportsMultipleScenes: false
         UILaunchScreen:
           UIColorName: LaunchBackground
+        # Publishes the ubiquity container's Documents folder as
+        # `iCloud Drive › meow`, where the user drops YAML for the Apple TV.
+        # iOS only re-reads this on a CFBundleVersion bump.
+        NSUbiquitousContainers:
+          iCloud.com.tangzixiang.meow:
+            NSUbiquitousContainerIsDocumentScopePublic: true
+            NSUbiquitousContainerName: meow
+            NSUbiquitousContainerSupportedFolderLevels: None
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
         UISupportedInterfaceOrientations~ipad:
@@ -76,6 +84,16 @@ targets:
           - packet-tunnel-provider
         keychain-access-groups:
           - $(AppIdentifierPrefix)com.tangzixiang.meow
+        # iCloud Drive → Apple TV relay (App/Sources/Services/ICloudRelay.swift):
+        # CloudDocuments for the `iCloud Drive › meow` folder, CloudKit for
+        # the zone the TV reads.
+        com.apple.developer.icloud-container-identifiers:
+          - iCloud.com.tangzixiang.meow
+        com.apple.developer.ubiquity-container-identifiers:
+          - iCloud.com.tangzixiang.meow
+        com.apple.developer.icloud-services:
+          - CloudDocuments
+          - CloudKit
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.tangzixiang.meow
@@ -282,6 +300,12 @@ targets:
           - packet-tunnel-provider
         keychain-access-groups:
           - $(AppIdentifierPrefix)com.tangzixiang.meow
+        # CloudKit only: tvOS has no iCloud Drive, so the TV reads the relay
+        # zone the iOS app fills (App/Sources/Services/ICloudRelay.swift).
+        com.apple.developer.icloud-container-identifiers:
+          - iCloud.com.tangzixiang.meow
+        com.apple.developer.icloud-services:
+          - CloudKit
     settings:
       base:
         # Same bundle ID as the iOS app on purpose: one App Store record and

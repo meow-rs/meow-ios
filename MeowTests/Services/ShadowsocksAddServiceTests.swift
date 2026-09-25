@@ -13,7 +13,7 @@ struct ShadowsocksAddServiceTests {
     private func makeService() throws -> (SubscriptionService, ModelContext) {
         let container = try ModelContainer(
             for: Profile.self,
-            configurations: ModelConfiguration(isStoredInMemoryOnly: true),
+            configurations: ModelConfiguration(isStoredInMemoryOnly: true, cloudKitDatabase: .none),
         )
         let context = ModelContext(container)
         return (SubscriptionService(modelContext: context), context)

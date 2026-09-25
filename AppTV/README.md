@@ -31,6 +31,8 @@ Apple TV needs instead:
 - `MeowTVApp.swift` — `@main`, identical service graph to `MeowApp`.
 - `TVContentView.swift` — title, connect button, subscription-URL field,
   profile list (long-press a row to refresh or delete it).
+- `TVICloudImportView.swift` — "Import from iCloud Drive": the configs the
+  iPhone app relayed (see below).
 - `Assets.xcassets` — the tvOS accent and launch colors, copied from the iOS
   catalog. The Brand Assets stack belongs here too.
 
@@ -56,7 +58,20 @@ first config read. Change one, change both.
   in Caches; the SwiftData store sits in the app's own Caches. The system may
   purge either under storage pressure, which is why `TVContentView.toggle()`
   rewrites `config.yaml` from the selected profile before every connect.
-- **No QR scan.** Apple TV has no camera. Subscriptions arrive by URL only.
+- **No QR scan.** Apple TV has no camera. Subscriptions arrive by URL, or
+  from iCloud Drive via the iPhone (next item).
+- **No iCloud Drive — relayed through CloudKit instead.** tvOS has no iCloud
+  Drive (Apple QA1935) and no `fileImporter`. The iOS app publishes
+  `iCloud Drive › meow` (`NSUbiquitousContainers`), watches it with an
+  `NSMetadataQuery` (`ICloudRelayUploader`), and mirrors each top-level
+  `.yaml` / `.yml` into the `ICloudDriveRelay` zone of the
+  `iCloud.com.tangzixiang.meow` private CloudKit database; the TV lists that
+  zone (`ICloudRelayStore`) and imports with `upsertLocal`, so re-importing an
+  edited file updates its profile. A file reaches the TV only after meow has
+  run on the phone. The container must exist in the developer portal with
+  iCloud (CloudKit + iCloud Documents) enabled on the App ID, and the schema
+  must be deployed to production in the CloudKit Console before release.
+  SwiftData stays `cloudKitDatabase: .none` — see `AppModelContainer`.
 - **No alternate app icons.** `ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES`
   is iOS-only; `AppIcon.swift` still compiles (it's plain `Foundation`) but
   nothing on tvOS calls it.

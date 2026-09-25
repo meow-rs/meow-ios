@@ -317,6 +317,12 @@
 "tv.profiles.section" = "Profiles";
 "tv.profiles.empty" = "No profiles yet. Add a subscription URL to get started.";
 "tv.connect.hint.noProfile" = "Add a subscription to connect.";
+"tv.icloud.button" = "iCloud Drive";
+"tv.icloud.title" = "Import from iCloud Drive";
+"tv.icloud.instructions" = "Save .yaml files to iCloud Drive › meow on your iPhone or Mac, then open meow on your iPhone to send them here.";
+"tv.icloud.empty" = "No configs from iCloud Drive yet.";
+"tv.icloud.noAccount" = "Sign in to iCloud in Settings to import configs from iCloud Drive.";
+"tv.icloud.failed %@" = "Couldn't load configs from iCloud: %@";
 
 
 /* Fullscreen diagnostics overlay (ContentView) */
