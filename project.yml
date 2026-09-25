@@ -306,6 +306,11 @@ targets:
           - iCloud.com.tangzixiang.meow
         com.apple.developer.icloud-services:
           - CloudKit
+        # App Store Connect rejects a tvOS app that uses iCloud without a
+        # push environment ("Missing Entitlement … aps-environment"), even
+        # though nothing here subscribes to pushes. Export re-signs this as
+        # `production` from the App Store profile.
+        aps-environment: development
     settings:
       base:
         # Same bundle ID as the iOS app on purpose: one App Store record and
