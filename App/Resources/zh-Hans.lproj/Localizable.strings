@@ -320,6 +320,7 @@
 "tv.subscription.error.invalidURL" = "请输入以 http:// 或 https:// 开头的订阅地址。";
 "tv.profiles.section" = "配置";
 "tv.profiles.empty" = "还没有配置。添加订阅地址即可开始。";
+"tv.connect.hint.noProfile" = "添加订阅后即可连接。";
 
 
 /* Fullscreen diagnostics overlay (ContentView) */
