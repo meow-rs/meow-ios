@@ -57,6 +57,38 @@ enum ICloudRelay {
         return stem.isEmpty ? fileName : stem
     }
 
+    /// The file name a profile is exported under (`ICloudDriveExporter`):
+    /// the profile name made safe for a file system, plus `.yaml`. Round-trips
+    /// with `profileName(for:)`, so a config exported on the phone imports
+    /// on the TV under the same name.
+    static func exportFileName(for profileName: String) -> String {
+        var stem = profileName
+            .components(separatedBy: CharacterSet(charactersIn: "/\\:"))
+            .joined(separator: "-")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        // A leading dot would make it a hidden file, which the relay skips.
+        while stem.hasPrefix(".") {
+            stem.removeFirst()
+        }
+        if stem.isEmpty {
+            stem = "config"
+        }
+        return isRelayable(fileName: stem) ? stem : stem + ".yaml"
+    }
+
+    /// `iCloud Drive › meow`, created if missing — or nil when iCloud Drive is
+    /// off, signed out, or the build lacks the entitlement. Blocks on the
+    /// ubiquity daemon, so never call it on the main thread.
+    static func resolveDocumentsFolder() -> URL? {
+        guard let root = FileManager.default.url(forUbiquityContainerIdentifier: containerIdentifier) else {
+            return nil
+        }
+        let documents = root.appendingPathComponent("Documents", isDirectory: true)
+        // The folder only shows up in iCloud Drive once it exists.
+        try? FileManager.default.createDirectory(at: documents, withIntermediateDirectories: true)
+        return documents
+    }
+
     static func sha256Hex(_ data: Data) -> String {
         SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined()
     }

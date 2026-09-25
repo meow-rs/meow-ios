@@ -40,15 +40,7 @@
             guard query == nil, FileManager.default.ubiquityIdentityToken != nil else { return }
             Task {
                 // Apple: never resolve the ubiquity container on the main thread.
-                let documents = await Task.detached { () -> URL? in
-                    guard let root = FileManager.default.url(
-                        forUbiquityContainerIdentifier: ICloudRelay.containerIdentifier,
-                    ) else { return nil }
-                    let documents = root.appendingPathComponent("Documents", isDirectory: true)
-                    // The folder only shows up in iCloud Drive once it exists.
-                    try? FileManager.default.createDirectory(at: documents, withIntermediateDirectories: true)
-                    return documents
-                }.value
+                let documents = await Task.detached { ICloudRelay.resolveDocumentsFolder() }.value
                 guard documents != nil else {
                     relayLog.notice("ubiquity container unavailable; relay idle")
                     return

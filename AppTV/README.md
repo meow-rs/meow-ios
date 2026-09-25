@@ -67,7 +67,9 @@ first config read. Change one, change both.
   `.yaml` / `.yml` into the `ICloudDriveRelay` zone of the
   `iCloud.com.tangzixiang.meow` private CloudKit database; the TV lists that
   zone (`ICloudRelayStore`) and imports with `upsertLocal`, so re-importing an
-  edited file updates its profile. A file reaches the TV only after meow has
+  edited file updates its profile. On the phone, a Configs row's leading swipe
+  action "iCloud Drive" writes that profile into the same folder
+  (`ICloudDriveExporter`), so a config added on iPhone reaches the TV too. A file reaches the TV only after meow has
   run on the phone. The container must exist in the developer portal with
   iCloud (CloudKit + iCloud Documents) enabled on the App ID, and the schema
   must be deployed to production in the CloudKit Console before release.

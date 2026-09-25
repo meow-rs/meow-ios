@@ -12,6 +12,8 @@ struct SubscriptionsView: View {
     @State private var editingInfo: Profile?
     @State private var exporting: Profile?
     @State private var error: String?
+    /// File name of the last iCloud Drive export, for the confirmation alert.
+    @State private var exportedFileName: String?
     // Owned here, not by `EngineOverviewSection`: the section changes
     // container on a fold and would otherwise reset (popping a pushed screen).
     @State private var routeMode: RouteMode = .rule
@@ -67,6 +69,18 @@ struct SubscriptionsView: View {
         }
         .sheet(item: $exporting) { profile in
             QRExportSheet(kind: exportKind(profile), payloads: exportPayloads(profile))
+        }
+        .alert(
+            "subscriptions.exportICloud.done.title",
+            isPresented: Binding(
+                get: { exportedFileName != nil },
+                set: { if !$0 { exportedFileName = nil } },
+            ),
+            presenting: exportedFileName,
+        ) { _ in
+            Button("common.ok") { exportedFileName = nil }
+        } message: { fileName in
+            Text("subscriptions.exportICloud.done.message \(fileName)")
         }
         .alert("common.error", isPresented: .constant(error != nil)) {
             Button("common.ok") { error = nil }
@@ -206,6 +220,17 @@ struct SubscriptionsView: View {
                         }
                         .tint(AppTheme.accent)
                         .accessibilityIdentifier("subscriptions.row.editInfo")
+                        // A swipe action rather than a fourth inline icon: the
+                        // row's control strip is already at its width budget on
+                        // the iPhone Duo outer display.
+                        Button {
+                            exportToICloudDrive(profile)
+                        } label: {
+                            Label("subscriptions.exportICloud.swipe", systemImage: "icloud.and.arrow.up")
+                        }
+                        .tint(.indigo)
+                        .accessibilityLabel(Text("subscriptions.row.a11y.exportICloud \(profile.name)"))
+                        .accessibilityIdentifier("subscriptions.row.exportICloud")
                     }
                     .swipeActions(edge: .trailing) {
                         Button(role: .destructive) {
@@ -398,6 +423,20 @@ extension SubscriptionsView {
     /// locally generated Shadowsocks profile exports per-server `ss://` URIs,
     /// URL subscriptions export the subscription URL itself. Local YAML
     /// imports (empty URL, not generated) have nothing link-shaped to share.
+    /// Copies the profile's YAML into `iCloud Drive › meow`; the relay then
+    /// carries it to the Apple TV (see `ICloudDriveExporter`).
+    private func exportToICloudDrive(_ profile: Profile) {
+        let name = profile.name
+        let yaml = profile.yamlContent
+        Task {
+            do {
+                exportedFileName = try await ICloudDriveExporter.export(name: name, yaml: yaml)
+            } catch {
+                self.error = error.localizedDescription
+            }
+        }
+    }
+
     private func isExportable(_ profile: Profile) -> Bool {
         ShadowsocksConfigBuilder.isGenerated(profile.yamlContent) || !profile.url.isEmpty
     }
