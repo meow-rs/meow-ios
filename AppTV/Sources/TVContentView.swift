@@ -28,6 +28,7 @@ struct TVContentView: View {
     @State private var subscriptionURL = ""
     @State private var isAdding = false
     @State private var importError: String?
+    @State private var isShowingICloudImport = false
     @FocusState private var focusedField: Field?
 
     private enum Field: Hashable {
@@ -52,6 +53,9 @@ struct TVContentView: View {
         // An alert rather than an inline banner: tvOS errors that need
         // acknowledging are modal, and a banner pushed every control down
         // and moved focus targets out from under the remote.
+        .fullScreenCover(isPresented: $isShowingICloudImport) {
+            TVICloudImportView(onImport: importRelayed)
+        }
         .alert("common.error", isPresented: isShowingError, presenting: errorMessage) { _ in
             Button("common.ok", action: dismissError)
         } message: { message in
@@ -121,13 +125,22 @@ struct TVContentView: View {
                 .onSubmit(addSubscription)
                 .accessibilityIdentifier("tv.subscription.url")
 
-            Button(LocalizedStringKey(
-                isAdding ? "subscriptions.add.button.adding" : "subscriptions.add.button.add",
-            )) {
-                addSubscription()
+            HStack(spacing: 20) {
+                Button(LocalizedStringKey(
+                    isAdding ? "subscriptions.add.button.adding" : "subscriptions.add.button.add",
+                )) {
+                    addSubscription()
+                }
+                .disabled(isAdding || trimmedURL.isEmpty)
+                .accessibilityIdentifier("tv.subscription.add")
+
+                Button {
+                    isShowingICloudImport = true
+                } label: {
+                    Label("tv.icloud.button", systemImage: "icloud.and.arrow.down")
+                }
+                .accessibilityIdentifier("tv.icloud.open")
             }
-            .disabled(isAdding || trimmedURL.isEmpty)
-            .accessibilityIdentifier("tv.subscription.add")
 
             Divider()
 
@@ -339,6 +352,23 @@ private extension TVContentView {
                 importError = error.localizedDescription
             }
             isAdding = false
+        }
+    }
+
+    /// Same add-then-select as `addSubscription`, via `upsertLocal` so
+    /// re-importing a file edited on the Mac updates its profile in place.
+    func importRelayed(_ config: RelayedConfig) {
+        Task {
+            do {
+                let profile = try await subscriptionService.upsertLocal(
+                    name: config.profileName,
+                    yamlContent: config.yaml,
+                )
+                try subscriptionService.select(profile)
+                reloadIfConnected(profile)
+            } catch {
+                importError = error.localizedDescription
+            }
         }
     }
 

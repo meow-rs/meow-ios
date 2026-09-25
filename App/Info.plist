@@ -42,6 +42,18 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>meow uses the camera to scan Shadowsocks server QR codes.</string>
+	<key>NSUbiquitousContainers</key>
+	<dict>
+		<key>iCloud.com.tangzixiang.meow</key>
+		<dict>
+			<key>NSUbiquitousContainerIsDocumentScopePublic</key>
+			<true/>
+			<key>NSUbiquitousContainerName</key>
+			<string>meow</string>
+			<key>NSUbiquitousContainerSupportedFolderLevels</key>
+			<string>None</string>
+		</dict>
+	</dict>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

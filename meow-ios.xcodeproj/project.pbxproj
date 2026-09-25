@@ -78,6 +78,7 @@
 		4FF1E4C061CE8323A6C981D1 /* AppIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CB86E1C2F1E528D2A14F58 /* AppIcon.swift */; };
 		50F7C0F2F8B850202089F7AE /* AppIconTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0D47E1D37E34301C40DC54 /* AppIconTests.swift */; };
 		51B3C9F10FE6A03AFD50A5E6 /* NavRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8D0D6120471BD1DBC4ACFB /* NavRow.swift */; };
+		521EAD7DC811E208DD0E1D31 /* ICloudRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE2AC85C91B47EDF654C19D /* ICloudRelay.swift */; };
 		5247368E57963DA43B22D272 /* UDPProtocolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF0A80A8CEB2105E171334C /* UDPProtocolTests.swift */; };
 		528DCD00B7A73F10142E0455 /* MeowApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF3488443D31DA0A523BC30 /* MeowApp.swift */; };
 		53A944BA990F0B03BCD01BCD /* ShadowsocksURIEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FF63D9219A475F002F2734 /* ShadowsocksURIEncoder.swift */; };
@@ -104,6 +105,7 @@
 		684752187B329EEE17E6EA1C /* MWAppGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = E605B002F990CE95032AA3A8 /* MWAppGroup.m */; };
 		6A844E6BF259DEC60C66D7D9 /* clash_minimal.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 47CD1F1E7DD00599AF2A5238 /* clash_minimal.yaml */; };
 		6C389E61C0E0EE2B66316EF5 /* MeowCore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B807F37D85605FF0AD1427F5 /* MeowCore.xcframework */; };
+		6E6C228991125641DCC0C8F3 /* ICloudRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE2AC85C91B47EDF654C19D /* ICloudRelay.swift */; };
 		6EB6E847C8DCA7390EA6C1C6 /* DailyTrafficAccumulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664BEEB7B966973C3D0A5074 /* DailyTrafficAccumulator.swift */; };
 		715F05C6C0596D3B99A6E069 /* AdaptiveLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578ACB1DC845DCE5788F9E60 /* AdaptiveLayout.swift */; };
 		723656CB0021E6DC5D7957EA /* MWPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 468AB5369E33BCD92920CF52 /* MWPreferences.m */; };
@@ -115,6 +117,7 @@
 		7BBAA67BDCCF6D97CA96775F /* GeoAssetStager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20AB821D2884D05E4EA7E831 /* GeoAssetStager.swift */; };
 		80F147645169132243DCE35F /* clash_full.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 8E04BAFAE74D1434FE497EE1 /* clash_full.yaml */; };
 		8175E08BB80BF5BFE715A492 /* ConcurrentAccessTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE277C8332F980E4EA3DCFE /* ConcurrentAccessTests.swift */; };
+		83187DDCE407E1CBCC936670 /* ICloudRelayStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0151FEE700CDDCB95FD99AA4 /* ICloudRelayStore.swift */; };
 		85741B25D33CEC3D9A2C9634 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1880D3F09797DFE2718AFC /* AppModel.swift */; };
 		865ED9E31F6FFCA7EF03996F /* EditableRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992E16ADDEBA2F4304D4E797 /* EditableRule.swift */; };
 		8743C9ECD8EE078FA44E6545 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF51AD7DD7946AB70970C9A8 /* ContentView.swift */; };
@@ -125,6 +128,7 @@
 		895396717485D8A14A828E2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00F3DBAD225AF1027B18873A /* Assets.xcassets */; };
 		8B7DA6E2D2778C59700F440D /* ClashConfigLinter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F582EC213C10F2BB97940B21 /* ClashConfigLinter.swift */; };
 		8C45959FE9EE5CD0D3F06BB7 /* ProfileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2336C906828FDB560633D6 /* ProfileTests.swift */; };
+		8DD0F3A4C910723A754FB6C9 /* TVICloudImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A40B1718E83428BED3BE842 /* TVICloudImportView.swift */; };
 		8E43F6904E5AAD529AACBA1C /* RulesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1CBAFD55A777C3B13296E2 /* RulesView.swift */; };
 		9059DE28A7DEE52FCF194DC3 /* MWDarwinBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F2E3A9014A186B34D8A465 /* MWDarwinBridge.m */; };
 		90E26674740B7C7141781B01 /* ProxyGroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7193B43D94BD4897FEDF967 /* ProxyGroupsView.swift */; };
@@ -135,6 +139,7 @@
 		9609134F0D274943E5E18297 /* LogsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F1B0B431DA0DD132F917FF /* LogsTests.swift */; };
 		96429731A395DD34652DF189 /* ProxyGroupModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A820C8680856C83B4C8EF7F /* ProxyGroupModel.swift */; };
 		997AE63C0D074EA6370C5DA8 /* SwiftDataTestContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7B8DF88EDD0D51301DD316 /* SwiftDataTestContainer.swift */; };
+		99FCBD02DE55ED20126AD655 /* ICloudRelayUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60CDAC71354AF7E29155D32 /* ICloudRelayUploader.swift */; };
 		9A5B14D23904B1EABD16BE23 /* MWAppGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = E605B002F990CE95032AA3A8 /* MWAppGroup.m */; };
 		9ADDC891C0BCC6053E86E2E2 /* SubscriptionConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601ADF66737508CC359C4936 /* SubscriptionConverter.swift */; };
 		9B151396D66CF06ECFAAD59C /* PacketTunnelTV.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 421A985E92CD32B07F712279 /* PacketTunnelTV.appex */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -168,6 +173,7 @@
 		B92365F2ACFA408CA226CA7F /* RulesEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8D42838BD27620D7F278DE /* RulesEditorView.swift */; };
 		BA6EC811EDC00657072F8372 /* ClashConfigLinter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F582EC213C10F2BB97940B21 /* ClashConfigLinter.swift */; };
 		BA844D3302038958647DC227 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D5CF6C1DB2C326705BE75B5 /* SystemConfiguration.framework */; };
+		BB349570A0007E98FA1205B2 /* ICloudRelayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB2E1ADC6497BAC02DC29E5 /* ICloudRelayTests.swift */; };
 		C05561AA0530BFF897CDEB8F /* MeowAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E114A82C37433E90AFEAD0E /* MeowAPI.swift */; };
 		C089C1713ACB294B9BB19091 /* MeowModels in Frameworks */ = {isa = PBXBuildFile; productRef = 631B5ADE84924A4D1A27E7F0 /* MeowModels */; };
 		C0EE6EDCE210308C46DE6856 /* RuleEditorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1711243E170547D1DA68FCD6 /* RuleEditorSheet.swift */; };
@@ -189,6 +195,7 @@
 		D49CAAAAB4878A24C8A7D52B /* ShadowsocksQRScannerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1871555B4BB947666ABD54B /* ShadowsocksQRScannerSheet.swift */; };
 		D5E3B0B2C42A294616BB2263 /* DnsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711184DB8878CD1F212CEEA3 /* DnsView.swift */; };
 		D799DB8DED88D678A4FE6299 /* SubscriptionConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601ADF66737508CC359C4936 /* SubscriptionConverter.swift */; };
+		D7FE9D016E4BBDE25D2FD9DC /* ICloudRelayUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60CDAC71354AF7E29155D32 /* ICloudRelayUploader.swift */; };
 		D84500AEEA48460A706AC01B /* MeowAPI+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D147EADA278504AB1CDFA6 /* MeowAPI+Mock.swift */; };
 		D94E6C83D6497117D1E7D35C /* DeepLinkConfirmationSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B201C0CCEE8F418C1AA9E387 /* DeepLinkConfirmationSheet.swift */; };
 		D95EF7A2FB411B4088E3255C /* URLValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFAA1935B322CD5DD66E23F0 /* URLValidationTests.swift */; };
@@ -212,6 +219,7 @@
 		FA6DFC3CA7B13A278CB1D630 /* AddSubscriptionFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA7DC0A8AEAA9185A7B40F0 /* AddSubscriptionFlowTests.swift */; };
 		FC4878B603356FA17059AB46 /* GlassCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2B37B72F11B1B2B1118221 /* GlassCard.swift */; };
 		FC5AB7D2C4E858BF27386FD9 /* DeepLinkImportConfirmation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2583E90C66D44FFDC834DAB9 /* DeepLinkImportConfirmation.swift */; };
+		FD2255767F60D30DA4D51A1F /* ICloudRelayStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0151FEE700CDDCB95FD99AA4 /* ICloudRelayStore.swift */; };
 		FE42DA2232D0C19C186114F8 /* ChinaDirectKeywords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3172561A6CE70D61D7666597 /* ChinaDirectKeywords.swift */; };
 /* End PBXBuildFile section */
 
@@ -280,6 +288,7 @@
 
 /* Begin PBXFileReference section */
 		00F3DBAD225AF1027B18873A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0151FEE700CDDCB95FD99AA4 /* ICloudRelayStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICloudRelayStore.swift; sourceTree = "<group>"; };
 		01E90E01A4CE68C4F872A40B /* ConnectionsScreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionsScreenTests.swift; sourceTree = "<group>"; };
 		03081064CD4E37ACB92EA355 /* ShadowsocksURIEncoderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowsocksURIEncoderTests.swift; sourceTree = "<group>"; };
 		0539F84A7F111BFF4BDD1840 /* MWSharedStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MWSharedStore.h; sourceTree = "<group>"; };
@@ -292,6 +301,7 @@
 		134693AAF1481D4CF2945CAD /* MeowUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = MeowUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1509E80EF5E3A28E045FE8C9 /* GeoLite2-ASN.mmdb */ = {isa = PBXFileReference; path = "GeoLite2-ASN.mmdb"; sourceTree = "<group>"; };
 		1711243E170547D1DA68FCD6 /* RuleEditorSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleEditorSheet.swift; sourceTree = "<group>"; };
+		1A40B1718E83428BED3BE842 /* TVICloudImportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVICloudImportView.swift; sourceTree = "<group>"; };
 		1B3F7EB51045141F84569793 /* UtilitySessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilitySessionStore.swift; sourceTree = "<group>"; };
 		1C50CF82F4373D42432869C5 /* MWPacketWriter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MWPacketWriter.m; sourceTree = "<group>"; };
 		1CCF322677C8A124E9D9107D /* MWDiagnosticsRunner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MWDiagnosticsRunner.m; sourceTree = "<group>"; };
@@ -379,6 +389,7 @@
 		A43280DA576025F244CD1432 /* SubscriptionServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionServiceTests.swift; sourceTree = "<group>"; };
 		A58DE76A35A4F9B0E9BAE069 /* MeowConfigValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeowConfigValidator.swift; sourceTree = "<group>"; };
 		A5CB86E1C2F1E528D2A14F58 /* AppIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIcon.swift; sourceTree = "<group>"; };
+		A60CDAC71354AF7E29155D32 /* ICloudRelayUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICloudRelayUploader.swift; sourceTree = "<group>"; };
 		A693FE7115671D717A87F1DB /* MeowAPITypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeowAPITypes.swift; sourceTree = "<group>"; };
 		A7002E0BC1FFE0A41FEBE8F6 /* LocalizableParityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizableParityTests.swift; sourceTree = "<group>"; };
 		AB83B7A37D165EF0E16A47BA /* MWSharedStore.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MWSharedStore.m; sourceTree = "<group>"; };
@@ -407,6 +418,7 @@
 		C6CD60CCEECD879D2873F26A /* MeowTVApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeowTVApp.swift; sourceTree = "<group>"; };
 		C840E453765151986763DE2B /* ChinaDirectKeywordsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChinaDirectKeywordsTests.swift; sourceTree = "<group>"; };
 		CA20D7D98E7BC4663E289174 /* DiagnosticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsViewController.swift; sourceTree = "<group>"; };
+		CCE2AC85C91B47EDF654C19D /* ICloudRelay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICloudRelay.swift; sourceTree = "<group>"; };
 		CDFB76E2466D24EF8DF96740 /* BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
 		CF2336C906828FDB560633D6 /* ProfileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTests.swift; sourceTree = "<group>"; };
 		CFAA1935B322CD5DD66E23F0 /* URLValidationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLValidationTests.swift; sourceTree = "<group>"; };
@@ -446,6 +458,7 @@
 		FD9FC97CA0606C12439B0684 /* EmojiGroupSelectNodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiGroupSelectNodeTests.swift; sourceTree = "<group>"; };
 		FE41537EBB7380469E247A65 /* TunnelSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TunnelSettings.swift; sourceTree = "<group>"; };
 		FEF29010A8460CAFFDADE05F /* TVContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVContentView.swift; sourceTree = "<group>"; };
+		FFB2E1ADC6497BAC02DC29E5 /* ICloudRelayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICloudRelayTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -613,6 +626,7 @@
 			children = (
 				8B8C6076C2AFE3F87452DDEF /* DeepLinkImportConfirmationTests.swift */,
 				7D8C1AC6AD4590D6827E6188 /* GeoAssetStagerTests.swift */,
+				FFB2E1ADC6497BAC02DC29E5 /* ICloudRelayTests.swift */,
 				DF623F1E34B38A27E15C6B36 /* QRCodeRendererTests.swift */,
 				F5B378E3EF2591C9CD059E98 /* ShadowsocksAddServiceTests.swift */,
 				B306CE837FA7A17D7D561877 /* SubscriptionDeepLinkTests.swift */,
@@ -724,6 +738,9 @@
 				664BEEB7B966973C3D0A5074 /* DailyTrafficAccumulator.swift */,
 				2583E90C66D44FFDC834DAB9 /* DeepLinkImportConfirmation.swift */,
 				20AB821D2884D05E4EA7E831 /* GeoAssetStager.swift */,
+				CCE2AC85C91B47EDF654C19D /* ICloudRelay.swift */,
+				0151FEE700CDDCB95FD99AA4 /* ICloudRelayStore.swift */,
+				A60CDAC71354AF7E29155D32 /* ICloudRelayUploader.swift */,
 				5E114A82C37433E90AFEAD0E /* MeowAPI.swift */,
 				B9D147EADA278504AB1CDFA6 /* MeowAPI+Mock.swift */,
 				A693FE7115671D717A87F1DB /* MeowAPITypes.swift */,
@@ -771,6 +788,7 @@
 			children = (
 				C6CD60CCEECD879D2873F26A /* MeowTVApp.swift */,
 				FEF29010A8460CAFFDADE05F /* TVContentView.swift */,
+				1A40B1718E83428BED3BE842 /* TVICloudImportView.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -1368,6 +1386,9 @@
 				88DC74D0DA14ED303ECB759F /* DeepLinkImportConfirmation.swift in Sources */,
 				865ED9E31F6FFCA7EF03996F /* EditableRule.swift in Sources */,
 				7BBAA67BDCCF6D97CA96775F /* GeoAssetStager.swift in Sources */,
+				521EAD7DC811E208DD0E1D31 /* ICloudRelay.swift in Sources */,
+				FD2255767F60D30DA4D51A1F /* ICloudRelayStore.swift in Sources */,
+				D7FE9D016E4BBDE25D2FD9DC /* ICloudRelayUploader.swift in Sources */,
 				61B4C3DD920447110FECD489 /* MeowAPI+Mock.swift in Sources */,
 				B728617544E24FA5D4501D95 /* MeowAPI.swift in Sources */,
 				A9E41576C0E036A74DB50B9C /* MeowAPITypes.swift in Sources */,
@@ -1384,6 +1405,7 @@
 				EF693A8E719B1F05552930D0 /* SubscriptionDeepLink.swift in Sources */,
 				573FC87E0903B4A00D8232D1 /* SubscriptionService.swift in Sources */,
 				AA55A7FC9AEAEF9088925400 /* TVContentView.swift in Sources */,
+				8DD0F3A4C910723A754FB6C9 /* TVICloudImportView.swift in Sources */,
 				3FAE83DC16BC5B29F06CE356 /* UtilitySessionStore.swift in Sources */,
 				D3105503E3C203986F81B1FD /* VpnManager.swift in Sources */,
 			);
@@ -1460,6 +1482,7 @@
 				74FE3E67A25CF1CE3E141EE2 /* EmojiGroupSelectNodeTests.swift in Sources */,
 				B5E8C76058F68847C10E5EDB /* FakeWebSocketTransport.swift in Sources */,
 				0D7669C4305C607B8C449A54 /* GeoAssetStagerTests.swift in Sources */,
+				BB349570A0007E98FA1205B2 /* ICloudRelayTests.swift in Sources */,
 				1DEF3FB14FBD667C00541BFF /* IdentifierSlugTests.swift in Sources */,
 				5915355710B88CF6038756E6 /* KeychainStoreTests.swift in Sources */,
 				E64DA5B39E08AF0DF25BFCBC /* LocalizableParityTests.swift in Sources */,
@@ -1517,6 +1540,9 @@
 				C1187CD2F55A4E1F99C1FB54 /* GeoAssetStager.swift in Sources */,
 				FC4878B603356FA17059AB46 /* GlassCard.swift in Sources */,
 				91159B9CB1EDFE43070C3A4E /* GlobalVpnSwitchBar.swift in Sources */,
+				6E6C228991125641DCC0C8F3 /* ICloudRelay.swift in Sources */,
+				83187DDCE407E1CBCC936670 /* ICloudRelayStore.swift in Sources */,
+				99FCBD02DE55ED20126AD655 /* ICloudRelayUploader.swift in Sources */,
 				9212E710474142F878EC5ABC /* LogsView.swift in Sources */,
 				D84500AEEA48460A706AC01B /* MeowAPI+Mock.swift in Sources */,
 				C05561AA0530BFF897CDEB8F /* MeowAPI.swift in Sources */,

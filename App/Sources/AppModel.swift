@@ -18,6 +18,12 @@ final class AppModel {
     let dailyTrafficAccumulator: DailyTrafficAccumulator
     let utilityTrafficChart: UtilityTrafficChartStore
     let utilityLogs: UtilityLogsStore
+    /// Configs relayed from iCloud Drive via CloudKit; the Apple TV reads it.
+    let iCloudRelayStore: ICloudRelayStore
+    #if os(iOS)
+        /// Mirrors `iCloud Drive › meow` into CloudKit for the Apple TV.
+        let iCloudRelayUploader: ICloudRelayUploader
+    #endif
 
     /// Monotonically bumped each time `replaySelectedProxies()` finishes a pass
     /// (successful replay, probe-timeout giveup, or no-active-profile no-op).
@@ -54,6 +60,10 @@ final class AppModel {
         )
         utilityTrafficChart = UtilityTrafficChartStore()
         utilityLogs = UtilityLogsStore()
+        iCloudRelayStore = ICloudRelayStore()
+        #if os(iOS)
+            iCloudRelayUploader = ICloudRelayUploader()
+        #endif
         ipcBridge.onTrafficDidUpdate = { [utilityTrafficChart] snapshot in
             utilityTrafficChart.ingest(snapshot)
         }
@@ -84,6 +94,9 @@ final class AppModel {
         ipcBridge.start()
         dailyTrafficAccumulator.start()
         utilityLogs.startStreaming(api: meowAPI)
+        #if os(iOS)
+            iCloudRelayUploader.start()
+        #endif
     }
 
     /// Re-issues the active profile's persisted `selectedProxies` each time

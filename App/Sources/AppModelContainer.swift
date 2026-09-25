@@ -12,6 +12,11 @@ enum AppModelContainer {
             let schema = Schema([Profile.self, DailyTraffic.self])
             let url = try storeURL()
             resetStoreForUITestsIfRequested(at: url)
+            // `.none` is load-bearing: the app carries the CloudKit
+            // entitlement for the iCloud Drive relay, and the default
+            // (`.automatic`) would then try to mirror this store to CloudKit —
+            // which `Profile`'s non-optional, unique attributes can't satisfy,
+            // so the store would fail to load. Test containers pin it too.
             let config = ModelConfiguration(
                 "meow",
                 schema: schema,
