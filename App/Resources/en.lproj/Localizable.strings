@@ -84,6 +84,11 @@
 "subscriptions.row.a11y.editInfoHint" = "Opens the name and URL editor";
 "subscriptions.row.a11y.exportQR %@" = "Export QR code for %@";
 "subscriptions.row.a11y.exportQRHint" = "Shows a scannable QR code of the share link";
+"subscriptions.exportICloud.swipe" = "iCloud Drive";
+"subscriptions.row.a11y.exportICloud %@" = "Save %@ to iCloud Drive";
+"subscriptions.exportICloud.done.title" = "Saved to iCloud Drive";
+"subscriptions.exportICloud.done.message %@" = "Saved as iCloud Drive › meow › %@. It will also show up on your Apple TV under iCloud Drive.";
+"subscriptions.exportICloud.error.unavailable" = "Sign in to iCloud and turn on iCloud Drive in Settings to save configs there.";
 
 /* QR export sheet */
 "qrExport.nav.title" = "Export QR Code";
@@ -317,6 +322,12 @@
 "tv.profiles.section" = "Profiles";
 "tv.profiles.empty" = "No profiles yet. Add a subscription URL to get started.";
 "tv.connect.hint.noProfile" = "Add a subscription to connect.";
+"tv.icloud.button" = "iCloud Drive";
+"tv.icloud.title" = "Import from iCloud Drive";
+"tv.icloud.instructions" = "Save .yaml files to iCloud Drive › meow on your iPhone or Mac — or swipe a config in meow on your iPhone and tap iCloud Drive — then open meow on your iPhone to send them here.";
+"tv.icloud.empty" = "No configs from iCloud Drive yet.";
+"tv.icloud.noAccount" = "Sign in to iCloud in Settings to import configs from iCloud Drive.";
+"tv.icloud.failed %@" = "Couldn't load configs from iCloud: %@";
 
 
 /* Fullscreen diagnostics overlay (ContentView) */

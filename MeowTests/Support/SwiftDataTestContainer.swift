@@ -9,7 +9,7 @@ import SwiftData
 /// once T4.1 lands.
 enum SwiftDataTestContainer {
     static func make() throws -> ModelContainer {
-        let config = ModelConfiguration(isStoredInMemoryOnly: true)
+        let config = ModelConfiguration(isStoredInMemoryOnly: true, cloudKitDatabase: .none)
         // TODO: replace with actual schema once Profile/DailyTraffic are defined.
         let schema = Schema([])
         return try ModelContainer(for: schema, configurations: config)

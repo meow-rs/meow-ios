@@ -90,6 +90,11 @@
 "subscriptions.row.a11y.editInfoHint" = "打开名称与 URL 编辑器";
 "subscriptions.row.a11y.exportQR %@" = "导出 %@ 的二维码";
 "subscriptions.row.a11y.exportQRHint" = "显示可扫描的分享链接二维码";
+"subscriptions.exportICloud.swipe" = "iCloud 云盘";
+"subscriptions.row.a11y.exportICloud %@" = "将 %@ 存到 iCloud 云盘";
+"subscriptions.exportICloud.done.title" = "已存到 iCloud 云盘";
+"subscriptions.exportICloud.done.message %@" = "已存为“iCloud 云盘 › meow › %@”。它也会出现在 Apple TV 的“iCloud 云盘”中。";
+"subscriptions.exportICloud.error.unavailable" = "请在“设置”中登录 iCloud 并打开 iCloud 云盘，才能在其中存储配置。";
 
 /* QR export sheet */
 "qrExport.nav.title" = "导出二维码";
@@ -321,6 +326,12 @@
 "tv.profiles.section" = "配置";
 "tv.profiles.empty" = "还没有配置。添加订阅地址即可开始。";
 "tv.connect.hint.noProfile" = "添加订阅后即可连接。";
+"tv.icloud.button" = "iCloud 云盘";
+"tv.icloud.title" = "从 iCloud 云盘导入";
+"tv.icloud.instructions" = "在 iPhone 或 Mac 上将 .yaml 文件存入“iCloud 云盘 › meow”，或在 iPhone 的 meow 中滑动配置并轻点“iCloud 云盘”，然后在 iPhone 上打开 meow，即可发送到这里。";
+"tv.icloud.empty" = "还没有来自 iCloud 云盘的配置。";
+"tv.icloud.noAccount" = "请在“设置”中登录 iCloud，才能从 iCloud 云盘导入配置。";
+"tv.icloud.failed %@" = "无法从 iCloud 载入配置：%@";
 
 
 /* Fullscreen diagnostics overlay (ContentView) */

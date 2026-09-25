@@ -60,6 +60,26 @@ final class SubscriptionService {
         return profile
     }
 
+    /// Import a local YAML payload, replacing the content of an existing
+    /// local profile with the same name instead of adding a duplicate. Used
+    /// by the Apple TV's iCloud Drive import, where re-importing a file after
+    /// editing it on the Mac should update that profile in place. Only local
+    /// profiles (empty `url`) match — a subscription that happens to share
+    /// the name is never overwritten.
+    @discardableResult
+    func upsertLocal(name: String, yamlContent: String) async throws -> Profile {
+        let normalized = try await normalize(body: Data(yamlContent.utf8))
+        let all = try modelContext.fetch(FetchDescriptor<Profile>())
+        if let existing = all.first(where: { $0.url.isEmpty && $0.name == name }) {
+            try updateContent(existing, yaml: normalized, lastUpdated: .now)
+            return existing
+        }
+        let profile = Profile(name: name, url: "", yamlContent: normalized, yamlBackup: normalized)
+        modelContext.insert(profile)
+        try modelContext.save()
+        return profile
+    }
+
     /// Add a manually-entered / QR-scanned Shadowsocks server. Servers live
     /// in a single locally generated profile (rendered from the built-in
     /// template): the first add creates it, later adds re-render it with the

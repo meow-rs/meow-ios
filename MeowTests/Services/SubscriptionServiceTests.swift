@@ -32,7 +32,7 @@ struct SubscriptionServiceTests {
     private func makeService(session: URLSession = .shared) throws -> Harness {
         let container = try ModelContainer(
             for: Profile.self,
-            configurations: ModelConfiguration(isStoredInMemoryOnly: true),
+            configurations: ModelConfiguration(isStoredInMemoryOnly: true, cloudKitDatabase: .none),
         )
         let context = ModelContext(container)
         let dir = FileManager.default.temporaryDirectory
@@ -243,7 +243,7 @@ struct SubscriptionServiceTests {
     func `updateContent rolls back the profile when the active-file write fails`() throws {
         let container = try ModelContainer(
             for: Profile.self,
-            configurations: ModelConfiguration(isStoredInMemoryOnly: true),
+            configurations: ModelConfiguration(isStoredInMemoryOnly: true, cloudKitDatabase: .none),
         )
         let context = ModelContext(container)
         // A regular file sits where the active-config *directory* needs to be
@@ -358,4 +358,53 @@ private enum TestSetupError: Error {
 
 extension Tag {
     @Tag static var service: Self
+}
+
+// MARK: - upsertLocal (Apple TV iCloud Drive import)
+
+extension SubscriptionServiceTests {
+    private static let relayYAML = "proxies: []\nproxy-groups: []\nrules:\n  - MATCH,DIRECT\n"
+
+    @Test
+    @MainActor
+    func `upsertLocal inserts a local profile when none matches`() async throws {
+        let harness = try makeService()
+        let profile = try await harness.service.upsertLocal(name: "Home", yamlContent: Self.relayYAML)
+
+        #expect(profile.url.isEmpty)
+        #expect(profile.yamlContent == Self.relayYAML)
+        let profileCount = try harness.context.fetch(FetchDescriptor<Profile>()).count
+        #expect(profileCount == 1)
+    }
+
+    @Test
+    @MainActor
+    func `upsertLocal updates a same-named local profile in place`() async throws {
+        let harness = try makeService()
+        let first = try await harness.service.upsertLocal(name: "Home", yamlContent: Self.relayYAML)
+        let edited = Self.relayYAML + "# edited on the Mac\n"
+
+        let second = try await harness.service.upsertLocal(name: "Home", yamlContent: edited)
+
+        #expect(second.id == first.id)
+        #expect(second.yamlContent == edited)
+        let profileCount = try harness.context.fetch(FetchDescriptor<Profile>()).count
+        #expect(profileCount == 1)
+    }
+
+    @Test
+    @MainActor
+    func `upsertLocal never overwrites a subscription with the same name`() async throws {
+        let harness = try makeService()
+        let subscription = Profile(name: "Home", url: "https://example.com/sub.yaml", yamlContent: "remote: true\n")
+        harness.context.insert(subscription)
+        try harness.context.save()
+
+        let imported = try await harness.service.upsertLocal(name: "Home", yamlContent: Self.relayYAML)
+
+        #expect(imported.id != subscription.id)
+        #expect(subscription.yamlContent == "remote: true\n")
+        let profileCount = try harness.context.fetch(FetchDescriptor<Profile>()).count
+        #expect(profileCount == 2)
+    }
 }
