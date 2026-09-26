@@ -269,6 +269,8 @@ targets:
           UIColorName: LaunchBackground
         CFBundleShortVersionString: "1.5.0"
         CFBundleVersion: "2026080601"
+        UIRequiredDeviceCapabilities:
+          - arm64
         NSAppTransportSecurity:
           NSAllowsArbitraryLoads: false
           NSAllowsLocalNetworking: true
@@ -341,6 +343,8 @@ targets:
         CFBundleDisplayName: meow Tunnel
         CFBundleShortVersionString: "1.5.0"
         CFBundleVersion: "2026080601"
+        UIRequiredDeviceCapabilities:
+          - arm64
         NSExtension:
           NSExtensionPointIdentifier: com.apple.networkextension.packet-tunnel
           NSExtensionPrincipalClass: PacketTunnelProvider
