@@ -1,0 +1,7 @@
+Build 2026092801 (1.7.0, iPhone/iPad + Apple TV)
+
+• New: send configs to Apple TV through iCloud Drive. On iPhone, swipe right on a config in Configs and tap iCloud Drive — it's saved to iCloud Drive › meow. You can also drop .yaml files into that folder from a Mac. Open meow on the iPhone so it passes them on, then on Apple TV open iCloud Drive and pick one.
+• A short animated guide shows how the first time. Replay it from Settings › Help on iPhone, or How It Works on the Apple TV's iCloud Drive screen.
+• Apple TV screen reworked to follow Apple's tvOS guidelines: standard margins, the profile list no longer cuts off the focus effect, the active profile is listed first with a checkmark, Connect is always focusable, errors appear as alerts, long-press a profile to Refresh or Delete, and a launch screen.
+• New Apple TV icon and Top Shelf image, made from the iPhone icon: the cat now fills the whole tile, with a parallax tilt when focused.
+• Please test: save a config to iCloud Drive on iPhone, check it appears in Files › iCloud Drive › meow, then import it on Apple TV and connect. Also check the new icon on the Apple TV Home Screen. Report if the config never shows up on the TV, or any crash.
