@@ -470,3 +470,14 @@
 "a11y.userDiagnostics.result.success %@" = "成功，耗时 %@ 毫秒";
 "a11y.userDiagnostics.result.failure %@" = "失败：%@";
 "a11y.userDiagnostics.errorBanner %@" = "错误：%@";
+
+/* iCloud 云盘导出引导 */
+"guide.icloudExport.title" = "将配置发送到 Apple TV";
+"guide.icloudExport.subtitle" = "在 iPhone 上的 meow 中将配置存入 iCloud 云盘，Apple TV 即可导入。";
+"guide.icloudExport.step1" = "在 iPhone 上打开“配置”，在一个配置上向右滑动。";
+"guide.icloudExport.step2" = "轻点“iCloud 云盘”，配置会存入“iCloud 云盘 › meow”。";
+"guide.icloudExport.step3" = "在 Apple TV 上打开 meow 的“iCloud 云盘”并选取该配置。请先在 iPhone 上打开 meow，以便发送。";
+"guide.icloudExport.done" = "好";
+"settings.section.help" = "帮助";
+"settings.label.icloudGuide" = "将配置发送到 Apple TV";
+"tv.icloud.howTo" = "使用方法";

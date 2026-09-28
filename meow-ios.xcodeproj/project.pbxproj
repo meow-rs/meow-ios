@@ -25,6 +25,7 @@
 		14F8BA99A57DE29B0A44BA04 /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = E71BA5E31CBB784360BE725D /* Yams */; };
 		16FA48C705C2691763DE4187 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8895187DE158A91BFC1775BE /* Localizable.strings */; };
 		1705DA22AD7A785A8E0A5DF5 /* MeowApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332AEAFC0EED0EC4C05576EC /* MeowApp.swift */; };
+		17286EF0A16EAB38B0E0A2DA /* ICloudExportGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8CA1E344F4BCAEA620233A3 /* ICloudExportGuide.swift */; };
 		1C4A14F944F334280633F3C1 /* ConnectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6DE9E643D70646873B923B /* ConnectionsView.swift */; };
 		1D0E4DFB12DCCF45036E06CA /* AppIconPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE172966C96A950FE7FDC9C /* AppIconPickerView.swift */; };
 		1DC1B422EB6A35C59910D0E5 /* UtilityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB85D08A244615CFA035C0B3 /* UtilityView.swift */; };
@@ -100,6 +101,7 @@
 		63B152B9AED7714B67D9FA21 /* Country.mmdb in Resources */ = {isa = PBXBuildFile; fileRef = F2B40C39BB5FC5957F42AC74 /* Country.mmdb */; };
 		646AA7E070AB3AB4CD605644 /* RulesYAMLEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06D2AA0F7CC09650CF8263EF /* RulesYAMLEditor.swift */; };
 		648D6C8316865A3DFBD6766D /* ShadowsocksURIParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6052B63FD334E86DC81BAE1E /* ShadowsocksURIParserTests.swift */; };
+		64F88AC673A92E9E119E0EA9 /* ICloudExportGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8CA1E344F4BCAEA620233A3 /* ICloudExportGuide.swift */; };
 		66C7B352BBD0B772976ABB1B /* SubscriptionServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43280DA576025F244CD1432 /* SubscriptionServiceTests.swift */; };
 		680C4EDF0525403D50D059E6 /* geosite.mrs in Resources */ = {isa = PBXBuildFile; fileRef = F58373225092C298E65BB090 /* geosite.mrs */; };
 		684752187B329EEE17E6EA1C /* MWAppGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = E605B002F990CE95032AA3A8 /* MWAppGroup.m */; };
@@ -143,6 +145,7 @@
 		9A5B14D23904B1EABD16BE23 /* MWAppGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = E605B002F990CE95032AA3A8 /* MWAppGroup.m */; };
 		9ADDC891C0BCC6053E86E2E2 /* SubscriptionConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601ADF66737508CC359C4936 /* SubscriptionConverter.swift */; };
 		9B151396D66CF06ECFAAD59C /* PacketTunnelTV.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 421A985E92CD32B07F712279 /* PacketTunnelTV.appex */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9CA348F75912B27BFF93B1FC /* ICloudExportGuideTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CB2FDDE14D4053A9015FBD /* ICloudExportGuideTests.swift */; };
 		9D59A8F980E180CECE858F27 /* DnsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2E8157E43AE62A3A59DDD5C /* DnsTests.swift */; };
 		9D8A3062281941D5B04CD09D /* YamlEditorFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA2BC08659A01899A4DB2CC /* YamlEditorFlowTests.swift */; };
 		9DAD82C550F44D6A48D1675D /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 5E3965E4A9673CFDC438D5F0 /* Yams */; };
@@ -332,6 +335,7 @@
 		410CE24CBC64FC687A12E0DE /* meow-tvos.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = "meow-tvos.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		415A45F45F6FA01D8DA04A95 /* YamlEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YamlEditorView.swift; sourceTree = "<group>"; };
 		421A985E92CD32B07F712279 /* PacketTunnelTV.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = PacketTunnelTV.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		43CB2FDDE14D4053A9015FBD /* ICloudExportGuideTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICloudExportGuideTests.swift; sourceTree = "<group>"; };
 		459136B958385ACB511D5D14 /* PacketTunnel.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = PacketTunnel.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		468AB5369E33BCD92920CF52 /* MWPreferences.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MWPreferences.m; sourceTree = "<group>"; };
 		47CD1F1E7DD00599AF2A5238 /* clash_minimal.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = clash_minimal.yaml; sourceTree = "<group>"; };
@@ -452,6 +456,7 @@
 		F5B378E3EF2591C9CD059E98 /* ShadowsocksAddServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowsocksAddServiceTests.swift; sourceTree = "<group>"; };
 		F73DB7377F110302EA3E8B4B /* clash_emoji_groups_realworld.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = clash_emoji_groups_realworld.yaml; sourceTree = "<group>"; };
 		F7957678F8E4A3C18D3F2C5A /* ICloudDriveExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICloudDriveExporter.swift; sourceTree = "<group>"; };
+		F8CA1E344F4BCAEA620233A3 /* ICloudExportGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICloudExportGuide.swift; sourceTree = "<group>"; };
 		F970EA608D1B86A217892A15 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA317DD319BE5DA6206036F1 /* MWEngineLog.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MWEngineLog.m; sourceTree = "<group>"; };
 		FA64C2503B8306CC64B9D23D /* MeowCoreBridgeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeowCoreBridgeTests.swift; sourceTree = "<group>"; };
@@ -629,6 +634,7 @@
 			children = (
 				8B8C6076C2AFE3F87452DDEF /* DeepLinkImportConfirmationTests.swift */,
 				7D8C1AC6AD4590D6827E6188 /* GeoAssetStagerTests.swift */,
+				43CB2FDDE14D4053A9015FBD /* ICloudExportGuideTests.swift */,
 				FFB2E1ADC6497BAC02DC29E5 /* ICloudRelayTests.swift */,
 				DF623F1E34B38A27E15C6B36 /* QRCodeRendererTests.swift */,
 				F5B378E3EF2591C9CD059E98 /* ShadowsocksAddServiceTests.swift */,
@@ -639,6 +645,14 @@
 				24AB2D298F7A38F31686BF15 /* VpnManagerTests.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		5A409937392FAF911FCFFDB2 /* Guides */ = {
+			isa = PBXGroup;
+			children = (
+				F8CA1E344F4BCAEA620233A3 /* ICloudExportGuide.swift */,
+			);
+			path = Guides;
 			sourceTree = "<group>";
 		};
 		6821CBE4BFA301051CC03910 /* yaml */ = {
@@ -828,6 +842,7 @@
 		B464EEBBC7F2249E8F6BB1BC /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				5A409937392FAF911FCFFDB2 /* Guides */,
 				C044A2B7BBD7A3F22C1B39DF /* Models */,
 				93261D79E379B4E9F79A2494 /* Services */,
 				82D5A212559F590D21A902F8 /* Views */,
@@ -1391,6 +1406,7 @@
 				865ED9E31F6FFCA7EF03996F /* EditableRule.swift in Sources */,
 				7BBAA67BDCCF6D97CA96775F /* GeoAssetStager.swift in Sources */,
 				D275D8A0C9F8D010199C5425 /* ICloudDriveExporter.swift in Sources */,
+				64F88AC673A92E9E119E0EA9 /* ICloudExportGuide.swift in Sources */,
 				521EAD7DC811E208DD0E1D31 /* ICloudRelay.swift in Sources */,
 				FD2255767F60D30DA4D51A1F /* ICloudRelayStore.swift in Sources */,
 				D7FE9D016E4BBDE25D2FD9DC /* ICloudRelayUploader.swift in Sources */,
@@ -1487,6 +1503,7 @@
 				74FE3E67A25CF1CE3E141EE2 /* EmojiGroupSelectNodeTests.swift in Sources */,
 				B5E8C76058F68847C10E5EDB /* FakeWebSocketTransport.swift in Sources */,
 				0D7669C4305C607B8C449A54 /* GeoAssetStagerTests.swift in Sources */,
+				9CA348F75912B27BFF93B1FC /* ICloudExportGuideTests.swift in Sources */,
 				BB349570A0007E98FA1205B2 /* ICloudRelayTests.swift in Sources */,
 				1DEF3FB14FBD667C00541BFF /* IdentifierSlugTests.swift in Sources */,
 				5915355710B88CF6038756E6 /* KeychainStoreTests.swift in Sources */,
@@ -1546,6 +1563,7 @@
 				FC4878B603356FA17059AB46 /* GlassCard.swift in Sources */,
 				91159B9CB1EDFE43070C3A4E /* GlobalVpnSwitchBar.swift in Sources */,
 				BFE14D587EFAA1BC4CDDFD7E /* ICloudDriveExporter.swift in Sources */,
+				17286EF0A16EAB38B0E0A2DA /* ICloudExportGuide.swift in Sources */,
 				6E6C228991125641DCC0C8F3 /* ICloudRelay.swift in Sources */,
 				83187DDCE407E1CBCC936670 /* ICloudRelayStore.swift in Sources */,
 				99FCBD02DE55ED20126AD655 /* ICloudRelayUploader.swift in Sources */,

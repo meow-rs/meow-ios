@@ -14,6 +14,7 @@ struct SubscriptionsView: View {
     @State private var error: String?
     /// File name of the last iCloud Drive export, for the confirmation alert.
     @State private var exportedFileName: String?
+    @State private var showingICloudGuide = false
     // Owned here, not by `EngineOverviewSection`: the section changes
     // container on a fold and would otherwise reset (popping a pushed screen).
     @State private var routeMode: RouteMode = .rule
@@ -87,6 +88,28 @@ struct SubscriptionsView: View {
         } message: {
             Text(error ?? "")
         }
+        .sheet(isPresented: $showingICloudGuide, onDismiss: markICloudGuideSeen) {
+            ICloudExportGuideView()
+                .presentationDetents([.large])
+        }
+        // The guide demonstrates swiping a profile, so it waits until there
+        // is one to swipe. The short delay lets a first import's own sheet or
+        // alert settle before this one competes with it.
+        .task(id: profiles.isEmpty) {
+            guard !profiles.isEmpty, ICloudExportGuide.shouldAutoPresent() else { return }
+            try? await Task.sleep(for: .seconds(0.8))
+            guard !Task.isCancelled, !isPresentingSomething else { return }
+            showingICloudGuide = true
+        }
+    }
+
+    private func markICloudGuideSeen() {
+        ICloudExportGuide.markSeen()
+    }
+
+    private var isPresentingSomething: Bool {
+        showingAdd || showingAddShadowsocks || showingImporter || editing != nil
+            || editingInfo != nil || exporting != nil || error != nil || exportedFileName != nil
     }
 
     private var engineSection: some View {
