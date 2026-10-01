@@ -107,7 +107,9 @@ struct ICloudExportGuideView: View {
             for next in GuidePhase.allCases {
                 withAnimation(next.animation) { phase = next }
                 try? await Task.sleep(for: next.hold)
-                if Task.isCancelled { return }
+                if Task.isCancelled {
+                    return
+                }
             }
         }
     }

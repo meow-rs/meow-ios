@@ -153,34 +153,34 @@ struct SettingsView: View {
         }
         #if DEBUG
         .navigationDestination(isPresented: $showDebugPanel) {
-                DiagnosticsPanelView()
-                    .ignoresSafeArea(edges: .bottom)
-                    .accessibilityIdentifier("settings.debug.diagnosticsPanel")
-            }
+            DiagnosticsPanelView()
+                .ignoresSafeArea(edges: .bottom)
+                .accessibilityIdentifier("settings.debug.diagnosticsPanel")
+        }
         #endif
-            .onChange(of: preferences.allowLan) { _, _ in persist() }
-            .onChange(of: preferences.blockHTTP3) { _, _ in persist() }
-            .onChange(of: preferences.ipv6Enabled) { _, _ in persist() }
-            .onChange(of: preferences.logLevel) { _, _ in persist() }
-            .onChange(of: preferences.onDemand) { _, _ in
-                persist()
-                // Push the new isOnDemandEnabled value into the live NE
-                // profile; otherwise the toggle only takes effect on next
-                // app launch.
-                Task { await vpnManager.refresh() }
-            }
-            .task {
-                appIcon = AppIcon(alternateIconName: UIApplication.shared.alternateIconName)
-                await pollMemory()
-            }
-            .fileExporter(
-                isPresented: $showingLogExporter,
-                document: logExportDocument,
-                contentType: .plainText,
-                defaultFilename: "meow-tunnel-\(logTimestamp).log",
-            ) { _ in
-                logExportDocument = nil
-            }
+        .onChange(of: preferences.allowLan) { _, _ in persist() }
+        .onChange(of: preferences.blockHTTP3) { _, _ in persist() }
+        .onChange(of: preferences.ipv6Enabled) { _, _ in persist() }
+        .onChange(of: preferences.logLevel) { _, _ in persist() }
+        .onChange(of: preferences.onDemand) { _, _ in
+            persist()
+            // Push the new isOnDemandEnabled value into the live NE
+            // profile; otherwise the toggle only takes effect on next
+            // app launch.
+            Task { await vpnManager.refresh() }
+        }
+        .task {
+            appIcon = AppIcon(alternateIconName: UIApplication.shared.alternateIconName)
+            await pollMemory()
+        }
+        .fileExporter(
+            isPresented: $showingLogExporter,
+            document: logExportDocument,
+            contentType: .plainText,
+            defaultFilename: "meow-tunnel-\(logTimestamp).log",
+        ) { _ in
+            logExportDocument = nil
+        }
     }
 
     private func binding<Value>(_ keyPath: WritableKeyPath<Preferences, Value>) -> Binding<Value> {

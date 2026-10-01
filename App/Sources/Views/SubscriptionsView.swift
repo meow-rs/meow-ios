@@ -75,7 +75,11 @@ struct SubscriptionsView: View {
             "subscriptions.exportICloud.done.title",
             isPresented: Binding(
                 get: { exportedFileName != nil },
-                set: { if !$0 { exportedFileName = nil } },
+                set: {
+                    if !$0 {
+                        exportedFileName = nil
+                    }
+                },
             ),
             presenting: exportedFileName,
         ) { _ in
