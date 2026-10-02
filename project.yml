@@ -337,8 +337,8 @@ targets:
         CFBundleDisplayName: meow
         UILaunchScreen:
           UIColorName: LaunchBackground
-        CFBundleShortVersionString: "1.5.0"
-        CFBundleVersion: "2026080601"
+        CFBundleShortVersionString: "1.7.0"
+        CFBundleVersion: "2026100201"
         UIRequiredDeviceCapabilities:
           - arm64
         NSAppTransportSecurity:
@@ -422,8 +422,8 @@ targets:
       path: PacketTunnelTV/Info.plist
       properties:
         CFBundleDisplayName: meow Tunnel
-        CFBundleShortVersionString: "1.5.0"
-        CFBundleVersion: "2026080601"
+        CFBundleShortVersionString: "1.7.0"
+        CFBundleVersion: "2026100201"
         UIRequiredDeviceCapabilities:
           - arm64
         NSExtension:
