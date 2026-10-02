@@ -339,6 +339,9 @@
 "widget.routeMode.all.long" = "Proxy All Traffic";
 "widget.routeMode.direct.long" = "Direct Connection";
 "widget.toggle.label" = "VPN";
+"widget.control.name" = "meow VPN";
+"widget.control.on" = "On";
+"widget.control.off" = "Off";
 "widget.intent.toggle.title" = "Turn meow VPN On or Off";
 "widget.intent.toggle.value" = "On";
 "widget.intent.routeMode.title" = "Set Route Mode";

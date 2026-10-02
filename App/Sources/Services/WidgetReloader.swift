@@ -39,6 +39,8 @@ enum WidgetReloader {
     private static func reloadAll() {
         #if canImport(WidgetKit)
             WidgetCenter.shared.reloadAllTimelines()
+            // The Control Center switch shows the tunnel state too.
+            ControlCenter.shared.reloadAllControls()
         #endif
     }
 }

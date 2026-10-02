@@ -343,6 +343,9 @@
 "widget.routeMode.all.long" = "全局代理";
 "widget.routeMode.direct.long" = "全部直连";
 "widget.toggle.label" = "VPN";
+"widget.control.name" = "meow VPN";
+"widget.control.on" = "开启";
+"widget.control.off" = "关闭";
 "widget.intent.toggle.title" = "开关 meow VPN";
 "widget.intent.toggle.value" = "开启";
 "widget.intent.routeMode.title" = "设置路由模式";

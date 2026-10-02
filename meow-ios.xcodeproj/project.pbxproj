@@ -175,6 +175,7 @@
 		ACB0FE6DC7CD1D5E824CCB35 /* EngineBootTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1046B4656B3C3717791D82D4 /* EngineBootTests.swift */; };
 		ADBD29F9A34A3AF34057D104 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1880D3F09797DFE2718AFC /* AppModel.swift */; };
 		AED9371463802844EA716734 /* TunnelWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC63DA4613615F75070234DC /* TunnelWidget.swift */; };
+		AEEC7CD2677216020C8E380E /* VpnControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4493E14EFC5CF195F133B5AC /* VpnControl.swift */; };
 		AFFFD00A574AA3A9C3D33248 /* DailyTrafficAccumulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664BEEB7B966973C3D0A5074 /* DailyTrafficAccumulator.swift */; };
 		B0A450745E86E643FC2DD310 /* AppIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CB86E1C2F1E528D2A14F58 /* AppIcon.swift */; };
 		B2761759D155051F32B46F2D /* AppModelContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EEE34003CA284E6D9754E0 /* AppModelContainer.swift */; };
@@ -364,6 +365,7 @@
 		415A45F45F6FA01D8DA04A95 /* YamlEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YamlEditorView.swift; sourceTree = "<group>"; };
 		421A985E92CD32B07F712279 /* PacketTunnelTV.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = PacketTunnelTV.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		43CB2FDDE14D4053A9015FBD /* ICloudExportGuideTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICloudExportGuideTests.swift; sourceTree = "<group>"; };
+		4493E14EFC5CF195F133B5AC /* VpnControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnControl.swift; sourceTree = "<group>"; };
 		459136B958385ACB511D5D14 /* PacketTunnel.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = PacketTunnel.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		468AB5369E33BCD92920CF52 /* MWPreferences.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MWPreferences.m; sourceTree = "<group>"; };
 		46B8F525EC80EC48DC803B97 /* WidgetReloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetReloader.swift; sourceTree = "<group>"; };
@@ -848,6 +850,7 @@
 				0F7D2469CF78975F683F7263 /* RouteModeWidget.swift */,
 				FEDFCDB10E8D38E7F2F3291D /* TunnelEntry.swift */,
 				DC63DA4613615F75070234DC /* TunnelWidget.swift */,
+				4493E14EFC5CF195F133B5AC /* VpnControl.swift */,
 				AC87F6F3F496FB702E9D90DB /* WidgetComponents.swift */,
 				6BE6A89E4D40278FC4A26C47 /* WidgetIntents.swift */,
 				11EB5F9F5C5ED7501F96B38D /* WidgetTunnel.swift */,
@@ -1559,6 +1562,7 @@
 				5E72BD0D8B49421C7A20B265 /* RouteModeWidget.swift in Sources */,
 				504C092A82FD9A438C3432FA /* TunnelEntry.swift in Sources */,
 				AED9371463802844EA716734 /* TunnelWidget.swift in Sources */,
+				AEEC7CD2677216020C8E380E /* VpnControl.swift in Sources */,
 				650327D839A581DCC0C20AE8 /* WidgetComponents.swift in Sources */,
 				668F2918E8573EE78DC49990 /* WidgetIntents.swift in Sources */,
 				2883358B5C8DFBCAAFCA6EFD /* WidgetTunnel.swift in Sources */,

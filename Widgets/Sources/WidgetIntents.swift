@@ -22,7 +22,10 @@ struct ToggleTunnelIntent: SetValueIntent {
     @MainActor
     func perform() async throws -> some IntentResult {
         // Reload even when the switch fails, so it snaps back to the truth.
-        defer { WidgetCenter.shared.reloadAllTimelines() }
+        defer {
+            WidgetCenter.shared.reloadAllTimelines()
+            ControlCenter.shared.reloadAllControls()
+        }
         try await WidgetTunnel.setRunning(value)
         return .result()
     }
