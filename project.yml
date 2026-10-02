@@ -46,7 +46,7 @@ targets:
       properties:
         CFBundleDisplayName: meow
         CFBundleShortVersionString: "1.7.0"
-        CFBundleVersion: "2026091701"
+        CFBundleVersion: "2026100201"
         UIApplicationSceneManifest:
           UIApplicationSupportsMultipleScenes: false
         UILaunchScreen:
@@ -217,7 +217,7 @@ targets:
       properties:
         CFBundleDisplayName: meow Tunnel
         CFBundleShortVersionString: "1.7.0"
-        CFBundleVersion: "2026091701"
+        CFBundleVersion: "2026100201"
         NSExtension:
           NSExtensionPointIdentifier: com.apple.networkextension.packet-tunnel
           NSExtensionPrincipalClass: PacketTunnelProvider
@@ -280,7 +280,7 @@ targets:
       properties:
         CFBundleDisplayName: meow Widgets
         CFBundleShortVersionString: "1.7.0"
-        CFBundleVersion: "2026091701"
+        CFBundleVersion: "2026100201"
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
         # The route-mode widget talks to the engine's REST API on 127.0.0.1.

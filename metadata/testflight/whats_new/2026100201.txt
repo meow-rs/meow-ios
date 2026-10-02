@@ -1,0 +1,6 @@
+Build 2026100201 (1.7.0, iPhone/iPad)
+
+• New: Home Screen widgets. Add "VPN" (small or medium) to turn meow on or off without opening the app, and see whether it's connected and which route mode it's using. The medium size and the "Route Mode" widget switch between Rule, Global and Direct while connected.
+• New: Lock Screen widgets. A round shield that turns the VPN on or off, a rectangular one with the connection state and route mode, a status line above the clock, and a Route Mode picker.
+• Widgets work on tinted Home Screens, and English and Chinese are supported.
+• Please test: add the widgets on the Home Screen and the Lock Screen, turn the VPN on and off from them, switch route modes while connected, and check they stay in sync with the app. Report a widget that shows the wrong state, a switch that doesn't respond, or any crash.
