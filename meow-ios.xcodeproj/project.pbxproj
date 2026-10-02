@@ -63,6 +63,7 @@
 		3B98C9A878991E13FC8087A8 /* MeowTVApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CD60CCEECD879D2873F26A /* MeowTVApp.swift */; };
 		3BAE21D06E5B9935E58FDF1B /* MeowAPITypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A693FE7115671D717A87F1DB /* MeowAPITypes.swift */; };
 		3BDE9CF191C04836EB30FBF5 /* MWTunnelEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 620106BFB5E8593748590EBA /* MWTunnelEngine.m */; };
+		3EC876FB190AE2D945453C4F /* LockScreenViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CCD7DF28AF9F39A8E225D3 /* LockScreenViews.swift */; };
 		3FAE83DC16BC5B29F06CE356 /* UtilitySessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3F7EB51045141F84569793 /* UtilitySessionStore.swift */; };
 		43CC40E5E8E7DEEB9E61CEB8 /* ShadowsocksConfigBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2646E6E7241DEDBA8C6127C6 /* ShadowsocksConfigBuilder.swift */; };
 		45310440BCC0654BDE996BA2 /* SubscriptionParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0AD4D11A4D395987DD843B /* SubscriptionParserTests.swift */; };
@@ -463,6 +464,7 @@
 		D00F6BDADF0FACF2ED3B0447 /* ExportQRFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportQRFlowTests.swift; sourceTree = "<group>"; };
 		D17FF5C7044F3F3FF3153128 /* SubscriptionDeepLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionDeepLink.swift; sourceTree = "<group>"; };
 		D1A7AFDD113E049439EEE4A9 /* MeowShared */ = {isa = PBXFileReference; lastKnownFileType = folder; name = MeowShared; path = MeowShared; sourceTree = SOURCE_ROOT; };
+		D4CCD7DF28AF9F39A8E225D3 /* LockScreenViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockScreenViews.swift; sourceTree = "<group>"; };
 		D51C2BC68B7800884B68643F /* DiagnosticsLabelParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsLabelParserTests.swift; sourceTree = "<group>"; };
 		D5A3FCA37BA819ACC0A9D0EB /* AddShadowsocksFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddShadowsocksFlowTests.swift; sourceTree = "<group>"; };
 		D7A0587577F4B11031F0816D /* ProxiesDecodingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxiesDecodingTests.swift; sourceTree = "<group>"; };
@@ -841,6 +843,7 @@
 			isa = PBXGroup;
 			children = (
 				10D4FAAA35E16BD3A3A2146B /* EngineModeClient.swift */,
+				D4CCD7DF28AF9F39A8E225D3 /* LockScreenViews.swift */,
 				A488B1A073BD3CD547E2B5A3 /* MeowWidgetsBundle.swift */,
 				0F7D2469CF78975F683F7263 /* RouteModeWidget.swift */,
 				FEDFCDB10E8D38E7F2F3291D /* TunnelEntry.swift */,
@@ -1551,6 +1554,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E3943946AFDEDE40C51FC2D0 /* EngineModeClient.swift in Sources */,
+				3EC876FB190AE2D945453C4F /* LockScreenViews.swift in Sources */,
 				4919E967A63FE326C9E5E4DC /* MeowWidgetsBundle.swift in Sources */,
 				5E72BD0D8B49421C7A20B265 /* RouteModeWidget.swift in Sources */,
 				504C092A82FD9A438C3432FA /* TunnelEntry.swift in Sources */,

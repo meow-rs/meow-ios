@@ -2,7 +2,8 @@ import SwiftUI
 import WidgetKit
 
 /// The VPN switch over the tunnel's status; the medium size adds the
-/// route-mode buttons.
+/// route-mode buttons. On the Lock Screen it's a tappable shield (circular
+/// and rectangular) or a status line (inline).
 struct TunnelWidget: Widget {
     static let kind = "com.tangzixiang.meow.widget.tunnel"
 
@@ -13,7 +14,13 @@ struct TunnelWidget: Widget {
         }
         .configurationDisplayName("widget.tunnel.name")
         .description("widget.tunnel.description")
-        .supportedFamilies([.systemSmall, .systemMedium])
+        .supportedFamilies([
+            .systemSmall,
+            .systemMedium,
+            .accessoryCircular,
+            .accessoryRectangular,
+            .accessoryInline,
+        ])
     }
 }
 
@@ -23,6 +30,19 @@ private struct TunnelWidgetView: View {
     @Environment(\.widgetFamily) private var family
 
     var body: some View {
+        switch family {
+        case .accessoryCircular:
+            TunnelCircularView(entry: entry)
+        case .accessoryRectangular:
+            TunnelRectangularView(entry: entry)
+        case .accessoryInline:
+            TunnelInlineView(entry: entry)
+        default:
+            homeScreen
+        }
+    }
+
+    private var homeScreen: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .top) {
                 AppMarkImage(isConnected: entry.isConnected)
@@ -54,4 +74,18 @@ private struct TunnelWidgetView: View {
 } timeline: {
     TunnelEntry.placeholder
     TunnelEntry(date: .now, stage: .stopped, routeMode: .all, isConfigured: true)
+}
+
+#Preview(as: .accessoryRectangular) {
+    TunnelWidget()
+} timeline: {
+    TunnelEntry.placeholder
+    TunnelEntry(date: .now, stage: .stopped, routeMode: .rule, isConfigured: true)
+}
+
+#Preview(as: .accessoryCircular) {
+    TunnelWidget()
+} timeline: {
+    TunnelEntry.placeholder
+    TunnelEntry(date: .now, stage: .stopped, routeMode: .rule, isConfigured: true)
 }

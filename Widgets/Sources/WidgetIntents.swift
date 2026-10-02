@@ -11,6 +11,14 @@ struct ToggleTunnelIntent: SetValueIntent {
     @Parameter(title: "widget.intent.toggle.value")
     var value: Bool
 
+    init() {}
+
+    /// For a plain `Button` (the Lock Screen widgets), which unlike a
+    /// `Toggle` doesn't fill in `value` itself.
+    init(value: Bool) {
+        self.value = value
+    }
+
     @MainActor
     func perform() async throws -> some IntentResult {
         // Reload even when the switch fails, so it snaps back to the truth.
