@@ -16,8 +16,16 @@ enum WidgetTunnel {
         let isConfigured: Bool
     }
 
-    enum Failure: Error {
+    /// Shown by the system when an intent throws it (the Control Center
+    /// toggle can be tapped before setup, unlike the widgets' switch).
+    enum Failure: Error, CustomLocalizedStringResourceConvertible {
         case notConfigured
+
+        var localizedStringResource: LocalizedStringResource {
+            switch self {
+            case .notConfigured: "widget.error.notConfigured"
+            }
+        }
     }
 
     /// How long an intent waits for the tunnel to finish starting or

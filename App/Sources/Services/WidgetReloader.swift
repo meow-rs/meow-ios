@@ -36,6 +36,14 @@ enum WidgetReloader {
         reloadAll()
     }
 
+    /// Catch up on changes made while the app wasn't running — the tunnel
+    /// stopped from Settings, another VPN taking the slot, the tunnel dying.
+    /// Controls have no timeline to fall back on, and reloads requested from
+    /// the foreground don't count against the widgets' budget.
+    static func appDidBecomeActive() {
+        reloadAll()
+    }
+
     private static func reloadAll() {
         #if canImport(WidgetKit)
             WidgetCenter.shared.reloadAllTimelines()

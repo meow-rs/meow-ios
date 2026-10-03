@@ -342,6 +342,8 @@
 "widget.control.name" = "meow VPN";
 "widget.control.on" = "On";
 "widget.control.off" = "Off";
+"widget.control.setup" = "Set Up";
+"widget.error.notConfigured" = "Open meow and choose a profile first.";
 "widget.intent.toggle.title" = "Turn meow VPN On or Off";
 "widget.intent.toggle.value" = "On";
 "widget.intent.routeMode.title" = "Set Route Mode";

@@ -346,6 +346,8 @@
 "widget.control.name" = "meow VPN";
 "widget.control.on" = "开启";
 "widget.control.off" = "关闭";
+"widget.control.setup" = "需设置";
+"widget.error.notConfigured" = "请先打开 meow 并选择一个配置。";
 "widget.intent.toggle.title" = "开关 meow VPN";
 "widget.intent.toggle.value" = "开启";
 "widget.intent.routeMode.title" = "设置路由模式";

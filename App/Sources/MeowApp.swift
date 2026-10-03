@@ -4,6 +4,7 @@ import SwiftUI
 @main
 struct MeowApp: App {
     @State private var appModel = AppModel()
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some Scene {
         WindowGroup {
@@ -19,5 +20,10 @@ struct MeowApp: App {
                 .task { await appModel.bootstrap() }
         }
         .modelContainer(AppModelContainer.shared.container)
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active {
+                WidgetReloader.appDidBecomeActive()
+            }
+        }
     }
 }
