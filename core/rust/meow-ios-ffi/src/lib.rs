@@ -916,6 +916,46 @@ fn inject_global_selector(root: &mut serde_yaml::Mapping, primary: &str) {
     }
 }
 
+/// Whether a DNS server entry is a mihomo DHCP resolver (`dhcp://en0`,
+/// `dhcp://system`).
+fn is_dhcp_nameserver(entry: &serde_yaml::Value) -> bool {
+    entry.as_str().is_some_and(|address| {
+        url::Url::parse(address.trim()).is_ok_and(|url| url.scheme() == "dhcp")
+    })
+}
+
+/// Drop DHCP resolvers from every DNS server list the engine parses.
+///
+/// meow-rs rejects the `dhcp` scheme, and one bad entry in `nameserver`,
+/// `fallback`, `default-nameserver` or `proxy-server-nameserver` fails the
+/// whole engine start (#358). Resolving one would mean reading the
+/// interface's DHCP lease, which the NE has no API for, so the entries are
+/// dropped and the built-in defaults (appended to `nameserver` by the
+/// caller) take over. In `nameserver-policy`, a domain left with no
+/// servers is removed, so it falls back to the main nameservers instead of
+/// erroring.
+fn strip_dhcp_nameservers(dns: &mut serde_yaml::Mapping) {
+    for key in [
+        "nameserver",
+        "fallback",
+        "default-nameserver",
+        "proxy-server-nameserver",
+    ] {
+        if let Some(serde_yaml::Value::Sequence(list)) = dns.get_mut(key) {
+            list.retain(|entry| !is_dhcp_nameserver(entry));
+        }
+    }
+    if let Some(serde_yaml::Value::Mapping(policy)) = dns.get_mut("nameserver-policy") {
+        policy.retain(|_, servers| match servers {
+            serde_yaml::Value::Sequence(list) => {
+                list.retain(|entry| !is_dhcp_nameserver(entry));
+                !list.is_empty()
+            }
+            single => !is_dhcp_nameserver(single),
+        });
+    }
+}
+
 /// Patch a Clash YAML config for iOS: strips `subscriptions`; keeps the
 /// user's `dns` block but pins the fake-ip keys the tunnel requires on top
 /// (supported user nameservers stay first, unsupported DHCP resolvers are
@@ -1038,21 +1078,15 @@ pub unsafe extern "C" fn meow_patch_config(
     ] {
         dns.insert(serde_yaml::Value::String(k.into()), v);
     }
-    // Supported user-supplied nameservers stay first. DHCP resolvers depend on
-    // platform interface discovery that the embedded parser does not support,
-    // so omit the scheme on iOS and let the built-in defaults provide the
-    // compatible fallback. The defaults are always appended (deduped) so the
-    // tunnel keeps a known-good plain-UDP resolver even when the user's entries
-    // are unreachable or DoH-only.
+    strip_dhcp_nameservers(&mut dns);
+    // Supported user-supplied nameservers stay first; the built-in defaults
+    // are always appended (deduped) so the tunnel keeps a known-good plain-UDP
+    // resolver even when the user's entries are unreachable, DoH-only, or were
+    // all DHCP resolvers dropped above.
     let mut nameservers = match dns.get("nameserver") {
         Some(serde_yaml::Value::Sequence(list)) => list.clone(),
         _ => Vec::new(),
     };
-    nameservers.retain(|entry| {
-        !entry
-            .as_str()
-            .is_some_and(|address| url::Url::parse(address).is_ok_and(|url| url.scheme() == "dhcp"))
-    });
     for default in ["119.29.29.29", "223.5.5.5"] {
         let entry = serde_yaml::Value::String(default.into());
         if !nameservers.contains(&entry) {
@@ -1831,6 +1865,56 @@ rules:
     }
 
     #[test]
+    fn patch_config_drops_dhcp_from_every_dns_server_list() {
+        let patched = patch_config(
+            r#"
+dns:
+  default-nameserver:
+    - dhcp://en0
+    - 223.5.5.5
+  fallback:
+    - dhcp://system
+    - tls://1.1.1.1
+  proxy-server-nameserver:
+    - DHCP://en0
+  nameserver-policy:
+    corp.example: dhcp://en0
+    "+.lan":
+      - dhcp://en0
+    example.com:
+      - dhcp://en0
+      - 8.8.8.8
+rules:
+  - MATCH,DIRECT
+"#,
+            7890,
+            0,
+            1053,
+        );
+        let doc: serde_yaml::Value = serde_yaml::from_str(&patched).expect("patched yaml");
+        let dns = &doc["dns"];
+        let list = |key: &str| -> Vec<String> {
+            dns[key]
+                .as_sequence()
+                .map(|s| {
+                    s.iter()
+                        .filter_map(|v| v.as_str().map(String::from))
+                        .collect()
+                })
+                .unwrap_or_default()
+        };
+        assert_eq!(list("default-nameserver"), ["223.5.5.5"]);
+        assert_eq!(list("fallback"), ["tls://1.1.1.1"]);
+        assert!(list("proxy-server-nameserver").is_empty());
+        let policy = dns["nameserver-policy"].as_mapping().expect("policy kept");
+        assert_eq!(policy.len(), 1, "domains left with no servers are dropped");
+        assert_eq!(
+            dns["nameserver-policy"]["example.com"][0].as_str(),
+            Some("8.8.8.8")
+        );
+    }
+
+    #[test]
     fn patch_config_drops_dhcp_nameserver_and_loads_config() {
         let tmp = tempfile::tempdir().expect("temp config dir");
         let config_path = tmp.path().join("effective-config.yaml");
@@ -1839,6 +1923,10 @@ rules:
 dns:
   nameserver:
     - dhcp://en0
+  fallback:
+    - dhcp://system
+  nameserver-policy:
+    corp.example: dhcp://en0
 proxies:
   - name: DIRECT
     type: direct
