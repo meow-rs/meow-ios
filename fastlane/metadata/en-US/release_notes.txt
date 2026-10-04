@@ -1,3 +1,11 @@
+meow 2.0
+
+• New: meow for Apple TV. Send a config from your iPhone through iCloud — swipe right on a config and tap "iCloud Drive" — and it appears on the TV
+• New: Home Screen, Lock Screen and Control Center widgets turn the VPN on or off and switch between Rule, Global and Direct
+• New: subscriptions can update themselves every day or every week
+• iPad and iPhone Duo: sidebar tabs, two-column Proxy Groups and Engine layouts, fold-aware columns on the inner display, and readable-width forms on wide screens
+• The status icon on the Home tab now matches the app icon you picked
+• Configs that list dhcp:// DNS servers now start instead of failing
 • Proxy engine updated to meow-rs 0.21.2: BoringSSL is now the only TLS stack, Hysteria2 runs on quiche, and the tunnel extension is smaller
 • Configs whose nameservers point at their own dns.listen port now resolve proxy servers correctly
 • DNS prefers IPv4 with a per-family cache, reuses tcp:// upstream connections, and accepts rule-set: patterns in nameserver-policy
@@ -5,7 +13,6 @@
 • GLOBAL mode uses the primary outbound
 • Deleting a connection or reloading the profile cancels the live stream; UDP DNS honours routing rules
 • AnyTLS, Snell and Hysteria2 reliability fixes; new XHTTP transport
-• iPad and iPhone Duo: sidebar tabs, two-column Proxy Groups and Engine layouts, and readable-width forms on wide displays
 • Requires iOS 18 or later
 
 Issues and feedback: https://github.com/meow-rs/meow-ios/issues

@@ -1,0 +1,8 @@
+构建 2026100401 (2.0, iPhone/iPad 与 Apple TV)
+
+meow 2.0 汇总了 1.5.0 以来的全部更新：Apple TV、小组件，以及 iPad 和 iPhone Duo 布局。相比构建 2026100201 的新内容：
+• 新功能：控制中心开关。在控制中心添加“meow VPN”即可开关隧道；如果还没有设置配置，会给出提示而不是静默失败。
+• 新功能：订阅自动更新。编辑带 URL 的订阅，将“自动更新”设为“每天更新”或“每周更新”；到期后下次打开应用时自动更新，订阅行上的时钟标记会显示该设置。
+• 修复：DNS 服务器（nameserver、fallback、default-nameserver、proxy-server-nameserver 或 nameserver-policy）中包含 dhcp:// 的配置不再导致引擎无法启动。
+• 修复：首页的状态图标现在显示你在设置中选择的应用图标。
+• 请测试：有配置和没有配置时的控制中心开关、订阅自动更新、包含 dhcp:// DNS 的配置，以及 Apple TV 的 iCloud 导入。如有状态不同步或崩溃，请反馈。

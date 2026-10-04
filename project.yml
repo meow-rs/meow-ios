@@ -45,8 +45,8 @@ targets:
       path: App/Info.plist
       properties:
         CFBundleDisplayName: meow
-        CFBundleShortVersionString: "1.7.0"
-        CFBundleVersion: "2026100201"
+        CFBundleShortVersionString: "2.0"
+        CFBundleVersion: "2026100401"
         UIApplicationSceneManifest:
           UIApplicationSupportsMultipleScenes: false
         UILaunchScreen:
@@ -216,8 +216,8 @@ targets:
       path: PacketTunnel/Info.plist
       properties:
         CFBundleDisplayName: meow Tunnel
-        CFBundleShortVersionString: "1.7.0"
-        CFBundleVersion: "2026100201"
+        CFBundleShortVersionString: "2.0"
+        CFBundleVersion: "2026100401"
         NSExtension:
           NSExtensionPointIdentifier: com.apple.networkextension.packet-tunnel
           NSExtensionPrincipalClass: PacketTunnelProvider
@@ -279,8 +279,8 @@ targets:
       path: Widgets/Info.plist
       properties:
         CFBundleDisplayName: meow Widgets
-        CFBundleShortVersionString: "1.7.0"
-        CFBundleVersion: "2026100201"
+        CFBundleShortVersionString: "2.0"
+        CFBundleVersion: "2026100401"
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
         # The route-mode widget talks to the engine's REST API on 127.0.0.1.
@@ -337,8 +337,8 @@ targets:
         CFBundleDisplayName: meow
         UILaunchScreen:
           UIColorName: LaunchBackground
-        CFBundleShortVersionString: "1.7.0"
-        CFBundleVersion: "2026100201"
+        CFBundleShortVersionString: "2.0"
+        CFBundleVersion: "2026100401"
         UIRequiredDeviceCapabilities:
           - arm64
         NSAppTransportSecurity:
@@ -422,8 +422,8 @@ targets:
       path: PacketTunnelTV/Info.plist
       properties:
         CFBundleDisplayName: meow Tunnel
-        CFBundleShortVersionString: "1.7.0"
-        CFBundleVersion: "2026100201"
+        CFBundleShortVersionString: "2.0"
+        CFBundleVersion: "2026100401"
         UIRequiredDeviceCapabilities:
           - arm64
         NSExtension:

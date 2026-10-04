@@ -1,3 +1,11 @@
+meow 2.0
+
+• 新功能：Apple TV 版 meow。在 iPhone 上向右轻扫配置并选择“iCloud 云盘”，配置会通过 iCloud 同步到电视上
+• 新功能：主屏幕、锁定屏幕和控制中心小组件，可开关 VPN 并在规则、全局、直连之间切换
+• 新功能：订阅可以每天或每周自动更新
+• iPad 与 iPhone Duo：侧边栏标签、代理组与引擎双列布局，内屏按折叠状态调整列数，宽屏上表单以适合阅读的宽度显示
+• 首页的状态图标现在与所选的应用图标一致
+• DNS 服务器中包含 dhcp:// 的配置现在可以正常启动
 • 代理引擎升级到 meow-rs 0.21.2：TLS 栈统一为 BoringSSL，Hysteria2 改用 quiche，隧道扩展体积更小
 • nameserver 指向自身 dns.listen 端口的配置现在可以正确解析代理服务器
 • DNS 优先 IPv4 并按地址族缓存，tcp:// 上游复用连接，nameserver-policy 支持 rule-set: 匹配
@@ -5,7 +13,6 @@
 • GLOBAL 模式使用主出站
 • 删除连接或重载配置会真正断开对应的流；UDP DNS 遵循路由规则
 • AnyTLS、Snell、Hysteria2 稳定性修复；新增 XHTTP 传输
-• iPad 与 iPhone Duo：侧边栏标签、代理组与引擎双列布局，宽屏上表单以适合阅读的宽度显示
 • 需要 iOS 18 或更高版本
 
 问题与反馈：https://github.com/meow-rs/meow-ios/issues
