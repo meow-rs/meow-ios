@@ -111,6 +111,7 @@
 		5AB90DB374188E502DDDD3BD /* MeowCore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B807F37D85605FF0AD1427F5 /* MeowCore.xcframework */; };
 		5C49A5DC6758BD9AB95DB5C2 /* TrafficView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F87C9BC53D85684F46CF05 /* TrafficView.swift */; };
 		5C5990FA3C513A4C32F4EC28 /* ProfileUpdateIntervalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B974DCDEF759A85D212F7A9 /* ProfileUpdateIntervalTests.swift */; };
+		5CA44EC7BD0DF5B440C839C2 /* PerformanceMetricsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C55542E2ECC7409524734A /* PerformanceMetricsView.swift */; };
 		5D4A6997EDAAC8F162E93EE5 /* GeoLite2-ASN.mmdb in Resources */ = {isa = PBXBuildFile; fileRef = 1509E80EF5E3A28E045FE8C9 /* GeoLite2-ASN.mmdb */; };
 		5E72BD0D8B49421C7A20B265 /* RouteModeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7D2469CF78975F683F7263 /* RouteModeWidget.swift */; };
 		5EE1CF9FBCC6D1A06B791A79 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D5CF6C1DB2C326705BE75B5 /* SystemConfiguration.framework */; };
@@ -449,6 +450,7 @@
 		A43280DA576025F244CD1432 /* SubscriptionServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionServiceTests.swift; sourceTree = "<group>"; };
 		A488B1A073BD3CD547E2B5A3 /* MeowWidgetsBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeowWidgetsBundle.swift; sourceTree = "<group>"; };
 		A58DE76A35A4F9B0E9BAE069 /* MeowConfigValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeowConfigValidator.swift; sourceTree = "<group>"; };
+		A5C55542E2ECC7409524734A /* PerformanceMetricsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceMetricsView.swift; sourceTree = "<group>"; };
 		A5CB86E1C2F1E528D2A14F58 /* AppIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIcon.swift; sourceTree = "<group>"; };
 		A60CDAC71354AF7E29155D32 /* ICloudRelayUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICloudRelayUploader.swift; sourceTree = "<group>"; };
 		A66281C54AAEBA997FF20386 /* MeowWidgets.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = MeowWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -791,6 +793,7 @@
 				AEF41AF44DDC9B81E01AF637 /* GlobalVpnSwitchBar.swift */,
 				B4B1F7C57B22583A6919A107 /* LogsView.swift */,
 				8E8D0D6120471BD1DBC4ACFB /* NavRow.swift */,
+				A5C55542E2ECC7409524734A /* PerformanceMetricsView.swift */,
 				3B0CE1B314060B8B82956086 /* ProvidersView.swift */,
 				B7193B43D94BD4897FEDF967 /* ProxyGroupsView.swift */,
 				257652A3B2BA6B1E11BA6252 /* QRExportSheet.swift */,
@@ -1761,6 +1764,7 @@
 				2C6AB01320EAEFBC05E6F0B3 /* MeowConfigValidator.swift in Sources */,
 				BD6AED15527913757A1F8B78 /* MetricKitReporter.swift in Sources */,
 				51B3C9F10FE6A03AFD50A5E6 /* NavRow.swift in Sources */,
+				5CA44EC7BD0DF5B440C839C2 /* PerformanceMetricsView.swift in Sources */,
 				458E58A53D18E7E14542FAB8 /* Profile.swift in Sources */,
 				845F32D19086A9891D57BF84 /* ProfileAutoUpdater.swift in Sources */,
 				D54E5E996E730BB25C489DC8 /* ProfileUpdateInterval.swift in Sources */,

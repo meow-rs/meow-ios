@@ -54,6 +54,13 @@ public enum AppGroup {
             .appending(path: "metrickit", directoryHint: .isDirectory)
     }
 
+    /// Daily MetricKit metric payloads — see `MetricReportStore`.
+    /// `MWAppGroup.metricKitMetricsDirectoryURL` mirrors it.
+    public static var metricKitMetricsDirectoryURL: URL {
+        containerURL.appending(path: "diagnostics", directoryHint: .isDirectory)
+            .appending(path: "metrickit-metrics", directoryHint: .isDirectory)
+    }
+
     public static var trafficURL: URL {
         containerURL.appending(path: "traffic.json")
     }

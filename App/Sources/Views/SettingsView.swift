@@ -79,6 +79,12 @@ struct SettingsView: View {
                     Label("settings.label.crashReports", systemImage: "exclamationmark.triangle")
                 }
                 .accessibilityIdentifier("settings.nav.crashReports")
+                NavigationLink {
+                    PerformanceMetricsView()
+                } label: {
+                    Label("settings.label.metrics", systemImage: "gauge.with.dots.needle.33percent")
+                }
+                .accessibilityIdentifier("settings.nav.metrics")
                 Button {
                     Task { await exportLogs() }
                 } label: {

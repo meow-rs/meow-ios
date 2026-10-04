@@ -41,6 +41,7 @@ struct CrashReportsView: View {
         }
         .readableColumn()
         .navigationTitle("crashReports.nav.title")
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             if !reports.isEmpty {
                 Button("crashReports.button.deleteAll", role: .destructive) {

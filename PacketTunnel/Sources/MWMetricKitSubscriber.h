@@ -3,11 +3,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/// Saves MetricKit diagnostic payloads (crashes, hangs, CPU / disk-write
-/// exceptions) delivered to the extension into the App Group, where the app's
-/// Settings › Crash Reports lists them. Mirrors `CrashReportStore` in
-/// MeowModels: same directory, same digest-based file name, so a payload saved
-/// twice lands in one file. No-op on tvOS, which has no MetricKit.
+/// Saves MetricKit payloads delivered to the extension into the App Group:
+/// diagnostics (crashes, hangs, CPU / disk-write exceptions) for Settings ›
+/// Crash Reports, and daily metrics (memory peak, CPU, exits, network) for
+/// Settings › Performance Metrics. Mirrors `CrashReportStore` and
+/// `MetricReportStore` in MeowModels: same directories, same digest-based file
+/// names (a payload saved twice lands in one file), and for metrics the same
+/// envelope keys. No-op on tvOS, which has no MetricKit.
 @interface MWMetricKitSubscriber : NSObject
 
 /// Subscribes once per process; later calls do nothing.
@@ -16,6 +18,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// `metrickit-<first 16 bytes of SHA-256, hex>.json` — must match
 /// `CrashReportStore.fileName(for:)`.
 + (NSString *)fileNameForJSON:(NSData *)json;
+
+/// `metrics-<first 16 bytes of SHA-256, hex>.json` — must match
+/// `MetricReportStore.fileName(for:)`.
++ (NSString *)metricsFileNameForJSON:(NSData *)json;
 
 @end
 
