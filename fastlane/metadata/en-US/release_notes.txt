@@ -4,6 +4,7 @@ meow 2.0
 • New: Home Screen, Lock Screen and Control Center widgets turn the VPN on or off and switch between Rule, Global and Direct
 • New: subscriptions can update themselves every day or every week
 • iPad and iPhone Duo: sidebar tabs, two-column Proxy Groups and Engine layouts, fold-aware columns on the inner display, and readable-width forms on wide screens
+• New: Settings › Diagnostics › Crash Reports collects crash and hang reports from iOS so you can share them with an issue
 • The status icon on the Home tab now matches the app icon you picked
 • Configs that list dhcp:// DNS servers now start instead of failing
 • Proxy engine updated to meow-rs 0.21.2: BoringSSL is now the only TLS stack, Hysteria2 runs on quiche, and the tunnel extension is smaller

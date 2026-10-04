@@ -182,7 +182,8 @@ int meow_proxy_select(const char *group, const char *name);
 /**
  * Patch a Clash YAML config for iOS: strips `subscriptions`; keeps the
  * user's `dns` block but pins the fake-ip keys the tunnel requires on top
- * (user nameservers stay first, the built-in defaults are always appended);
+ * (supported user nameservers stay first, unsupported DHCP resolvers are
+ * omitted, and the built-in defaults are always appended);
  * pins `mixed-port`, `allow-lan`, listener bind address, and DNS listen
  * socket; declares a `GLOBAL` selector headed by the config's primary
  * outbound (so `mode: global` proxies rather than black-holes); injects a

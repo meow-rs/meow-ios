@@ -3,6 +3,7 @@ Build 2026100401 (2.0, iPhone/iPad and Apple TV)
 meow 2.0 rolls up everything since 1.5.0: Apple TV, widgets, and the iPad and iPhone Duo layouts. New since build 2026100201:
 • New: Control Center toggle. Add "meow VPN" in Control Center to turn the tunnel on or off. If no config is set up yet, it says so instead of failing silently.
 • New: per-subscription auto-update. Edit a subscription that has a URL and set Auto-update to Every day or Every week. The update runs the next time you open the app after it's due. A clock badge on the row shows the setting.
+• New: Settings › Diagnostics › Crash Reports. meow and its tunnel now save the crash and hang reports iOS delivers (usually a day after the event). Open a report to see what crashed, and share its JSON with your bug report.
 • Fixed: configs that list dhcp:// DNS servers (nameserver, fallback, default-nameserver, proxy-server-nameserver or nameserver-policy) no longer stop the engine from starting.
 • Fixed: the status glyph on the Home tab now shows the app icon you picked in Settings.
-• Please test: the Control Center toggle with and without a config, auto-update on a subscription, a config with dhcp:// DNS entries, and the Apple TV iCloud import. Report anything that doesn't stay in sync or any crash.
+• Please test: the Crash Reports screen (if meow or the tunnel ever crashed on your device, a report should appear within a day), the Control Center toggle with and without a config, auto-update on a subscription, a config with dhcp:// DNS entries, and the Apple TV iCloud import. Report anything that doesn't stay in sync or any crash.
