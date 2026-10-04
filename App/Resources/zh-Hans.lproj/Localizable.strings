@@ -507,3 +507,21 @@
 "settings.section.help" = "帮助";
 "settings.label.icloudGuide" = "将配置发送到 Apple TV";
 "tv.icloud.howTo" = "使用方法";
+
+/* Crash Reports (MetricKit) */
+"settings.label.crashReports" = "崩溃报告";
+"crashReports.nav.title" = "崩溃报告";
+"crashReports.empty.title" = "暂无崩溃报告";
+"crashReports.empty.description" = "发生崩溃或卡死后，iOS 会在之后某次启动时（通常一天内）把报告交给 meow。";
+"crashReports.footer" = "报告由 iOS（MetricKit）生成，仅保存在本机。反馈问题时可以分享报告。";
+"crashReports.button.deleteAll" = "全部删除";
+"crashReports.deleteAll.title" = "删除所有崩溃报告？";
+"crashReports.button.share" = "分享";
+"crashReports.detail.process" = "进程";
+"crashReports.detail.version" = "版本";
+"crashReports.detail.os" = "系统";
+"crashReports.kind.crash" = "崩溃";
+"crashReports.kind.hang" = "卡死";
+"crashReports.kind.cpu" = "CPU 异常";
+"crashReports.kind.diskWrite" = "磁盘写入异常";
+"crashReports.kind.launch" = "启动缓慢";

@@ -37,6 +37,11 @@ NSString *const MWAppGroupIdentifier = @"group.com.tangzixiang.meow";
     return [[self containerURL] URLByAppendingPathComponent:@"traffic.json"];
 }
 
++ (NSURL *)metricKitDirectoryURL {
+    return [[[self containerURL] URLByAppendingPathComponent:@"diagnostics" isDirectory:YES]
+        URLByAppendingPathComponent:@"metrickit" isDirectory:YES];
+}
+
 + (NSUserDefaults *)defaults {
     NSUserDefaults *d = [[NSUserDefaults alloc] initWithSuiteName:MWAppGroupIdentifier];
     NSAssert(d, @"Shared UserDefaults unavailable for suite '%@'", MWAppGroupIdentifier);

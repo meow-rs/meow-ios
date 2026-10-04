@@ -27,6 +27,7 @@
 		16FA48C705C2691763DE4187 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8895187DE158A91BFC1775BE /* Localizable.strings */; };
 		1705DA22AD7A785A8E0A5DF5 /* MeowApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332AEAFC0EED0EC4C05576EC /* MeowApp.swift */; };
 		17286EF0A16EAB38B0E0A2DA /* ICloudExportGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8CA1E344F4BCAEA620233A3 /* ICloudExportGuide.swift */; };
+		1A67E4325986A5703C43E7C5 /* CrashReportsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9947C821C35716297174EFA9 /* CrashReportsView.swift */; };
 		1B425023E3BA74B2E4B112DF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8895187DE158A91BFC1775BE /* Localizable.strings */; };
 		1C4A14F944F334280633F3C1 /* ConnectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6DE9E643D70646873B923B /* ConnectionsView.swift */; };
 		1D0E4DFB12DCCF45036E06CA /* AppIconPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE172966C96A950FE7FDC9C /* AppIconPickerView.swift */; };
@@ -36,13 +37,16 @@
 		1F65A4332745A913B8056198 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8895187DE158A91BFC1775BE /* Localizable.strings */; };
 		2063EF5A21DBDB2E5097D885 /* MeowCoreBridgeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA64C2503B8306CC64B9D23D /* MeowCoreBridgeTests.swift */; };
 		20AD914853192F80F71C9648 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F970EA608D1B86A217892A15 /* Assets.xcassets */; };
+		2182A79A2B76A7A3CEAD2664 /* MWMetricKitSubscriber.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B7947C05D3F17022FDEF4B /* MWMetricKitSubscriber.m */; };
 		220C80BA4770CE7A21194C2A /* WidgetReloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B8F525EC80EC48DC803B97 /* WidgetReloader.swift */; };
 		2272D3CBA8718DD970FCC402 /* MWSharedStore.m in Sources */ = {isa = PBXBuildFile; fileRef = AB83B7A37D165EF0E16A47BA /* MWSharedStore.m */; };
 		247B39FC868019403BC0B1BE /* MWTunnelSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B56935362D1576450CB4A3 /* MWTunnelSettings.m */; };
 		2534B8CDD2E40D5F2105C9EF /* ShadowsocksServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F650A5FA59D90978E2D8BC6 /* ShadowsocksServer.swift */; };
+		2559D24694DC95B6B14CA311 /* MetricKitReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C0C728420637134DE22109 /* MetricKitReporter.swift */; };
 		25931B4F38353E7DF1CD7F5E /* ProxiesDecodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A0587577F4B11031F0816D /* ProxiesDecodingTests.swift */; };
 		25E66559A88A13B0FEE0233B /* SubscriptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5369F7A0022B20FF1321D5 /* SubscriptionService.swift */; };
 		2687DFC8A2EC27D66312C06F /* UtilitySessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3F7EB51045141F84569793 /* UtilitySessionStore.swift */; };
+		270C7A5495404DA4AA4C750B /* MWMetricKitSubscriber.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B7947C05D3F17022FDEF4B /* MWMetricKitSubscriber.m */; };
 		278F82062579E2C776F91AA5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0007CC15139B2A50DA66285F /* Assets.xcassets */; };
 		27E34E45FFE9A9D2242373E2 /* ShadowsocksURIParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48800BB67F7CB5E42F942A83 /* ShadowsocksURIParser.swift */; };
 		2883358B5C8DFBCAAFCA6EFD /* WidgetTunnel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EB5F9F5C5ED7501F96B38D /* WidgetTunnel.swift */; };
@@ -199,6 +203,7 @@
 		BA844D3302038958647DC227 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D5CF6C1DB2C326705BE75B5 /* SystemConfiguration.framework */; };
 		BB311FD51E9A58A69F148EE5 /* ProfileAutoUpdaterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB7C1CA9DE54ED874D50571 /* ProfileAutoUpdaterTests.swift */; };
 		BB349570A0007E98FA1205B2 /* ICloudRelayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB2E1ADC6497BAC02DC29E5 /* ICloudRelayTests.swift */; };
+		BD6AED15527913757A1F8B78 /* MetricKitReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C0C728420637134DE22109 /* MetricKitReporter.swift */; };
 		BFE14D587EFAA1BC4CDDFD7E /* ICloudDriveExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7957678F8E4A3C18D3F2C5A /* ICloudDriveExporter.swift */; };
 		C05561AA0530BFF897CDEB8F /* MeowAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E114A82C37433E90AFEAD0E /* MeowAPI.swift */; };
 		C089C1713ACB294B9BB19091 /* MeowModels in Frameworks */ = {isa = PBXBuildFile; productRef = 631B5ADE84924A4D1A27E7F0 /* MeowModels */; };
@@ -385,6 +390,7 @@
 		47CD1F1E7DD00599AF2A5238 /* clash_minimal.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = clash_minimal.yaml; sourceTree = "<group>"; };
 		48057A73B8C1C158EB155986 /* MWIPCListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MWIPCListener.h; sourceTree = "<group>"; };
 		48800BB67F7CB5E42F942A83 /* ShadowsocksURIParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowsocksURIParser.swift; sourceTree = "<group>"; };
+		49C0C728420637134DE22109 /* MetricKitReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricKitReporter.swift; sourceTree = "<group>"; };
 		4B0AD4D11A4D395987DD843B /* SubscriptionParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionParserTests.swift; sourceTree = "<group>"; };
 		4B827CA25C7C1502C8AB3535 /* AddShadowsocksSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddShadowsocksSheet.swift; sourceTree = "<group>"; };
 		5173E18BCFC9C0CBADC96556 /* IPCRoundTripTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPCRoundTripTests.swift; sourceTree = "<group>"; };
@@ -406,6 +412,7 @@
 		6B7B8DF88EDD0D51301DD316 /* SwiftDataTestContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataTestContainer.swift; sourceTree = "<group>"; };
 		6BE6A89E4D40278FC4A26C47 /* WidgetIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetIntents.swift; sourceTree = "<group>"; };
 		6C69499C9815F48EC9AB924E /* AppIPCBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIPCBridge.swift; sourceTree = "<group>"; };
+		6D06890F557F4ADB3A4369A3 /* MWMetricKitSubscriber.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MWMetricKitSubscriber.h; sourceTree = "<group>"; };
 		6E01FEA2CE383A66686EDD16 /* v2rayn_ss_pair.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = v2rayn_ss_pair.txt; sourceTree = "<group>"; };
 		703008DEDF15E37B8C951A9A /* TunnelSettingsLANExclusionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TunnelSettingsLANExclusionTests.swift; sourceTree = "<group>"; };
 		711184DB8878CD1F212CEEA3 /* DnsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DnsView.swift; sourceTree = "<group>"; };
@@ -431,6 +438,7 @@
 		930ED8C12FBC2859BCDC56E4 /* VpnManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnManager.swift; sourceTree = "<group>"; };
 		992E16ADDEBA2F4304D4E797 /* EditableRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableRule.swift; sourceTree = "<group>"; };
 		9943546218B2F23235F1CCAD /* clash_malformed.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = clash_malformed.yaml; sourceTree = "<group>"; };
+		9947C821C35716297174EFA9 /* CrashReportsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrashReportsView.swift; sourceTree = "<group>"; };
 		9C5369F7A0022B20FF1321D5 /* SubscriptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionService.swift; sourceTree = "<group>"; };
 		9CA7DC0A8AEAA9185A7B40F0 /* AddSubscriptionFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSubscriptionFlowTests.swift; sourceTree = "<group>"; };
 		9CF0A80A8CEB2105E171334C /* UDPProtocolTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDPProtocolTests.swift; sourceTree = "<group>"; };
@@ -505,6 +513,7 @@
 		F1F87C9BC53D85684F46CF05 /* TrafficView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrafficView.swift; sourceTree = "<group>"; };
 		F2B40C39BB5FC5957F42AC74 /* Country.mmdb */ = {isa = PBXFileReference; path = Country.mmdb; sourceTree = "<group>"; };
 		F4B2AEF174C775BBB240908B /* meow-ios.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = "meow-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4B7947C05D3F17022FDEF4B /* MWMetricKitSubscriber.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MWMetricKitSubscriber.m; sourceTree = "<group>"; };
 		F582EC213C10F2BB97940B21 /* ClashConfigLinter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClashConfigLinter.swift; sourceTree = "<group>"; };
 		F58373225092C298E65BB090 /* geosite.mrs */ = {isa = PBXFileReference; path = geosite.mrs; sourceTree = "<group>"; };
 		F5B378E3EF2591C9CD059E98 /* ShadowsocksAddServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowsocksAddServiceTests.swift; sourceTree = "<group>"; };
@@ -771,6 +780,7 @@
 				8E8110225EBDEBDC762A0E20 /* ClashYAMLTextView.swift */,
 				8E6DE9E643D70646873B923B /* ConnectionsView.swift */,
 				AF51AD7DD7946AB70970C9A8 /* ContentView.swift */,
+				9947C821C35716297174EFA9 /* CrashReportsView.swift */,
 				B201C0CCEE8F418C1AA9E387 /* DeepLinkConfirmationSheet.swift */,
 				CA20D7D98E7BC4663E289174 /* DiagnosticsViewController.swift */,
 				711184DB8878CD1F212CEEA3 /* DnsView.swift */,
@@ -840,6 +850,7 @@
 				B9D147EADA278504AB1CDFA6 /* MeowAPI+Mock.swift */,
 				A693FE7115671D717A87F1DB /* MeowAPITypes.swift */,
 				A58DE76A35A4F9B0E9BAE069 /* MeowConfigValidator.swift */,
+				49C0C728420637134DE22109 /* MetricKitReporter.swift */,
 				CAA371ACBA09537B82B6ED70 /* ProfileAutoUpdater.swift */,
 				06D2AA0F7CC09650CF8263EF /* RulesYAMLEditor.swift */,
 				2646E6E7241DEDBA8C6127C6 /* ShadowsocksConfigBuilder.swift */,
@@ -1093,6 +1104,8 @@
 				FA317DD319BE5DA6206036F1 /* MWEngineLog.m */,
 				48057A73B8C1C158EB155986 /* MWIPCListener.h */,
 				329B260F122D91D5DDB24C44 /* MWIPCListener.m */,
+				6D06890F557F4ADB3A4369A3 /* MWMetricKitSubscriber.h */,
+				F4B7947C05D3F17022FDEF4B /* MWMetricKitSubscriber.m */,
 				8D0911E3BAFED1B94903FE31 /* MWPacketWriter.h */,
 				1C50CF82F4373D42432869C5 /* MWPacketWriter.m */,
 				5EEF0D1CF99CA135B39D3676 /* MWPreferences.h */,
@@ -1559,6 +1572,7 @@
 				A9E41576C0E036A74DB50B9C /* MeowAPITypes.swift in Sources */,
 				F6F3EEF925F0CF55E2DA0A21 /* MeowConfigValidator.swift in Sources */,
 				3B98C9A878991E13FC8087A8 /* MeowTVApp.swift in Sources */,
+				2559D24694DC95B6B14CA311 /* MetricKitReporter.swift in Sources */,
 				455C10A18CBEA8976BFFFD50 /* Profile.swift in Sources */,
 				2BB2A8A52D27FE95AB533BDF /* ProfileAutoUpdater.swift in Sources */,
 				073167323984AD05388EF90B /* ProfileUpdateInterval.swift in Sources */,
@@ -1605,6 +1619,7 @@
 				CA2E2A6FB985DA47F5F821CF /* MWDiagnosticsRunner.m in Sources */,
 				CC84729243B2772D45BDEAFA /* MWEngineLog.m in Sources */,
 				B703DA9A3985500E24E0E420 /* MWIPCListener.m in Sources */,
+				270C7A5495404DA4AA4C750B /* MWMetricKitSubscriber.m in Sources */,
 				B6F7DEBEB6F5A772063B4AC0 /* MWPacketWriter.m in Sources */,
 				723656CB0021E6DC5D7957EA /* MWPreferences.m in Sources */,
 				2272D3CBA8718DD970FCC402 /* MWSharedStore.m in Sources */,
@@ -1643,6 +1658,7 @@
 				889A7F885031B01EE2D4ABCE /* MWDiagnosticsRunner.m in Sources */,
 				C58EE1AF7B24B7192EB4E258 /* MWEngineLog.m in Sources */,
 				4F29B935B393F48182AC7CE4 /* MWIPCListener.m in Sources */,
+				2182A79A2B76A7A3CEAD2664 /* MWMetricKitSubscriber.m in Sources */,
 				B85AC5CED1BCB971FB7C16DB /* MWPacketWriter.m in Sources */,
 				C12A1DC80F02BF9348895EAF /* MWPreferences.m in Sources */,
 				34B4F8F808C424CBAF8E7EA9 /* MWSharedStore.m in Sources */,
@@ -1718,6 +1734,7 @@
 				5633A6F5985AA9E9A03443B7 /* ClashYAMLTextView.swift in Sources */,
 				1C4A14F944F334280633F3C1 /* ConnectionsView.swift in Sources */,
 				8743C9ECD8EE078FA44E6545 /* ContentView.swift in Sources */,
+				1A67E4325986A5703C43E7C5 /* CrashReportsView.swift in Sources */,
 				53CECD909096DFDB00109EC4 /* DailyTraffic.swift in Sources */,
 				AFFFD00A574AA3A9C3D33248 /* DailyTrafficAccumulator.swift in Sources */,
 				D94E6C83D6497117D1E7D35C /* DeepLinkConfirmationSheet.swift in Sources */,
@@ -1742,6 +1759,7 @@
 				3BAE21D06E5B9935E58FDF1B /* MeowAPITypes.swift in Sources */,
 				1705DA22AD7A785A8E0A5DF5 /* MeowApp.swift in Sources */,
 				2C6AB01320EAEFBC05E6F0B3 /* MeowConfigValidator.swift in Sources */,
+				BD6AED15527913757A1F8B78 /* MetricKitReporter.swift in Sources */,
 				51B3C9F10FE6A03AFD50A5E6 /* NavRow.swift in Sources */,
 				458E58A53D18E7E14542FAB8 /* Profile.swift in Sources */,
 				845F32D19086A9891D57BF84 /* ProfileAutoUpdater.swift in Sources */,

@@ -47,6 +47,13 @@ public enum AppGroup {
             .appending(path: "meow-tunnel.log")
     }
 
+    /// MetricKit diagnostic payloads saved by the app and the extension —
+    /// see `CrashReportStore`. `MWAppGroup.metricKitDirectoryURL` mirrors it.
+    public static var metricKitDirectoryURL: URL {
+        containerURL.appending(path: "diagnostics", directoryHint: .isDirectory)
+            .appending(path: "metrickit", directoryHint: .isDirectory)
+    }
+
     public static var trafficURL: URL {
         containerURL.appending(path: "traffic.json")
     }

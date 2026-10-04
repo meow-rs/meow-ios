@@ -73,6 +73,12 @@ struct SettingsView: View {
                     Label("settings.label.diagnostics", systemImage: "stethoscope")
                 }
                 .accessibilityIdentifier("settings.nav.diagnostics")
+                NavigationLink {
+                    CrashReportsView()
+                } label: {
+                    Label("settings.label.crashReports", systemImage: "exclamationmark.triangle")
+                }
+                .accessibilityIdentifier("settings.nav.crashReports")
                 Button {
                     Task { await exportLogs() }
                 } label: {

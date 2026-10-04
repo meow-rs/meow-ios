@@ -8,6 +8,7 @@
 #import "MWDarwinBridge.h"
 #import "MWDiagnosticsRunner.h"
 #import "MWEngineLog.h"
+#import "MWMetricKitSubscriber.h"
 #import "meow_core.h"
 #import <os/log.h>
 #import <mach/mach.h>
@@ -46,6 +47,7 @@ static os_log_t gLog;
                                                     0);
         _engineControlQueue = dispatch_queue_create(
             "com.tangzixiang.meow.PacketTunnel.engine-control", attr);
+        [MWMetricKitSubscriber start];
     }
     return self;
 }

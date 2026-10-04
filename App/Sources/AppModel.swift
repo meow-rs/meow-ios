@@ -26,6 +26,8 @@ final class AppModel {
         let iCloudRelayUploader: ICloudRelayUploader
         /// Home Screen icon choice; tvOS has no alternate icons to pick.
         let appIconStore: AppIconStore
+        /// Saves MetricKit crash / hang reports for Settings › Crash Reports.
+        let metricKitReporter: MetricKitReporter
     #endif
 
     /// Monotonically bumped each time `replaySelectedProxies()` finishes a pass
@@ -71,6 +73,7 @@ final class AppModel {
         #if os(iOS)
             iCloudRelayUploader = ICloudRelayUploader()
             appIconStore = AppIconStore()
+            metricKitReporter = MetricKitReporter()
         #endif
         ipcBridge.onTrafficDidUpdate = { [utilityTrafficChart] snapshot in
             utilityTrafficChart.ingest(snapshot)
@@ -109,6 +112,7 @@ final class AppModel {
         utilityLogs.startStreaming(api: meowAPI)
         #if os(iOS)
             iCloudRelayUploader.start()
+            metricKitReporter.start()
         #endif
     }
 

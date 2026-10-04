@@ -503,3 +503,21 @@
 "settings.section.help" = "Help";
 "settings.label.icloudGuide" = "Send Configs to Apple TV";
 "tv.icloud.howTo" = "How It Works";
+
+/* Crash Reports (MetricKit) */
+"settings.label.crashReports" = "Crash Reports";
+"crashReports.nav.title" = "Crash Reports";
+"crashReports.empty.title" = "No Crash Reports";
+"crashReports.empty.description" = "iOS hands meow a report of any crash or hang on a later launch, usually within a day.";
+"crashReports.footer" = "Reports come from iOS (MetricKit) and stay on this device. Share one when you report an issue.";
+"crashReports.button.deleteAll" = "Delete All";
+"crashReports.deleteAll.title" = "Delete all crash reports?";
+"crashReports.button.share" = "Share";
+"crashReports.detail.process" = "Process";
+"crashReports.detail.version" = "Version";
+"crashReports.detail.os" = "OS";
+"crashReports.kind.crash" = "Crash";
+"crashReports.kind.hang" = "Hang";
+"crashReports.kind.cpu" = "CPU Exception";
+"crashReports.kind.diskWrite" = "Disk Write Exception";
+"crashReports.kind.launch" = "Slow Launch";

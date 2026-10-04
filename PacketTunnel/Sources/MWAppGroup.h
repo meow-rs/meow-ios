@@ -10,5 +10,7 @@ extern NSString *const MWAppGroupIdentifier;
 @property (class, nonatomic, readonly) NSURL *effectiveConfigURL;
 @property (class, nonatomic, readonly) NSURL *stateURL;
 @property (class, nonatomic, readonly) NSURL *trafficURL;
+/// MetricKit payloads; mirrors `AppGroup.metricKitDirectoryURL`.
+@property (class, nonatomic, readonly) NSURL *metricKitDirectoryURL;
 @property (class, nonatomic, readonly) NSUserDefaults *defaults;
 @end
