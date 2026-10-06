@@ -35,14 +35,15 @@ struct ConnectionsTests {
     }
 
     /// Wire-accurate regression fixture for the "连接 (0)" decode failure:
-    /// meow-rs 498967e serializes per-connection `metadata` (meow-rs#241)
-    /// with ports as JSON numbers (`u16`), nullable `sourceIP`/
-    /// `destinationIP`, and extra fields (`dnsMode`, geo-IP arrays, …).
-    /// The old Swift model decoded `destinationPort` as `String` and the
-    /// IPs as non-optional, so one active connection made the WHOLE
-    /// payload undecodable — same failure mode as `Proxy.History.time`
-    /// (issue #255). This fixture is copied from what
-    /// `ConnectionInfo`/`Metadata`'s `Serialize` derives actually emit.
+    /// meow-rs serializes per-connection `metadata` (meow-rs#241) with
+    /// ports as JSON numbers (`u16`), nullable `sourceIP`/`destinationIP`,
+    /// and extra fields (`dnsMode`, geo-IP arrays, …). The old Swift model
+    /// decoded `destinationPort` as `String` and the IPs as non-optional, so
+    /// one active connection made the WHOLE payload undecodable — same
+    /// failure mode as `Proxy.History.time` (issue #255). This fixture is
+    /// copied from what meow-rs a663364's `ConnectionsResponse`
+    /// (camelCase totals + `memory`, meow-rs#333) and `ConnectionInfo`/
+    /// `Metadata` `Serialize` derives actually emit.
     @Test func `decodes engine /connections payload with numeric ports and null IPs`() throws {
         let resp = try JSONDecoder().decode(
             ConnectionsResponse.self,
@@ -64,8 +65,9 @@ struct ConnectionsTests {
 
     private static let engineFixture = """
     {
-      "upload_total": 486539,
-      "download_total": 3842146,
+      "uploadTotal": 486539,
+      "downloadTotal": 3842146,
+      "memory": 23068672,
       "connections": [
         {
           "id": "0193b1de-7e47-7c1a-8f2e-4babbe1f48da",
@@ -141,8 +143,8 @@ struct ConnectionsTests {
 
     private static let compatFixture = """
     {
-      "upload_total": 0,
-      "download_total": 0,
+      "uploadTotal": 0,
+      "downloadTotal": 0,
       "connections": [
         {
           "id": "a",
@@ -174,13 +176,44 @@ struct ConnectionsTests {
     /// Idle engine emits `"connections": null` — must decode as nil, not throw.
     @Test func `decodes null connections list`() throws {
         let fixture = """
-        {"upload_total": 0, "download_total": 0, "connections": null}
+        {"uploadTotal": 0, "downloadTotal": 0, "memory": 0, "connections": null}
         """
         let resp = try JSONDecoder().decode(
             ConnectionsResponse.self,
             from: Data(fixture.utf8),
         )
         #expect(resp.connections == nil)
+    }
+
+    /// Regression for the empty Connections screen after the meow-rs 0.18.0
+    /// bump: the model required `upload_total`/`download_total`, the engine
+    /// had renamed them (meow-rs#333), and every poll threw `keyNotFound`.
+    /// Totals the view never reads must not be able to blank the list.
+    @Test func `decodes connections when the totals are missing or renamed`() throws {
+        let fixture = """
+        {
+          "upload_total": 1,
+          "download_total": 2,
+          "connections": [
+            {
+              "id": "a",
+              "upload": 0,
+              "download": 0,
+              "start": "2026-10-07T08:00:00Z",
+              "chains": ["DIRECT"],
+              "rule": "MATCH",
+              "rulePayload": ""
+            }
+          ]
+        }
+        """
+        let resp = try JSONDecoder().decode(
+            ConnectionsResponse.self,
+            from: Data(fixture.utf8),
+        )
+        #expect(resp.uploadTotal == 0)
+        #expect(resp.downloadTotal == 0)
+        #expect(resp.connections?.map(\.id) == ["a"])
     }
 
     @Test(

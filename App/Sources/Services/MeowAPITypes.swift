@@ -89,13 +89,26 @@ struct ConnectionsResponse: Decodable {
     let uploadTotal: Int64
     let connections: [Connection]?
 
-    /// meow-rs serializes the outer struct fields with default snake_case
-    /// (meow-api routes.rs:270-275 — no `rename_all` attribute) while the
-    /// per-connection JSON is built with literal camelCase keys.
-    enum CodingKeys: String, CodingKey {
-        case downloadTotal = "download_total"
-        case uploadTotal = "upload_total"
-        case connections
+    init(downloadTotal: Int64, uploadTotal: Int64, connections: [Connection]?) {
+        self.downloadTotal = downloadTotal
+        self.uploadTotal = uploadTotal
+        self.connections = connections
+    }
+
+    /// meow-rs 0.18.0 (#333) moved the totals from `upload_total` /
+    /// `download_total` to mihomo's `uploadTotal` / `downloadTotal`. Requiring
+    /// the old keys threw `keyNotFound` on every poll, so the list stayed
+    /// empty. No view reads the totals, so a missing total decodes as 0
+    /// instead of failing the whole payload.
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        downloadTotal = try container.decodeIfPresent(Int64.self, forKey: .downloadTotal) ?? 0
+        uploadTotal = try container.decodeIfPresent(Int64.self, forKey: .uploadTotal) ?? 0
+        connections = try container.decodeIfPresent([Connection].self, forKey: .connections)
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case downloadTotal, uploadTotal, connections
     }
 }
 
