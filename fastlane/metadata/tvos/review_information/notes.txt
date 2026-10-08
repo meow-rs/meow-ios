@@ -1,0 +1,17 @@
+meow for Apple TV is a client-side proxy / VPN utility, sold as a one-time universal purchase with the iPhone/iPad app (same bundle ID, already on the App Store). It has NO account system, NO in-app purchases, and NO auto-renewing subscriptions, so no demo account is needed.
+
+TERMINOLOGY: "Subscription" in our description means a proxy CONFIGURATION subscription — a Clash-format YAML configuration fetched from a URL the user supplies (the standard term in this app category). It is not a paid or auto-renewing subscription.
+
+HOW TO TEST ON APPLE TV (one screen, no tabs)
+1. Launch meow. The screen shows a Connect panel on the left and a Subscription panel on the right.
+2. Move focus to the "Subscription URL" field, press the touch surface to open the keyboard, and enter this demo configuration URL (it routes all traffic DIRECT, so no proxy credentials are needed):
+   https://meow-rs.github.io/meow-ios/review-demo-config.yaml
+   Tip: the iPhone "Continuity Keyboard" notification or the Apple TV Remote in Control Center makes typing the URL easier.
+3. Select "Add". The YAML configuration is downloaded and appears under "Profiles" with a checkmark (it is selected automatically). Long-press a profile row to refresh or delete it.
+4. Move focus to "Connect" and press it. tvOS shows the VPN configuration permission prompt; choose Allow. The status changes to "Connected" and the button becomes "Disconnect".
+5. Open any app that uses the network (e.g. the TV app or YouTube). Traffic flows through the on-device packet tunnel; the demo configuration routes it DIRECT, since meow does not operate any proxy servers.
+6. Press "Disconnect" to stop the tunnel.
+
+The "iCloud Drive" button next to "Add" lists configs relayed from meow on the user's own iPhone through their private iCloud database. It is optional and requires the iPhone app; with no iPhone configs it simply shows an empty list.
+
+PRIVACY: the app collects no user data of any kind (no analytics/tracking SDKs, no developer servers). Traffic is processed entirely on-device by the Network Extension and forwarded only to servers from the user's own configuration. Privacy policy: https://github.com/meow-rs/meow-ios/blob/main/PRIVACY.md
