@@ -1,0 +1,30 @@
+meow for Apple TV brings the meow-rs proxy engine to the living room. Add a Clash-style YAML subscription by URL, or send a config from meow on your iPhone through iCloud, select it, and press Connect — the packet tunnel runs on the Apple TV itself, with no cloud component.
+
+WHAT IT DOES
+• Clash-protocol YAML subscriptions, added by URL or imported from your iPhone via iCloud
+• Rule-based traffic routing (domain, IP, GeoIP, GeoSITE)
+• DNS-over-HTTPS resolution
+• One screen built for the Siri Remote: Connect button, subscription field and profile list; long-press a profile to refresh or delete it
+• On-device packet tunnel — no external server handles your traffic
+
+SUPPORTED PROTOCOLS
+Shadowsocks, Trojan, and VLESS outbounds (with TLS, WebSocket, gRPC, H2 and HTTPUpgrade transports). HTTP and SOCKS5 outbounds are also supported for upstream proxies.
+
+SENDING A CONFIG FROM IPHONE
+In meow on iPhone, swipe right on a config and tap "iCloud Drive". On the Apple TV, choose "Import from iCloud Drive" and pick it. The config travels through your own private iCloud database and is visible only to your Apple Account.
+
+PRIVACY
+Your subscription URLs, proxy credentials, configurations, and tunneled traffic stay on your device and are never transmitted by meow. The packet tunnel runs locally inside the Network Extension sandbox.
+
+The app does not collect analytics, subscription URLs, proxy credentials, configuration contents, DNS queries, or tunneled traffic. See the privacy policy for details.
+
+REQUIREMENTS
+• Apple TV 4K or Apple TV HD running tvOS 17 or later
+• A proxy subscription you trust — meow does not provide any proxy servers
+• meow for iPhone (same purchase) if you want to send configs via iCloud
+
+meow is a one-time universal purchase for iPhone, iPad and Apple TV, with no in-app purchases and no subscription fees. "Subscription" here means a proxy configuration URL (a Clash-style config subscription) that you supply — not a paid subscription.
+
+OPEN SOURCE
+meow-ios is open source. Source, issue tracker, and release notes:
+https://github.com/meow-rs/meow-ios

@@ -1,0 +1,8 @@
+meow 2.0——Apple TV 首个版本
+
+• 通过 URL 添加 Clash 风格的 YAML 订阅，或从 iPhone 上的 meow 发送配置：向右轻扫配置并点按“iCloud 云盘”，再在电视上的“从 iCloud 云盘导入”中选中它
+• 为 Siri Remote 设计的单屏界面：连接按钮、订阅输入框与配置列表；长按配置可刷新或删除
+• 与 iPhone、iPad 相同的 meow-rs 0.21.2 引擎：基于规则的路由、DNS over HTTPS、Shadowsocks、Trojan 与 VLESS
+• 通用购买：一次购买即可在 iPhone、iPad 与 Apple TV 上使用
+
+问题与反馈：https://github.com/meow-rs/meow-ios/issues

@@ -1,0 +1,8 @@
+meow 2.0 — first release for Apple TV
+
+• Add a Clash-style YAML subscription by URL, or send a config from meow on your iPhone: swipe right on a config, tap "iCloud Drive", and pick it on the TV under "Import from iCloud Drive"
+• One screen built for the Siri Remote: Connect, subscription field and profile list; long-press a profile to refresh or delete it
+• Same meow-rs 0.21.2 engine as iPhone and iPad: rule-based routing, DNS-over-HTTPS, Shadowsocks, Trojan and VLESS
+• Universal purchase: one purchase covers iPhone, iPad and Apple TV
+
+Issues and feedback: https://github.com/meow-rs/meow-ios/issues

@@ -1,0 +1,30 @@
+Apple TV 版 meow 把 meow-rs 代理引擎带到客厅。通过 URL 添加 Clash 风格的 YAML 订阅，或从 iPhone 上的 meow 经 iCloud 发送配置，选中后按下“连接”——数据包隧道直接在 Apple TV 上运行，没有任何云端组件。
+
+主要特性
+• 支持 Clash 协议 YAML 订阅，可通过 URL 添加或经 iCloud 从 iPhone 导入
+• 基于规则的流量路由（域名、IP、GeoIP、GeoSITE）
+• DNS over HTTPS 解析
+• 为 Siri Remote 设计的单屏界面：连接按钮、订阅输入框与配置列表；长按配置可刷新或删除
+• 设备内数据包隧道——没有外部服务器处理你的流量
+
+支持的协议
+Shadowsocks、Trojan、VLESS 出站协议（支持 TLS、WebSocket、gRPC、H2 与 HTTPUpgrade 传输层）。同时支持 HTTP 与 SOCKS5 上游代理。
+
+从 iPhone 发送配置
+在 iPhone 上的 meow 中向右轻扫配置并点按“iCloud 云盘”；在 Apple TV 上选择“从 iCloud 云盘导入”并选中它。配置通过你自己的 iCloud 私有数据库传输，仅你的 Apple 账户可见。
+
+隐私
+你的订阅地址、代理凭证、配置和经隧道转发的流量都保留在本机，meow 不会上传这些数据。数据包隧道在 Network Extension 沙盒中本地运行。
+
+应用不收集分析数据、订阅地址、代理凭证、配置内容、DNS 查询或隧道转发流量。详情见隐私政策。
+
+系统要求
+• 运行 tvOS 17 或更高版本的 Apple TV 4K 或 Apple TV HD
+• 一份你信任的代理订阅——meow 本身不提供任何代理服务器
+• 如需经 iCloud 发送配置，需要 iPhone 版 meow（同一购买）
+
+meow 为一次性买断的通用购买应用，覆盖 iPhone、iPad 与 Apple TV，不含任何内购或订阅收费。本页所述“订阅”指你自行提供的代理配置链接（Clash 风格配置订阅），并非付费订阅。
+
+开源
+meow-ios 是开源软件。源代码、问题追踪与发布说明：
+https://github.com/meow-rs/meow-ios

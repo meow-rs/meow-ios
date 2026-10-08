@@ -1,0 +1,9 @@
+meow does not collect analytics, account data, subscription URLs, proxy credentials, configuration contents, DNS queries, or any traffic carried by the tunnel. Everything you configure stays on your Apple TV unless you explicitly share it.
+
+When the VPN is on, your traffic is routed through whichever proxy server your own configuration names. meow operates no proxy servers and makes no requests to developer-operated servers. Subscription refreshes fetch YAML from the URL you provided over HTTPS.
+
+Configs sent from meow on your iPhone travel through your own private iCloud database (CloudKit) and are visible only to your Apple Account; the developer cannot read them.
+
+No analytics, advertising, attribution or session-replay SDKs are embedded. Crash reports are those Apple collects with your consent and reach the developer only as aggregate summaries.
+
+Full policy: https://github.com/meow-rs/meow-ios/blob/main/PRIVACY.md
