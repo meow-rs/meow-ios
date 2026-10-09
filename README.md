@@ -16,21 +16,35 @@ builds early? The public beta is open on TestFlight:
 Requires iOS 18 or later (iPhone, iPad, and iPhone Duo). Bring your own Mihomo / Clash
 subscription — meow does not provide proxy servers.
 
-Latest version: **v1.4.0** (July 2026) — dark mode across the app, QR-code
-export for `ss://` profiles and subscription URLs, and a refreshed cat
-branding. Since then, `main` also picked up a wake-from-idle reliability
-fix — after sleep/wake the tunnel probes its data path and only restarts
-when the probe fails — plus a meow-rs engine bump to 0.18.0, a leading
-swipe menu for refreshing individual subscriptions, and a per-profile
-auto-update cadence (never / every day / every week). See the
-[release notes](https://github.com/meow-rs/meow-ios/releases) for earlier
-per-version changelogs.
+Latest version: **2.0** (October 2026) — meow for Apple TV (send a config
+from your iPhone through iCloud), Home Screen / Lock Screen / Control Center
+widgets, subscriptions that update themselves, iPad and iPhone Duo layouts,
+crash reports under Settings › Diagnostics, and the meow-rs 0.21.2 engine
+(BoringSSL-only TLS, Hysteria2 on quiche, XHTTP transport). See the
+[release notes](https://github.com/meow-rs/meow-ios/releases) for per-version
+changelogs.
+
+## Screenshots
+
+**Apple TV** — the same config, relayed from your iPhone through iCloud:
+
+<img src="docs/screenshots/apple-tv-home.png" alt="meow on Apple TV: connected, with the Meow Cloud and Home Lab configs" width="800">
+
+**iPhone Duo** — the outer display keeps the phone layout; unfolded, the inner
+display lays Configs, Engine and Proxy Groups out in two columns that reflow
+live across the fold:
+
+<p>
+<img src="docs/screenshots/iphone-duo-outer.png" alt="meow on the iPhone Duo outer display" height="400">
+<img src="docs/screenshots/iphone-duo-inner.png" alt="meow on the iPhone Duo inner display, unfolded" height="400">
+</p>
 
 ## Status
 
 Live on the
-[App Store](https://apps.apple.com/us/app/meow-smart-vpn/id6778303404) (v1.4.0),
-with the public beta continuing on TestFlight. See [`docs/PRD.md`](docs/PRD.md) and
+[App Store](https://apps.apple.com/us/app/meow-smart-vpn/id6778303404) (2.0 for iPhone and
+iPad; the first Apple TV version is in App Review), with the public beta
+continuing on TestFlight. See [`docs/PRD.md`](docs/PRD.md) and
 [`docs/PROJECT_PLAN.md`](docs/PROJECT_PLAN.md) for the product spec and task
 breakdown.
 
