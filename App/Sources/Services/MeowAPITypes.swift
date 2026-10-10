@@ -89,14 +89,40 @@ struct ConnectionsResponse: Decodable {
     let uploadTotal: Int64
     let connections: [Connection]?
 
-    /// meow-rs serializes the outer struct fields with default snake_case
-    /// (meow-api routes.rs:270-275 — no `rename_all` attribute) while the
-    /// per-connection JSON is built with literal camelCase keys.
-    enum CodingKeys: String, CodingKey {
-        case downloadTotal = "download_total"
-        case uploadTotal = "upload_total"
-        case connections
+    init(downloadTotal: Int64, uploadTotal: Int64, connections: [Connection]?) {
+        self.downloadTotal = downloadTotal
+        self.uploadTotal = uploadTotal
+        self.connections = connections
     }
+
+    /// The engine has spelled the totals both ways: meow-rs 498967e emitted
+    /// serde's default `download_total` / `upload_total`, and the 0.21.2 pin
+    /// (`a663364`, meow-api routes.rs `#[serde(rename_all = "camelCase")]`)
+    /// emits mihomo's `downloadTotal` / `uploadTotal`. Requiring either
+    /// spelling threw `keyNotFound` ("data is missing") and blanked the
+    /// Connections screen — the same whole-payload failure as
+    /// `Proxy.History.time` and `Metadata.destinationPort`. The UI does not
+    /// read the totals, so accept both and default to 0.
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: ConnectionsResponseKeys.self)
+        downloadTotal = try container.decodeIfPresent(Int64.self, forKey: .downloadTotal)
+            ?? container.decodeIfPresent(Int64.self, forKey: .downloadTotalSnake)
+            ?? 0
+        uploadTotal = try container.decodeIfPresent(Int64.self, forKey: .uploadTotal)
+            ?? container.decodeIfPresent(Int64.self, forKey: .uploadTotalSnake)
+            ?? 0
+        connections = try container.decodeIfPresent([Connection].self, forKey: .connections)
+    }
+}
+
+/// Top-level so `ConnectionsResponse` stays within swiftlint's 1-level
+/// type-nesting budget.
+private enum ConnectionsResponseKeys: String, CodingKey {
+    case downloadTotal
+    case uploadTotal
+    case downloadTotalSnake = "download_total"
+    case uploadTotalSnake = "upload_total"
+    case connections
 }
 
 struct Rule: Decodable, Identifiable {

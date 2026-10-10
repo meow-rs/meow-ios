@@ -34,15 +34,18 @@ struct ConnectionsTests {
         try await api.closeAllConnections()
     }
 
-    /// Wire-accurate regression fixture for the "连接 (0)" decode failure:
+    /// Wire-accurate regression fixture for the "连接 (0)" decode failures:
     /// meow-rs 498967e serializes per-connection `metadata` (meow-rs#241)
     /// with ports as JSON numbers (`u16`), nullable `sourceIP`/
     /// `destinationIP`, and extra fields (`dnsMode`, geo-IP arrays, …).
     /// The old Swift model decoded `destinationPort` as `String` and the
     /// IPs as non-optional, so one active connection made the WHOLE
     /// payload undecodable — same failure mode as `Proxy.History.time`
-    /// (issue #255). This fixture is copied from what
-    /// `ConnectionInfo`/`Metadata`'s `Serialize` derives actually emit.
+    /// (issue #255). The 0.21.2 pin (`a663364`) then renamed the top-level
+    /// totals to camelCase (`uploadTotal` / `downloadTotal`, plus `memory`),
+    /// which the snake_case-only `CodingKeys` turned into `keyNotFound`
+    /// ("未能读取数据，因为数据丢失") on every poll. This fixture is copied
+    /// from what the `Serialize` derives actually emit today.
     @Test func `decodes engine /connections payload with numeric ports and null IPs`() throws {
         let resp = try JSONDecoder().decode(
             ConnectionsResponse.self,
@@ -64,8 +67,9 @@ struct ConnectionsTests {
 
     private static let engineFixture = """
     {
-      "upload_total": 486539,
-      "download_total": 3842146,
+      "uploadTotal": 486539,
+      "downloadTotal": 3842146,
+      "memory": 41943040,
       "connections": [
         {
           "id": "0193b1de-7e47-7c1a-8f2e-4babbe1f48da",
@@ -127,13 +131,16 @@ struct ConnectionsTests {
     }
     """
 
-    /// mihomo-compat panels get string ports from the classic API; the
-    /// tolerant decoder must keep accepting those too.
+    /// mihomo-compat panels get string ports from the classic API, and the
+    /// pre-0.21.2 engine spelled the totals `upload_total` / `download_total`;
+    /// the tolerant decoder must keep accepting both.
     @Test func `decodes mihomo-compat string ports and missing metadata`() throws {
         let resp = try JSONDecoder().decode(
             ConnectionsResponse.self,
             from: Data(Self.compatFixture.utf8),
         )
+        #expect(resp.downloadTotal == 7)
+        #expect(resp.uploadTotal == 3)
         let conns = try #require(resp.connections)
         #expect(conns[0].metadata?.destinationPort == "443")
         #expect(conns[1].metadata == nil)
@@ -141,8 +148,8 @@ struct ConnectionsTests {
 
     private static let compatFixture = """
     {
-      "upload_total": 0,
-      "download_total": 0,
+      "upload_total": 3,
+      "download_total": 7,
       "connections": [
         {
           "id": "a",
@@ -181,6 +188,21 @@ struct ConnectionsTests {
             from: Data(fixture.utf8),
         )
         #expect(resp.connections == nil)
+    }
+
+    /// Totals are informational only; a payload without either spelling
+    /// must still decode so the list renders.
+    @Test func `decodes payload without totals`() throws {
+        let fixture = """
+        {"connections": []}
+        """
+        let resp = try JSONDecoder().decode(
+            ConnectionsResponse.self,
+            from: Data(fixture.utf8),
+        )
+        #expect(resp.downloadTotal == 0)
+        #expect(resp.uploadTotal == 0)
+        #expect(resp.connections?.isEmpty == true)
     }
 
     @Test(
