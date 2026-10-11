@@ -303,16 +303,42 @@ enum SubscriptionError: Error, Equatable {
     case conversionFailed(String)
 }
 
+/// Every case carries a user-facing message. A `nil` `errorDescription`
+/// falls back to Foundation's "The operation couldn't be completed.
+/// (meow_ios.SubscriptionError error N.)", which is what the Add Config
+/// alert showed for a subscription the engine could not convert — and N is
+/// Swift's NSError code, which numbers payload cases first, so it does not
+/// even match declaration order (`conversionFailed` is 1, `invalidURL` 2).
+/// Users cannot act on that; the converter's own reason ("no supported
+/// proxy URIs found", "invalid Clash YAML: …") is what they need.
 extension SubscriptionError: LocalizedError {
     var errorDescription: String? {
         switch self {
+        case .invalidURL:
+            String(
+                localized: "subscriptions.error.invalidURL",
+                comment: "Shown when the config URL is empty or cannot be parsed",
+            )
         case .insecureHTTPURL:
             String(
                 localized: "subscriptions.error.plainHTTP",
                 comment: "Shown when a config URL uses http:// — iOS ATS blocks cleartext connections",
             )
-        case .invalidURL, .http, .decodeFailed, .conversionFailed:
-            nil
+        case let .http(status):
+            String(
+                localized: "subscriptions.error.http \(status)",
+                comment: "Shown when the config server answers a non-2xx HTTP status; %lld is the status code",
+            )
+        case .decodeFailed:
+            String(
+                localized: "subscriptions.error.decodeFailed",
+                comment: "Shown when the downloaded config body is not UTF-8 text",
+            )
+        case let .conversionFailed(detail):
+            String(
+                localized: "subscriptions.error.conversionFailed \(detail)",
+                comment: "Shown when the engine cannot convert the download to Clash YAML; %@ is the engine's reason",
+            )
         }
     }
 }

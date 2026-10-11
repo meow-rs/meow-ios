@@ -117,6 +117,10 @@
 "subscriptions.toolbar.importFromFile" = "从 iCloud 云盘导入…";
 "subscriptions.import.invalidEncoding" = "所选文件不是有效的 UTF-8 文本。";
 "subscriptions.error.plainHTTP" = "该配置链接使用未加密的 HTTP。iOS 会拦截非 HTTPS 连接,无法下载配置,请改用 https:// 链接。";
+"subscriptions.error.invalidURL" = "配置链接无效。请检查是否有拼写错误,并确认以 https:// 开头。";
+"subscriptions.error.http %lld" = "配置服务器返回了 HTTP %lld。请确认链接仍然有效,或向服务商索取新的链接。";
+"subscriptions.error.decodeFailed" = "下载的配置不是有效的 UTF-8 文本。";
+"subscriptions.error.conversionFailed %@" = "下载的内容不是 Clash 配置,也不是受支持的订阅格式(ss://、trojan://、vless://、vmess://)。请确认这是 Clash / Mihomo 订阅链接,而不是网页。\n\n引擎:%@";
 "subscriptions.empty.title" = "暂无配置";
 "subscriptions.empty.description" = "点击右上角的 + 添加 Mihomo 或 Clash 配置链接。";
 "subscriptions.empty.importFile" = "导入文件";

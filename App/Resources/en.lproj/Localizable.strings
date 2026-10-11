@@ -111,6 +111,10 @@
 "subscriptions.toolbar.importFromFile" = "Import from iCloud Drive…";
 "subscriptions.import.invalidEncoding" = "The selected file isn't valid UTF-8 text.";
 "subscriptions.error.plainHTTP" = "This config URL uses plain HTTP. iOS blocks insecure (non-HTTPS) connections, so the config can't be downloaded. Please use an https:// URL instead.";
+"subscriptions.error.invalidURL" = "The config URL isn't valid. Check it for typos and make sure it starts with https://.";
+"subscriptions.error.http %lld" = "The config server answered with HTTP %lld. Check that the URL is still valid, or ask your provider for a new link.";
+"subscriptions.error.decodeFailed" = "The downloaded config isn't valid UTF-8 text.";
+"subscriptions.error.conversionFailed %@" = "The download isn't a Clash config or a supported subscription (ss://, trojan://, vless://, vmess://). Make sure this is a Clash or Mihomo subscription link, not a web page.\n\nEngine: %@";
 "subscriptions.empty.title" = "No configs yet";
 "subscriptions.empty.description" = "Tap + to add a Mihomo or Clash config URL.";
 "subscriptions.empty.importFile" = "Import File";

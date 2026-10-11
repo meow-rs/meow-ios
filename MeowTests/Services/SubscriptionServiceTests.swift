@@ -447,3 +447,40 @@ extension SubscriptionServiceTests {
         #expect(profileCount == 2)
     }
 }
+
+/// Every `SubscriptionError` must explain itself. A `nil` `errorDescription`
+/// surfaces as Foundation's "The operation couldn't be completed.
+/// (meow_ios.SubscriptionError error N.)" in the Add Config alert — which is
+/// what a tester saw for a subscription the engine could not convert. `N`
+/// is the NSError code, which Swift assigns payload-first (`http` 0,
+/// `conversionFailed` 1, `invalidURL` 2, …), so even that number misleads.
+@Suite("SubscriptionError descriptions", .tags(.service))
+struct SubscriptionErrorDescriptionTests {
+    private static let allCases: [SubscriptionError] = [
+        .invalidURL,
+        .insecureHTTPURL,
+        .http(status: 403),
+        .decodeFailed,
+        .conversionFailed("convert failed: no supported proxy URIs found in subscription"),
+    ]
+
+    @Test(arguments: allCases)
+    func `every case has a human-readable description`(error: SubscriptionError) {
+        let text = error.localizedDescription
+        #expect(error.errorDescription != nil)
+        #expect(!text.isEmpty)
+        #expect(!text.contains("SubscriptionError error"), "fell back to Foundation's generic text: \(text)")
+        #expect(!text.hasPrefix("subscriptions.error."), "unresolved localization key: \(text)")
+    }
+
+    @Test func `conversion failure carries the engine's reason`() {
+        let reason = "convert failed: no supported proxy URIs found in subscription"
+        let text = SubscriptionError.conversionFailed(reason).localizedDescription
+        #expect(text.contains(reason))
+        #expect(text.contains("Clash"))
+    }
+
+    @Test func `http failure names the status code`() {
+        #expect(SubscriptionError.http(status: 403).localizedDescription.contains("403"))
+    }
+}
