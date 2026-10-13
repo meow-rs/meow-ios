@@ -1,58 +1,69 @@
 import Foundation
 import Testing
 
+/// Translated catalogues that must stay in lockstep with en.lproj. Mirrors
+/// meow-android's `values-*` resource set (zh-CN maps to zh-Hans on iOS).
+private let translations = ["ar", "fa", "my", "ru", "tr", "vi", "zh-Hans"]
+
 /// Guards against silent key drift between `en.lproj/Localizable.strings`
-/// (developmentRegion) and `zh-Hans.lproj/Localizable.strings`. The two
-/// catalogues must share the same key set — if a SwiftUI view introduces
-/// `Text("foo.bar")` but only `en.lproj` carries the value, a zh-CN
-/// device renders the raw key string. The reverse (zh-Hans with an extra
-/// key) is dead weight that won't survive a translator pass.
+/// (developmentRegion) and every translated catalogue. Each translation
+/// must share en's key set — if a SwiftUI view introduces `Text("foo.bar")`
+/// but only `en.lproj` carries the value, a device in that locale renders
+/// the raw key string. The reverse (a translation with an extra key) is
+/// dead weight that won't survive a translator pass.
 ///
 /// Test runs against the host app bundle, so `Bundle.main` here is the
 /// `meow-ios.app` (unit-test target is hosted by the app target).
-@Suite("Localizable.strings parity (en ⇄ zh-Hans)")
+@Suite("Localizable.strings parity (en ⇄ translations)")
 struct LocalizableParityTests {
     @Test
-    func `en and zh-Hans share an identical key set`() throws {
+    func `app bundle ships every translation`() {
+        let shipped = Set(Bundle.main.localizations)
+        let missing = translations.filter { !shipped.contains($0) }
+        #expect(missing.isEmpty, "Localizations missing from the app bundle: \(missing)")
+    }
+
+    @Test(arguments: translations)
+    func `translation shares the en key set`(localization: String) throws {
         let en = try loadStrings(localization: "en")
-        let zh = try loadStrings(localization: "zh-Hans")
+        let translated = try loadStrings(localization: localization)
 
         let enKeys = Set(en.keys)
-        let zhKeys = Set(zh.keys)
-        let missingFromZh = enKeys.subtracting(zhKeys).sorted()
-        let extraInZh = zhKeys.subtracting(enKeys).sorted()
+        let translatedKeys = Set(translated.keys)
+        let missing = enKeys.subtracting(translatedKeys).sorted()
+        let extra = translatedKeys.subtracting(enKeys).sorted()
         #expect(
-            missingFromZh.isEmpty,
-            "zh-Hans is missing keys present in en.lproj: \(missingFromZh)",
+            missing.isEmpty,
+            "\(localization) is missing keys present in en.lproj: \(missing)",
         )
         #expect(
-            extraInZh.isEmpty,
-            "zh-Hans has keys absent from en.lproj (orphans): \(extraInZh)",
+            extra.isEmpty,
+            "\(localization) has keys absent from en.lproj (orphans): \(extra)",
         )
     }
 
-    @Test
-    func `every zh-Hans value is non-empty`() throws {
-        let zh = try loadStrings(localization: "zh-Hans")
-        let empties = zh.filter(\.value.isEmpty).keys.sorted()
-        #expect(empties.isEmpty, "zh-Hans has empty values for keys: \(empties)")
+    @Test(arguments: translations)
+    func `every translated value is non-empty`(localization: String) throws {
+        let translated = try loadStrings(localization: localization)
+        let empties = translated.filter(\.value.isEmpty).keys.sorted()
+        #expect(empties.isEmpty, "\(localization) has empty values for keys: \(empties)")
     }
 
-    @Test
-    func `printf format specifiers match across locales`() throws {
-        // If en has "Total %@" and zh translates that to "合计 %lld" the
-        // runtime crashes when SwiftUI feeds it a string argument. Compare
-        // the multiset of conversion specifiers (%@, %lld, %d, %f, %1$@,
-        // …) per key.
+    @Test(arguments: translations)
+    func `printf format specifiers match en`(localization: String) throws {
+        // If en has "Total %@" and a translation turns that into
+        // "合计 %lld" the runtime crashes when SwiftUI feeds it a string
+        // argument. Compare the multiset of conversion specifiers (%@,
+        // %lld, %d, %f, %1$@, …) per key.
         let en = try loadStrings(localization: "en")
-        let zh = try loadStrings(localization: "zh-Hans")
+        let translated = try loadStrings(localization: localization)
         for (key, enValue) in en {
-            guard let zhValue = zh[key] else { continue } // covered by key-set test
+            guard let translatedValue = translated[key] else { continue } // covered by key-set test
             let enSpecs = formatSpecifiers(in: enValue).sorted()
-            let zhSpecs = formatSpecifiers(in: zhValue).sorted()
+            let translatedSpecs = formatSpecifiers(in: translatedValue).sorted()
             #expect(
-                enSpecs == zhSpecs,
-                "Format specifier mismatch for '\(key)': en=\(enSpecs) zh=\(zhSpecs)",
+                enSpecs == translatedSpecs,
+                "Format specifier mismatch for '\(key)': en=\(enSpecs) \(localization)=\(translatedSpecs)",
             )
         }
     }

@@ -43,7 +43,7 @@ struct AppIconTests {
     @Test
     func `every title key resolves in the en strings catalogue`() throws {
         // `Bundle.main` is the host app bundle (see LocalizableParityTests);
-        // zh-Hans coverage follows from the en ⇄ zh-Hans parity suite.
+        // Translation coverage follows from the en ⇄ translations parity suite.
         let path = try #require(Bundle.main.path(
             forResource: "Localizable",
             ofType: "strings",

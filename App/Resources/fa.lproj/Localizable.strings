@@ -1,0 +1,589 @@
+/* meow-ios — Persian (fa) localization.
+
+   Key set is 1:1 with en.lproj — every key in en.lproj/Localizable.strings
+   appears here, in the same order, with a real translation. Strings
+   deliberately omitted from en.lproj (QA/OCR harness pins, stable diagnostic
+   reason codes, internal chart bindings, log-level Picker .tag() values)
+   must NOT be added here either — see en.lproj header for the exclusion list.
+
+   Terminology follows meow-android values-fa/strings.xml: Config → پیکربندی,
+   Profile → پروفایل, Proxy → پروکسی, Engine → هسته, Rule → قانون,
+   Logs → گزارش‌ها, Latency → تأخیر, Upload / Download → آپلود / دانلود,
+   Route Mode → حالت مسیریابی (Rule / Global / Direct → قوانین / سراسری / مستقیم).
+
+   Style:
+     - Persian ی (U+06CC) and ک (U+06A9); ZWNJ (U+200C) per standard
+       orthography (می‌شود، گروه‌ها); ezafe after ه written as هٔ (U+0654),
+       matching values-fa.
+     - Technical identifiers and brand names (Shadowsocks, Mihomo, Clash, YAML,
+       DNS, TCP, UDP, HTTP/3, QUIC, TUN, TLS, SNI, ECH, DIRECT, no-resolve, …)
+       stay in Latin script. Short labels are phrased to start with a Persian
+       word where possible so the line keeps a right-to-left base direction.
+     - No bidi control characters (unlike values-fa, arguments are not wrapped
+       in FSI/PDI); SwiftUI handles RTL layout.
+     - Digits written in the source stay Western; runtime numbers follow the
+       device locale. Ellipsis is the single character "…" (U+2026). */
+
+
+/* Tab bar */
+"tabs.subscriptions" = "پیکربندی‌ها";
+"tabs.proxyGroups" = "پروکسی‌ها";
+"tabs.utility" = "ابزارها";
+"tabs.settings" = "تنظیمات";
+
+
+/* Common */
+"common.ok" = "تأیید";
+"common.cancel" = "لغو";
+"common.close" = "بستن";
+"common.error" = "خطا";
+"common.delete" = "حذف";
+
+
+/* Home screen */
+"home.nav.title" = "meow";
+"home.profile.none" = "بدون پروفایل";
+"home.toggle.connect" = "اتصال";
+"home.toggle.connecting" = "در حال اتصال…";
+"home.toggle.disconnect" = "قطع اتصال";
+"home.toggle.disconnecting" = "در حال قطع اتصال…";
+"home.badge.disconnected" = "قطع شد";
+"home.badge.preparing" = "در حال آماده‌سازی…";
+"home.badge.connecting" = "در حال اتصال";
+"home.badge.connected" = "متصل";
+"home.badge.disconnecting" = "در حال قطع اتصال";
+"home.toggle.preparing" = "در حال آماده‌سازی…";
+"home.packet.ingress" = "ورودی";
+"home.packet.egress" = "خروجی";
+"home.traffic.upload" = "آپلود";
+"home.traffic.download" = "دانلود";
+"home.traffic.total %@" = "مجموع: %@";
+"home.routeMode.title" = "حالت مسیریابی";
+"home.routeMode.rule" = "قوانین";
+"home.routeMode.all" = "سراسری";
+"home.routeMode.direct" = "مستقیم";
+"home.proxyGroups.header" = "گروه‌های پروکسی";
+"home.proxyGroups.placeholder.connected" = "در حال بارگیری گروه‌ها…";
+"home.proxyGroups.placeholder.connecting" = "در حال اتصال — گروه‌ها پس از راه‌اندازی هسته نمایش داده می‌شوند.";
+"home.proxyGroups.placeholder.disconnected" = "برای بارگیری گروه‌های موجود، VPN را وصل کنید.";
+"home.nav.connections" = "اتصال‌ها";
+"home.nav.rules" = "قوانین";
+"home.nav.providers" = "ارائه‌دهنده‌ها";
+"home.nav.diagnostics" = "عیب‌یابی";
+"home.error.apiUnavailable" = "رابط API در دسترس نیست";
+"home.error.selectFailed" = "انتخاب ناموفق بود";
+"home.error.tunnelFailed.title" = "راه‌اندازی تونل ممکن نشد";
+"home.error.dismiss" = "بستن";
+
+
+/* Subscriptions */
+"subscriptions.nav.title" = "پیکربندی‌ها";
+"subscriptions.home.addTitle" = "افزودن پیکربندی";
+"subscriptions.home.addSubtitle" = "یک لینک اضافه کنید یا یک پروفایل YAML محلی را وارد کنید.";
+"subscriptions.section.profiles" = "پروفایل‌ها";
+"subscriptions.section.engine" = "هسته";
+"subscriptions.add.nav.title" = "افزودن پیکربندی";
+"subscriptions.add.field.name" = "نام";
+"subscriptions.add.field.url" = "لینک";
+"subscriptions.add.button.add" = "افزودن";
+"subscriptions.add.button.adding" = "در حال افزودن…";
+"subscriptions.editInfo.swipe" = "ویرایش اطلاعات";
+"subscriptions.refresh.swipe" = "تازه‌سازی";
+"subscriptions.editInfo.nav.title" = "ویرایش پیکربندی";
+"subscriptions.editInfo.button.save" = "ذخیره";
+"subscriptions.editInfo.footer" = "تغییر لینک در تازه‌سازی بعدی اعمال می‌شود.";
+"subscriptions.editInfo.updateInterval" = "به‌روزرسانی خودکار";
+"subscriptions.editInfo.updateInterval.footer" = "اگر هنگام باز کردن برنامه بازهٔ انتخاب‌شده سپری شده باشد، meow این پیکربندی را دوباره دریافت می‌کند. برای به‌روزرسانی فوری، ردیف آن را به چپ بکشید.";
+"subscriptions.updateInterval.manual" = "هرگز";
+"subscriptions.updateInterval.daily" = "هر روز";
+"subscriptions.updateInterval.weekly" = "هر هفته";
+"subscriptions.import.errorTitle" = "وارد کردن پیکربندی ناموفق بود";
+"subscriptions.row.updated %@" = "به‌روزرسانی: %@";
+"subscriptions.row.a11y.edit %@" = "ویرایش YAML مربوط به %@";
+"subscriptions.row.a11y.refresh %@" = "تازه‌سازی %@";
+"subscriptions.row.a11y.editInfo %@" = "تغییر نام یا ویرایش اطلاعات %@";
+"subscriptions.row.a11y.editInfoHint" = "ویرایشگر نام و لینک را باز می‌کند";
+"subscriptions.row.a11y.exportQR %@" = "خروجی کد QR برای %@";
+"subscriptions.row.a11y.exportQRHint" = "یک کد QR قابل اسکن از لینک اشتراک‌گذاری نمایش می‌دهد";
+"subscriptions.exportICloud.swipe" = "iCloud Drive";
+"subscriptions.row.a11y.exportICloud %@" = "ذخیرهٔ %@ در iCloud Drive";
+"subscriptions.exportICloud.done.title" = "در iCloud Drive ذخیره شد";
+"subscriptions.exportICloud.done.message %@" = "با نام «iCloud Drive › meow › %@» ذخیره شد. این پیکربندی در Apple TV شما هم در بخش iCloud Drive نمایش داده می‌شود.";
+"subscriptions.exportICloud.error.unavailable" = "برای ذخیرهٔ پیکربندی‌ها در iCloud Drive، در «تنظیمات» وارد iCloud شوید و iCloud Drive را روشن کنید.";
+
+/* QR export sheet */
+"qrExport.nav.title" = "خروجی کد QR";
+"qrExport.picker.server" = "سرور";
+"qrExport.button.copy" = "کپی لینک";
+"qrExport.button.copied" = "کپی شد";
+"qrExport.button.share" = "اشتراک‌گذاری";
+"qrExport.empty" = "چیزی برای خروجی وجود ندارد — این پروفایل هیچ سرور Shadowsocks ندارد.";
+"qrExport.error.tooLong" = "این لینک برای کد QR بیش از حد طولانی است. به‌جای آن از کپی یا اشتراک‌گذاری استفاده کنید.";
+"qrExport.caption.subscription" = "برای وارد کردن لینک این پیکربندی در کلاینتی دیگر، آن را اسکن کنید.";
+"qrExport.caption.shadowsocks" = "برای وارد کردن این سرور در هر کلاینت سازگار با Shadowsocks، آن را اسکن کنید.";
+"qrExport.a11y.qrImage %@" = "کد QR برای %@";
+"subscriptions.toolbar.a11y.add" = "افزودن پیکربندی";
+"subscriptions.toolbar.addFromURL" = "افزودن از لینک";
+"subscriptions.toolbar.importFromFile" = "وارد کردن از iCloud Drive…";
+"subscriptions.import.invalidEncoding" = "فایل انتخاب‌شده متن UTF-8 معتبری نیست.";
+"subscriptions.error.plainHTTP" = "لینک این پیکربندی از HTTP ساده استفاده می‌کند. iOS اتصال‌های ناامن (غیر HTTPS) را مسدود می‌کند، بنابراین نمی‌توان پیکربندی را دانلود کرد. لطفاً به‌جای آن از لینک https:// استفاده کنید.";
+"subscriptions.error.invalidURL" = "لینک پیکربندی معتبر نیست. آن را از نظر غلط تایپی بررسی کنید و مطمئن شوید که با https:// شروع می‌شود.";
+"subscriptions.error.http %lld" = "سرور پیکربندی با کد HTTP %lld پاسخ داد. بررسی کنید که لینک هنوز معتبر باشد، یا از ارائه‌دهندهٔ سرویس خود لینک جدیدی بخواهید.";
+"subscriptions.error.decodeFailed" = "پیکربندی دانلودشده متن UTF-8 معتبری نیست.";
+"subscriptions.error.conversionFailed %@" = "محتوای دانلودشده نه پیکربندی Clash است و نه اشتراکی پشتیبانی‌شده (ss://، trojan://، vless://، vmess://). مطمئن شوید که این لینک اشتراک Clash یا Mihomo است، نه یک صفحهٔ وب.\n\nهسته: %@";
+"subscriptions.empty.title" = "هنوز پیکربندی‌ای وجود ندارد";
+"subscriptions.empty.description" = "برای افزودن لینک پیکربندی Mihomo یا Clash، روی + ضربه بزنید.";
+"subscriptions.empty.importFile" = "وارد کردن فایل";
+"subscriptions.toolbar.addShadowsocks" = "افزودن سرور Shadowsocks";
+
+
+/* Deep-link import confirmation (meow://connect) */
+"deepLinkImport.nav.title" = "وارد کردن پیکربندی";
+"deepLinkImport.section.subscription" = "این لینک می‌خواهد این مورد را اضافه کند:";
+"deepLinkImport.field.name" = "نام";
+"deepLinkImport.field.host" = "میزبان";
+"deepLinkImport.warning.insecure" = "اتصال ناامن — این پروفایل ممکن است در مسیر انتقال دستکاری شود. اگر ارائه‌دهنده لینک https:// دارد، از آن استفاده کنید.";
+"deepLinkImport.warning.acknowledge" = "از خطر وارد کردن از طریق HTTP آگاهم";
+"deepLinkImport.notice.duplicate" = "پیکربندی‌ای با این لینک قبلاً وارد شده است. با ادامه، همان پیکربندی به‌روز می‌شود و مورد تکراری اضافه نمی‌شود.";
+"deepLinkImport.button.import" = "وارد کردن";
+"deepLinkImport.button.update" = "به‌روزرسانی پیکربندی موجود";
+"deepLinkImport.button.importAndActivate" = "وارد کردن و فعال‌سازی";
+"a11y.deepLinkImport.cancel" = "لغو وارد کردن";
+"deepLinkImport.a11y.url %@" = "لینک پیکربندی: %@";
+
+
+/* Add Shadowsocks server sheet */
+"ssAdd.nav.title" = "افزودن Shadowsocks";
+"ssAdd.section.link" = "لینک";
+"ssAdd.button.scan" = "اسکن کد QR";
+"ssAdd.button.applyLink" = "پر کردن از لینک";
+"ssAdd.error.invalidLink" = "این یک لینک ss:// معتبر نیست.";
+"ssAdd.section.server" = "سرور";
+"ssAdd.field.name" = "نام";
+"ssAdd.field.server" = "سرور";
+"ssAdd.field.port" = "پورت";
+"ssAdd.field.cipher" = "روش رمزنگاری";
+"ssAdd.field.password" = "رمز عبور";
+"ssAdd.toggle.udp" = "UDP";
+"ssAdd.section.plugin" = "افزونه";
+"ssAdd.plugin.picker" = "افزونه";
+"ssAdd.plugin.none" = "هیچ";
+"ssAdd.plugin.ech" = "تونل ECH-TLS";
+"ssAdd.plugin.obfs" = "simple-obfs";
+"ssAdd.plugin.v2ray" = "v2ray-plugin";
+"ssAdd.ech.footer" = "لایهٔ انتقال SIP003 ech-tls-tunnel که در هسته تعبیه شده است.";
+"ssAdd.plugin.hostFallback.footer" = "برای استفاده از نشانی سرور، میزبان را خالی بگذارید.";
+"ssAdd.field.obfsMode" = "حالت Obfs";
+"ssAdd.field.obfsHost" = "میزبان Obfs";
+"ssAdd.toggle.v2rayTLS" = "TLS";
+"ssAdd.field.v2rayHost" = "میزبان";
+"ssAdd.field.v2rayPath" = "مسیر";
+"ssAdd.toggle.v2rayMux" = "Mux";
+"ssAdd.field.sni" = "SNI";
+"ssAdd.field.path" = "مسیر";
+"ssAdd.field.echConfig" = "پیکربندی ECH";
+"ssAdd.field.fingerprint" = "اثر انگشت";
+"ssAdd.toggle.fastOpen" = "Fast Open";
+"ssAdd.plugin.passthrough %@" = "افزونه از لینک: %@";
+"ssAdd.footer.profile" = "در یک پروفایل محلی که از الگوی داخلی ساخته می‌شود ذخیره می‌شود. افزودن سرورهای بیشتر همین پروفایل را به‌روز می‌کند.";
+"ssAdd.button.add" = "افزودن";
+"ssAdd.button.adding" = "در حال افزودن…";
+"ssAdd.scanner.nav.title" = "اسکن کد QR";
+"ssAdd.scanner.unavailable.title" = "دوربین در دسترس نیست";
+"ssAdd.scanner.unavailable.description" = "اسکن در این دستگاه در دسترس نیست. به‌جای آن، لینک ss:// را بچسبانید.";
+"ssAdd.scanner.denied.description" = "دسترسی به دوربین رد شده است. آن را در تنظیمات فعال کنید یا به‌جای آن، لینک ss:// را بچسبانید.";
+"ssAdd.profile.defaultName" = "سرورهای من";
+
+
+/* Connections */
+"connections.empty.title" = "اتصالی وجود ندارد";
+"connections.empty.description" = "ترافیک فعال اینجا نمایش داده می‌شود.";
+"connections.toolbar.closeAll" = "بستن همه";
+"connections.swipe.close" = "بستن";
+"connections.nav.titleFormat %lld" = "اتصال‌ها (%lld)";
+
+
+/* Utility hub */
+"utility.nav.title" = "ابزارها";
+"utility.nav.traffic" = "ترافیک";
+"utility.nav.logs" = "گزارش‌ها";
+"utility.nav.dns" = "DNS";
+
+
+/* DNS */
+"dns.empty.title" = "نتیجهٔ DNS وجود ندارد";
+"dns.empty.description" = "وقتی هسته دامنه‌ها را تفکیک کند، پاسخ‌های ذخیره‌شده اینجا نمایش داده می‌شوند.";
+"dns.nav.titleFormat %lld" = "DNS (%lld)";
+"dns.row.unknownUpstream" = "نامشخص";
+"dns.row.ttl %lld" = "TTL %lld ثانیه";
+
+
+/* Rules */
+"rules.empty.title" = "قانونی وجود ندارد";
+"rules.empty.description" = "قوانین پس از بارگیری یک پروفایل نمایش داده می‌شوند.";
+"rules.nav.titleFormat %lld" = "قوانین (%lld)";
+"rules.button.edit" = "ویرایش";
+
+/* Rules editor (structured per-rule edit sheet) */
+"rulesEditor.nav.title" = "ویرایش قوانین";
+"rulesEditor.empty.title" = "قانونی وجود ندارد";
+"rulesEditor.empty.description" = "برای افزودن نخستین قانون، روی + ضربه بزنید.";
+"rulesEditor.button.add" = "افزودن";
+"rulesEditor.button.addChinaPreset" = "افزودن پیش‌تنظیم DIRECT برای چین";
+"rulesEditor.button.cancel" = "لغو";
+"rulesEditor.button.save" = "ذخیره";
+"rulesEditor.button.saving" = "در حال ذخیره…";
+
+/* Single-rule editor sheet */
+"ruleEditor.nav.title" = "قانون";
+"ruleEditor.section.type" = "نوع";
+"ruleEditor.section.payload" = "مقدار";
+"ruleEditor.section.proxy" = "پروکسی";
+"ruleEditor.field.type" = "نوع";
+"ruleEditor.field.payload" = "مقدار";
+"ruleEditor.field.proxy" = "پروکسی";
+"ruleEditor.field.proxy.custom" = "نام سفارشی";
+"ruleEditor.field.noResolve" = "no-resolve";
+"ruleEditor.field.noResolve.footer" = "تفکیک DNS پیش از تطبیق انجام نمی‌شود. از آن برای قوانین IP استفاده کنید که فقط باید با مقصدهایی تطبیق یابند که از قبل تفکیک شده‌اند.";
+"ruleEditor.button.cancel" = "لغو";
+"ruleEditor.button.save" = "ذخیره";
+
+
+/* Logs */
+"logs.picker.level" = "سطح";
+"logs.level.debug" = "اشکال‌زدایی";
+"logs.level.info" = "اطلاعات";
+"logs.level.warning" = "هشدار";
+"logs.level.error" = "خطا";
+"logs.toggle.autoScroll" = "پیمایش خودکار";
+"logs.empty.title" = "گزارشی وجود ندارد";
+"logs.empty.description" = "گزارش‌ها هنگام فعال بودن تونل نمایش داده می‌شوند.";
+"logs.nav.titleFormat %lld" = "گزارش‌ها (%lld)";
+
+
+/* Providers */
+"providers.empty.title" = "ارائه‌دهنده‌ای وجود ندارد";
+"providers.empty.description" = "ارائه‌دهنده‌ها پس از بارگیری یک پروفایل نمایش داده می‌شوند.";
+"providers.nav.titleFormat %lld" = "ارائه‌دهنده‌ها (%lld)";
+"providers.a11y.healthCheck %@" = "بررسی سلامت %@";
+"providers.a11y.test %@" = "تست %@";
+
+
+/* Yaml Editor */
+"yamlEditor.nav.title" = "ویرایش پیکربندی";
+"yamlEditor.empty.title" = "پیکربندی خالی است";
+"yamlEditor.empty.description" = "برای شروع ویرایش، یک پیکربندی Clash YAML بچسبانید.";
+"yamlEditor.button.cancel" = "لغو";
+"yamlEditor.button.save" = "ذخیره";
+"yamlEditor.button.saving" = "در حال ذخیره…";
+"yamlEditor.a11y.cancel" = "صرف‌نظر از تغییرات و بستن ویرایشگر";
+"yamlEditor.a11y.save" = "ذخیرهٔ پیکربندی";
+"yamlEditor.error.invalid" = "پیکربندی نامعتبر است";
+
+
+/* Settings */
+"settings.nav.title" = "تنظیمات";
+"settings.section.general" = "عمومی";
+"settings.toggle.allowLan" = "اجازهٔ اتصال از شبکهٔ محلی";
+"settings.toggle.onDemand" = "اتصال در صورت نیاز";
+"settings.toggle.blockHTTP3" = "مسدود کردن HTTP/3 (QUIC)";
+"settings.toggle.blockHTTP3.footer" = "ترافیک UDP به پورت 443 و رکوردهای DNS از نوع SVCB/HTTPS را دور می‌اندازد تا استفاده از TCP/HTTP2 اجباری شود.";
+"settings.toggle.ipv6" = "فعال‌سازی IPv6";
+"settings.toggle.ipv6.footer" = "رکوردهای AAAA را تفکیک می‌کند و ترافیک IPv6 را از طریق تونل مسیریابی می‌کند. در حالت خاموش، تونل فقط از IPv4 استفاده می‌کند و پرس‌وجوهای AAAA دور انداخته می‌شوند.";
+"settings.picker.logLevel" = "سطح گزارش";
+"settings.logLevel.debug" = "اشکال‌زدایی";
+"settings.logLevel.info" = "اطلاعات";
+"settings.logLevel.warning" = "هشدار";
+"settings.logLevel.error" = "خطا";
+"settings.logLevel.silent" = "خاموش";
+"settings.label.appIcon" = "آیکون برنامه";
+"settings.appIcon.primary" = "پیش‌فرض";
+"settings.appIcon.leap" = "جهش";
+"settings.appIcon.sunset" = "غروب";
+"settings.appIcon.midnight" = "نیمه‌شب";
+"settings.section.diagnostics" = "عیب‌یابی";
+"settings.label.diagnostics" = "عیب‌یابی";
+"settings.label.exportLogs" = "خروجی گرفتن از گزارش‌ها";
+"settings.section.about" = "درباره";
+"settings.about.version" = "نسخه";
+"settings.about.memory" = "حافظه";
+
+
+/* App Icon picker */
+"appIconPicker.nav.title" = "آیکون برنامه";
+"appIconPicker.error.failed" = "تغییر آیکون توسط iOS رد شد. از «دسترسی هدایت‌شده» خارج شوید یا پروفایل مدیریت دستگاه را بررسی کنید، سپس دوباره تلاش کنید.";
+"appIconPicker.unsupported.title" = "آیکون‌های جایگزین در دسترس نیستند";
+"appIconPicker.unsupported.description" = "این دستگاه نمی‌تواند آیکون برنامه را تغییر دهد.";
+
+
+/* User Diagnostics */
+"userDiagnostics.nav.title" = "عیب‌یابی";
+"userDiagnostics.section.directTcp" = "اتصال مستقیم TCP";
+"userDiagnostics.section.proxyHttp" = "درخواست HTTP از طریق پروکسی";
+"userDiagnostics.section.dns" = "تفکیک‌کنندهٔ DNS";
+"userDiagnostics.empty.title" = "اتصال VPN لازم است";
+"userDiagnostics.empty.description" = "برای اجرای بررسی‌های «درخواست HTTP از طریق پروکسی» و «تفکیک‌کنندهٔ DNS»، به پروکسی وصل شوید.";
+"userDiagnostics.button.test" = "تست";
+"userDiagnostics.button.testing" = "در حال تست…";
+"userDiagnostics.error.parseHostPort" = "قالب مورد انتظار host:port است (مثلاً 1.1.1.1:443)";
+
+
+/* Traffic */
+"traffic.nav.title" = "ترافیک";
+"traffic.empty.title" = "هنوز دادهٔ ترافیکی وجود ندارد";
+"traffic.empty.description" = "برای شروع ثبت مصرف، VPN را وصل کنید.";
+"traffic.label.speed" = "سرعت";
+"traffic.label.last7Days" = "7 روز گذشته";
+"traffic.tile.today" = "امروز";
+"traffic.tile.thisMonth" = "این ماه";
+
+
+/* tvOS home screen (TVContentView) — the tvOS target compiles App/Resources
+   but not App/Sources/Views, so it reuses home.* / subscriptions.* above and
+   adds only what has no iPhone counterpart. */
+"tv.subscription.section" = "اشتراک";
+"tv.subscription.field.url" = "لینک اشتراک";
+"tv.subscription.error.invalidURL" = "یک لینک اشتراک http:// یا https:// وارد کنید.";
+"tv.profiles.section" = "پروفایل‌ها";
+"tv.profiles.empty" = "هنوز پروفایلی وجود ندارد. برای شروع، یک لینک اشتراک اضافه کنید.";
+"tv.connect.hint.noProfile" = "برای اتصال، یک اشتراک اضافه کنید.";
+"tv.icloud.button" = "iCloud Drive";
+"tv.icloud.title" = "وارد کردن از iCloud Drive";
+"tv.icloud.instructions" = "فایل‌های .yaml را از iPhone یا Mac خود در «iCloud Drive › meow» ذخیره کنید — یا در meow روی iPhone یک پیکربندی را بکشید و روی «iCloud Drive» ضربه بزنید — سپس meow را روی iPhone باز کنید تا آن‌ها را به اینجا بفرستد.";
+"tv.icloud.empty" = "هنوز پیکربندی‌ای از iCloud Drive وجود ندارد.";
+"tv.icloud.noAccount" = "برای وارد کردن پیکربندی‌ها از iCloud Drive، در «تنظیمات» وارد iCloud شوید.";
+"tv.icloud.failed %@" = "بارگیری پیکربندی‌ها از iCloud ممکن نشد: %@";
+
+
+/* Home Screen widgets (Widgets/ — the extension ships this same file) */
+"widget.tunnel.name" = "VPN";
+"widget.tunnel.description" = "ببینید meow متصل است یا نه و آن را روشن یا خاموش کنید.";
+"widget.routeMode.description" = "هنگام اتصال، شیوهٔ مسیریابی ترافیک در meow را تغییر دهید.";
+"widget.status.setup" = "برای راه‌اندازی، meow را باز کنید";
+"widget.routeMode.rule.long" = "پروکسی بر اساس قوانین";
+"widget.routeMode.all.long" = "پروکسی همهٔ ترافیک";
+"widget.routeMode.direct.long" = "اتصال مستقیم";
+"widget.toggle.label" = "VPN";
+"widget.control.name" = "meow VPN";
+"widget.control.on" = "روشن";
+"widget.control.off" = "خاموش";
+"widget.control.setup" = "راه‌اندازی";
+"widget.error.notConfigured" = "ابتدا meow را باز کنید و یک پروفایل انتخاب کنید.";
+"widget.intent.toggle.title" = "روشن یا خاموش کردن meow VPN";
+"widget.intent.toggle.value" = "روشن";
+"widget.intent.routeMode.title" = "تنظیم حالت مسیریابی";
+"widget.intent.routeMode.mode" = "حالت";
+
+
+/* Fullscreen diagnostics overlay (ContentView) */
+"content.diagnostics.nav.title" = "عیب‌یابی";
+
+
+/* Accessibility — ContentView / diagnostics overlay */
+"a11y.content.diagnostics.close" = "بستن پنل عیب‌یابی";
+"a11y.content.diagnostics.closeHint" = "پنل عیب‌یابی را می‌بندد و به صفحهٔ خانه برمی‌گردد";
+
+
+/* Accessibility — Common */
+"a11y.common.dismissAlert" = "بستن هشدار خطا";
+
+
+/* Accessibility — Home */
+"a11y.home.proxyGroups.none" = "هیچ گروهی در دسترس نیست";
+
+
+/* Accessibility — Rules list */
+"a11y.rules.row %@ %@ %@" = "قانون %@، %@، از طریق %@";
+"a11y.rules.error %@" = "خطا: %@";
+
+
+/* Accessibility — Logs */
+"a11y.logs.row.label %@ %@" = "%1$@ %2$@";
+"a11y.logs.errorBanner.label %@" = "خطا: %@";
+
+
+/* Accessibility — YAML editor */
+"yamlEditor.a11y.errorBanner %@" = "خطا: %@";
+"yamlEditor.a11y.saving" = "در حال ذخیره";
+"yamlEditor.a11y.save.hint" = "پیکربندی را اعتبارسنجی و ذخیره می‌کند";
+"a11y.yamlEditor.textView" = "ویرایشگر پیکربندی YAML";
+"a11y.yamlEditor.errorLines %@" = "خط‌های دارای خطا: %@";
+
+
+/* Accessibility — Providers */
+"a11y.providers.row.delay.label" = "تأخیر";
+"a11y.providers.row.delay.value %lld" = "%lld میلی‌ثانیه";
+"a11y.providers.errorBanner.label %@" = "خطا: %@";
+
+
+/* Accessibility — Connections */
+"a11y.connections.row.upload %@" = "آپلودشده: %@";
+"a11y.connections.row.download %@" = "دانلودشده: %@";
+"a11y.connections.row.label %@ %@ %@ %@ %@" = "%@، %@، آپلودشده %@، دانلودشده %@، از طریق %@";
+"a11y.connections.errorBanner %@" = "هشدار: %@";
+
+
+/* Accessibility — DNS */
+"a11y.dns.row.label %@ %@ %@ %lld" = "%@، %@، سرور بالادستی %@، TTL %lld ثانیه";
+"a11y.dns.errorBanner %@" = "هشدار: %@";
+
+
+/* Accessibility — Rule editor (single-rule sheet) */
+"a11y.ruleEditor.noResolve.hint" = "پیش از تطبیق این قانون، از تفکیک DNS صرف‌نظر می‌کند";
+"a11y.ruleEditor.save.hint" = "قانون را ذخیره می‌کند و ویرایشگر را می‌بندد";
+
+
+/* Accessibility — DiagnosticsViewController (auto-run checks) */
+"a11y.diagnostics.button.run.hint" = "همهٔ بررسی‌های عیب‌یابی را روی تونل VPN فعال اجرا می‌کند";
+"a11y.diagnostics.running" = "در حال اجرای عیب‌یابی";
+"a11y.diagnostics.check.tunExists" = "رابط TUN";
+"a11y.diagnostics.check.dnsOk" = "تفکیک‌کنندهٔ DNS";
+"a11y.diagnostics.check.tcpProxyOk" = "پروکسی TCP";
+"a11y.diagnostics.check.http204Ok" = "بررسی HTTP 204";
+"a11y.diagnostics.result.pass %@" = "%@: موفق";
+"a11y.diagnostics.result.fail %@ %@" = "%1$@: ناموفق، %2$@";
+
+
+/* Accessibility — Subscriptions */
+"subscriptions.row.a11y.selected" = "انتخاب‌شده";
+"subscriptions.row.a11y.notSelected" = "انتخاب‌نشده";
+"subscriptions.row.a11y.selectHint" = "این پیکربندی را فعال می‌کند";
+"subscriptions.row.a11y.editHint" = "ویرایشگر YAML را باز می‌کند";
+"subscriptions.row.a11y.refreshHint" = "آخرین نسخهٔ پیکربندی را از لینک راه دور دریافت می‌کند";
+"subscriptions.editInfo.a11y.updateIntervalHint" = "تعیین می‌کند این پیکربندی هر چند وقت یک بار دوباره دریافت شود";
+
+
+/* Accessibility — Traffic charts */
+"a11y.traffic.speedChart.value %@ %@" = "آپلود %@ در ثانیه، دانلود %@ در ثانیه";
+"a11y.traffic.historyChart.value %@ %@" = "مجموع آپلود %@، مجموع دانلود %@";
+"a11y.traffic.chart.axis.time" = "زمان";
+"a11y.traffic.chart.seconds %@" = "%@ ثانیه";
+"a11y.traffic.chart.axis.speed" = "سرعت";
+"a11y.traffic.chart.axis.day" = "روز";
+"a11y.traffic.chart.axis.data" = "حجم داده";
+
+
+/* Accessibility — Settings */
+"a11y.settings.allowLan.hint" = "به دستگاه‌های دیگر در شبکهٔ محلی شما اجازه می‌دهد از طریق پروکسی متصل شوند.";
+"a11y.settings.onDemand.hint" = "هر زمان فعالیت شبکه به آن نیاز داشته باشد، تونل را به‌صورت خودکار راه‌اندازی می‌کند.";
+"a11y.settings.blockHTTP3.hint" = "با دور انداختن ترافیک UDP به پورت 443 و رکوردهای DNS از نوع SVCB/HTTPS، HTTP/3 و QUIC را مسدود می‌کند و اتصال‌ها را به استفاده از TCP و HTTP/2 وادار می‌کند.";
+"a11y.settings.ipv6.hint" = "با تفکیک رکوردهای AAAA و مسیریابی ترافیک IPv6 از طریق تونل، IPv6 را فعال می‌کند. در حالت خاموش، تونل فقط از IPv4 استفاده می‌کند و پرس‌وجوهای AAAA دور انداخته می‌شوند.";
+"a11y.settings.appIcon.hint" = "آیکون برنامه را که در صفحهٔ اصلی نمایش داده می‌شود تغییر می‌دهد.";
+"a11y.settings.exportLogs.hint" = "گزارش‌های یک ساعت اخیر برنامه را در یک فایل ذخیره می‌کند.";
+"a11y.settings.exportLogs.inProgress" = "در حال خروجی گرفتن";
+"a11y.settings.memory.unavailable" = "در دسترس نیست";
+
+
+/* Accessibility — App Icon picker */
+"a11y.appIconPicker.option.hint" = "این طرح را به‌عنوان آیکون صفحهٔ اصلی تنظیم می‌کند.";
+
+
+/* Accessibility — Rules editor (structured list) */
+"a11y.rulesEditor.row.payloadEmpty" = "بدون مقدار تطبیق";
+"a11y.rulesEditor.row.proxy %@" = "مسیریابی به %@";
+"a11y.rulesEditor.error %@" = "خطا: %@";
+"a11y.rulesEditor.row.hint" = "ویرایشگر قانون را باز می‌کند.";
+"a11y.rulesEditor.row.position %lld %lld" = "قانون %1$lld از %2$lld";
+"a11y.rulesEditor.row.moveUp" = "انتقال به بالا";
+"a11y.rulesEditor.row.moveDown" = "انتقال به پایین";
+"a11y.rulesEditor.row.delete" = "حذف قانون";
+
+
+/* Accessibility — Proxy groups */
+"a11y.proxyGroups.group.expanded" = "باز";
+"a11y.proxyGroups.group.collapsed" = "بسته";
+"a11y.proxyGroups.group.hint" = "پروکسی‌های این گروه را نمایش می‌دهد یا پنهان می‌کند.";
+"a11y.proxyGroups.group.action.testAll" = "تست تأخیر همهٔ پروکسی‌ها";
+"a11y.proxyGroups.proxy.hint" = "این پروکسی را برای گروه انتخاب می‌کند.";
+"a11y.proxyGroups.proxy.action.ping" = "تست تأخیر";
+"a11y.proxyGroups.proxy.delay %@" = "%@ میلی‌ثانیه";
+"a11y.proxyGroups.proxy.delay.testing" = "در حال تست تأخیر";
+"a11y.proxyGroups.proxy.delay.none" = "تأخیر تست نشده است";
+
+
+/* Accessibility — User Diagnostics */
+"a11y.userDiagnostics.directTcp.input" = "میزبان و پورت";
+"a11y.userDiagnostics.proxyHttp.input" = "لینک HTTP";
+"a11y.userDiagnostics.dns.input" = "نام دامنه";
+"a11y.userDiagnostics.directTcp.test" = "تست اتصال مستقیم TCP";
+"a11y.userDiagnostics.proxyHttp.test" = "تست درخواست HTTP از طریق پروکسی";
+"a11y.userDiagnostics.dns.test" = "تست تفکیک DNS";
+"a11y.userDiagnostics.result.httpStatus %@ %@" = "کد وضعیت HTTP %@، %@ میلی‌ثانیه";
+"a11y.userDiagnostics.result.success %@" = "موفق، %@ میلی‌ثانیه";
+"a11y.userDiagnostics.result.failure %@" = "ناموفق: %@";
+"a11y.userDiagnostics.errorBanner %@" = "خطا: %@";
+
+/* iCloud Drive export guide */
+"guide.icloudExport.title" = "ارسال پیکربندی به Apple TV";
+"guide.icloudExport.subtitle" = "پیکربندی را از meow در iPhone خود در iCloud Drive ذخیره کنید تا Apple TV بتواند آن را وارد کند.";
+"guide.icloudExport.step1" = "در iPhone خود، «پیکربندی‌ها» را باز کنید و یک پیکربندی را به چپ بکشید.";
+"guide.icloudExport.step2" = "روی «iCloud Drive» ضربه بزنید. پیکربندی در «iCloud Drive › meow» ذخیره می‌شود.";
+"guide.icloudExport.step3" = "در Apple TV خود، بخش «iCloud Drive» را در meow باز کنید و پیکربندی را انتخاب کنید. ابتدا meow را در iPhone باز کنید تا بتواند آن را ارسال کند.";
+"guide.icloudExport.done" = "متوجه شدم";
+"settings.section.help" = "راهنما";
+"settings.label.icloudGuide" = "ارسال پیکربندی‌ها به Apple TV";
+"tv.icloud.howTo" = "روش کار";
+
+/* Crash Reports (MetricKit) */
+"settings.label.crashReports" = "گزارش‌های خرابی";
+"crashReports.nav.title" = "گزارش‌های خرابی";
+"crashReports.empty.title" = "گزارش خرابی وجود ندارد";
+"crashReports.empty.description" = "گزارش هر خرابی یا توقف پاسخ‌دهی را iOS در یکی از اجراهای بعدی برنامه، معمولاً ظرف یک روز، به meow تحویل می‌دهد.";
+"crashReports.footer" = "این گزارش‌ها از iOS (MetricKit) دریافت می‌شوند و روی همین دستگاه می‌مانند. هنگام گزارش مشکل، یکی از آن‌ها را به اشتراک بگذارید.";
+"crashReports.button.deleteAll" = "حذف همه";
+"crashReports.deleteAll.title" = "همهٔ گزارش‌های خرابی حذف شوند؟";
+"crashReports.button.share" = "اشتراک‌گذاری";
+"crashReports.detail.process" = "فرایند";
+"crashReports.detail.version" = "نسخه";
+"crashReports.detail.os" = "سیستم‌عامل";
+"crashReports.kind.crash" = "خرابی";
+"crashReports.kind.hang" = "توقف پاسخ‌دهی";
+"crashReports.kind.cpu" = "استثنای CPU";
+"crashReports.kind.diskWrite" = "استثنای نوشتن روی دیسک";
+"crashReports.kind.launch" = "راه‌اندازی کند";
+
+/* Performance Metrics (MetricKit) */
+"settings.label.metrics" = "معیارهای عملکرد";
+"metrics.nav.title" = "معیارهای عملکرد";
+"metrics.empty.title" = "هنوز معیاری وجود ندارد";
+"metrics.empty.description" = "روزی یک بار، iOS خلاصه‌ای از مصرف حافظه، CPU و شبکه و خروج‌های برنامه و تونل در روز قبل را برای meow می‌فرستد.";
+"metrics.section.daily" = "گزارش‌های روزانه";
+"metrics.section.lastWeek" = "7 روز گذشته";
+"metrics.section.resources" = "منابع";
+"metrics.section.network" = "شبکه";
+"metrics.section.exits" = "خروج‌ها";
+"metrics.deleteAll.title" = "همهٔ معیارهای عملکرد حذف شوند؟";
+"metrics.footer.tunnel" = "اگر تونل بیش از حدود 50 مگابایت حافظه مصرف کند، iOS آن را متوقف می‌کند. هر توقف یک خروج به‌دلیل محدودیت حافظه به شمار می‌آید.";
+"metrics.source.app" = "برنامه";
+"metrics.source.tunnel" = "تونل";
+"metrics.label.peakMemory" = "حداکثر حافظه";
+"metrics.label.suspendedMemory" = "حافظه در حالت تعلیق (میانگین)";
+"metrics.label.cpuTime" = "زمان CPU";
+"metrics.label.foreground" = "زمان پیش‌زمینه";
+"metrics.label.background" = "زمان پس‌زمینه";
+"metrics.label.diskWrites" = "نوشتن روی دیسک";
+"metrics.label.launch" = "زمان راه‌اندازی (میانه)";
+"metrics.label.hangs" = "موارد توقف پاسخ‌دهی";
+"metrics.label.download" = "دانلودشده";
+"metrics.label.upload" = "آپلودشده";
+"metrics.label.wifiDown" = "دانلود Wi-Fi";
+"metrics.label.wifiUp" = "آپلود Wi-Fi";
+"metrics.label.cellDown" = "دانلود شبکهٔ همراه";
+"metrics.label.cellUp" = "آپلود شبکهٔ همراه";
+"metrics.label.memoryLimitExits" = "خروج به‌دلیل محدودیت حافظه";
+"metrics.label.forcedExits" = "خروج‌های غیرعادی";
+"metrics.label.period" = "بازهٔ زمانی";
+"metrics.row.peak %@" = "حداکثر حافظه: %@";
+"metrics.row.cpu %@" = "زمان CPU: %@";
+"metrics.row.exits %lld" = "خروج غیرعادی: %lld";
+"metrics.exits.none" = "موردی از خروج ثبت نشده است";
+"metrics.exit.normal" = "عادی";
+"metrics.exit.abnormal" = "غیرعادی";
+"metrics.exit.memoryLimit" = "محدودیت حافظه";
+"metrics.exit.memoryPressure" = "فشار حافظه";
+"metrics.exit.watchdog" = "تایمر نگهبان";
+"metrics.exit.cpuLimit" = "محدودیت CPU";
+"metrics.exit.badAccess" = "دسترسی غیرمجاز به حافظه";
+"metrics.exit.illegalInstruction" = "دستورالعمل غیرمجاز";
+"metrics.exit.lockedFile" = "تعلیق با فایل قفل‌شده";
+"metrics.exit.taskAssertionTimeout" = "پایان مهلت کار پس‌زمینه";

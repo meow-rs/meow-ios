@@ -1,0 +1,586 @@
+/* meow-ios — Arabic (ar) localization.
+
+   Key set is 1:1 with en.lproj — every key in en.lproj/Localizable.strings
+   appears here, in the same order. Strings deliberately omitted from en.lproj
+   (QA/OCR harness pins, stable diagnostic reason codes, internal chart
+   bindings, log-level Picker .tag() values) must NOT be added here either —
+   see en.lproj header for the exclusion list.
+
+   Terminology follows meow-android values-ar (mobile + core): Proxy → بروكسي,
+   Config → تكوين (iOS "Configs" tab), Profile → ملف التعريف, Engine → النواة,
+   Upload / Download → رفع / تنزيل, Latency → زمن الاستجابة, Global → شامل.
+
+   Style:
+     - Modern Standard Arabic; buttons are short verbal nouns (إضافة / حفظ /
+       إلغاء / إغلاق), accessibility hints use 3rd-person present (يفتح…).
+     - In-progress states use "جارٍ …" with the single-character ellipsis
+       "…" (U+2026), matching en.lproj.
+     - No .stringsdict: counts use a "label: N" or unit form that reads
+       correctly for any number. Western digits are kept as in en.lproj.
+     - Protocol / brand identifiers (DNS, TCP, UDP, TUN, YAML, QR, Shadowsocks,
+       Mihomo, Clash, no-resolve, DIRECT…) stay in Latin script.
+     - No bidi control characters; SwiftUI handles RTL layout. */
+
+
+/* Tab bar */
+"tabs.subscriptions" = "التكوينات";
+"tabs.proxyGroups" = "البروكسي";
+"tabs.utility" = "الأدوات";
+"tabs.settings" = "الإعدادات";
+
+
+/* Common */
+"common.ok" = "حسنًا";
+"common.cancel" = "إلغاء";
+"common.close" = "إغلاق";
+"common.error" = "خطأ";
+"common.delete" = "حذف";
+
+
+/* Home screen */
+"home.nav.title" = "meow";
+"home.profile.none" = "لا يوجد ملف تعريف";
+"home.toggle.connect" = "اتصال";
+"home.toggle.connecting" = "جارٍ الاتصال…";
+"home.toggle.disconnect" = "قطع الاتصال";
+"home.toggle.disconnecting" = "جارٍ قطع الاتصال…";
+"home.badge.disconnected" = "غير متصل";
+"home.badge.preparing" = "جارٍ التحضير…";
+"home.badge.connecting" = "جارٍ الاتصال";
+"home.badge.connected" = "متصل";
+"home.badge.disconnecting" = "جارٍ قطع الاتصال";
+"home.toggle.preparing" = "جارٍ التحضير…";
+"home.packet.ingress" = "الوارد";
+"home.packet.egress" = "الصادر";
+"home.traffic.upload" = "رفع";
+"home.traffic.download" = "تنزيل";
+"home.traffic.total %@" = "الإجمالي: %@";
+"home.routeMode.title" = "وضع التوجيه";
+"home.routeMode.rule" = "قواعد";
+"home.routeMode.all" = "شامل";
+"home.routeMode.direct" = "مباشر";
+"home.proxyGroups.header" = "مجموعات البروكسي";
+"home.proxyGroups.placeholder.connected" = "جارٍ تحميل المجموعات…";
+"home.proxyGroups.placeholder.connecting" = "جارٍ الاتصال — ستظهر المجموعات بعد تشغيل النواة.";
+"home.proxyGroups.placeholder.disconnected" = "اتصل لعرض المجموعات المتاحة.";
+"home.nav.connections" = "الاتصالات";
+"home.nav.rules" = "القواعد";
+"home.nav.providers" = "المزوّدون";
+"home.nav.diagnostics" = "التشخيص";
+"home.error.apiUnavailable" = "واجهة API غير متاحة";
+"home.error.selectFailed" = "تعذّر الاختيار";
+"home.error.tunnelFailed.title" = "تعذّر تشغيل النفق";
+"home.error.dismiss" = "تجاهل";
+
+
+/* Subscriptions */
+"subscriptions.nav.title" = "التكوينات";
+"subscriptions.home.addTitle" = "إضافة تكوين";
+"subscriptions.home.addSubtitle" = "اربط عنوان URL أو استورِد ملف تعريف YAML محليًا.";
+"subscriptions.section.profiles" = "ملفات التعريف";
+"subscriptions.section.engine" = "النواة";
+"subscriptions.add.nav.title" = "إضافة تكوين";
+"subscriptions.add.field.name" = "الاسم";
+"subscriptions.add.field.url" = "عنوان URL";
+"subscriptions.add.button.add" = "إضافة";
+"subscriptions.add.button.adding" = "جارٍ الإضافة…";
+"subscriptions.editInfo.swipe" = "تعديل المعلومات";
+"subscriptions.refresh.swipe" = "تحديث";
+"subscriptions.editInfo.nav.title" = "تعديل التكوين";
+"subscriptions.editInfo.button.save" = "حفظ";
+"subscriptions.editInfo.footer" = "تسري التغييرات على عنوان URL عند التحديث التالي.";
+"subscriptions.editInfo.updateInterval" = "تحديث تلقائي";
+"subscriptions.editInfo.updateInterval.footer" = "يعيد meow جلب هذا التكوين عند فتح التطبيق إذا انقضى الفاصل الزمني المحدد. اسحب الصف إلى اليسار لتحديثه فورًا.";
+"subscriptions.updateInterval.manual" = "أبدًا";
+"subscriptions.updateInterval.daily" = "كل يوم";
+"subscriptions.updateInterval.weekly" = "كل أسبوع";
+"subscriptions.import.errorTitle" = "تعذّر استيراد التكوين";
+"subscriptions.row.updated %@" = "آخر تحديث: %@";
+"subscriptions.row.a11y.edit %@" = "تعديل YAML للتكوين %@";
+"subscriptions.row.a11y.refresh %@" = "تحديث %@";
+"subscriptions.row.a11y.editInfo %@" = "إعادة تسمية التكوين %@ أو تعديل معلوماته";
+"subscriptions.row.a11y.editInfoHint" = "يفتح محرر الاسم وعنوان URL";
+"subscriptions.row.a11y.exportQR %@" = "تصدير رمز QR للتكوين %@";
+"subscriptions.row.a11y.exportQRHint" = "يعرض رمز QR قابلًا للمسح لرابط المشاركة";
+"subscriptions.exportICloud.swipe" = "iCloud Drive";
+"subscriptions.row.a11y.exportICloud %@" = "حفظ %@ في iCloud Drive";
+"subscriptions.exportICloud.done.title" = "تم الحفظ في iCloud Drive";
+"subscriptions.exportICloud.done.message %@" = "تم الحفظ باسم «iCloud Drive › meow › %@». سيظهر أيضًا على Apple TV ضمن iCloud Drive.";
+"subscriptions.exportICloud.error.unavailable" = "سجّل الدخول إلى iCloud وشغّل iCloud Drive في «الإعدادات» لحفظ التكوينات فيه.";
+
+/* QR export sheet */
+"qrExport.nav.title" = "تصدير رمز QR";
+"qrExport.picker.server" = "الخادم";
+"qrExport.button.copy" = "نسخ الرابط";
+"qrExport.button.copied" = "تم النسخ";
+"qrExport.button.share" = "مشاركة";
+"qrExport.empty" = "لا يوجد ما يمكن تصديره — لا يحتوي ملف التعريف هذا على خوادم Shadowsocks.";
+"qrExport.error.tooLong" = "هذا الرابط أطول من أن يتّسع له رمز QR. استخدم «نسخ» أو «مشاركة» بدلًا من ذلك.";
+"qrExport.caption.subscription" = "امسح الرمز لاستيراد عنوان URL لهذا التكوين إلى عميل آخر.";
+"qrExport.caption.shadowsocks" = "امسح الرمز لاستيراد هذا الخادم إلى أي عميل متوافق مع Shadowsocks.";
+"qrExport.a11y.qrImage %@" = "رمز QR الخاص بـ %@";
+"subscriptions.toolbar.a11y.add" = "إضافة تكوين";
+"subscriptions.toolbar.addFromURL" = "إضافة من عنوان URL";
+"subscriptions.toolbar.importFromFile" = "استيراد من iCloud Drive…";
+"subscriptions.import.invalidEncoding" = "الملف المحدد ليس نصًا صالحًا بترميز UTF-8.";
+"subscriptions.error.plainHTTP" = "يستخدم عنوان URL لهذا التكوين بروتوكول HTTP غير المشفّر. يحظر iOS الاتصالات غير الآمنة (غير HTTPS)، لذا لا يمكن تنزيل التكوين. يُرجى استخدام عنوان URL يبدأ بـ https:// بدلًا من ذلك.";
+"subscriptions.error.invalidURL" = "عنوان URL للتكوين غير صالح. تحقّق من خلوّه من الأخطاء الإملائية وتأكّد من أنه يبدأ بـ https://.";
+"subscriptions.error.http %lld" = "ردّ خادم التكوين برمز HTTP %lld. تحقّق من أن عنوان URL لا يزال صالحًا، أو اطلب رابطًا جديدًا من مقدّم الخدمة.";
+"subscriptions.error.decodeFailed" = "التكوين الذي تم تنزيله ليس نصًا صالحًا بترميز UTF-8.";
+"subscriptions.error.conversionFailed %@" = "المحتوى الذي تم تنزيله ليس تكوين Clash ولا اشتراكًا مدعومًا (ss://، trojan://، vless://، vmess://). تأكّد من أن هذا رابط اشتراك Clash أو Mihomo، وليس صفحة ويب.\n\nالنواة: %@";
+"subscriptions.empty.title" = "لا توجد تكوينات بعد";
+"subscriptions.empty.description" = "انقر على + لإضافة عنوان URL لتكوين Mihomo أو Clash.";
+"subscriptions.empty.importFile" = "استيراد ملف";
+"subscriptions.toolbar.addShadowsocks" = "إضافة خادم Shadowsocks";
+
+
+/* Deep-link import confirmation (meow://connect) */
+"deepLinkImport.nav.title" = "استيراد تكوين";
+"deepLinkImport.section.subscription" = "يريد هذا الرابط إضافة:";
+"deepLinkImport.field.name" = "الاسم";
+"deepLinkImport.field.host" = "المضيف";
+"deepLinkImport.warning.insecure" = "اتصال غير آمن — يمكن العبث بملف التعريف هذا أثناء نقله. استخدم رابط https:// إن كان مقدّم الخدمة يوفّره.";
+"deepLinkImport.warning.acknowledge" = "أدرك مخاطر الاستيراد عبر HTTP";
+"deepLinkImport.notice.duplicate" = "تم استيراد تكوين بعنوان URL هذا من قبل. ستؤدي المتابعة إلى تحديثه في مكانه بدلًا من إضافة نسخة مكرّرة.";
+"deepLinkImport.button.import" = "استيراد";
+"deepLinkImport.button.update" = "تحديث التكوين الحالي";
+"deepLinkImport.button.importAndActivate" = "استيراد وتفعيل";
+"a11y.deepLinkImport.cancel" = "إلغاء الاستيراد";
+"deepLinkImport.a11y.url %@" = "عنوان URL للتكوين: %@";
+
+
+/* Add Shadowsocks server sheet */
+"ssAdd.nav.title" = "إضافة Shadowsocks";
+"ssAdd.section.link" = "الرابط";
+"ssAdd.button.scan" = "مسح رمز QR";
+"ssAdd.button.applyLink" = "التعبئة من الرابط";
+"ssAdd.error.invalidLink" = "ليس رابط ss:// صالحًا.";
+"ssAdd.section.server" = "الخادم";
+"ssAdd.field.name" = "الاسم";
+"ssAdd.field.server" = "الخادم";
+"ssAdd.field.port" = "المنفذ";
+"ssAdd.field.cipher" = "التشفير";
+"ssAdd.field.password" = "كلمة المرور";
+"ssAdd.toggle.udp" = "UDP";
+"ssAdd.section.plugin" = "المكوّن الإضافي";
+"ssAdd.plugin.picker" = "المكوّن الإضافي";
+"ssAdd.plugin.none" = "بلا";
+"ssAdd.plugin.ech" = "نفق ECH-TLS";
+"ssAdd.plugin.obfs" = "simple-obfs";
+"ssAdd.plugin.v2ray" = "v2ray-plugin";
+"ssAdd.ech.footer" = "وسيلة نقل ech-tls-tunnel وفق SIP003، مدمجة في النواة.";
+"ssAdd.plugin.hostFallback.footer" = "اترك حقل «المضيف» فارغًا لاستخدام عنوان الخادم.";
+"ssAdd.field.obfsMode" = "وضع التمويه";
+"ssAdd.field.obfsHost" = "مضيف التمويه";
+"ssAdd.toggle.v2rayTLS" = "TLS";
+"ssAdd.field.v2rayHost" = "المضيف";
+"ssAdd.field.v2rayPath" = "المسار";
+"ssAdd.toggle.v2rayMux" = "Mux";
+"ssAdd.field.sni" = "SNI";
+"ssAdd.field.path" = "المسار";
+"ssAdd.field.echConfig" = "تكوين ECH";
+"ssAdd.field.fingerprint" = "البصمة";
+"ssAdd.toggle.fastOpen" = "Fast Open";
+"ssAdd.plugin.passthrough %@" = "المكوّن الإضافي من الرابط: %@";
+"ssAdd.footer.profile" = "يُحفظ في ملف تعريف محلي مُنشأ من القالب المدمج. تؤدي إضافة المزيد من الخوادم إلى تحديث ملف التعريف نفسه.";
+"ssAdd.button.add" = "إضافة";
+"ssAdd.button.adding" = "جارٍ الإضافة…";
+"ssAdd.scanner.nav.title" = "مسح رمز QR";
+"ssAdd.scanner.unavailable.title" = "الكاميرا غير متاحة";
+"ssAdd.scanner.unavailable.description" = "المسح غير متاح على هذا الجهاز. الصق رابط ss:// بدلًا من ذلك.";
+"ssAdd.scanner.denied.description" = "تم رفض الوصول إلى الكاميرا. فعِّله من «الإعدادات»، أو الصق رابط ss:// بدلًا من ذلك.";
+"ssAdd.profile.defaultName" = "خوادمي";
+
+
+/* Connections */
+"connections.empty.title" = "لا توجد اتصالات";
+"connections.empty.description" = "ستظهر حركة البيانات النشطة هنا.";
+"connections.toolbar.closeAll" = "إغلاق الكل";
+"connections.swipe.close" = "إغلاق";
+"connections.nav.titleFormat %lld" = "الاتصالات (%lld)";
+
+
+/* Utility hub */
+"utility.nav.title" = "الأدوات";
+"utility.nav.traffic" = "حركة البيانات";
+"utility.nav.logs" = "السجلات";
+"utility.nav.dns" = "DNS";
+
+
+/* DNS */
+"dns.empty.title" = "لا توجد نتائج DNS";
+"dns.empty.description" = "تظهر هنا الاستعلامات المخزّنة مؤقتًا عندما تحلّ النواة أسماء النطاقات.";
+"dns.nav.titleFormat %lld" = "DNS (%lld)";
+"dns.row.unknownUpstream" = "غير معروف";
+"dns.row.ttl %lld" = "TTL %lld ث";
+
+
+/* Rules */
+"rules.empty.title" = "لا توجد قواعد";
+"rules.empty.description" = "تظهر القواعد عند تحميل ملف تعريف.";
+"rules.nav.titleFormat %lld" = "القواعد (%lld)";
+"rules.button.edit" = "تعديل";
+
+/* Rules editor (structured per-rule edit sheet) */
+"rulesEditor.nav.title" = "تعديل القواعد";
+"rulesEditor.empty.title" = "لا توجد قواعد";
+"rulesEditor.empty.description" = "انقر على + لإضافة أول قاعدة.";
+"rulesEditor.button.add" = "إضافة";
+"rulesEditor.button.addChinaPreset" = "إضافة الإعداد المسبق DIRECT للصين";
+"rulesEditor.button.cancel" = "إلغاء";
+"rulesEditor.button.save" = "حفظ";
+"rulesEditor.button.saving" = "جارٍ الحفظ…";
+
+/* Single-rule editor sheet */
+"ruleEditor.nav.title" = "القاعدة";
+"ruleEditor.section.type" = "النوع";
+"ruleEditor.section.payload" = "القيمة";
+"ruleEditor.section.proxy" = "البروكسي";
+"ruleEditor.field.type" = "النوع";
+"ruleEditor.field.payload" = "القيمة";
+"ruleEditor.field.proxy" = "البروكسي";
+"ruleEditor.field.proxy.custom" = "اسم مخصص";
+"ruleEditor.field.noResolve" = "no-resolve";
+"ruleEditor.field.noResolve.footer" = "يتخطى تحليل DNS قبل المطابقة. استخدمه لقواعد IP التي يجب ألا تطابق إلا الوجهات التي سبق تحليلها.";
+"ruleEditor.button.cancel" = "إلغاء";
+"ruleEditor.button.save" = "حفظ";
+
+
+/* Logs */
+"logs.picker.level" = "المستوى";
+"logs.level.debug" = "تصحيح";
+"logs.level.info" = "معلومات";
+"logs.level.warning" = "تحذير";
+"logs.level.error" = "خطأ";
+"logs.toggle.autoScroll" = "تمرير تلقائي";
+"logs.empty.title" = "لا توجد سجلات";
+"logs.empty.description" = "تظهر السجلات عندما يكون النفق نشطًا.";
+"logs.nav.titleFormat %lld" = "السجلات (%lld)";
+
+
+/* Providers */
+"providers.empty.title" = "لا يوجد مزوّدون";
+"providers.empty.description" = "يظهر المزوّدون عند تحميل ملف تعريف.";
+"providers.nav.titleFormat %lld" = "المزوّدون (%lld)";
+"providers.a11y.healthCheck %@" = "فحص سلامة المزوّد %@";
+"providers.a11y.test %@" = "اختبار %@";
+
+
+/* Yaml Editor */
+"yamlEditor.nav.title" = "تعديل التكوين";
+"yamlEditor.empty.title" = "التكوين فارغ";
+"yamlEditor.empty.description" = "الصق تكوين Clash بصيغة YAML لبدء التعديل.";
+"yamlEditor.button.cancel" = "إلغاء";
+"yamlEditor.button.save" = "حفظ";
+"yamlEditor.button.saving" = "جارٍ الحفظ…";
+"yamlEditor.a11y.cancel" = "تجاهل التغييرات وإغلاق المحرر";
+"yamlEditor.a11y.save" = "حفظ التكوين";
+"yamlEditor.error.invalid" = "تكوين غير صالح";
+
+
+/* Settings */
+"settings.nav.title" = "الإعدادات";
+"settings.section.general" = "عام";
+"settings.toggle.allowLan" = "السماح بالشبكة المحلية";
+"settings.toggle.onDemand" = "الاتصال عند الطلب";
+"settings.toggle.blockHTTP3" = "حظر HTTP/3 (QUIC)";
+"settings.toggle.blockHTTP3.footer" = "يُسقط حركة بيانات UDP المتجهة إلى المنفذ 443 وسجلات DNS من نوع SVCB/HTTPS لفرض استخدام TCP/HTTP2.";
+"settings.toggle.ipv6" = "تفعيل IPv6";
+"settings.toggle.ipv6.footer" = "يحلّل سجلات AAAA ويوجّه حركة بيانات IPv6 عبر النفق. عند إيقافه، يقتصر النفق على IPv4 وتُسقَط استعلامات AAAA.";
+"settings.picker.logLevel" = "مستوى السجل";
+"settings.logLevel.debug" = "تصحيح";
+"settings.logLevel.info" = "معلومات";
+"settings.logLevel.warning" = "تحذير";
+"settings.logLevel.error" = "خطأ";
+"settings.logLevel.silent" = "صامت";
+"settings.label.appIcon" = "أيقونة التطبيق";
+"settings.appIcon.primary" = "الافتراضية";
+"settings.appIcon.leap" = "قفزة";
+"settings.appIcon.sunset" = "غروب";
+"settings.appIcon.midnight" = "منتصف الليل";
+"settings.section.diagnostics" = "التشخيص";
+"settings.label.diagnostics" = "التشخيص";
+"settings.label.exportLogs" = "تصدير السجلات";
+"settings.section.about" = "حول";
+"settings.about.version" = "الإصدار";
+"settings.about.memory" = "الذاكرة";
+
+
+/* App Icon picker */
+"appIconPicker.nav.title" = "أيقونة التطبيق";
+"appIconPicker.error.failed" = "رفض iOS تغيير الأيقونة. اخرج من «الوصول الموجّه» أو تحقّق من ملف تعريف إدارة الجهاز، ثم حاول مرة أخرى.";
+"appIconPicker.unsupported.title" = "الأيقونات البديلة غير متاحة";
+"appIconPicker.unsupported.description" = "لا يمكن تغيير أيقونة التطبيق على هذا الجهاز.";
+
+
+/* User Diagnostics */
+"userDiagnostics.nav.title" = "التشخيص";
+"userDiagnostics.section.directTcp" = "اتصال TCP مباشر";
+"userDiagnostics.section.proxyHttp" = "HTTP عبر البروكسي";
+"userDiagnostics.section.dns" = "محلّل DNS";
+"userDiagnostics.empty.title" = "يلزم اتصال VPN";
+"userDiagnostics.empty.description" = "اتصل بالبروكسي لإجراء فحصَي «HTTP عبر البروكسي» و«محلّل DNS».";
+"userDiagnostics.button.test" = "اختبار";
+"userDiagnostics.button.testing" = "جارٍ الاختبار…";
+"userDiagnostics.error.parseHostPort" = "الصيغة المتوقعة host:port (مثل 1.1.1.1:443)";
+
+
+/* Traffic */
+"traffic.nav.title" = "حركة البيانات";
+"traffic.empty.title" = "لم تُسجَّل أي حركة بيانات بعد";
+"traffic.empty.description" = "شغّل VPN لبدء تسجيل الاستخدام.";
+"traffic.label.speed" = "السرعة";
+"traffic.label.last7Days" = "آخر 7 أيام";
+"traffic.tile.today" = "اليوم";
+"traffic.tile.thisMonth" = "هذا الشهر";
+
+
+/* tvOS home screen (TVContentView) — the tvOS target compiles App/Resources
+   but not App/Sources/Views, so it reuses home.* / subscriptions.* above and
+   adds only what has no iPhone counterpart. */
+"tv.subscription.section" = "الاشتراك";
+"tv.subscription.field.url" = "عنوان URL للاشتراك";
+"tv.subscription.error.invalidURL" = "أدخِل عنوان URL للاشتراك يبدأ بـ http:// أو https://.";
+"tv.profiles.section" = "ملفات التعريف";
+"tv.profiles.empty" = "لا توجد ملفات تعريف بعد. أضِف عنوان URL لاشتراك للبدء.";
+"tv.connect.hint.noProfile" = "أضِف اشتراكًا للاتصال.";
+"tv.icloud.button" = "iCloud Drive";
+"tv.icloud.title" = "استيراد من iCloud Drive";
+"tv.icloud.instructions" = "احفظ ملفات .yaml في «iCloud Drive › meow» على iPhone أو Mac — أو اسحب تكوينًا في meow على iPhone وانقر على «iCloud Drive» — ثم افتح meow على iPhone لإرسالها إلى هنا.";
+"tv.icloud.empty" = "لا توجد تكوينات من iCloud Drive بعد.";
+"tv.icloud.noAccount" = "سجّل الدخول إلى iCloud في «الإعدادات» لاستيراد التكوينات من iCloud Drive.";
+"tv.icloud.failed %@" = "تعذّر تحميل التكوينات من iCloud: %@";
+
+
+/* Home Screen widgets (Widgets/ — the extension ships this same file) */
+"widget.tunnel.name" = "VPN";
+"widget.tunnel.description" = "اعرف ما إذا كان meow متصلًا، وشغّله أو أوقفه.";
+"widget.routeMode.description" = "غيّر طريقة توجيه meow لحركة البيانات أثناء الاتصال.";
+"widget.status.setup" = "افتح meow لإعداده";
+"widget.routeMode.rule.long" = "بروكسي حسب القواعد";
+"widget.routeMode.all.long" = "بروكسي لكل حركة البيانات";
+"widget.routeMode.direct.long" = "اتصال مباشر";
+"widget.toggle.label" = "VPN";
+"widget.control.name" = "meow VPN";
+"widget.control.on" = "تشغيل";
+"widget.control.off" = "إيقاف";
+"widget.control.setup" = "إعداد";
+"widget.error.notConfigured" = "افتح meow واختر ملف تعريف أولًا.";
+"widget.intent.toggle.title" = "تشغيل meow VPN أو إيقافه";
+"widget.intent.toggle.value" = "تشغيل";
+"widget.intent.routeMode.title" = "تعيين وضع التوجيه";
+"widget.intent.routeMode.mode" = "الوضع";
+
+
+/* Fullscreen diagnostics overlay (ContentView) */
+"content.diagnostics.nav.title" = "التشخيص";
+
+
+/* Accessibility — ContentView / diagnostics overlay */
+"a11y.content.diagnostics.close" = "إغلاق لوحة التشخيص";
+"a11y.content.diagnostics.closeHint" = "يغلق لوحة التشخيص ويعود إلى الشاشة الرئيسية";
+
+
+/* Accessibility — Common */
+"a11y.common.dismissAlert" = "إغلاق تنبيه الخطأ";
+
+
+/* Accessibility — Home */
+"a11y.home.proxyGroups.none" = "لا توجد مجموعات متاحة";
+
+
+/* Accessibility — Rules list */
+"a11y.rules.row %@ %@ %@" = "القاعدة %@، %@، عبر %@";
+"a11y.rules.error %@" = "خطأ: %@";
+
+
+/* Accessibility — Logs */
+"a11y.logs.row.label %@ %@" = "%1$@ %2$@";
+"a11y.logs.errorBanner.label %@" = "خطأ: %@";
+
+
+/* Accessibility — YAML editor */
+"yamlEditor.a11y.errorBanner %@" = "خطأ: %@";
+"yamlEditor.a11y.saving" = "جارٍ الحفظ";
+"yamlEditor.a11y.save.hint" = "يتحقق من صحة التكوين ويحفظه";
+"a11y.yamlEditor.textView" = "محرر تكوين YAML";
+"a11y.yamlEditor.errorLines %@" = "أخطاء في الأسطر: %@";
+
+
+/* Accessibility — Providers */
+"a11y.providers.row.delay.label" = "زمن الاستجابة";
+"a11y.providers.row.delay.value %lld" = "%lld مللي ثانية";
+"a11y.providers.errorBanner.label %@" = "خطأ: %@";
+
+
+/* Accessibility — Connections */
+"a11y.connections.row.upload %@" = "تم رفع %@";
+"a11y.connections.row.download %@" = "تم تنزيل %@";
+"a11y.connections.row.label %@ %@ %@ %@ %@" = "%@، %@، تم رفع %@، تم تنزيل %@، عبر %@";
+"a11y.connections.errorBanner %@" = "تحذير: %@";
+
+
+/* Accessibility — DNS */
+"a11y.dns.row.label %@ %@ %@ %lld" = "%@، %@، الخادم المنبع %@، TTL بالثواني: %lld";
+"a11y.dns.errorBanner %@" = "تحذير: %@";
+
+
+/* Accessibility — Rule editor (single-rule sheet) */
+"a11y.ruleEditor.noResolve.hint" = "يتخطى تحليل DNS قبل مطابقة هذه القاعدة";
+"a11y.ruleEditor.save.hint" = "يحفظ القاعدة ويغلق المحرر";
+
+
+/* Accessibility — DiagnosticsViewController (auto-run checks) */
+"a11y.diagnostics.button.run.hint" = "يُجري جميع فحوص التشخيص على نفق VPN النشط";
+"a11y.diagnostics.running" = "جارٍ إجراء التشخيص";
+"a11y.diagnostics.check.tunExists" = "واجهة TUN";
+"a11y.diagnostics.check.dnsOk" = "محلّل DNS";
+"a11y.diagnostics.check.tcpProxyOk" = "بروكسي TCP";
+"a11y.diagnostics.check.http204Ok" = "فحص HTTP 204";
+"a11y.diagnostics.result.pass %@" = "%@: نجح";
+"a11y.diagnostics.result.fail %@ %@" = "%1$@: فشل، %2$@";
+
+
+/* Accessibility — Subscriptions */
+"subscriptions.row.a11y.selected" = "محدد";
+"subscriptions.row.a11y.notSelected" = "غير محدد";
+"subscriptions.row.a11y.selectHint" = "يفعّل هذا التكوين";
+"subscriptions.row.a11y.editHint" = "يفتح محرر YAML";
+"subscriptions.row.a11y.refreshHint" = "يجلب أحدث تكوين من عنوان URL البعيد";
+"subscriptions.editInfo.a11y.updateIntervalHint" = "يحدد مدى تكرار إعادة جلب هذا التكوين تلقائيًا";
+
+
+/* Accessibility — Traffic charts */
+"a11y.traffic.speedChart.value %@ %@" = "الرفع %@ في الثانية، التنزيل %@ في الثانية";
+"a11y.traffic.historyChart.value %@ %@" = "إجمالي الرفع %@، إجمالي التنزيل %@";
+"a11y.traffic.chart.axis.time" = "الوقت";
+"a11y.traffic.chart.seconds %@" = "الثانية %@";
+"a11y.traffic.chart.axis.speed" = "السرعة";
+"a11y.traffic.chart.axis.day" = "اليوم";
+"a11y.traffic.chart.axis.data" = "حجم البيانات";
+
+
+/* Accessibility — Settings */
+"a11y.settings.allowLan.hint" = "يسمح للأجهزة الأخرى على شبكتك المحلية بالاتصال عبر البروكسي.";
+"a11y.settings.onDemand.hint" = "يشغّل النفق تلقائيًا عندما يتطلب نشاط الشبكة ذلك.";
+"a11y.settings.blockHTTP3.hint" = "يحظر HTTP/3 وQUIC عن طريق إسقاط حركة بيانات UDP المتجهة إلى المنفذ 443 وسجلات DNS من نوع SVCB/HTTPS، مما يفرض على الاتصالات استخدام TCP وHTTP/2.";
+"a11y.settings.ipv6.hint" = "يفعّل IPv6 عن طريق تحليل سجلات AAAA وتوجيه حركة بيانات IPv6 عبر النفق. عند إيقافه، يقتصر النفق على IPv4 وتُسقَط استعلامات AAAA.";
+"a11y.settings.appIcon.hint" = "يغيّر أيقونة التطبيق المعروضة على الشاشة الرئيسية.";
+"a11y.settings.exportLogs.hint" = "يحفظ سجلات التطبيق لآخر ساعة في ملف.";
+"a11y.settings.exportLogs.inProgress" = "جارٍ التصدير";
+"a11y.settings.memory.unavailable" = "غير متاح";
+
+
+/* Accessibility — App Icon picker */
+"a11y.appIconPicker.option.hint" = "يجعل هذا التصميم أيقونة التطبيق على الشاشة الرئيسية.";
+
+
+/* Accessibility — Rules editor (structured list) */
+"a11y.rulesEditor.row.payloadEmpty" = "لا توجد قيمة للمطابقة";
+"a11y.rulesEditor.row.proxy %@" = "يوجّه إلى %@";
+"a11y.rulesEditor.error %@" = "خطأ: %@";
+"a11y.rulesEditor.row.hint" = "يفتح محرر القاعدة.";
+"a11y.rulesEditor.row.position %lld %lld" = "القاعدة %1$lld من %2$lld";
+"a11y.rulesEditor.row.moveUp" = "نقل لأعلى";
+"a11y.rulesEditor.row.moveDown" = "نقل لأسفل";
+"a11y.rulesEditor.row.delete" = "حذف القاعدة";
+
+
+/* Accessibility — Proxy groups */
+"a11y.proxyGroups.group.expanded" = "موسّعة";
+"a11y.proxyGroups.group.collapsed" = "مطويّة";
+"a11y.proxyGroups.group.hint" = "يُظهر خوادم البروكسي في هذه المجموعة أو يخفيها.";
+"a11y.proxyGroups.group.action.testAll" = "اختبار زمن الاستجابة لجميع خوادم البروكسي";
+"a11y.proxyGroups.proxy.hint" = "يحدد هذا البروكسي للمجموعة.";
+"a11y.proxyGroups.proxy.action.ping" = "اختبار زمن الاستجابة";
+"a11y.proxyGroups.proxy.delay %@" = "%@ مللي ثانية";
+"a11y.proxyGroups.proxy.delay.testing" = "جارٍ اختبار زمن الاستجابة";
+"a11y.proxyGroups.proxy.delay.none" = "لم يُختبر زمن الاستجابة";
+
+
+/* Accessibility — User Diagnostics */
+"a11y.userDiagnostics.directTcp.input" = "المضيف والمنفذ";
+"a11y.userDiagnostics.proxyHttp.input" = "عنوان URL ببروتوكول HTTP";
+"a11y.userDiagnostics.dns.input" = "اسم النطاق";
+"a11y.userDiagnostics.directTcp.test" = "اختبار اتصال TCP المباشر";
+"a11y.userDiagnostics.proxyHttp.test" = "اختبار طلب HTTP عبر البروكسي";
+"a11y.userDiagnostics.dns.test" = "اختبار تحليل DNS";
+"a11y.userDiagnostics.result.httpStatus %@ %@" = "رمز حالة HTTP %@، %@ مللي ثانية";
+"a11y.userDiagnostics.result.success %@" = "نجح، %@ مللي ثانية";
+"a11y.userDiagnostics.result.failure %@" = "فشل: %@";
+"a11y.userDiagnostics.errorBanner %@" = "خطأ: %@";
+
+/* iCloud Drive export guide */
+"guide.icloudExport.title" = "إرسال تكوين إلى Apple TV";
+"guide.icloudExport.subtitle" = "احفظه في iCloud Drive من meow على iPhone، وسيتمكن Apple TV من استيراده.";
+"guide.icloudExport.step1" = "على iPhone، افتح «التكوينات» واسحب أحد التكوينات إلى اليسار.";
+"guide.icloudExport.step2" = "انقر على «iCloud Drive». يُحفظ التكوين في «iCloud Drive › meow».";
+"guide.icloudExport.step3" = "على Apple TV، افتح «iCloud Drive» في meow واختر التكوين. افتح meow على iPhone أولًا ليتمكن من إرساله.";
+"guide.icloudExport.done" = "فهمت";
+"settings.section.help" = "المساعدة";
+"settings.label.icloudGuide" = "إرسال التكوينات إلى Apple TV";
+"tv.icloud.howTo" = "كيف يعمل";
+
+/* Crash Reports (MetricKit) */
+"settings.label.crashReports" = "تقارير الأعطال";
+"crashReports.nav.title" = "تقارير الأعطال";
+"crashReports.empty.title" = "لا توجد تقارير أعطال";
+"crashReports.empty.description" = "يقدّم iOS إلى meow تقريرًا عن أي تعطّل أو تجمّد عند تشغيل لاحق، عادةً في غضون يوم.";
+"crashReports.footer" = "تأتي التقارير من iOS (MetricKit) وتبقى على هذا الجهاز. شارِك تقريرًا عند الإبلاغ عن مشكلة.";
+"crashReports.button.deleteAll" = "حذف الكل";
+"crashReports.deleteAll.title" = "هل تريد حذف جميع تقارير الأعطال؟";
+"crashReports.button.share" = "مشاركة";
+"crashReports.detail.process" = "العملية";
+"crashReports.detail.version" = "الإصدار";
+"crashReports.detail.os" = "نظام التشغيل";
+"crashReports.kind.crash" = "تعطّل";
+"crashReports.kind.hang" = "تجمّد";
+"crashReports.kind.cpu" = "استثناء CPU";
+"crashReports.kind.diskWrite" = "استثناء الكتابة على القرص";
+"crashReports.kind.launch" = "بطء بدء التشغيل";
+
+/* Performance Metrics (MetricKit) */
+"settings.label.metrics" = "مقاييس الأداء";
+"metrics.nav.title" = "مقاييس الأداء";
+"metrics.empty.title" = "لا توجد مقاييس بعد";
+"metrics.empty.description" = "يرسل iOS إلى meow مرة يوميًا ملخصًا لاستخدام الذاكرة وCPU والشبكة وحالات الإنهاء في اليوم السابق، للتطبيق والنفق.";
+"metrics.section.daily" = "التقارير اليومية";
+"metrics.section.lastWeek" = "آخر 7 أيام";
+"metrics.section.resources" = "الموارد";
+"metrics.section.network" = "الشبكة";
+"metrics.section.exits" = "حالات الإنهاء";
+"metrics.deleteAll.title" = "هل تريد حذف جميع مقاييس الأداء؟";
+"metrics.footer.tunnel" = "يوقف iOS النفق إذا تجاوز استخدامه للذاكرة نحو 50 ميغابايت. يُحتسب كل إيقاف حالةَ إنهاء بسبب حد الذاكرة.";
+"metrics.source.app" = "التطبيق";
+"metrics.source.tunnel" = "النفق";
+"metrics.label.peakMemory" = "ذروة الذاكرة";
+"metrics.label.suspendedMemory" = "الذاكرة أثناء الإيقاف المؤقت (المتوسط)";
+"metrics.label.cpuTime" = "وقت CPU";
+"metrics.label.foreground" = "الوقت في المقدمة";
+"metrics.label.background" = "الوقت في الخلفية";
+"metrics.label.diskWrites" = "الكتابة على القرص";
+"metrics.label.launch" = "زمن بدء التشغيل (الوسيط)";
+"metrics.label.hangs" = "حالات التجمّد";
+"metrics.label.download" = "البيانات المنزّلة";
+"metrics.label.upload" = "البيانات المرفوعة";
+"metrics.label.wifiDown" = "تنزيل Wi-Fi";
+"metrics.label.wifiUp" = "رفع Wi-Fi";
+"metrics.label.cellDown" = "تنزيل خلوي";
+"metrics.label.cellUp" = "رفع خلوي";
+"metrics.label.memoryLimitExits" = "حالات الإنهاء بسبب حد الذاكرة";
+"metrics.label.forcedExits" = "حالات الإنهاء غير الطبيعي";
+"metrics.label.period" = "الفترة";
+"metrics.row.peak %@" = "الذروة: %@";
+"metrics.row.cpu %@" = "CPU: %@";
+"metrics.row.exits %lld" = "حالات إنهاء غير طبيعي: %lld";
+"metrics.exits.none" = "لم تُسجَّل أي حالات إنهاء";
+"metrics.exit.normal" = "طبيعي";
+"metrics.exit.abnormal" = "غير طبيعي";
+"metrics.exit.memoryLimit" = "حد الذاكرة";
+"metrics.exit.memoryPressure" = "ضغط الذاكرة";
+"metrics.exit.watchdog" = "مؤقّت المراقبة";
+"metrics.exit.cpuLimit" = "حد CPU";
+"metrics.exit.badAccess" = "وصول غير صالح إلى الذاكرة";
+"metrics.exit.illegalInstruction" = "تعليمة غير مشروعة";
+"metrics.exit.lockedFile" = "إيقاف مؤقت مع ملف مقفل";
+"metrics.exit.taskAssertionTimeout" = "انتهاء مهلة مهمة الخلفية";

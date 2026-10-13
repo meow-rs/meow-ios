@@ -357,8 +357,11 @@
 		1B974DCDEF759A85D212F7A9 /* ProfileUpdateIntervalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUpdateIntervalTests.swift; sourceTree = "<group>"; };
 		1C50CF82F4373D42432869C5 /* MWPacketWriter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MWPacketWriter.m; sourceTree = "<group>"; };
 		1CCF322677C8A124E9D9107D /* MWDiagnosticsRunner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MWDiagnosticsRunner.m; sourceTree = "<group>"; };
+		1D917306DA4C61CA7C982B0B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1DB0CE6B72F82E76AA9997D5 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1F7BB3C0C2648B6097E52E53 /* UtilityScreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityScreenTests.swift; sourceTree = "<group>"; };
 		20AB821D2884D05E4EA7E831 /* GeoAssetStager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoAssetStager.swift; sourceTree = "<group>"; };
+		211A39E7346D43B2BC093B69 /* fa */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fa; path = fa.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2286E52FC6D973728DE5D1A8 /* ShadowsocksConfigBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowsocksConfigBuilderTests.swift; sourceTree = "<group>"; };
 		24AB2D298F7A38F31686BF15 /* VpnManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnManagerTests.swift; sourceTree = "<group>"; };
 		24F2E3A9014A186B34D8A465 /* MWDarwinBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MWDarwinBridge.m; sourceTree = "<group>"; };
@@ -404,6 +407,7 @@
 		601ADF66737508CC359C4936 /* SubscriptionConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionConverter.swift; sourceTree = "<group>"; };
 		6052B63FD334E86DC81BAE1E /* ShadowsocksURIParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowsocksURIParserTests.swift; sourceTree = "<group>"; };
 		620106BFB5E8593748590EBA /* MWTunnelEngine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MWTunnelEngine.m; sourceTree = "<group>"; };
+		62A1C4C0B1495873C1F6BD77 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		664BEEB7B966973C3D0A5074 /* DailyTrafficAccumulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyTrafficAccumulator.swift; sourceTree = "<group>"; };
 		66EEA26ED8A4895932CE53E3 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		67B54369F081E1B728712CC9 /* IdentifierSlugTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifierSlugTests.swift; sourceTree = "<group>"; };
@@ -419,6 +423,7 @@
 		711184DB8878CD1F212CEEA3 /* DnsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DnsView.swift; sourceTree = "<group>"; };
 		71FF15AE48B5E9FFE60B4051 /* PacketTunnelProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PacketTunnelProvider.m; sourceTree = "<group>"; };
 		729BDB9DF0375708DCD8F84E /* TrafficAccumulatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrafficAccumulatorTests.swift; sourceTree = "<group>"; };
+		7400FA6C4393A8AD8411EE49 /* my */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = my; path = my.lproj/Localizable.strings; sourceTree = "<group>"; };
 		797EA53C272DDA3EC6E73E6F /* MWDarwinBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MWDarwinBridge.h; sourceTree = "<group>"; };
 		7D8C1AC6AD4590D6827E6188 /* GeoAssetStagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoAssetStagerTests.swift; sourceTree = "<group>"; };
 		7D936CF5D2CCA1B2D180C2D6 /* AppShellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppShellTests.swift; sourceTree = "<group>"; };
@@ -473,6 +478,7 @@
 		B59B5D27EF37B635FC5B38AA /* HomeScreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenTests.swift; sourceTree = "<group>"; };
 		B6F70A8DAF3D01F062A5FC0E /* MWTunnelSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MWTunnelSettings.h; sourceTree = "<group>"; };
 		B7193B43D94BD4897FEDF967 /* ProxyGroupsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyGroupsView.swift; sourceTree = "<group>"; };
+		B725D08C9DB8936C1E0B55A4 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B807F37D85605FF0AD1427F5 /* MeowCore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MeowCore.xcframework; path = MeowCore/Frameworks/MeowCore.xcframework; sourceTree = "<group>"; };
 		B9D147EADA278504AB1CDFA6 /* MeowAPI+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeowAPI+Mock.swift"; sourceTree = "<group>"; };
 		BC43530025FE948C50C6C78E /* ConnectionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionsTests.swift; sourceTree = "<group>"; };
@@ -1378,7 +1384,13 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				Base,
+				ar,
 				en,
+				fa,
+				my,
+				ru,
+				tr,
+				vi,
 				"zh-Hans",
 			);
 			mainGroup = E02B6D5AAF221F5DB70141A0;
@@ -1836,7 +1848,13 @@
 		8895187DE158A91BFC1775BE /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
+				1DB0CE6B72F82E76AA9997D5 /* ar */,
 				EA9B231AA3DD65F22AB2D513 /* en */,
+				211A39E7346D43B2BC093B69 /* fa */,
+				7400FA6C4393A8AD8411EE49 /* my */,
+				1D917306DA4C61CA7C982B0B /* ru */,
+				62A1C4C0B1495873C1F6BD77 /* tr */,
+				B725D08C9DB8936C1E0B55A4 /* vi */,
 				66EEA26ED8A4895932CE53E3 /* zh-Hans */,
 			);
 			name = Localizable.strings;

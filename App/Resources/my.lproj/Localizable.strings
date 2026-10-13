@@ -1,0 +1,583 @@
+/* meow-ios — Burmese (my) localization.
+
+   Key set is 1:1 with en.lproj — every key in en.lproj/Localizable.strings
+   appears here, in the same order. Strings deliberately omitted from en.lproj
+   (QA/OCR harness pins, stable diagnostic reason codes, internal chart
+   bindings, log-level Picker .tag() values) must NOT be added here either —
+   see en.lproj header for the exclusion list.
+
+   Terminology follows meow-android values-my (mobile + core), e.g.
+   ပရောက်စီ (proxy), စည်းမျဉ်း (rule), တိုက်ရိုက် (direct), Global,
+   ကြန့်ကြာချိန် (latency), ဒေတာ အသွားအလာ (traffic). "Config", "Host",
+   "payload" and "Tunnel" stay in Latin script, as on Android.
+
+   Style:
+     - Standard Unicode Myanmar script in canonical storage order, never Zawgyi.
+     - Buttons / toolbar items use the short "…ရန်" imperative form
+       (ထည့်ရန် / သိမ်းရန် / ပိတ်ရန်); Cancel is မလုပ်တော့, as on Android.
+     - Western digits are kept exactly as in en.lproj (443, 204, 7).
+     - Ellipsis is the single character "…" (U+2026), matching en.lproj. */
+
+
+/* Tab bar */
+"tabs.subscriptions" = "Config များ";
+"tabs.proxyGroups" = "ပရောက်စီ";
+"tabs.utility" = "ကိရိယာများ";
+"tabs.settings" = "ဆက်တင်များ";
+
+
+/* Common */
+"common.ok" = "အိုကေ";
+"common.cancel" = "မလုပ်တော့";
+"common.close" = "ပိတ်ရန်";
+"common.error" = "အမှား";
+"common.delete" = "ဖျက်ရန်";
+
+
+/* Home screen */
+"home.nav.title" = "meow";
+"home.profile.none" = "ပရိုဖိုင် ရွေးမထားပါ";
+"home.toggle.connect" = "ချိတ်ဆက်ရန်";
+"home.toggle.connecting" = "ချိတ်ဆက်နေသည်…";
+"home.toggle.disconnect" = "ချိတ်ဆက်မှု ဖြတ်ရန်";
+"home.toggle.disconnecting" = "ချိတ်ဆက်မှု ဖြတ်နေသည်…";
+"home.badge.disconnected" = "ချိတ်ဆက်မှု ဖြတ်ထားသည်";
+"home.badge.preparing" = "ပြင်ဆင်နေသည်…";
+"home.badge.connecting" = "ချိတ်ဆက်နေသည်";
+"home.badge.connected" = "ချိတ်ဆက်ထားသည်";
+"home.badge.disconnecting" = "ချိတ်ဆက်မှု ဖြတ်နေသည်";
+"home.toggle.preparing" = "ပြင်ဆင်နေသည်…";
+"home.packet.ingress" = "အဝင်";
+"home.packet.egress" = "အထွက်";
+"home.traffic.upload" = "အပ်လုဒ်";
+"home.traffic.download" = "ဒေါင်းလုဒ်";
+"home.traffic.total %@" = "စုစုပေါင်း %@";
+"home.routeMode.title" = "လမ်းကြောင်းမုဒ်";
+"home.routeMode.rule" = "စည်းမျဉ်း";
+"home.routeMode.all" = "Global";
+"home.routeMode.direct" = "တိုက်ရိုက်";
+"home.proxyGroups.header" = "ပရောက်စီအုပ်စုများ";
+"home.proxyGroups.placeholder.connected" = "အုပ်စုများ ရယူနေသည်…";
+"home.proxyGroups.placeholder.connecting" = "ချိတ်ဆက်နေသည် — အင်ဂျင် စတင်ပြီးနောက် အုပ်စုများ ပေါ်လာမည်။";
+"home.proxyGroups.placeholder.disconnected" = "ရနိုင်သော အုပ်စုများ ကြည့်ရန် ချိတ်ဆက်ပါ။";
+"home.nav.connections" = "ချိတ်ဆက်မှုများ";
+"home.nav.rules" = "စည်းမျဉ်းများ";
+"home.nav.providers" = "Provider များ";
+"home.nav.diagnostics" = "ပြဿနာ စစ်ဆေးခြင်း";
+"home.error.apiUnavailable" = "API အသုံးပြု၍ မရပါ";
+"home.error.selectFailed" = "ရွေးချယ်၍ မရပါ";
+"home.error.tunnelFailed.title" = "Tunnel စတင်၍ မရပါ";
+"home.error.dismiss" = "ပိတ်ရန်";
+
+
+/* Subscriptions */
+"subscriptions.nav.title" = "Config များ";
+"subscriptions.home.addTitle" = "Config ထည့်ရန်";
+"subscriptions.home.addSubtitle" = "URL တစ်ခု ချိတ်ဆက်ပါ သို့မဟုတ် စက်တွင်းရှိ YAML ပရိုဖိုင်ကို တင်သွင်းပါ။";
+"subscriptions.section.profiles" = "ပရိုဖိုင်များ";
+"subscriptions.section.engine" = "အင်ဂျင်";
+"subscriptions.add.nav.title" = "Config ထည့်ရန်";
+"subscriptions.add.field.name" = "အမည်";
+"subscriptions.add.field.url" = "URL";
+"subscriptions.add.button.add" = "ထည့်ရန်";
+"subscriptions.add.button.adding" = "ထည့်နေသည်…";
+"subscriptions.editInfo.swipe" = "အချက်အလက် တည်းဖြတ်ရန်";
+"subscriptions.refresh.swipe" = "ပြန်လည်ဆန်းသစ်ရန်";
+"subscriptions.editInfo.nav.title" = "Config တည်းဖြတ်ရန်";
+"subscriptions.editInfo.button.save" = "သိမ်းရန်";
+"subscriptions.editInfo.footer" = "URL ပြောင်းလဲမှုများသည် နောက်တစ်ကြိမ် ပြန်လည်ဆန်းသစ်သည့်အခါ သက်ရောက်မည်။";
+"subscriptions.editInfo.updateInterval" = "အလိုအလျောက် အပ်ဒိတ်";
+"subscriptions.editInfo.updateInterval.footer" = "အက်ပ်ကို ဖွင့်သည့်အခါ ရွေးထားသော ကြားကာလ ကျော်လွန်ပြီးပါက meow သည် ဤ Config ကို ပြန်လည်ရယူသည်။ ချက်ချင်း အပ်ဒိတ်လုပ်ရန် အတန်းကို ညာဘက်သို့ ပွတ်ဆွဲပါ။";
+"subscriptions.updateInterval.manual" = "ဘယ်တော့မှ";
+"subscriptions.updateInterval.daily" = "နေ့စဉ်";
+"subscriptions.updateInterval.weekly" = "အပတ်စဉ်";
+"subscriptions.import.errorTitle" = "Config တင်သွင်း၍ မရပါ";
+"subscriptions.row.updated %@" = "နောက်ဆုံး အပ်ဒိတ်: %@";
+"subscriptions.row.a11y.edit %@" = "%@ အတွက် YAML တည်းဖြတ်ရန်";
+"subscriptions.row.a11y.refresh %@" = "%@ ကို ပြန်လည်ဆန်းသစ်ရန်";
+"subscriptions.row.a11y.editInfo %@" = "%@ ကို အမည်ပြောင်းရန် သို့မဟုတ် အချက်အလက် တည်းဖြတ်ရန်";
+"subscriptions.row.a11y.editInfoHint" = "အမည်နှင့် URL တည်းဖြတ်ကိရိယာကို ဖွင့်သည်";
+"subscriptions.row.a11y.exportQR %@" = "%@ အတွက် QR ကုဒ် ထုတ်ယူရန်";
+"subscriptions.row.a11y.exportQRHint" = "မျှဝေလင့်ခ်၏ စကင်ဖတ်နိုင်သော QR ကုဒ်ကို ပြသည်";
+"subscriptions.exportICloud.swipe" = "iCloud Drive";
+"subscriptions.row.a11y.exportICloud %@" = "%@ ကို iCloud Drive တွင် သိမ်းရန်";
+"subscriptions.exportICloud.done.title" = "iCloud Drive တွင် သိမ်းပြီးပါပြီ";
+"subscriptions.exportICloud.done.message %@" = "iCloud Drive › meow › %@ အဖြစ် သိမ်းပြီးပါပြီ။ သင့် Apple TV ရှိ iCloud Drive အောက်တွင်လည်း ပေါ်လာမည်။";
+"subscriptions.exportICloud.error.unavailable" = "Config များကို iCloud Drive တွင် သိမ်းရန် ဆက်တင်များတွင် iCloud သို့ အကောင့်ဝင်ပြီး iCloud Drive ကို ဖွင့်ပါ။";
+
+/* QR export sheet */
+"qrExport.nav.title" = "QR ကုဒ် ထုတ်ယူရန်";
+"qrExport.picker.server" = "ဆာဗာ";
+"qrExport.button.copy" = "လင့်ခ် ကူးရန်";
+"qrExport.button.copied" = "ကူးပြီးပါပြီ";
+"qrExport.button.share" = "မျှဝေရန်";
+"qrExport.empty" = "ထုတ်ယူစရာ မရှိပါ — ဤပရိုဖိုင်တွင် Shadowsocks ဆာဗာ မပါပါ။";
+"qrExport.error.tooLong" = "ဤလင့်ခ်သည် QR ကုဒ်အတွက် ရှည်လွန်းသည်။ ၎င်းအစား ကူးယူခြင်း သို့မဟုတ် မျှဝေခြင်းကို သုံးပါ။";
+"qrExport.caption.subscription" = "ဤ Config URL ကို အခြား အက်ပ်တစ်ခုသို့ တင်သွင်းရန် စကင်ဖတ်ပါ။";
+"qrExport.caption.shadowsocks" = "ဤဆာဗာကို Shadowsocks နှင့် တွဲသုံးနိုင်သော မည်သည့်အက်ပ်သို့မဆို တင်သွင်းရန် စကင်ဖတ်ပါ။";
+"qrExport.a11y.qrImage %@" = "%@ အတွက် QR ကုဒ်";
+"subscriptions.toolbar.a11y.add" = "Config ထည့်ရန်";
+"subscriptions.toolbar.addFromURL" = "URL မှ ထည့်ရန်";
+"subscriptions.toolbar.importFromFile" = "iCloud Drive မှ တင်သွင်းရန်…";
+"subscriptions.import.invalidEncoding" = "ရွေးထားသော ဖိုင်သည် မှန်ကန်သော UTF-8 စာသား မဟုတ်ပါ။";
+"subscriptions.error.plainHTTP" = "ဤ Config URL သည် ရိုးရိုး HTTP ကို သုံးသည်။ iOS က လုံခြုံမှုမရှိသော (HTTPS မဟုတ်သော) ချိတ်ဆက်မှုများကို ပိတ်ဆို့ထားသဖြင့် Config ကို ဒေါင်းလုဒ်လုပ်၍ မရပါ။ ၎င်းအစား https:// URL ကို သုံးပါ။";
+"subscriptions.error.invalidURL" = "Config URL မမှန်ကန်ပါ။ စာလုံးပေါင်း အမှား ရှိမရှိ စစ်ဆေးပြီး https:// ဖြင့် စကြောင်း သေချာပါစေ။";
+"subscriptions.error.http %lld" = "Config ဆာဗာက HTTP %lld ဖြင့် တုံ့ပြန်သည်။ URL မှန်ကန်ဆဲ ဖြစ်ကြောင်း စစ်ဆေးပါ သို့မဟုတ် ဝန်ဆောင်မှုပေးသူထံ လင့်ခ် အသစ် တောင်းပါ။";
+"subscriptions.error.decodeFailed" = "ဒေါင်းလုဒ်လုပ်ထားသော Config သည် မှန်ကန်သော UTF-8 စာသား မဟုတ်ပါ။";
+"subscriptions.error.conversionFailed %@" = "ဒေါင်းလုဒ်လုပ်ထားသည့်အရာသည် Clash Config သို့မဟုတ် ပံ့ပိုးထားသော စာရင်းသွင်းမှု (ss://၊ trojan://၊ vless://၊ vmess://) မဟုတ်ပါ။ ၎င်းသည် ဝဘ်စာမျက်နှာ မဟုတ်ဘဲ Clash သို့မဟုတ် Mihomo စာရင်းသွင်းမှု လင့်ခ် ဖြစ်ကြောင်း သေချာပါစေ။\n\nအင်ဂျင်: %@";
+"subscriptions.empty.title" = "Config မရှိသေးပါ";
+"subscriptions.empty.description" = "Mihomo သို့မဟုတ် Clash Config URL ထည့်ရန် + ကို တို့ပါ။";
+"subscriptions.empty.importFile" = "ဖိုင် တင်သွင်းရန်";
+"subscriptions.toolbar.addShadowsocks" = "Shadowsocks ဆာဗာ ထည့်ရန်";
+
+
+/* Deep-link import confirmation (meow://connect) */
+"deepLinkImport.nav.title" = "Config တင်သွင်းရန်";
+"deepLinkImport.section.subscription" = "ဤလင့်ခ်က ထည့်လိုသည့်အရာ:";
+"deepLinkImport.field.name" = "အမည်";
+"deepLinkImport.field.host" = "Host";
+"deepLinkImport.warning.insecure" = "လုံခြုံမှုမရှိသော ချိတ်ဆက်မှု — ဤပရိုဖိုင်ကို ပေးပို့စဉ်အတွင်း အခြားသူက ပြုပြင်ပြောင်းလဲနိုင်သည်။ ဝန်ဆောင်မှုပေးသူက https:// လင့်ခ် ပေးထားပါက ၎င်းကို ဦးစားပေး သုံးပါ။";
+"deepLinkImport.warning.acknowledge" = "HTTP ဖြင့် တင်သွင်းခြင်း၏ အန္တရာယ်ကို နားလည်ပါသည်";
+"deepLinkImport.notice.duplicate" = "ဤ URL ပါသော Config ကို တင်သွင်းပြီးသား ဖြစ်သည်။ ဆက်လုပ်ပါက ထပ်တူတစ်ခု အသစ်မထည့်ဘဲ ရှိပြီးသားကိုပင် အပ်ဒိတ်လုပ်မည်။";
+"deepLinkImport.button.import" = "တင်သွင်းရန်";
+"deepLinkImport.button.update" = "ရှိပြီးသား Config ကို အပ်ဒိတ်လုပ်ရန်";
+"deepLinkImport.button.importAndActivate" = "တင်သွင်းပြီး အသုံးပြုရန်";
+"a11y.deepLinkImport.cancel" = "တင်သွင်းခြင်းကို ပယ်ဖျက်ရန်";
+"deepLinkImport.a11y.url %@" = "Config ၏ URL: %@";
+
+
+/* Add Shadowsocks server sheet */
+"ssAdd.nav.title" = "Shadowsocks ထည့်ရန်";
+"ssAdd.section.link" = "လင့်ခ်";
+"ssAdd.button.scan" = "QR ကုဒ် စကင်ဖတ်ရန်";
+"ssAdd.button.applyLink" = "လင့်ခ်မှ ဖြည့်ရန်";
+"ssAdd.error.invalidLink" = "မှန်ကန်သော ss:// လင့်ခ် မဟုတ်ပါ။";
+"ssAdd.section.server" = "ဆာဗာ";
+"ssAdd.field.name" = "အမည်";
+"ssAdd.field.server" = "ဆာဗာ";
+"ssAdd.field.port" = "ပို့တ်";
+"ssAdd.field.cipher" = "ကုဒ်ဝှက်နည်း";
+"ssAdd.field.password" = "စကားဝှက်";
+"ssAdd.toggle.udp" = "UDP";
+"ssAdd.section.plugin" = "ပလပ်အင်";
+"ssAdd.plugin.picker" = "ပလပ်အင်";
+"ssAdd.plugin.none" = "မရှိ";
+"ssAdd.plugin.ech" = "ECH-TLS Tunnel";
+"ssAdd.plugin.obfs" = "simple-obfs";
+"ssAdd.plugin.v2ray" = "v2ray-plugin";
+"ssAdd.ech.footer" = "အင်ဂျင်တွင် ပါဝင်ပြီးသား SIP003 ech-tls-tunnel ပို့ဆောင်ရေး အလွှာ ဖြစ်သည်။";
+"ssAdd.plugin.hostFallback.footer" = "ဆာဗာလိပ်စာကို သုံးရန် Host ကို ကွက်လပ်ထားပါ။";
+"ssAdd.field.obfsMode" = "Obfs မုဒ်";
+"ssAdd.field.obfsHost" = "Obfs Host";
+"ssAdd.toggle.v2rayTLS" = "TLS";
+"ssAdd.field.v2rayHost" = "Host";
+"ssAdd.field.v2rayPath" = "လမ်းကြောင်း";
+"ssAdd.toggle.v2rayMux" = "Mux";
+"ssAdd.field.sni" = "SNI";
+"ssAdd.field.path" = "လမ်းကြောင်း";
+"ssAdd.field.echConfig" = "ECH Config";
+"ssAdd.field.fingerprint" = "လက်ဗွေ";
+"ssAdd.toggle.fastOpen" = "Fast Open";
+"ssAdd.plugin.passthrough %@" = "လင့်ခ်မှ ပလပ်အင်: %@";
+"ssAdd.footer.profile" = "ပါဝင်ပြီးသား နမူနာပုံစံမှ ဖန်တီးထားသော စက်တွင်း ပရိုဖိုင်တွင် သိမ်းသည်။ ဆာဗာများ ထပ်ထည့်ပါက ထိုပရိုဖိုင်တစ်ခုတည်းကိုပင် အပ်ဒိတ်လုပ်မည်။";
+"ssAdd.button.add" = "ထည့်ရန်";
+"ssAdd.button.adding" = "ထည့်နေသည်…";
+"ssAdd.scanner.nav.title" = "QR ကုဒ် စကင်ဖတ်ရန်";
+"ssAdd.scanner.unavailable.title" = "ကင်မရာ အသုံးပြု၍ မရပါ";
+"ssAdd.scanner.unavailable.description" = "ဤစက်တွင် စကင်ဖတ်၍ မရပါ။ ၎င်းအစား ss:// လင့်ခ်ကို ကူးထည့်ပါ။";
+"ssAdd.scanner.denied.description" = "ကင်မရာ အသုံးပြုခွင့်ကို ငြင်းပယ်ထားသည်။ ဆက်တင်များတွင် ဖွင့်ပါ သို့မဟုတ် ၎င်းအစား ss:// လင့်ခ်ကို ကူးထည့်ပါ။";
+"ssAdd.profile.defaultName" = "ကျွန်ုပ်၏ ဆာဗာများ";
+
+
+/* Connections */
+"connections.empty.title" = "ချိတ်ဆက်မှု မရှိပါ";
+"connections.empty.description" = "လက်ရှိ ဒေတာ အသွားအလာ ဤနေရာတွင် ပေါ်လာမည်။";
+"connections.toolbar.closeAll" = "အားလုံး ပိတ်ရန်";
+"connections.swipe.close" = "ပိတ်ရန်";
+"connections.nav.titleFormat %lld" = "ချိတ်ဆက်မှုများ (%lld)";
+
+
+/* Utility hub */
+"utility.nav.title" = "ကိရိယာများ";
+"utility.nav.traffic" = "ဒေတာ အသွားအလာ";
+"utility.nav.logs" = "မှတ်တမ်းများ";
+"utility.nav.dns" = "DNS";
+
+
+/* DNS */
+"dns.empty.title" = "DNS ရလဒ် မရှိပါ";
+"dns.empty.description" = "အင်ဂျင်က ဒိုမိန်းများကို ရှာဖွေသည့်အခါ ကက်ရှ်ထားသော ရလဒ်များ ဤနေရာတွင် ပေါ်လာမည်။";
+"dns.nav.titleFormat %lld" = "DNS (%lld)";
+"dns.row.unknownUpstream" = "မသိ";
+"dns.row.ttl %lld" = "TTL %lld စက္ကန့်";
+
+
+/* Rules */
+"rules.empty.title" = "စည်းမျဉ်း မရှိပါ";
+"rules.empty.description" = "ပရိုဖိုင် ဖွင့်ပြီးသည့်အခါ စည်းမျဉ်းများ ပေါ်လာမည်။";
+"rules.nav.titleFormat %lld" = "စည်းမျဉ်းများ (%lld)";
+"rules.button.edit" = "တည်းဖြတ်ရန်";
+
+/* Rules editor (structured per-rule edit sheet) */
+"rulesEditor.nav.title" = "စည်းမျဉ်းများ တည်းဖြတ်ရန်";
+"rulesEditor.empty.title" = "စည်းမျဉ်း မရှိပါ";
+"rulesEditor.empty.description" = "ပထမဆုံး စည်းမျဉ်း ထည့်ရန် + ကို တို့ပါ။";
+"rulesEditor.button.add" = "ထည့်ရန်";
+"rulesEditor.button.addChinaPreset" = "တရုတ်နိုင်ငံအတွက် DIRECT ကြိုတင်သတ်မှတ်ချက် ထည့်ရန်";
+"rulesEditor.button.cancel" = "မလုပ်တော့";
+"rulesEditor.button.save" = "သိမ်းရန်";
+"rulesEditor.button.saving" = "သိမ်းနေသည်…";
+
+/* Single-rule editor sheet */
+"ruleEditor.nav.title" = "စည်းမျဉ်း";
+"ruleEditor.section.type" = "အမျိုးအစား";
+"ruleEditor.section.payload" = "Payload";
+"ruleEditor.section.proxy" = "ပရောက်စီ";
+"ruleEditor.field.type" = "အမျိုးအစား";
+"ruleEditor.field.payload" = "Payload";
+"ruleEditor.field.proxy" = "ပရောက်စီ";
+"ruleEditor.field.proxy.custom" = "စိတ်ကြိုက် အမည်";
+"ruleEditor.field.noResolve" = "no-resolve";
+"ruleEditor.field.noResolve.footer" = "ကိုက်ညီမှု မစစ်ဆေးမီ DNS ရှာဖွေခြင်းကို ကျော်ပါ။ IP ရှာဖွေပြီးသား ဦးတည်ရာများနှင့်သာ ကိုက်ညီသင့်သော IP စည်းမျဉ်းများအတွက် သုံးပါ။";
+"ruleEditor.button.cancel" = "မလုပ်တော့";
+"ruleEditor.button.save" = "သိမ်းရန်";
+
+
+/* Logs */
+"logs.picker.level" = "အဆင့်";
+"logs.level.debug" = "အမှားရှာ";
+"logs.level.info" = "အချက်အလက်";
+"logs.level.warning" = "သတိပေးချက်";
+"logs.level.error" = "အမှား";
+"logs.toggle.autoScroll" = "အလိုအလျောက် လှိမ့်ရန်";
+"logs.empty.title" = "မှတ်တမ်း မရှိပါ";
+"logs.empty.description" = "Tunnel အလုပ်လုပ်နေသည့်အခါ မှတ်တမ်းများ ပေါ်လာမည်။";
+"logs.nav.titleFormat %lld" = "မှတ်တမ်းများ (%lld)";
+
+
+/* Providers */
+"providers.empty.title" = "Provider မရှိပါ";
+"providers.empty.description" = "ပရိုဖိုင် ဖွင့်ပြီးသည့်အခါ Provider များ ပေါ်လာမည်။";
+"providers.nav.titleFormat %lld" = "Provider များ (%lld)";
+"providers.a11y.healthCheck %@" = "%@ ၏ အခြေအနေ စစ်ဆေးရန်";
+"providers.a11y.test %@" = "%@ ကို စစ်ဆေးရန်";
+
+
+/* Yaml Editor */
+"yamlEditor.nav.title" = "Config တည်းဖြတ်ရန်";
+"yamlEditor.empty.title" = "Config တွင် ဘာမှမရှိပါ";
+"yamlEditor.empty.description" = "တည်းဖြတ်ရန် Clash YAML Config ကို ကူးထည့်ပါ။";
+"yamlEditor.button.cancel" = "မလုပ်တော့";
+"yamlEditor.button.save" = "သိမ်းရန်";
+"yamlEditor.button.saving" = "သိမ်းနေသည်…";
+"yamlEditor.a11y.cancel" = "အပြောင်းအလဲများကို ဖယ်ပစ်ပြီး တည်းဖြတ်ကိရိယာကို ပိတ်ရန်";
+"yamlEditor.a11y.save" = "Config သိမ်းရန်";
+"yamlEditor.error.invalid" = "Config မမှန်ကန်ပါ";
+
+
+/* Settings */
+"settings.nav.title" = "ဆက်တင်များ";
+"settings.section.general" = "အထွေထွေ";
+"settings.toggle.allowLan" = "LAN ခွင့်ပြုရန်";
+"settings.toggle.onDemand" = "လိုအပ်သည့်အခါ ချိတ်ဆက်ရန်";
+"settings.toggle.blockHTTP3" = "HTTP/3 (QUIC) ပိတ်ဆို့ရန်";
+"settings.toggle.blockHTTP3.footer" = "TCP/HTTP2 ကို မဖြစ်မနေ သုံးစေရန် ပို့တ် 443 သို့ သွားသော UDP ဒေတာ အသွားအလာနှင့် SVCB/HTTPS DNS record များကို ပယ်ချသည်။";
+"settings.toggle.ipv6" = "IPv6 ဖွင့်ရန်";
+"settings.toggle.ipv6.footer" = "AAAA record များကို ရှာဖွေပြီး IPv6 ဒေတာ အသွားအလာကို Tunnel မှတစ်ဆင့် ဖြတ်သန်းစေသည်။ ပိတ်ထားပါက Tunnel သည် IPv4 သာ သုံးပြီး AAAA မေးမြန်းမှုများကို ပယ်ချသည်။";
+"settings.picker.logLevel" = "မှတ်တမ်း အဆင့်";
+"settings.logLevel.debug" = "အမှားရှာ";
+"settings.logLevel.info" = "အချက်အလက်";
+"settings.logLevel.warning" = "သတိပေးချက်";
+"settings.logLevel.error" = "အမှား";
+"settings.logLevel.silent" = "မှတ်တမ်းမတင်";
+"settings.label.appIcon" = "အက်ပ် အိုင်ကွန်";
+"settings.appIcon.primary" = "မူလ";
+"settings.appIcon.leap" = "ခုန်ပေါက်";
+"settings.appIcon.sunset" = "နေဝင်ချိန်";
+"settings.appIcon.midnight" = "သန်းခေါင်ယံ";
+"settings.section.diagnostics" = "ပြဿနာ စစ်ဆေးခြင်း";
+"settings.label.diagnostics" = "ပြဿနာ စစ်ဆေးခြင်း";
+"settings.label.exportLogs" = "မှတ်တမ်းများ ထုတ်ယူရန်";
+"settings.section.about" = "အကြောင်း";
+"settings.about.version" = "ဗားရှင်း";
+"settings.about.memory" = "မှတ်ဉာဏ်";
+
+
+/* App Icon picker */
+"appIconPicker.nav.title" = "အက်ပ် အိုင်ကွန်";
+"appIconPicker.error.failed" = "iOS က အိုင်ကွန် ပြောင်းလဲမှုကို ငြင်းပယ်လိုက်သည်။ Guided Access မုဒ်မှ ထွက်ပါ သို့မဟုတ် စက် စီမံခန့်ခွဲမှု ပရိုဖိုင်ကို စစ်ဆေးပါ၊ ထို့နောက် ထပ်စမ်းကြည့်ပါ။";
+"appIconPicker.unsupported.title" = "အခြား အိုင်ကွန်များ အသုံးပြု၍ မရပါ";
+"appIconPicker.unsupported.description" = "ဤစက်တွင် အက်ပ် အိုင်ကွန်ကို ပြောင်း၍ မရပါ။";
+
+
+/* User Diagnostics */
+"userDiagnostics.nav.title" = "ပြဿနာ စစ်ဆေးခြင်း";
+"userDiagnostics.section.directTcp" = "တိုက်ရိုက် TCP";
+"userDiagnostics.section.proxyHttp" = "ပရောက်စီ HTTP";
+"userDiagnostics.section.dns" = "DNS ရှာဖွေမှု";
+"userDiagnostics.empty.title" = "VPN လိုအပ်သည်";
+"userDiagnostics.empty.description" = "ပရောက်စီ HTTP နှင့် DNS ရှာဖွေမှု စစ်ဆေးချက်များ လုပ်ဆောင်ရန် ပရောက်စီသို့ ချိတ်ဆက်ပါ။";
+"userDiagnostics.button.test" = "စစ်ဆေးရန်";
+"userDiagnostics.button.testing" = "စစ်ဆေးနေသည်…";
+"userDiagnostics.error.parseHostPort" = "host:port ပုံစံ ဖြစ်ရမည် (ဥပမာ 1.1.1.1:443)";
+
+
+/* Traffic */
+"traffic.nav.title" = "ဒေတာ အသွားအလာ";
+"traffic.empty.title" = "ဒေတာ အသွားအလာ အချက်အလက် မရှိသေးပါ";
+"traffic.empty.description" = "အသုံးပြုမှုကို စတင်မှတ်တမ်းတင်ရန် VPN ကို စတင်ပါ။";
+"traffic.label.speed" = "အမြန်နှုန်း";
+"traffic.label.last7Days" = "ပြီးခဲ့သော ရက် 7";
+"traffic.tile.today" = "ယနေ့";
+"traffic.tile.thisMonth" = "ဤလ";
+
+
+/* tvOS home screen (TVContentView) — the tvOS target compiles App/Resources
+   but not App/Sources/Views, so it reuses home.* / subscriptions.* above and
+   adds only what has no iPhone counterpart. */
+"tv.subscription.section" = "စာရင်းသွင်းမှု";
+"tv.subscription.field.url" = "စာရင်းသွင်းမှု URL";
+"tv.subscription.error.invalidURL" = "http:// သို့မဟုတ် https:// ဖြင့် စသော စာရင်းသွင်းမှု URL ကို ထည့်ပါ။";
+"tv.profiles.section" = "ပရိုဖိုင်များ";
+"tv.profiles.empty" = "ပရိုဖိုင် မရှိသေးပါ။ စတင်ရန် စာရင်းသွင်းမှု URL တစ်ခု ထည့်ပါ။";
+"tv.connect.hint.noProfile" = "ချိတ်ဆက်ရန် စာရင်းသွင်းမှု တစ်ခု ထည့်ပါ။";
+"tv.icloud.button" = "iCloud Drive";
+"tv.icloud.title" = "iCloud Drive မှ တင်သွင်းရန်";
+"tv.icloud.instructions" = "သင့် iPhone သို့မဟုတ် Mac တွင် .yaml ဖိုင်များကို iCloud Drive › meow ထဲသို့ သိမ်းပါ — သို့မဟုတ် iPhone ရှိ meow တွင် Config တစ်ခုကို ပွတ်ဆွဲပြီး iCloud Drive ကို တို့ပါ — ထို့နောက် ၎င်းတို့ကို ဤနေရာသို့ ပို့ရန် iPhone တွင် meow ကို ဖွင့်ပါ။";
+"tv.icloud.empty" = "iCloud Drive မှ Config မရှိသေးပါ။";
+"tv.icloud.noAccount" = "iCloud Drive မှ Config များ တင်သွင်းရန် ဆက်တင်များတွင် iCloud သို့ အကောင့်ဝင်ပါ။";
+"tv.icloud.failed %@" = "iCloud မှ Config များ ရယူ၍ မရပါ: %@";
+
+
+/* Home Screen widgets (Widgets/ — the extension ships this same file) */
+"widget.tunnel.name" = "VPN";
+"widget.tunnel.description" = "meow ချိတ်ဆက်ထားမထား ကြည့်ပြီး ဖွင့်/ပိတ် လုပ်နိုင်သည်။";
+"widget.routeMode.description" = "ချိတ်ဆက်ထားစဉ် meow ၏ လမ်းကြောင်းမုဒ်ကို ပြောင်းနိုင်သည်။";
+"widget.status.setup" = "သတ်မှတ်ရန် meow ကို ဖွင့်ပါ";
+"widget.routeMode.rule.long" = "စည်းမျဉ်းအလိုက် ပရောက်စီ";
+"widget.routeMode.all.long" = "ဒေတာ အားလုံး ပရောက်စီမှတစ်ဆင့်";
+"widget.routeMode.direct.long" = "တိုက်ရိုက် ချိတ်ဆက်မှု";
+"widget.toggle.label" = "VPN";
+"widget.control.name" = "meow VPN";
+"widget.control.on" = "ဖွင့်ထားသည်";
+"widget.control.off" = "ပိတ်ထားသည်";
+"widget.control.setup" = "သတ်မှတ်ရန်";
+"widget.error.notConfigured" = "meow ကို ဖွင့်ပြီး ပရိုဖိုင်တစ်ခုကို ဦးစွာ ရွေးပါ။";
+"widget.intent.toggle.title" = "meow VPN ဖွင့်/ပိတ်ရန်";
+"widget.intent.toggle.value" = "ဖွင့်ရန်";
+"widget.intent.routeMode.title" = "လမ်းကြောင်းမုဒ် သတ်မှတ်ရန်";
+"widget.intent.routeMode.mode" = "မုဒ်";
+
+
+/* Fullscreen diagnostics overlay (ContentView) */
+"content.diagnostics.nav.title" = "ပြဿနာ စစ်ဆေးခြင်း";
+
+
+/* Accessibility — ContentView / diagnostics overlay */
+"a11y.content.diagnostics.close" = "ပြဿနာ စစ်ဆေးခြင်း စာမျက်နှာကို ပိတ်ရန်";
+"a11y.content.diagnostics.closeHint" = "ပြဿနာ စစ်ဆေးခြင်း စာမျက်နှာကို ပိတ်ပြီး ပင်မ စာမျက်နှာသို့ ပြန်သွားသည်";
+
+
+/* Accessibility — Common */
+"a11y.common.dismissAlert" = "အမှား သတိပေးချက်ကို ပိတ်ရန်";
+
+
+/* Accessibility — Home */
+"a11y.home.proxyGroups.none" = "ရနိုင်သော အုပ်စု မရှိပါ";
+
+
+/* Accessibility — Rules list */
+"a11y.rules.row %@ %@ %@" = "စည်းမျဉ်း %@၊ %@၊ %@ မှတစ်ဆင့်";
+"a11y.rules.error %@" = "အမှား: %@";
+
+
+/* Accessibility — Logs */
+"a11y.logs.row.label %@ %@" = "%1$@ %2$@";
+"a11y.logs.errorBanner.label %@" = "အမှား: %@";
+
+
+/* Accessibility — YAML editor */
+"yamlEditor.a11y.errorBanner %@" = "အမှား: %@";
+"yamlEditor.a11y.saving" = "သိမ်းနေသည်";
+"yamlEditor.a11y.save.hint" = "Config ကို စစ်ဆေးပြီး သိမ်းသည်";
+"a11y.yamlEditor.textView" = "YAML Config တည်းဖြတ်ကိရိယာ";
+"a11y.yamlEditor.errorLines %@" = "စာကြောင်း %@ တွင် အမှားများ ရှိသည်";
+
+
+/* Accessibility — Providers */
+"a11y.providers.row.delay.label" = "ကြန့်ကြာချိန်";
+"a11y.providers.row.delay.value %lld" = "%lld မီလီစက္ကန့်";
+"a11y.providers.errorBanner.label %@" = "အမှား: %@";
+
+
+/* Accessibility — Connections */
+"a11y.connections.row.upload %@" = "%@ အပ်လုဒ်လုပ်ထားသည်";
+"a11y.connections.row.download %@" = "%@ ဒေါင်းလုဒ်လုပ်ထားသည်";
+"a11y.connections.row.label %@ %@ %@ %@ %@" = "%@၊ %@၊ အပ်လုဒ် %@၊ ဒေါင်းလုဒ် %@၊ %@ မှတစ်ဆင့်";
+"a11y.connections.errorBanner %@" = "သတိပေးချက်: %@";
+
+
+/* Accessibility — DNS */
+"a11y.dns.row.label %@ %@ %@ %lld" = "%@၊ %@၊ ဆာဗာ %@၊ TTL %lld စက္ကန့်";
+"a11y.dns.errorBanner %@" = "သတိပေးချက်: %@";
+
+
+/* Accessibility — Rule editor (single-rule sheet) */
+"a11y.ruleEditor.noResolve.hint" = "ဤစည်းမျဉ်းနှင့် ကိုက်ညီမှု မစစ်ဆေးမီ DNS ရှာဖွေခြင်းကို ကျော်သည်";
+"a11y.ruleEditor.save.hint" = "စည်းမျဉ်းကို သိမ်းပြီး တည်းဖြတ်ကိရိယာကို ပိတ်သည်";
+
+
+/* Accessibility — DiagnosticsViewController (auto-run checks) */
+"a11y.diagnostics.button.run.hint" = "လက်ရှိ VPN Tunnel ပေါ်တွင် ပြဿနာ စစ်ဆေးချက် အားလုံးကို လုပ်ဆောင်သည်";
+"a11y.diagnostics.running" = "ပြဿနာ စစ်ဆေးနေသည်";
+"a11y.diagnostics.check.tunExists" = "TUN အင်တာဖေ့စ်";
+"a11y.diagnostics.check.dnsOk" = "DNS ရှာဖွေမှု";
+"a11y.diagnostics.check.tcpProxyOk" = "TCP ပရောက်စီ";
+"a11y.diagnostics.check.http204Ok" = "HTTP 204 စစ်ဆေးချက်";
+"a11y.diagnostics.result.pass %@" = "%@: အောင်မြင်သည်";
+"a11y.diagnostics.result.fail %@ %@" = "%1$@: မအောင်မြင်ပါ၊ %2$@";
+
+
+/* Accessibility — Subscriptions */
+"subscriptions.row.a11y.selected" = "ရွေးထားသည်";
+"subscriptions.row.a11y.notSelected" = "ရွေးမထားပါ";
+"subscriptions.row.a11y.selectHint" = "ဤ Config ကို စတင်အသုံးပြုသည်";
+"subscriptions.row.a11y.editHint" = "YAML တည်းဖြတ်ကိရိယာကို ဖွင့်သည်";
+"subscriptions.row.a11y.refreshHint" = "အဝေးရှိ URL မှ နောက်ဆုံး Config ကို ရယူသည်";
+"subscriptions.editInfo.a11y.updateIntervalHint" = "ဤ Config ကို မည်မျှ မကြာခဏ ပြန်လည်ရယူမည်ကို ရွေးသည်";
+
+
+/* Accessibility — Traffic charts */
+"a11y.traffic.speedChart.value %@ %@" = "အပ်လုဒ် တစ်စက္ကန့်လျှင် %@၊ ဒေါင်းလုဒ် တစ်စက္ကန့်လျှင် %@";
+"a11y.traffic.historyChart.value %@ %@" = "စုစုပေါင်း အပ်လုဒ် %@၊ စုစုပေါင်း ဒေါင်းလုဒ် %@";
+"a11y.traffic.chart.axis.time" = "အချိန်";
+"a11y.traffic.chart.seconds %@" = "%@ စက္ကန့်";
+"a11y.traffic.chart.axis.speed" = "အမြန်နှုန်း";
+"a11y.traffic.chart.axis.day" = "ရက်";
+"a11y.traffic.chart.axis.data" = "ဒေတာ ပမာဏ";
+
+
+/* Accessibility — Settings */
+"a11y.settings.allowLan.hint" = "သင့်ဒေသတွင်း ကွန်ရက်ရှိ အခြားစက်များကို ပရောက်စီမှတစ်ဆင့် ချိတ်ဆက်ခွင့်ပြုသည်။";
+"a11y.settings.onDemand.hint" = "ကွန်ရက် လုပ်ဆောင်မှု လိုအပ်သည့်အခါ Tunnel ကို အလိုအလျောက် စတင်သည်။";
+"a11y.settings.blockHTTP3.hint" = "ပို့တ် 443 သို့ သွားသော UDP ဒေတာ အသွားအလာနှင့် SVCB/HTTPS DNS record များကို ပယ်ချခြင်းဖြင့် HTTP/3 နှင့် QUIC ကို ပိတ်ဆို့ပြီး ချိတ်ဆက်မှုများကို TCP နှင့် HTTP/2 သုံးရန် တွန်းအားပေးသည်။";
+"a11y.settings.ipv6.hint" = "AAAA record များကို ရှာဖွေပြီး IPv6 ဒေတာ အသွားအလာကို Tunnel မှတစ်ဆင့် ဖြတ်သန်းစေခြင်းဖြင့် IPv6 ကို ဖွင့်သည်။ ပိတ်ထားပါက Tunnel သည် IPv4 သာ သုံးပြီး AAAA မေးမြန်းမှုများကို ပယ်ချသည်။";
+"a11y.settings.appIcon.hint" = "ပင်မ မျက်နှာပြင်တွင် ပြသော အက်ပ် အိုင်ကွန်ကို ပြောင်းသည်။";
+"a11y.settings.exportLogs.hint" = "နောက်ဆုံး တစ်နာရီအတွင်းရှိ အက်ပ် မှတ်တမ်းများကို ဖိုင်တစ်ခုအဖြစ် သိမ်းသည်။";
+"a11y.settings.exportLogs.inProgress" = "ထုတ်ယူနေသည်";
+"a11y.settings.memory.unavailable" = "မရနိုင်ပါ";
+
+
+/* Accessibility — App Icon picker */
+"a11y.appIconPicker.option.hint" = "ဤပုံကို ပင်မ မျက်နှာပြင် အိုင်ကွန်အဖြစ် သတ်မှတ်သည်။";
+
+
+/* Accessibility — Rules editor (structured list) */
+"a11y.rulesEditor.row.payloadEmpty" = "ကိုက်ညီရမည့် တန်ဖိုး မရှိပါ";
+"a11y.rulesEditor.row.proxy %@" = "%@ သို့ လမ်းကြောင်းပေးသည်";
+"a11y.rulesEditor.error %@" = "အမှား: %@";
+"a11y.rulesEditor.row.hint" = "စည်းမျဉ်း တည်းဖြတ်ကိရိယာကို ဖွင့်သည်။";
+"a11y.rulesEditor.row.position %lld %lld" = "%1$lld ခုမြောက် စည်းမျဉ်း၊ စုစုပေါင်း %2$lld ခု";
+"a11y.rulesEditor.row.moveUp" = "အပေါ်သို့ ရွှေ့ရန်";
+"a11y.rulesEditor.row.moveDown" = "အောက်သို့ ရွှေ့ရန်";
+"a11y.rulesEditor.row.delete" = "စည်းမျဉ်း ဖျက်ရန်";
+
+
+/* Accessibility — Proxy groups */
+"a11y.proxyGroups.group.expanded" = "ချဲ့ထားသည်";
+"a11y.proxyGroups.group.collapsed" = "ခေါက်ထားသည်";
+"a11y.proxyGroups.group.hint" = "ဤအုပ်စုရှိ ပရောက်စီများကို ပြသည် သို့မဟုတ် ဖျောက်သည်။";
+"a11y.proxyGroups.group.action.testAll" = "ပရောက်စီ အားလုံးကို ကြန့်ကြာချိန် စစ်ဆေးရန်";
+"a11y.proxyGroups.proxy.hint" = "ဤပရောက်စီကို အုပ်စုအတွက် ရွေးသည်။";
+"a11y.proxyGroups.proxy.action.ping" = "ကြန့်ကြာချိန် စစ်ဆေးရန်";
+"a11y.proxyGroups.proxy.delay %@" = "%@ မီလီစက္ကန့်";
+"a11y.proxyGroups.proxy.delay.testing" = "ကြန့်ကြာချိန် စစ်ဆေးနေသည်";
+"a11y.proxyGroups.proxy.delay.none" = "ကြန့်ကြာချိန် မစစ်ဆေးရသေးပါ";
+
+
+/* Accessibility — User Diagnostics */
+"a11y.userDiagnostics.directTcp.input" = "Host နှင့် ပို့တ်";
+"a11y.userDiagnostics.proxyHttp.input" = "HTTP URL";
+"a11y.userDiagnostics.dns.input" = "ဒိုမိန်း အမည်";
+"a11y.userDiagnostics.directTcp.test" = "တိုက်ရိုက် TCP ချိတ်ဆက်မှုကို စစ်ဆေးရန်";
+"a11y.userDiagnostics.proxyHttp.test" = "ပရောက်စီ HTTP တောင်းဆိုမှုကို စစ်ဆေးရန်";
+"a11y.userDiagnostics.dns.test" = "DNS ရှာဖွေမှုကို စစ်ဆေးရန်";
+"a11y.userDiagnostics.result.httpStatus %@ %@" = "HTTP အခြေအနေ %@၊ %@ မီလီစက္ကန့်";
+"a11y.userDiagnostics.result.success %@" = "အောင်မြင်သည်၊ %@ မီလီစက္ကန့်";
+"a11y.userDiagnostics.result.failure %@" = "မအောင်မြင်ပါ: %@";
+"a11y.userDiagnostics.errorBanner %@" = "အမှား: %@";
+
+/* iCloud Drive export guide */
+"guide.icloudExport.title" = "Apple TV သို့ Config ပို့ရန်";
+"guide.icloudExport.subtitle" = "iPhone ရှိ meow မှ iCloud Drive တွင် သိမ်းလိုက်ပါက Apple TV က ၎င်းကို တင်သွင်းနိုင်သည်။";
+"guide.icloudExport.step1" = "iPhone တွင် Config များ တဘ်ကို ဖွင့်ပြီး Config တစ်ခုကို ညာဘက်သို့ ပွတ်ဆွဲပါ။";
+"guide.icloudExport.step2" = "iCloud Drive ကို တို့ပါ။ Config ကို iCloud Drive › meow တွင် သိမ်းမည်။";
+"guide.icloudExport.step3" = "Apple TV တွင် meow ရှိ iCloud Drive ကို ဖွင့်ပြီး Config ကို ရွေးပါ။ ၎င်းကို ပို့နိုင်ရန် iPhone တွင် meow ကို ဦးစွာ ဖွင့်ပါ။";
+"guide.icloudExport.done" = "နားလည်ပါပြီ";
+"settings.section.help" = "အကူအညီ";
+"settings.label.icloudGuide" = "Apple TV သို့ Config များ ပို့ရန်";
+"tv.icloud.howTo" = "အသုံးပြုပုံ";
+
+/* Crash Reports (MetricKit) */
+"settings.label.crashReports" = "ပျက်ကျမှု အစီရင်ခံစာများ";
+"crashReports.nav.title" = "ပျက်ကျမှု အစီရင်ခံစာများ";
+"crashReports.empty.title" = "ပျက်ကျမှု အစီရင်ခံစာ မရှိပါ";
+"crashReports.empty.description" = "ပျက်ကျမှု သို့မဟုတ် မတုံ့ပြန်ခြင်း ဖြစ်ပါက iOS သည် နောက်တစ်ကြိမ် ဖွင့်သည့်အခါ (များသောအားဖြင့် တစ်ရက်အတွင်း) meow ထံ အစီရင်ခံစာ ပေးပို့သည်။";
+"crashReports.footer" = "အစီရင်ခံစာများသည် iOS (MetricKit) မှ လာပြီး ဤစက်တွင်သာ ရှိသည်။ ပြဿနာ တင်ပြသည့်အခါ တစ်ခုကို မျှဝေပါ။";
+"crashReports.button.deleteAll" = "အားလုံး ဖျက်ရန်";
+"crashReports.deleteAll.title" = "ပျက်ကျမှု အစီရင်ခံစာ အားလုံးကို ဖျက်မလား။";
+"crashReports.button.share" = "မျှဝေရန်";
+"crashReports.detail.process" = "လုပ်ငန်းစဉ်";
+"crashReports.detail.version" = "ဗားရှင်း";
+"crashReports.detail.os" = "လည်ပတ်မှုစနစ်";
+"crashReports.kind.crash" = "ပျက်ကျမှု";
+"crashReports.kind.hang" = "မတုံ့ပြန်ခြင်း";
+"crashReports.kind.cpu" = "CPU အလွန်အကျွံ သုံးမှု";
+"crashReports.kind.diskWrite" = "ဒစ်ခ် အလွန်အကျွံ ရေးသားမှု";
+"crashReports.kind.launch" = "စတင်ဖွင့်မှု နှေးခြင်း";
+
+/* Performance Metrics (MetricKit) */
+"settings.label.metrics" = "စွမ်းဆောင်ရည် တိုင်းတာချက်များ";
+"metrics.nav.title" = "စွမ်းဆောင်ရည် တိုင်းတာချက်များ";
+"metrics.empty.title" = "တိုင်းတာချက် မရှိသေးပါ";
+"metrics.empty.description" = "iOS သည် တစ်ရက်လျှင် တစ်ကြိမ် အက်ပ်နှင့် Tunnel ၏ ယခင်နေ့ မှတ်ဉာဏ်၊ CPU၊ ကွန်ရက်နှင့် ရပ်စဲမှုများ အနှစ်ချုပ်ကို meow ထံ ပို့သည်။";
+"metrics.section.daily" = "နေ့စဉ် အစီရင်ခံစာများ";
+"metrics.section.lastWeek" = "ပြီးခဲ့သော ရက် 7";
+"metrics.section.resources" = "အရင်းအမြစ်များ";
+"metrics.section.network" = "ကွန်ရက်";
+"metrics.section.exits" = "ရပ်စဲမှုများ";
+"metrics.deleteAll.title" = "စွမ်းဆောင်ရည် တိုင်းတာချက် အားလုံးကို ဖျက်မလား။";
+"metrics.footer.tunnel" = "Tunnel က မှတ်ဉာဏ် 50 MB ခန့်ထက် ပိုသုံးပါက iOS က ၎င်းကို ရပ်တန့်သည်။ ရပ်တန့်မှုတိုင်းကို မှတ်ဉာဏ် ကန့်သတ်ချက်ကြောင့် ရပ်စဲမှု တစ်ကြိမ်အဖြစ် ရေတွက်သည်။";
+"metrics.source.app" = "အက်ပ်";
+"metrics.source.tunnel" = "Tunnel";
+"metrics.label.peakMemory" = "အမြင့်ဆုံး မှတ်ဉာဏ်";
+"metrics.label.suspendedMemory" = "ဆိုင်းငံ့ထားစဉ် မှတ်ဉာဏ် (ပျမ်းမျှ)";
+"metrics.label.cpuTime" = "CPU အချိန်";
+"metrics.label.foreground" = "ရှေ့ခံ အချိန်";
+"metrics.label.background" = "နောက်ခံ အချိန်";
+"metrics.label.diskWrites" = "ဒစ်ခ် ရေးသားမှု";
+"metrics.label.launch" = "စတင်ဖွင့်ရန် ကြာချိန် (အလယ်ကိန်း)";
+"metrics.label.hangs" = "မတုံ့ပြန်သည့် အကြိမ်ရေ";
+"metrics.label.download" = "ဒေါင်းလုဒ်";
+"metrics.label.upload" = "အပ်လုဒ်";
+"metrics.label.wifiDown" = "Wi-Fi ဒေါင်းလုဒ်";
+"metrics.label.wifiUp" = "Wi-Fi အပ်လုဒ်";
+"metrics.label.cellDown" = "မိုဘိုင်းဒေတာ ဒေါင်းလုဒ်";
+"metrics.label.cellUp" = "မိုဘိုင်းဒေတာ အပ်လုဒ်";
+"metrics.label.memoryLimitExits" = "မှတ်ဉာဏ် ကန့်သတ်ချက်ကြောင့် ရပ်စဲမှု";
+"metrics.label.forcedExits" = "ပုံမှန်မဟုတ်သော ရပ်စဲမှု";
+"metrics.label.period" = "ကာလ";
+"metrics.row.peak %@" = "အမြင့်ဆုံး %@";
+"metrics.row.cpu %@" = "CPU %@";
+"metrics.row.exits %lld" = "ပုံမှန်မဟုတ်သော ရပ်စဲမှု: %lld";
+"metrics.exits.none" = "ရပ်စဲမှု မှတ်တမ်း မရှိပါ";
+"metrics.exit.normal" = "ပုံမှန်";
+"metrics.exit.abnormal" = "ပုံမှန်မဟုတ်";
+"metrics.exit.memoryLimit" = "မှတ်ဉာဏ် ကန့်သတ်ချက်";
+"metrics.exit.memoryPressure" = "စနစ် မှတ်ဉာဏ် မလုံလောက်မှု";
+"metrics.exit.watchdog" = "Watchdog";
+"metrics.exit.cpuLimit" = "CPU ကန့်သတ်ချက်";
+"metrics.exit.badAccess" = "မှတ်ဉာဏ် ဝင်ရောက်မှု အမှား";
+"metrics.exit.illegalInstruction" = "မမှန်ကန်သော ညွှန်ကြားချက်";
+"metrics.exit.lockedFile" = "ဖိုင် လော့ခ်ချထားစဉ် ဆိုင်းငံ့ခံရခြင်း";
+"metrics.exit.taskAssertionTimeout" = "နောက်ခံ လုပ်ငန်း အချိန်ကုန်";

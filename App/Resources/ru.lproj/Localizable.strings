@@ -1,0 +1,586 @@
+/* meow-ios — Russian (ru) localization.
+
+   Key set is 1:1 with en.lproj — every key in en.lproj/Localizable.strings
+   appears here, in the same order, with a real translation. Strings
+   deliberately omitted from en.lproj (QA/OCR harness pins, stable diagnostic
+   reason codes, internal chart bindings, log-level Picker .tag() values)
+   must NOT be added here either — see en.lproj header for the exclusion list.
+
+   Terminology follows meow-android values-ru (Подключить / Отключено,
+   Группы прокси, Режим маршрутизации: Правила / Глобальный / Прямой,
+   Отправка / Загрузка, Журнал, Ядро, Задержка). iOS "Config" → «Конфигурация»;
+   "Profile" → «Профиль».
+
+   Style:
+     - Buttons and toolbar items use short infinitives (Добавить, Сохранить,
+       Закрыть) or nouns (Отмена); accessibility hints are full third-person
+       phrases (Открывает…, Сохраняет…).
+     - No .stringsdict: anything carrying a count is phrased plural-neutrally
+       (Соединения (%lld), %lld мс, Секунд: %@, Правило %1$lld из %2$lld).
+     - Protocol and brand names (DNS, TCP, UDP, TUN, TLS, SNI, Shadowsocks,
+       Mihomo, Clash, YAML) and rule literals (DIRECT, no-resolve) stay as-is.
+     - Ellipsis is the single character "…" (U+2026); quotes are «ёлочки». */
+
+
+/* Tab bar */
+"tabs.subscriptions" = "Конфигурации";
+"tabs.proxyGroups" = "Прокси";
+"tabs.utility" = "Утилиты";
+"tabs.settings" = "Настройки";
+
+
+/* Common */
+"common.ok" = "ОК";
+"common.cancel" = "Отмена";
+"common.close" = "Закрыть";
+"common.error" = "Ошибка";
+"common.delete" = "Удалить";
+
+
+/* Home screen */
+"home.nav.title" = "meow";
+"home.profile.none" = "Профиль не выбран";
+"home.toggle.connect" = "Подключить";
+"home.toggle.connecting" = "Подключение…";
+"home.toggle.disconnect" = "Отключить";
+"home.toggle.disconnecting" = "Отключение…";
+"home.badge.disconnected" = "Отключено";
+"home.badge.preparing" = "Подготовка…";
+"home.badge.connecting" = "Подключение";
+"home.badge.connected" = "Подключено";
+"home.badge.disconnecting" = "Отключение";
+"home.toggle.preparing" = "Подготовка…";
+"home.packet.ingress" = "Входящие";
+"home.packet.egress" = "Исходящие";
+"home.traffic.upload" = "Отправка";
+"home.traffic.download" = "Загрузка";
+"home.traffic.total %@" = "Всего: %@";
+"home.routeMode.title" = "Режим маршрутизации";
+"home.routeMode.rule" = "Правила";
+"home.routeMode.all" = "Глобальный";
+"home.routeMode.direct" = "Прямой";
+"home.proxyGroups.header" = "Группы прокси";
+"home.proxyGroups.placeholder.connected" = "Загрузка групп…";
+"home.proxyGroups.placeholder.connecting" = "Подключение — группы появятся, когда запустится ядро.";
+"home.proxyGroups.placeholder.disconnected" = "Подключитесь, чтобы загрузить доступные группы.";
+"home.nav.connections" = "Соединения";
+"home.nav.rules" = "Правила";
+"home.nav.providers" = "Провайдеры";
+"home.nav.diagnostics" = "Диагностика";
+"home.error.apiUnavailable" = "API недоступен";
+"home.error.selectFailed" = "Не удалось выбрать прокси";
+"home.error.tunnelFailed.title" = "Не удалось запустить туннель";
+"home.error.dismiss" = "Закрыть";
+
+
+/* Subscriptions */
+"subscriptions.nav.title" = "Конфигурации";
+"subscriptions.home.addTitle" = "Добавить конфигурацию";
+"subscriptions.home.addSubtitle" = "Укажите URL или импортируйте локальный YAML-профиль.";
+"subscriptions.section.profiles" = "Профили";
+"subscriptions.section.engine" = "Ядро";
+"subscriptions.add.nav.title" = "Добавить конфигурацию";
+"subscriptions.add.field.name" = "Название";
+"subscriptions.add.field.url" = "URL";
+"subscriptions.add.button.add" = "Добавить";
+"subscriptions.add.button.adding" = "Добавление…";
+"subscriptions.editInfo.swipe" = "Свойства";
+"subscriptions.refresh.swipe" = "Обновить";
+"subscriptions.editInfo.nav.title" = "Изменить конфигурацию";
+"subscriptions.editInfo.button.save" = "Сохранить";
+"subscriptions.editInfo.footer" = "Изменение URL вступит в силу при следующем обновлении.";
+"subscriptions.editInfo.updateInterval" = "Автообновление";
+"subscriptions.editInfo.updateInterval.footer" = "meow заново загружает эту конфигурацию при открытии приложения, если выбранный интервал истёк. Чтобы обновить её прямо сейчас, смахните строку вправо.";
+"subscriptions.updateInterval.manual" = "Никогда";
+"subscriptions.updateInterval.daily" = "Ежедневно";
+"subscriptions.updateInterval.weekly" = "Еженедельно";
+"subscriptions.import.errorTitle" = "Не удалось импортировать конфигурацию";
+"subscriptions.row.updated %@" = "Обновлено %@";
+"subscriptions.row.a11y.edit %@" = "Редактировать YAML конфигурации %@";
+"subscriptions.row.a11y.refresh %@" = "Обновить конфигурацию %@";
+"subscriptions.row.a11y.editInfo %@" = "Переименовать или изменить свойства конфигурации %@";
+"subscriptions.row.a11y.editInfoHint" = "Открывает редактор названия и URL";
+"subscriptions.row.a11y.exportQR %@" = "Экспортировать QR-код конфигурации %@";
+"subscriptions.row.a11y.exportQRHint" = "Показывает QR-код ссылки, который можно отсканировать";
+"subscriptions.exportICloud.swipe" = "iCloud Drive";
+"subscriptions.row.a11y.exportICloud %@" = "Сохранить конфигурацию %@ в iCloud Drive";
+"subscriptions.exportICloud.done.title" = "Сохранено в iCloud Drive";
+"subscriptions.exportICloud.done.message %@" = "Сохранено как iCloud Drive › meow › %@. Конфигурация также появится на Apple TV в разделе iCloud Drive.";
+"subscriptions.exportICloud.error.unavailable" = "Чтобы сохранять туда конфигурации, войдите в iCloud и включите iCloud Drive в Настройках.";
+
+/* QR export sheet */
+"qrExport.nav.title" = "Экспорт QR-кода";
+"qrExport.picker.server" = "Сервер";
+"qrExport.button.copy" = "Копировать ссылку";
+"qrExport.button.copied" = "Скопировано";
+"qrExport.button.share" = "Поделиться";
+"qrExport.empty" = "Нечего экспортировать — в этом профиле нет серверов Shadowsocks.";
+"qrExport.error.tooLong" = "Эта ссылка слишком длинная для QR-кода. Скопируйте её или поделитесь ею.";
+"qrExport.caption.subscription" = "Отсканируйте, чтобы импортировать URL этой конфигурации в другой клиент.";
+"qrExport.caption.shadowsocks" = "Отсканируйте, чтобы импортировать этот сервер в любой клиент, совместимый с Shadowsocks.";
+"qrExport.a11y.qrImage %@" = "QR-код для %@";
+"subscriptions.toolbar.a11y.add" = "Добавить конфигурацию";
+"subscriptions.toolbar.addFromURL" = "Добавить по ссылке";
+"subscriptions.toolbar.importFromFile" = "Импорт из iCloud Drive…";
+"subscriptions.import.invalidEncoding" = "Выбранный файл не является текстом в кодировке UTF-8.";
+"subscriptions.error.plainHTTP" = "Этот URL конфигурации использует незащищённый HTTP. iOS блокирует небезопасные соединения (не HTTPS), поэтому загрузить конфигурацию невозможно. Используйте URL, начинающийся с https://.";
+"subscriptions.error.invalidURL" = "Некорректный URL конфигурации. Проверьте его на опечатки и убедитесь, что он начинается с https://.";
+"subscriptions.error.http %lld" = "Сервер конфигурации ответил кодом HTTP %lld. Проверьте, действителен ли ещё URL, или запросите новую ссылку у сервиса.";
+"subscriptions.error.decodeFailed" = "Загруженная конфигурация не является корректным текстом в кодировке UTF-8.";
+"subscriptions.error.conversionFailed %@" = "Загруженные данные не являются ни конфигурацией Clash, ни поддерживаемой подпиской (ss://, trojan://, vless://, vmess://). Убедитесь, что это ссылка на подписку Clash или Mihomo, а не веб-страница.\n\nЯдро: %@";
+"subscriptions.empty.title" = "Конфигураций пока нет";
+"subscriptions.empty.description" = "Нажмите +, чтобы добавить URL конфигурации Mihomo или Clash.";
+"subscriptions.empty.importFile" = "Импортировать файл";
+"subscriptions.toolbar.addShadowsocks" = "Добавить сервер Shadowsocks";
+
+
+/* Deep-link import confirmation (meow://connect) */
+"deepLinkImport.nav.title" = "Импорт конфигурации";
+"deepLinkImport.section.subscription" = "По этой ссылке будет добавлено:";
+"deepLinkImport.field.name" = "Название";
+"deepLinkImport.field.host" = "Хост";
+"deepLinkImport.warning.insecure" = "Небезопасное соединение — профиль может быть изменён при передаче. Если сервис предлагает ссылку https://, лучше используйте её.";
+"deepLinkImport.warning.acknowledge" = "Я понимаю риск импорта по HTTP";
+"deepLinkImport.notice.duplicate" = "Конфигурация с этим URL уже импортирована. Если продолжить, она будет обновлена на месте, а не добавлена повторно.";
+"deepLinkImport.button.import" = "Импортировать";
+"deepLinkImport.button.update" = "Обновить существующую конфигурацию";
+"deepLinkImport.button.importAndActivate" = "Импортировать и активировать";
+"a11y.deepLinkImport.cancel" = "Отменить импорт";
+"deepLinkImport.a11y.url %@" = "URL конфигурации: %@";
+
+
+/* Add Shadowsocks server sheet */
+"ssAdd.nav.title" = "Добавить Shadowsocks";
+"ssAdd.section.link" = "Ссылка";
+"ssAdd.button.scan" = "Сканировать QR-код";
+"ssAdd.button.applyLink" = "Заполнить по ссылке";
+"ssAdd.error.invalidLink" = "Некорректная ссылка ss://.";
+"ssAdd.section.server" = "Сервер";
+"ssAdd.field.name" = "Название";
+"ssAdd.field.server" = "Сервер";
+"ssAdd.field.port" = "Порт";
+"ssAdd.field.cipher" = "Шифр";
+"ssAdd.field.password" = "Пароль";
+"ssAdd.toggle.udp" = "UDP";
+"ssAdd.section.plugin" = "Плагин";
+"ssAdd.plugin.picker" = "Плагин";
+"ssAdd.plugin.none" = "Нет";
+"ssAdd.plugin.ech" = "Туннель ECH-TLS";
+"ssAdd.plugin.obfs" = "simple-obfs";
+"ssAdd.plugin.v2ray" = "v2ray-plugin";
+"ssAdd.ech.footer" = "Встроенный в ядро транспорт SIP003 ech-tls-tunnel.";
+"ssAdd.plugin.hostFallback.footer" = "Оставьте поле «Хост» пустым, чтобы использовать адрес сервера.";
+"ssAdd.field.obfsMode" = "Режим obfs";
+"ssAdd.field.obfsHost" = "Хост obfs";
+"ssAdd.toggle.v2rayTLS" = "TLS";
+"ssAdd.field.v2rayHost" = "Хост";
+"ssAdd.field.v2rayPath" = "Путь";
+"ssAdd.toggle.v2rayMux" = "Mux";
+"ssAdd.field.sni" = "SNI";
+"ssAdd.field.path" = "Путь";
+"ssAdd.field.echConfig" = "Конфигурация ECH";
+"ssAdd.field.fingerprint" = "Отпечаток";
+"ssAdd.toggle.fastOpen" = "Fast Open";
+"ssAdd.plugin.passthrough %@" = "Плагин из ссылки: %@";
+"ssAdd.footer.profile" = "Сохраняется в локальный профиль, созданный из встроенного шаблона. Новые серверы добавляются в тот же профиль.";
+"ssAdd.button.add" = "Добавить";
+"ssAdd.button.adding" = "Добавление…";
+"ssAdd.scanner.nav.title" = "Сканировать QR-код";
+"ssAdd.scanner.unavailable.title" = "Камера недоступна";
+"ssAdd.scanner.unavailable.description" = "На этом устройстве сканирование недоступно. Вставьте ссылку ss://.";
+"ssAdd.scanner.denied.description" = "Доступ к камере запрещён. Разрешите его в Настройках или вставьте ссылку ss://.";
+"ssAdd.profile.defaultName" = "Мои серверы";
+
+
+/* Connections */
+"connections.empty.title" = "Нет соединений";
+"connections.empty.description" = "Здесь появится активный трафик.";
+"connections.toolbar.closeAll" = "Закрыть все";
+"connections.swipe.close" = "Закрыть";
+"connections.nav.titleFormat %lld" = "Соединения (%lld)";
+
+
+/* Utility hub */
+"utility.nav.title" = "Утилиты";
+"utility.nav.traffic" = "Трафик";
+"utility.nav.logs" = "Журнал";
+"utility.nav.dns" = "DNS";
+
+
+/* DNS */
+"dns.empty.title" = "Нет результатов DNS";
+"dns.empty.description" = "Кэшированные ответы появятся, когда ядро начнёт разрешать домены.";
+"dns.nav.titleFormat %lld" = "DNS (%lld)";
+"dns.row.unknownUpstream" = "Неизвестно";
+"dns.row.ttl %lld" = "TTL %lld с";
+
+
+/* Rules */
+"rules.empty.title" = "Нет правил";
+"rules.empty.description" = "Правила появятся после загрузки профиля.";
+"rules.nav.titleFormat %lld" = "Правила (%lld)";
+"rules.button.edit" = "Изменить";
+
+/* Rules editor (structured per-rule edit sheet) */
+"rulesEditor.nav.title" = "Изменить правила";
+"rulesEditor.empty.title" = "Нет правил";
+"rulesEditor.empty.description" = "Нажмите +, чтобы добавить первое правило.";
+"rulesEditor.button.add" = "Добавить";
+"rulesEditor.button.addChinaPreset" = "Добавить пресет DIRECT для Китая";
+"rulesEditor.button.cancel" = "Отмена";
+"rulesEditor.button.save" = "Сохранить";
+"rulesEditor.button.saving" = "Сохранение…";
+
+/* Single-rule editor sheet */
+"ruleEditor.nav.title" = "Правило";
+"ruleEditor.section.type" = "Тип";
+"ruleEditor.section.payload" = "Значение";
+"ruleEditor.section.proxy" = "Прокси";
+"ruleEditor.field.type" = "Тип";
+"ruleEditor.field.payload" = "Значение";
+"ruleEditor.field.proxy" = "Прокси";
+"ruleEditor.field.proxy.custom" = "Своё название";
+"ruleEditor.field.noResolve" = "no-resolve";
+"ruleEditor.field.noResolve.footer" = "Не выполнять разрешение DNS перед сопоставлением. Используйте для IP-правил, которые должны срабатывать только на уже разрешённые адреса назначения.";
+"ruleEditor.button.cancel" = "Отмена";
+"ruleEditor.button.save" = "Сохранить";
+
+
+/* Logs */
+"logs.picker.level" = "Уровень";
+"logs.level.debug" = "отладка";
+"logs.level.info" = "инфо";
+"logs.level.warning" = "предупр.";
+"logs.level.error" = "ошибка";
+"logs.toggle.autoScroll" = "Автопрокрутка";
+"logs.empty.title" = "Нет записей";
+"logs.empty.description" = "Записи журнала появятся, когда туннель будет активен.";
+"logs.nav.titleFormat %lld" = "Журнал (%lld)";
+
+
+/* Providers */
+"providers.empty.title" = "Нет провайдеров";
+"providers.empty.description" = "Провайдеры появятся после загрузки профиля.";
+"providers.nav.titleFormat %lld" = "Провайдеры (%lld)";
+"providers.a11y.healthCheck %@" = "Проверить состояние провайдера %@";
+"providers.a11y.test %@" = "Проверить %@";
+
+
+/* Yaml Editor */
+"yamlEditor.nav.title" = "Изменить конфигурацию";
+"yamlEditor.empty.title" = "Пустая конфигурация";
+"yamlEditor.empty.description" = "Вставьте конфигурацию Clash в формате YAML, чтобы начать редактирование.";
+"yamlEditor.button.cancel" = "Отмена";
+"yamlEditor.button.save" = "Сохранить";
+"yamlEditor.button.saving" = "Сохранение…";
+"yamlEditor.a11y.cancel" = "Отменить изменения и закрыть редактор";
+"yamlEditor.a11y.save" = "Сохранить конфигурацию";
+"yamlEditor.error.invalid" = "Некорректная конфигурация";
+
+
+/* Settings */
+"settings.nav.title" = "Настройки";
+"settings.section.general" = "Общие";
+"settings.toggle.allowLan" = "Доступ из локальной сети";
+"settings.toggle.onDemand" = "Подключение по требованию";
+"settings.toggle.blockHTTP3" = "Блокировать HTTP/3 (QUIC)";
+"settings.toggle.blockHTTP3.footer" = "Отбрасывает UDP-трафик на порт 443 и DNS-записи SVCB/HTTPS, чтобы принудительно использовать TCP/HTTP2.";
+"settings.toggle.ipv6" = "Включить IPv6";
+"settings.toggle.ipv6.footer" = "Разрешает записи AAAA и направляет IPv6-трафик через туннель. Если выключено, туннель работает только с IPv4, а запросы AAAA отбрасываются.";
+"settings.picker.logLevel" = "Уровень журнала";
+"settings.logLevel.debug" = "Отладка";
+"settings.logLevel.info" = "Информация";
+"settings.logLevel.warning" = "Предупреждение";
+"settings.logLevel.error" = "Ошибка";
+"settings.logLevel.silent" = "Отключено";
+"settings.label.appIcon" = "Значок приложения";
+"settings.appIcon.primary" = "По умолчанию";
+"settings.appIcon.leap" = "Прыжок";
+"settings.appIcon.sunset" = "Закат";
+"settings.appIcon.midnight" = "Полночь";
+"settings.section.diagnostics" = "Диагностика";
+"settings.label.diagnostics" = "Диагностика";
+"settings.label.exportLogs" = "Экспорт журнала";
+"settings.section.about" = "О приложении";
+"settings.about.version" = "Версия";
+"settings.about.memory" = "Память";
+
+
+/* App Icon picker */
+"appIconPicker.nav.title" = "Значок приложения";
+"appIconPicker.error.failed" = "iOS отклонила смену значка. Завершите сеанс Гид-доступа или проверьте профиль управления устройством, затем повторите попытку.";
+"appIconPicker.unsupported.title" = "Альтернативные значки недоступны";
+"appIconPicker.unsupported.description" = "На этом устройстве нельзя сменить значок приложения.";
+
+
+/* User Diagnostics */
+"userDiagnostics.nav.title" = "Диагностика";
+"userDiagnostics.section.directTcp" = "TCP напрямую";
+"userDiagnostics.section.proxyHttp" = "HTTP через прокси";
+"userDiagnostics.section.dns" = "DNS-резолвер";
+"userDiagnostics.empty.title" = "Требуется VPN";
+"userDiagnostics.empty.description" = "Подключитесь к прокси, чтобы выполнить проверки «HTTP через прокси» и «DNS-резолвер».";
+"userDiagnostics.button.test" = "Проверить";
+"userDiagnostics.button.testing" = "Проверка…";
+"userDiagnostics.error.parseHostPort" = "Ожидается host:port (например, 1.1.1.1:443)";
+
+
+/* Traffic */
+"traffic.nav.title" = "Трафик";
+"traffic.empty.title" = "Данных о трафике пока нет";
+"traffic.empty.description" = "Запустите VPN, чтобы начать учёт трафика.";
+"traffic.label.speed" = "Скорость";
+"traffic.label.last7Days" = "Последние 7 дней";
+"traffic.tile.today" = "Сегодня";
+"traffic.tile.thisMonth" = "В этом месяце";
+
+
+/* tvOS home screen (TVContentView) — the tvOS target compiles App/Resources
+   but not App/Sources/Views, so it reuses home.* / subscriptions.* above and
+   adds only what has no iPhone counterpart. */
+"tv.subscription.section" = "Подписка";
+"tv.subscription.field.url" = "URL подписки";
+"tv.subscription.error.invalidURL" = "Введите URL подписки, начинающийся с http:// или https://.";
+"tv.profiles.section" = "Профили";
+"tv.profiles.empty" = "Профилей пока нет. Добавьте URL подписки, чтобы начать.";
+"tv.connect.hint.noProfile" = "Добавьте подписку, чтобы подключиться.";
+"tv.icloud.button" = "iCloud Drive";
+"tv.icloud.title" = "Импорт из iCloud Drive";
+"tv.icloud.instructions" = "Сохраните файлы .yaml в iCloud Drive › meow на iPhone или Mac — или смахните конфигурацию в meow на iPhone и коснитесь «iCloud Drive», — затем откройте meow на iPhone, чтобы отправить их сюда.";
+"tv.icloud.empty" = "Конфигураций из iCloud Drive пока нет.";
+"tv.icloud.noAccount" = "Чтобы импортировать конфигурации из iCloud Drive, войдите в iCloud в Настройках.";
+"tv.icloud.failed %@" = "Не удалось загрузить конфигурации из iCloud: %@";
+
+
+/* Home Screen widgets (Widgets/ — the extension ships this same file) */
+"widget.tunnel.name" = "VPN";
+"widget.tunnel.description" = "Показывает, подключён ли meow, и позволяет включить или выключить VPN.";
+"widget.routeMode.description" = "Переключает режим маршрутизации meow во время подключения.";
+"widget.status.setup" = "Откройте meow для настройки";
+"widget.routeMode.rule.long" = "Прокси по правилам";
+"widget.routeMode.all.long" = "Весь трафик через прокси";
+"widget.routeMode.direct.long" = "Прямое подключение";
+"widget.toggle.label" = "VPN";
+"widget.control.name" = "meow VPN";
+"widget.control.on" = "Вкл.";
+"widget.control.off" = "Выкл.";
+"widget.control.setup" = "Настроить";
+"widget.error.notConfigured" = "Сначала откройте meow и выберите профиль.";
+"widget.intent.toggle.title" = "Включить или выключить meow VPN";
+"widget.intent.toggle.value" = "Включено";
+"widget.intent.routeMode.title" = "Задать режим маршрутизации";
+"widget.intent.routeMode.mode" = "Режим";
+
+
+/* Fullscreen diagnostics overlay (ContentView) */
+"content.diagnostics.nav.title" = "Диагностика";
+
+
+/* Accessibility — ContentView / diagnostics overlay */
+"a11y.content.diagnostics.close" = "Закрыть панель диагностики";
+"a11y.content.diagnostics.closeHint" = "Закрывает панель диагностики и возвращает на главный экран";
+
+
+/* Accessibility — Common */
+"a11y.common.dismissAlert" = "Закрыть сообщение об ошибке";
+
+
+/* Accessibility — Home */
+"a11y.home.proxyGroups.none" = "Нет доступных групп";
+
+
+/* Accessibility — Rules list */
+"a11y.rules.row %@ %@ %@" = "Правило %@, %@, через %@";
+"a11y.rules.error %@" = "Ошибка: %@";
+
+
+/* Accessibility — Logs */
+"a11y.logs.row.label %@ %@" = "%1$@ %2$@";
+"a11y.logs.errorBanner.label %@" = "Ошибка: %@";
+
+
+/* Accessibility — YAML editor */
+"yamlEditor.a11y.errorBanner %@" = "Ошибка: %@";
+"yamlEditor.a11y.saving" = "Сохранение";
+"yamlEditor.a11y.save.hint" = "Проверяет и сохраняет конфигурацию";
+"a11y.yamlEditor.textView" = "Редактор конфигурации YAML";
+"a11y.yamlEditor.errorLines %@" = "Ошибки в строках: %@";
+
+
+/* Accessibility — Providers */
+"a11y.providers.row.delay.label" = "Задержка";
+"a11y.providers.row.delay.value %lld" = "%lld мс";
+"a11y.providers.errorBanner.label %@" = "Ошибка: %@";
+
+
+/* Accessibility — Connections */
+"a11y.connections.row.upload %@" = "Отправлено %@";
+"a11y.connections.row.download %@" = "Загружено %@";
+"a11y.connections.row.label %@ %@ %@ %@ %@" = "%@, %@, отправлено %@, загружено %@, через %@";
+"a11y.connections.errorBanner %@" = "Предупреждение: %@";
+
+
+/* Accessibility — DNS */
+"a11y.dns.row.label %@ %@ %@ %lld" = "%@, %@, сервер %@, TTL в секундах: %lld";
+"a11y.dns.errorBanner %@" = "Предупреждение: %@";
+
+
+/* Accessibility — Rule editor (single-rule sheet) */
+"a11y.ruleEditor.noResolve.hint" = "Пропускает разрешение DNS перед сопоставлением с этим правилом";
+"a11y.ruleEditor.save.hint" = "Сохраняет правило и закрывает редактор";
+
+
+/* Accessibility — DiagnosticsViewController (auto-run checks) */
+"a11y.diagnostics.button.run.hint" = "Выполняет все диагностические проверки для активного VPN-туннеля";
+"a11y.diagnostics.running" = "Выполняется диагностика";
+"a11y.diagnostics.check.tunExists" = "Интерфейс TUN";
+"a11y.diagnostics.check.dnsOk" = "DNS-резолвер";
+"a11y.diagnostics.check.tcpProxyOk" = "TCP-прокси";
+"a11y.diagnostics.check.http204Ok" = "Проверка HTTP 204";
+"a11y.diagnostics.result.pass %@" = "%@: пройдено";
+"a11y.diagnostics.result.fail %@ %@" = "%1$@: не пройдено, %2$@";
+
+
+/* Accessibility — Subscriptions */
+"subscriptions.row.a11y.selected" = "Выбрано";
+"subscriptions.row.a11y.notSelected" = "Не выбрано";
+"subscriptions.row.a11y.selectHint" = "Активирует эту конфигурацию";
+"subscriptions.row.a11y.editHint" = "Открывает редактор YAML";
+"subscriptions.row.a11y.refreshHint" = "Загружает последнюю версию конфигурации с удалённого URL";
+"subscriptions.editInfo.a11y.updateIntervalHint" = "Выбирает, как часто эта конфигурация обновляется автоматически";
+
+
+/* Accessibility — Traffic charts */
+"a11y.traffic.speedChart.value %@ %@" = "Отправка %@ в секунду, загрузка %@ в секунду";
+"a11y.traffic.historyChart.value %@ %@" = "Всего отправлено %@, всего загружено %@";
+"a11y.traffic.chart.axis.time" = "Время";
+"a11y.traffic.chart.seconds %@" = "Секунд: %@";
+"a11y.traffic.chart.axis.speed" = "Скорость";
+"a11y.traffic.chart.axis.day" = "День";
+"a11y.traffic.chart.axis.data" = "Объём данных";
+
+
+/* Accessibility — Settings */
+"a11y.settings.allowLan.hint" = "Позволяет другим устройствам в вашей локальной сети подключаться через прокси.";
+"a11y.settings.onDemand.hint" = "Автоматически запускает туннель, когда этого требует сетевая активность.";
+"a11y.settings.blockHTTP3.hint" = "Блокирует HTTP/3 и QUIC, отбрасывая UDP-трафик на порт 443 и DNS-записи SVCB/HTTPS, чтобы соединения шли через TCP и HTTP/2.";
+"a11y.settings.ipv6.hint" = "Включает IPv6: разрешает записи AAAA и направляет IPv6-трафик через туннель. Если выключено, туннель работает только с IPv4, а запросы AAAA отбрасываются.";
+"a11y.settings.appIcon.hint" = "Меняет значок приложения на экране «Домой».";
+"a11y.settings.exportLogs.hint" = "Сохраняет журнал приложения за последний час в файл.";
+"a11y.settings.exportLogs.inProgress" = "Идёт экспорт";
+"a11y.settings.memory.unavailable" = "Недоступно";
+
+
+/* Accessibility — App Icon picker */
+"a11y.appIconPicker.option.hint" = "Устанавливает это изображение как значок на экране «Домой».";
+
+
+/* Accessibility — Rules editor (structured list) */
+"a11y.rulesEditor.row.payloadEmpty" = "Значение не задано";
+"a11y.rulesEditor.row.proxy %@" = "Направляет через %@";
+"a11y.rulesEditor.error %@" = "Ошибка: %@";
+"a11y.rulesEditor.row.hint" = "Открывает редактор правила.";
+"a11y.rulesEditor.row.position %lld %lld" = "Правило %1$lld из %2$lld";
+"a11y.rulesEditor.row.moveUp" = "Переместить вверх";
+"a11y.rulesEditor.row.moveDown" = "Переместить вниз";
+"a11y.rulesEditor.row.delete" = "Удалить правило";
+
+
+/* Accessibility — Proxy groups */
+"a11y.proxyGroups.group.expanded" = "Развёрнуто";
+"a11y.proxyGroups.group.collapsed" = "Свёрнуто";
+"a11y.proxyGroups.group.hint" = "Показывает или скрывает прокси в этой группе.";
+"a11y.proxyGroups.group.action.testAll" = "Проверить задержку всех прокси";
+"a11y.proxyGroups.proxy.hint" = "Выбирает этот прокси для группы.";
+"a11y.proxyGroups.proxy.action.ping" = "Проверить задержку";
+"a11y.proxyGroups.proxy.delay %@" = "Задержка в миллисекундах: %@";
+"a11y.proxyGroups.proxy.delay.testing" = "Проверка задержки";
+"a11y.proxyGroups.proxy.delay.none" = "Задержка не проверялась";
+
+
+/* Accessibility — User Diagnostics */
+"a11y.userDiagnostics.directTcp.input" = "Хост и порт";
+"a11y.userDiagnostics.proxyHttp.input" = "URL для HTTP-запроса";
+"a11y.userDiagnostics.dns.input" = "Доменное имя";
+"a11y.userDiagnostics.directTcp.test" = "Проверить прямое TCP-соединение";
+"a11y.userDiagnostics.proxyHttp.test" = "Проверить HTTP-запрос через прокси";
+"a11y.userDiagnostics.dns.test" = "Проверить разрешение DNS";
+"a11y.userDiagnostics.result.httpStatus %@ %@" = "HTTP-статус %@, время в миллисекундах: %@";
+"a11y.userDiagnostics.result.success %@" = "Успешно, время в миллисекундах: %@";
+"a11y.userDiagnostics.result.failure %@" = "Сбой: %@";
+"a11y.userDiagnostics.errorBanner %@" = "Ошибка: %@";
+
+/* iCloud Drive export guide */
+"guide.icloudExport.title" = "Отправка конфигурации на Apple TV";
+"guide.icloudExport.subtitle" = "Сохраните конфигурацию в iCloud Drive из meow на iPhone — и Apple TV сможет её импортировать.";
+"guide.icloudExport.step1" = "На iPhone откройте вкладку «Конфигурации» и смахните конфигурацию вправо.";
+"guide.icloudExport.step2" = "Коснитесь «iCloud Drive». Конфигурация сохранится в iCloud Drive › meow.";
+"guide.icloudExport.step3" = "На Apple TV откройте раздел «iCloud Drive» в meow и выберите конфигурацию. Перед этим откройте meow на iPhone, чтобы приложение смогло её отправить.";
+"guide.icloudExport.done" = "Понятно";
+"settings.section.help" = "Справка";
+"settings.label.icloudGuide" = "Отправка конфигураций на Apple TV";
+"tv.icloud.howTo" = "Как это работает";
+
+/* Crash Reports (MetricKit) */
+"settings.label.crashReports" = "Отчёты о сбоях";
+"crashReports.nav.title" = "Отчёты о сбоях";
+"crashReports.empty.title" = "Нет отчётов о сбоях";
+"crashReports.empty.description" = "Отчёт о любом сбое или зависании iOS передаёт meow при одном из следующих запусков, обычно в течение суток.";
+"crashReports.footer" = "Отчёты формирует iOS (MetricKit), и они хранятся только на этом устройстве. Приложите отчёт, когда сообщаете о проблеме.";
+"crashReports.button.deleteAll" = "Удалить все";
+"crashReports.deleteAll.title" = "Удалить все отчёты о сбоях?";
+"crashReports.button.share" = "Поделиться";
+"crashReports.detail.process" = "Процесс";
+"crashReports.detail.version" = "Версия";
+"crashReports.detail.os" = "ОС";
+"crashReports.kind.crash" = "Сбой";
+"crashReports.kind.hang" = "Зависание";
+"crashReports.kind.cpu" = "Исключение CPU";
+"crashReports.kind.diskWrite" = "Исключение записи на диск";
+"crashReports.kind.launch" = "Медленный запуск";
+
+/* Performance Metrics (MetricKit) */
+"settings.label.metrics" = "Показатели производительности";
+"metrics.nav.title" = "Показатели производительности";
+"metrics.empty.title" = "Показателей пока нет";
+"metrics.empty.description" = "Раз в сутки iOS отправляет meow сводку за предыдущий день: память, CPU, сеть и завершения работы приложения и туннеля.";
+"metrics.section.daily" = "Ежедневные отчёты";
+"metrics.section.lastWeek" = "Последние 7 дней";
+"metrics.section.resources" = "Ресурсы";
+"metrics.section.network" = "Сеть";
+"metrics.section.exits" = "Завершения";
+"metrics.deleteAll.title" = "Удалить все показатели производительности?";
+"metrics.footer.tunnel" = "iOS останавливает туннель, если он занимает больше примерно 50 МБ памяти. Каждая такая остановка считается завершением по лимиту памяти.";
+"metrics.source.app" = "Приложение";
+"metrics.source.tunnel" = "Туннель";
+"metrics.label.peakMemory" = "Пиковая память";
+"metrics.label.suspendedMemory" = "Память при приостановке (сред.)";
+"metrics.label.cpuTime" = "Время CPU";
+"metrics.label.foreground" = "Время на переднем плане";
+"metrics.label.background" = "Время в фоновом режиме";
+"metrics.label.diskWrites" = "Запись на диск";
+"metrics.label.launch" = "Время запуска (медиана)";
+"metrics.label.hangs" = "Зависания";
+"metrics.label.download" = "Загружено";
+"metrics.label.upload" = "Отправлено";
+"metrics.label.wifiDown" = "Загрузка по Wi-Fi";
+"metrics.label.wifiUp" = "Отправка по Wi-Fi";
+"metrics.label.cellDown" = "Загрузка по сотовой сети";
+"metrics.label.cellUp" = "Отправка по сотовой сети";
+"metrics.label.memoryLimitExits" = "Завершения по лимиту памяти";
+"metrics.label.forcedExits" = "Аварийные завершения";
+"metrics.label.period" = "Период";
+"metrics.row.peak %@" = "Пик: %@";
+"metrics.row.cpu %@" = "CPU: %@";
+"metrics.row.exits %lld" = "Аварийных завершений: %lld";
+"metrics.exits.none" = "Завершений не зафиксировано";
+"metrics.exit.normal" = "Штатные";
+"metrics.exit.abnormal" = "Аварийные";
+"metrics.exit.memoryLimit" = "Лимит памяти";
+"metrics.exit.memoryPressure" = "Нехватка памяти";
+"metrics.exit.watchdog" = "Сторожевой таймер";
+"metrics.exit.cpuLimit" = "Лимит CPU";
+"metrics.exit.badAccess" = "Ошибка доступа к памяти";
+"metrics.exit.illegalInstruction" = "Недопустимая инструкция";
+"metrics.exit.lockedFile" = "Приостановка с заблокированным файлом";
+"metrics.exit.taskAssertionTimeout" = "Тайм-аут фоновой задачи";

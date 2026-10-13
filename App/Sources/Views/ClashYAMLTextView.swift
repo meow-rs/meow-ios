@@ -86,6 +86,10 @@ final class GutteredTextView: UIView {
         textView.backgroundColor = .clear
         textView.textContainerInset = UIEdgeInsets(top: 8, left: 4, bottom: 8, right: 4)
         textView.alwaysBounceVertical = true
+        // YAML is code: keep it left-to-right next to the left-pinned gutter,
+        // even when the app runs in an RTL localization (ar, fa).
+        textView.semanticContentAttribute = .forceLeftToRight
+        textView.textAlignment = .left
         textView.accessibilityLabel = String(localized: "a11y.yamlEditor.textView")
 
         gutterView.backgroundColor = UIColor.secondarySystemBackground.withAlphaComponent(0.5)
@@ -305,11 +309,17 @@ enum YAMLHighlighter {
         let text = storage.string
         let range = NSRange(location: 0, length: (text as NSString).length)
         let isDark = UITraitCollection.current.userInterfaceStyle == .dark
+        // setAttributes drops any paragraph style, so pin LTR here too —
+        // `.natural` would right-align the YAML under an RTL localization.
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.alignment = .left
+        paragraph.baseWritingDirection = .leftToRight
 
         storage.beginEditing()
         storage.setAttributes([
             .font: font,
             .foregroundColor: isDark ? UIColor.white : UIColor.black,
+            .paragraphStyle: paragraph,
         ], range: range)
 
         let keyColor = isDark ? UIColor.systemCyan : UIColor.systemBlue

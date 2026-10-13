@@ -1,0 +1,584 @@
+/* meow-ios — Vietnamese (vi) localization.
+
+   Key set is 1:1 with en.lproj — every key in en.lproj/Localizable.strings
+   appears here, in the same order, with a real translation. Strings
+   deliberately omitted from en.lproj (QA/OCR harness pins, stable diagnostic
+   reason codes, internal chart bindings, log-level Picker .tag() values)
+   must NOT be added here either — see en.lproj header for the exclusion list.
+
+   Terminology follows meow-android values-vi (mobile + core strings.xml):
+   config/profile → cấu hình, engine → lõi, tunnel → đường hầm,
+   latency → độ trễ, payload → giá trị, upstream → máy chủ DNS,
+   Route Mode → Chế độ định tuyến (Quy tắc / Toàn cục / Trực tiếp).
+   "proxy" stays "proxy", as on Android.
+
+   Style:
+     - Buttons / toolbar items use short verbs: Thêm / Hủy / Lưu / Đóng / Xóa /
+       Kiểm tra. Tone-mark placement matches meow-android ("Hủy", "Xóa", "tùy").
+     - Rule identifiers (DIRECT, no-resolve), protocol names and plugin names
+       are not translated.
+     - Ellipsis is the single character "…" (U+2026), matching en.lproj. */
+
+
+/* Tab bar */
+"tabs.subscriptions" = "Cấu hình";
+"tabs.proxyGroups" = "Nhóm proxy";
+"tabs.utility" = "Tiện ích";
+"tabs.settings" = "Cài đặt";
+
+
+/* Common */
+"common.ok" = "OK";
+"common.cancel" = "Hủy";
+"common.close" = "Đóng";
+"common.error" = "Lỗi";
+"common.delete" = "Xóa";
+
+
+/* Home screen */
+"home.nav.title" = "meow";
+"home.profile.none" = "Chưa chọn cấu hình";
+"home.toggle.connect" = "Kết nối";
+"home.toggle.connecting" = "Đang kết nối…";
+"home.toggle.disconnect" = "Ngắt kết nối";
+"home.toggle.disconnecting" = "Đang ngắt kết nối…";
+"home.badge.disconnected" = "Đã ngắt kết nối";
+"home.badge.preparing" = "Đang chuẩn bị…";
+"home.badge.connecting" = "Đang kết nối";
+"home.badge.connected" = "Đã kết nối";
+"home.badge.disconnecting" = "Đang ngắt kết nối";
+"home.toggle.preparing" = "Đang chuẩn bị…";
+"home.packet.ingress" = "Gói vào";
+"home.packet.egress" = "Gói ra";
+"home.traffic.upload" = "Tải lên";
+"home.traffic.download" = "Tải xuống";
+"home.traffic.total %@" = "Tổng %@";
+"home.routeMode.title" = "Chế độ định tuyến";
+"home.routeMode.rule" = "Quy tắc";
+"home.routeMode.all" = "Toàn cục";
+"home.routeMode.direct" = "Trực tiếp";
+"home.proxyGroups.header" = "Nhóm proxy";
+"home.proxyGroups.placeholder.connected" = "Đang tải các nhóm…";
+"home.proxyGroups.placeholder.connecting" = "Đang kết nối — các nhóm sẽ hiện khi lõi khởi động xong.";
+"home.proxyGroups.placeholder.disconnected" = "Kết nối để hiển thị các nhóm khả dụng.";
+"home.nav.connections" = "Kết nối";
+"home.nav.rules" = "Quy tắc";
+"home.nav.providers" = "Nhà cung cấp";
+"home.nav.diagnostics" = "Chẩn đoán";
+"home.error.apiUnavailable" = "API không khả dụng";
+"home.error.selectFailed" = "Không thể chọn proxy";
+"home.error.tunnelFailed.title" = "Không thể khởi động đường hầm";
+"home.error.dismiss" = "Bỏ qua";
+
+
+/* Subscriptions */
+"subscriptions.nav.title" = "Cấu hình";
+"subscriptions.home.addTitle" = "Thêm cấu hình";
+"subscriptions.home.addSubtitle" = "Thêm từ URL hoặc nhập cấu hình YAML cục bộ.";
+"subscriptions.section.profiles" = "Tệp cấu hình";
+"subscriptions.section.engine" = "Lõi";
+"subscriptions.add.nav.title" = "Thêm cấu hình";
+"subscriptions.add.field.name" = "Tên";
+"subscriptions.add.field.url" = "URL";
+"subscriptions.add.button.add" = "Thêm";
+"subscriptions.add.button.adding" = "Đang thêm…";
+"subscriptions.editInfo.swipe" = "Sửa thông tin";
+"subscriptions.refresh.swipe" = "Làm mới";
+"subscriptions.editInfo.nav.title" = "Chỉnh sửa cấu hình";
+"subscriptions.editInfo.button.save" = "Lưu";
+"subscriptions.editInfo.footer" = "Thay đổi URL sẽ có hiệu lực ở lần làm mới tiếp theo.";
+"subscriptions.editInfo.updateInterval" = "Tự động cập nhật";
+"subscriptions.editInfo.updateInterval.footer" = "Khi bạn mở ứng dụng, nếu đã quá khoảng thời gian đã chọn, meow sẽ tải lại cấu hình này. Vuốt một dòng sang phải để cập nhật ngay.";
+"subscriptions.updateInterval.manual" = "Không bao giờ";
+"subscriptions.updateInterval.daily" = "Hàng ngày";
+"subscriptions.updateInterval.weekly" = "Hàng tuần";
+"subscriptions.import.errorTitle" = "Không thể nhập cấu hình";
+"subscriptions.row.updated %@" = "Cập nhật %@";
+"subscriptions.row.a11y.edit %@" = "Chỉnh sửa YAML của %@";
+"subscriptions.row.a11y.refresh %@" = "Làm mới %@";
+"subscriptions.row.a11y.editInfo %@" = "Đổi tên hoặc chỉnh sửa thông tin của %@";
+"subscriptions.row.a11y.editInfoHint" = "Mở trình chỉnh sửa tên và URL";
+"subscriptions.row.a11y.exportQR %@" = "Xuất mã QR cho %@";
+"subscriptions.row.a11y.exportQRHint" = "Hiển thị mã QR của liên kết chia sẻ để quét";
+"subscriptions.exportICloud.swipe" = "iCloud Drive";
+"subscriptions.row.a11y.exportICloud %@" = "Lưu %@ vào iCloud Drive";
+"subscriptions.exportICloud.done.title" = "Đã lưu vào iCloud Drive";
+"subscriptions.exportICloud.done.message %@" = "Đã lưu tại iCloud Drive › meow › %@. Tệp này cũng sẽ xuất hiện trên Apple TV của bạn trong mục iCloud Drive.";
+"subscriptions.exportICloud.error.unavailable" = "Hãy đăng nhập iCloud và bật iCloud Drive trong Cài đặt để lưu cấu hình vào đó.";
+
+/* QR export sheet */
+"qrExport.nav.title" = "Xuất mã QR";
+"qrExport.picker.server" = "Máy chủ";
+"qrExport.button.copy" = "Sao chép liên kết";
+"qrExport.button.copied" = "Đã sao chép";
+"qrExport.button.share" = "Chia sẻ";
+"qrExport.empty" = "Không có gì để xuất — cấu hình này không có máy chủ Shadowsocks nào.";
+"qrExport.error.tooLong" = "Liên kết này quá dài để tạo mã QR. Hãy dùng Sao chép hoặc Chia sẻ.";
+"qrExport.caption.subscription" = "Quét để nhập URL cấu hình này vào ứng dụng khác.";
+"qrExport.caption.shadowsocks" = "Quét để nhập máy chủ này vào bất kỳ ứng dụng nào tương thích với Shadowsocks.";
+"qrExport.a11y.qrImage %@" = "Mã QR của %@";
+"subscriptions.toolbar.a11y.add" = "Thêm cấu hình";
+"subscriptions.toolbar.addFromURL" = "Thêm từ URL";
+"subscriptions.toolbar.importFromFile" = "Nhập từ iCloud Drive…";
+"subscriptions.import.invalidEncoding" = "Tệp đã chọn không phải văn bản UTF-8 hợp lệ.";
+"subscriptions.error.plainHTTP" = "URL cấu hình này dùng HTTP không mã hóa. iOS chặn các kết nối không an toàn (không phải HTTPS) nên không thể tải xuống cấu hình. Hãy dùng URL https:// thay thế.";
+"subscriptions.error.invalidURL" = "URL cấu hình không hợp lệ. Hãy kiểm tra lỗi chính tả và đảm bảo URL bắt đầu bằng https://.";
+"subscriptions.error.http %lld" = "Máy chủ cấu hình trả về HTTP %lld. Hãy kiểm tra xem URL còn hợp lệ không, hoặc yêu cầu nhà cung cấp gửi liên kết mới.";
+"subscriptions.error.decodeFailed" = "Cấu hình đã tải xuống không phải văn bản UTF-8 hợp lệ.";
+"subscriptions.error.conversionFailed %@" = "Nội dung tải xuống không phải cấu hình Clash hay gói đăng ký được hỗ trợ (ss://, trojan://, vless://, vmess://). Hãy đảm bảo đây là liên kết gói đăng ký Clash hoặc Mihomo, không phải trang web.\n\nLõi: %@";
+"subscriptions.empty.title" = "Chưa có cấu hình nào";
+"subscriptions.empty.description" = "Nhấn + để thêm URL cấu hình Mihomo hoặc Clash.";
+"subscriptions.empty.importFile" = "Nhập tệp";
+"subscriptions.toolbar.addShadowsocks" = "Thêm máy chủ Shadowsocks";
+
+
+/* Deep-link import confirmation (meow://connect) */
+"deepLinkImport.nav.title" = "Nhập cấu hình";
+"deepLinkImport.section.subscription" = "Liên kết này muốn thêm:";
+"deepLinkImport.field.name" = "Tên";
+"deepLinkImport.field.host" = "Máy chủ";
+"deepLinkImport.warning.insecure" = "Kết nối không an toàn — cấu hình này có thể bị can thiệp trong quá trình truyền. Nên dùng liên kết https:// nếu nhà cung cấp có hỗ trợ.";
+"deepLinkImport.warning.acknowledge" = "Tôi hiểu rủi ro khi nhập qua HTTP";
+"deepLinkImport.notice.duplicate" = "Một cấu hình có URL này đã được nhập. Nếu tiếp tục, cấu hình đó sẽ được cập nhật thay vì thêm bản trùng lặp.";
+"deepLinkImport.button.import" = "Nhập";
+"deepLinkImport.button.update" = "Cập nhật cấu hình hiện có";
+"deepLinkImport.button.importAndActivate" = "Nhập và kích hoạt";
+"a11y.deepLinkImport.cancel" = "Hủy nhập";
+"deepLinkImport.a11y.url %@" = "URL cấu hình: %@";
+
+
+/* Add Shadowsocks server sheet */
+"ssAdd.nav.title" = "Thêm Shadowsocks";
+"ssAdd.section.link" = "Liên kết";
+"ssAdd.button.scan" = "Quét mã QR";
+"ssAdd.button.applyLink" = "Điền từ liên kết";
+"ssAdd.error.invalidLink" = "Không phải liên kết ss:// hợp lệ.";
+"ssAdd.section.server" = "Máy chủ";
+"ssAdd.field.name" = "Tên";
+"ssAdd.field.server" = "Máy chủ";
+"ssAdd.field.port" = "Cổng";
+"ssAdd.field.cipher" = "Mã hóa";
+"ssAdd.field.password" = "Mật khẩu";
+"ssAdd.toggle.udp" = "UDP";
+"ssAdd.section.plugin" = "Plugin";
+"ssAdd.plugin.picker" = "Plugin";
+"ssAdd.plugin.none" = "Không có";
+"ssAdd.plugin.ech" = "Đường hầm ECH-TLS";
+"ssAdd.plugin.obfs" = "simple-obfs";
+"ssAdd.plugin.v2ray" = "v2ray-plugin";
+"ssAdd.ech.footer" = "Phương thức truyền tải SIP003 ech-tls-tunnel được tích hợp sẵn trong lõi.";
+"ssAdd.plugin.hostFallback.footer" = "Để trống Host để dùng địa chỉ máy chủ.";
+"ssAdd.field.obfsMode" = "Chế độ obfs";
+"ssAdd.field.obfsHost" = "Host obfs";
+"ssAdd.toggle.v2rayTLS" = "TLS";
+"ssAdd.field.v2rayHost" = "Host";
+"ssAdd.field.v2rayPath" = "Đường dẫn";
+"ssAdd.toggle.v2rayMux" = "Mux";
+"ssAdd.field.sni" = "SNI";
+"ssAdd.field.path" = "Đường dẫn";
+"ssAdd.field.echConfig" = "Cấu hình ECH";
+"ssAdd.field.fingerprint" = "Dấu vân tay";
+"ssAdd.toggle.fastOpen" = "Fast Open";
+"ssAdd.plugin.passthrough %@" = "Plugin từ liên kết: %@";
+"ssAdd.footer.profile" = "Lưu vào cấu hình cục bộ được tạo từ mẫu tích hợp sẵn. Các máy chủ thêm sau sẽ được cập nhật vào cùng cấu hình này.";
+"ssAdd.button.add" = "Thêm";
+"ssAdd.button.adding" = "Đang thêm…";
+"ssAdd.scanner.nav.title" = "Quét mã QR";
+"ssAdd.scanner.unavailable.title" = "Máy ảnh không khả dụng";
+"ssAdd.scanner.unavailable.description" = "Không thể quét trên thiết bị này. Hãy dán liên kết ss:// để thay thế.";
+"ssAdd.scanner.denied.description" = "Quyền truy cập máy ảnh đã bị từ chối. Hãy bật quyền này trong Cài đặt hoặc dán liên kết ss:// để thay thế.";
+"ssAdd.profile.defaultName" = "Máy chủ của tôi";
+
+
+/* Connections */
+"connections.empty.title" = "Không có kết nối";
+"connections.empty.description" = "Lưu lượng đang hoạt động sẽ xuất hiện ở đây.";
+"connections.toolbar.closeAll" = "Đóng tất cả";
+"connections.swipe.close" = "Đóng";
+"connections.nav.titleFormat %lld" = "Kết nối (%lld)";
+
+
+/* Utility hub */
+"utility.nav.title" = "Tiện ích";
+"utility.nav.traffic" = "Lưu lượng";
+"utility.nav.logs" = "Nhật ký";
+"utility.nav.dns" = "DNS";
+
+
+/* DNS */
+"dns.empty.title" = "Chưa có kết quả DNS";
+"dns.empty.description" = "Kết quả tra cứu trong bộ nhớ đệm sẽ xuất hiện khi lõi phân giải tên miền.";
+"dns.nav.titleFormat %lld" = "DNS (%lld)";
+"dns.row.unknownUpstream" = "Không rõ";
+"dns.row.ttl %lld" = "TTL %lld giây";
+
+
+/* Rules */
+"rules.empty.title" = "Không có quy tắc";
+"rules.empty.description" = "Quy tắc sẽ xuất hiện khi cấu hình được tải.";
+"rules.nav.titleFormat %lld" = "Quy tắc (%lld)";
+"rules.button.edit" = "Chỉnh sửa";
+
+/* Rules editor (structured per-rule edit sheet) */
+"rulesEditor.nav.title" = "Chỉnh sửa quy tắc";
+"rulesEditor.empty.title" = "Không có quy tắc";
+"rulesEditor.empty.description" = "Nhấn + để thêm quy tắc đầu tiên.";
+"rulesEditor.button.add" = "Thêm";
+"rulesEditor.button.addChinaPreset" = "Thêm mẫu DIRECT cho Trung Quốc";
+"rulesEditor.button.cancel" = "Hủy";
+"rulesEditor.button.save" = "Lưu";
+"rulesEditor.button.saving" = "Đang lưu…";
+
+/* Single-rule editor sheet */
+"ruleEditor.nav.title" = "Quy tắc";
+"ruleEditor.section.type" = "Loại";
+"ruleEditor.section.payload" = "Giá trị";
+"ruleEditor.section.proxy" = "Proxy";
+"ruleEditor.field.type" = "Loại";
+"ruleEditor.field.payload" = "Giá trị";
+"ruleEditor.field.proxy" = "Proxy";
+"ruleEditor.field.proxy.custom" = "Tên tùy chỉnh";
+"ruleEditor.field.noResolve" = "no-resolve";
+"ruleEditor.field.noResolve.footer" = "Bỏ qua phân giải DNS trước khi so khớp. Dùng cho các quy tắc IP chỉ nên khớp với đích đã được phân giải.";
+"ruleEditor.button.cancel" = "Hủy";
+"ruleEditor.button.save" = "Lưu";
+
+
+/* Logs */
+"logs.picker.level" = "Mức";
+"logs.level.debug" = "gỡ lỗi";
+"logs.level.info" = "thông tin";
+"logs.level.warning" = "cảnh báo";
+"logs.level.error" = "lỗi";
+"logs.toggle.autoScroll" = "Tự động cuộn";
+"logs.empty.title" = "Chưa có nhật ký";
+"logs.empty.description" = "Nhật ký sẽ xuất hiện khi đường hầm hoạt động.";
+"logs.nav.titleFormat %lld" = "Nhật ký (%lld)";
+
+
+/* Providers */
+"providers.empty.title" = "Không có nhà cung cấp";
+"providers.empty.description" = "Nhà cung cấp sẽ xuất hiện khi cấu hình được tải.";
+"providers.nav.titleFormat %lld" = "Nhà cung cấp (%lld)";
+"providers.a11y.healthCheck %@" = "Kiểm tra tình trạng %@";
+"providers.a11y.test %@" = "Kiểm tra %@";
+
+
+/* Yaml Editor */
+"yamlEditor.nav.title" = "Chỉnh sửa cấu hình";
+"yamlEditor.empty.title" = "Cấu hình trống";
+"yamlEditor.empty.description" = "Dán cấu hình YAML của Clash để bắt đầu chỉnh sửa.";
+"yamlEditor.button.cancel" = "Hủy";
+"yamlEditor.button.save" = "Lưu";
+"yamlEditor.button.saving" = "Đang lưu…";
+"yamlEditor.a11y.cancel" = "Loại bỏ thay đổi và đóng trình chỉnh sửa";
+"yamlEditor.a11y.save" = "Lưu cấu hình";
+"yamlEditor.error.invalid" = "Cấu hình không hợp lệ";
+
+
+/* Settings */
+"settings.nav.title" = "Cài đặt";
+"settings.section.general" = "Chung";
+"settings.toggle.allowLan" = "Cho phép LAN";
+"settings.toggle.onDemand" = "Kết nối theo yêu cầu";
+"settings.toggle.blockHTTP3" = "Chặn HTTP/3 (QUIC)";
+"settings.toggle.blockHTTP3.footer" = "Loại bỏ lưu lượng UDP tới cổng 443 và các bản ghi DNS SVCB/HTTPS để buộc dùng TCP/HTTP2.";
+"settings.toggle.ipv6" = "Bật IPv6";
+"settings.toggle.ipv6.footer" = "Phân giải bản ghi AAAA và định tuyến lưu lượng IPv6 qua đường hầm. Khi tắt, đường hầm chỉ dùng IPv4 và các truy vấn AAAA bị loại bỏ.";
+"settings.picker.logLevel" = "Mức nhật ký";
+"settings.logLevel.debug" = "Gỡ lỗi";
+"settings.logLevel.info" = "Thông tin";
+"settings.logLevel.warning" = "Cảnh báo";
+"settings.logLevel.error" = "Lỗi";
+"settings.logLevel.silent" = "Im lặng";
+"settings.label.appIcon" = "Biểu tượng ứng dụng";
+"settings.appIcon.primary" = "Mặc định";
+"settings.appIcon.leap" = "Nhảy vọt";
+"settings.appIcon.sunset" = "Hoàng hôn";
+"settings.appIcon.midnight" = "Nửa đêm";
+"settings.section.diagnostics" = "Chẩn đoán";
+"settings.label.diagnostics" = "Chẩn đoán";
+"settings.label.exportLogs" = "Xuất nhật ký";
+"settings.section.about" = "Giới thiệu";
+"settings.about.version" = "Phiên bản";
+"settings.about.memory" = "Bộ nhớ";
+
+
+/* App Icon picker */
+"appIconPicker.nav.title" = "Biểu tượng ứng dụng";
+"appIconPicker.error.failed" = "iOS đã từ chối thay đổi biểu tượng. Hãy thoát Truy cập được hướng dẫn hoặc kiểm tra hồ sơ quản lý thiết bị, rồi thử lại.";
+"appIconPicker.unsupported.title" = "Biểu tượng thay thế không khả dụng";
+"appIconPicker.unsupported.description" = "Thiết bị này không thể đổi biểu tượng ứng dụng.";
+
+
+/* User Diagnostics */
+"userDiagnostics.nav.title" = "Chẩn đoán";
+"userDiagnostics.section.directTcp" = "TCP trực tiếp";
+"userDiagnostics.section.proxyHttp" = "HTTP qua proxy";
+"userDiagnostics.section.dns" = "Trình phân giải DNS";
+"userDiagnostics.empty.title" = "Cần kết nối VPN";
+"userDiagnostics.empty.description" = "Kết nối proxy để chạy các bài kiểm tra HTTP qua proxy và Trình phân giải DNS.";
+"userDiagnostics.button.test" = "Kiểm tra";
+"userDiagnostics.button.testing" = "Đang kiểm tra…";
+"userDiagnostics.error.parseHostPort" = "Cần nhập theo dạng host:port (ví dụ 1.1.1.1:443)";
+
+
+/* Traffic */
+"traffic.nav.title" = "Lưu lượng";
+"traffic.empty.title" = "Chưa có dữ liệu lưu lượng";
+"traffic.empty.description" = "Kết nối VPN để bắt đầu ghi nhận mức sử dụng.";
+"traffic.label.speed" = "Tốc độ";
+"traffic.label.last7Days" = "7 ngày qua";
+"traffic.tile.today" = "Hôm nay";
+"traffic.tile.thisMonth" = "Tháng này";
+
+
+/* tvOS home screen (TVContentView) — the tvOS target compiles App/Resources
+   but not App/Sources/Views, so it reuses home.* / subscriptions.* above and
+   adds only what has no iPhone counterpart. */
+"tv.subscription.section" = "Gói đăng ký";
+"tv.subscription.field.url" = "URL gói đăng ký";
+"tv.subscription.error.invalidURL" = "Hãy nhập URL gói đăng ký bắt đầu bằng http:// hoặc https://.";
+"tv.profiles.section" = "Tệp cấu hình";
+"tv.profiles.empty" = "Chưa có cấu hình nào. Hãy thêm URL gói đăng ký để bắt đầu.";
+"tv.connect.hint.noProfile" = "Hãy thêm gói đăng ký để kết nối.";
+"tv.icloud.button" = "iCloud Drive";
+"tv.icloud.title" = "Nhập từ iCloud Drive";
+"tv.icloud.instructions" = "Lưu các tệp .yaml vào iCloud Drive › meow trên iPhone hoặc Mac — hoặc vuốt một cấu hình trong meow trên iPhone rồi nhấn iCloud Drive — sau đó mở meow trên iPhone để gửi chúng tới đây.";
+"tv.icloud.empty" = "Chưa có cấu hình nào từ iCloud Drive.";
+"tv.icloud.noAccount" = "Hãy đăng nhập iCloud trong Cài đặt để nhập cấu hình từ iCloud Drive.";
+"tv.icloud.failed %@" = "Không thể tải cấu hình từ iCloud: %@";
+
+
+/* Home Screen widgets (Widgets/ — the extension ships this same file) */
+"widget.tunnel.name" = "VPN";
+"widget.tunnel.description" = "Xem meow đã kết nối hay chưa, và bật hoặc tắt kết nối.";
+"widget.routeMode.description" = "Đổi cách meow định tuyến lưu lượng khi đang kết nối.";
+"widget.status.setup" = "Mở meow để thiết lập";
+"widget.routeMode.rule.long" = "Proxy theo quy tắc";
+"widget.routeMode.all.long" = "Proxy toàn bộ lưu lượng";
+"widget.routeMode.direct.long" = "Kết nối trực tiếp";
+"widget.toggle.label" = "VPN";
+"widget.control.name" = "meow VPN";
+"widget.control.on" = "Bật";
+"widget.control.off" = "Tắt";
+"widget.control.setup" = "Thiết lập";
+"widget.error.notConfigured" = "Hãy mở meow và chọn một cấu hình trước.";
+"widget.intent.toggle.title" = "Bật hoặc tắt meow VPN";
+"widget.intent.toggle.value" = "Bật";
+"widget.intent.routeMode.title" = "Đặt chế độ định tuyến";
+"widget.intent.routeMode.mode" = "Chế độ";
+
+
+/* Fullscreen diagnostics overlay (ContentView) */
+"content.diagnostics.nav.title" = "Chẩn đoán";
+
+
+/* Accessibility — ContentView / diagnostics overlay */
+"a11y.content.diagnostics.close" = "Đóng bảng chẩn đoán";
+"a11y.content.diagnostics.closeHint" = "Đóng bảng chẩn đoán và quay lại màn hình chính";
+
+
+/* Accessibility — Common */
+"a11y.common.dismissAlert" = "Đóng thông báo lỗi";
+
+
+/* Accessibility — Home */
+"a11y.home.proxyGroups.none" = "Không có nhóm nào khả dụng";
+
+
+/* Accessibility — Rules list */
+"a11y.rules.row %@ %@ %@" = "Quy tắc %@, %@, qua %@";
+"a11y.rules.error %@" = "Lỗi: %@";
+
+
+/* Accessibility — Logs */
+"a11y.logs.row.label %@ %@" = "%1$@ %2$@";
+"a11y.logs.errorBanner.label %@" = "Lỗi: %@";
+
+
+/* Accessibility — YAML editor */
+"yamlEditor.a11y.errorBanner %@" = "Lỗi: %@";
+"yamlEditor.a11y.saving" = "Đang lưu";
+"yamlEditor.a11y.save.hint" = "Kiểm tra tính hợp lệ và lưu cấu hình";
+"a11y.yamlEditor.textView" = "Trình chỉnh sửa cấu hình YAML";
+"a11y.yamlEditor.errorLines %@" = "Có lỗi ở dòng %@";
+
+
+/* Accessibility — Providers */
+"a11y.providers.row.delay.label" = "Độ trễ";
+"a11y.providers.row.delay.value %lld" = "%lld mili giây";
+"a11y.providers.errorBanner.label %@" = "Lỗi: %@";
+
+
+/* Accessibility — Connections */
+"a11y.connections.row.upload %@" = "Đã tải lên %@";
+"a11y.connections.row.download %@" = "Đã tải xuống %@";
+"a11y.connections.row.label %@ %@ %@ %@ %@" = "%@, %@, đã tải lên %@, đã tải xuống %@, qua %@";
+"a11y.connections.errorBanner %@" = "Cảnh báo: %@";
+
+
+/* Accessibility — DNS */
+"a11y.dns.row.label %@ %@ %@ %lld" = "%@, %@, máy chủ DNS %@, TTL %lld giây";
+"a11y.dns.errorBanner %@" = "Cảnh báo: %@";
+
+
+/* Accessibility — Rule editor (single-rule sheet) */
+"a11y.ruleEditor.noResolve.hint" = "Bỏ qua phân giải DNS trước khi so khớp quy tắc này";
+"a11y.ruleEditor.save.hint" = "Lưu quy tắc và đóng trình chỉnh sửa";
+
+
+/* Accessibility — DiagnosticsViewController (auto-run checks) */
+"a11y.diagnostics.button.run.hint" = "Chạy tất cả các bước kiểm tra chẩn đoán trên đường hầm VPN đang hoạt động";
+"a11y.diagnostics.running" = "Đang chạy chẩn đoán";
+"a11y.diagnostics.check.tunExists" = "Giao diện TUN";
+"a11y.diagnostics.check.dnsOk" = "Trình phân giải DNS";
+"a11y.diagnostics.check.tcpProxyOk" = "Proxy TCP";
+"a11y.diagnostics.check.http204Ok" = "Kiểm tra HTTP 204";
+"a11y.diagnostics.result.pass %@" = "%@: đạt";
+"a11y.diagnostics.result.fail %@ %@" = "%1$@: không đạt, %2$@";
+
+
+/* Accessibility — Subscriptions */
+"subscriptions.row.a11y.selected" = "Đã chọn";
+"subscriptions.row.a11y.notSelected" = "Chưa chọn";
+"subscriptions.row.a11y.selectHint" = "Kích hoạt cấu hình này";
+"subscriptions.row.a11y.editHint" = "Mở trình chỉnh sửa YAML";
+"subscriptions.row.a11y.refreshHint" = "Tải cấu hình mới nhất từ URL từ xa";
+"subscriptions.editInfo.a11y.updateIntervalHint" = "Chọn tần suất tự động tải lại cấu hình này";
+
+
+/* Accessibility — Traffic charts */
+"a11y.traffic.speedChart.value %@ %@" = "Tải lên %@ mỗi giây, tải xuống %@ mỗi giây";
+"a11y.traffic.historyChart.value %@ %@" = "Tổng đã tải lên %@, tổng đã tải xuống %@";
+"a11y.traffic.chart.axis.time" = "Thời gian";
+"a11y.traffic.chart.seconds %@" = "%@ giây";
+"a11y.traffic.chart.axis.speed" = "Tốc độ";
+"a11y.traffic.chart.axis.day" = "Ngày";
+"a11y.traffic.chart.axis.data" = "Lượng dữ liệu";
+
+
+/* Accessibility — Settings */
+"a11y.settings.allowLan.hint" = "Cho phép các thiết bị khác trong mạng cục bộ của bạn kết nối qua proxy.";
+"a11y.settings.onDemand.hint" = "Tự động khởi động đường hầm khi có hoạt động mạng cần đến.";
+"a11y.settings.blockHTTP3.hint" = "Chặn HTTP/3 và QUIC bằng cách loại bỏ lưu lượng UDP tới cổng 443 và các bản ghi DNS SVCB/HTTPS, buộc các kết nối dùng TCP và HTTP/2.";
+"a11y.settings.ipv6.hint" = "Bật IPv6 bằng cách phân giải bản ghi AAAA và định tuyến lưu lượng IPv6 qua đường hầm. Khi tắt, đường hầm chỉ dùng IPv4 và các truy vấn AAAA bị loại bỏ.";
+"a11y.settings.appIcon.hint" = "Thay đổi biểu tượng ứng dụng hiển thị trên Màn hình chính.";
+"a11y.settings.exportLogs.hint" = "Lưu nhật ký ứng dụng trong một giờ qua vào một tệp.";
+"a11y.settings.exportLogs.inProgress" = "Đang xuất";
+"a11y.settings.memory.unavailable" = "Không khả dụng";
+
+
+/* Accessibility — App Icon picker */
+"a11y.appIconPicker.option.hint" = "Đặt hình này làm biểu tượng trên Màn hình chính.";
+
+
+/* Accessibility — Rules editor (structured list) */
+"a11y.rulesEditor.row.payloadEmpty" = "Không có giá trị so khớp";
+"a11y.rulesEditor.row.proxy %@" = "Định tuyến tới %@";
+"a11y.rulesEditor.error %@" = "Lỗi: %@";
+"a11y.rulesEditor.row.hint" = "Mở trình chỉnh sửa quy tắc.";
+"a11y.rulesEditor.row.position %lld %lld" = "Quy tắc thứ %1$lld trên tổng số %2$lld";
+"a11y.rulesEditor.row.moveUp" = "Di chuyển lên";
+"a11y.rulesEditor.row.moveDown" = "Di chuyển xuống";
+"a11y.rulesEditor.row.delete" = "Xóa quy tắc";
+
+
+/* Accessibility — Proxy groups */
+"a11y.proxyGroups.group.expanded" = "Đã mở rộng";
+"a11y.proxyGroups.group.collapsed" = "Đã thu gọn";
+"a11y.proxyGroups.group.hint" = "Hiện hoặc ẩn các proxy trong nhóm này.";
+"a11y.proxyGroups.group.action.testAll" = "Kiểm tra độ trễ của tất cả proxy";
+"a11y.proxyGroups.proxy.hint" = "Chọn proxy này cho nhóm.";
+"a11y.proxyGroups.proxy.action.ping" = "Kiểm tra độ trễ";
+"a11y.proxyGroups.proxy.delay %@" = "%@ mili giây";
+"a11y.proxyGroups.proxy.delay.testing" = "Đang kiểm tra độ trễ";
+"a11y.proxyGroups.proxy.delay.none" = "Chưa kiểm tra độ trễ";
+
+
+/* Accessibility — User Diagnostics */
+"a11y.userDiagnostics.directTcp.input" = "Máy chủ và cổng";
+"a11y.userDiagnostics.proxyHttp.input" = "URL HTTP";
+"a11y.userDiagnostics.dns.input" = "Tên miền";
+"a11y.userDiagnostics.directTcp.test" = "Kiểm tra kết nối TCP trực tiếp";
+"a11y.userDiagnostics.proxyHttp.test" = "Kiểm tra yêu cầu HTTP qua proxy";
+"a11y.userDiagnostics.dns.test" = "Kiểm tra phân giải DNS";
+"a11y.userDiagnostics.result.httpStatus %@ %@" = "Mã trạng thái HTTP %@, %@ mili giây";
+"a11y.userDiagnostics.result.success %@" = "Thành công, %@ mili giây";
+"a11y.userDiagnostics.result.failure %@" = "Thất bại: %@";
+"a11y.userDiagnostics.errorBanner %@" = "Lỗi: %@";
+
+/* iCloud Drive export guide */
+"guide.icloudExport.title" = "Gửi cấu hình tới Apple TV";
+"guide.icloudExport.subtitle" = "Lưu cấu hình vào iCloud Drive từ meow trên iPhone để Apple TV có thể nhập.";
+"guide.icloudExport.step1" = "Trên iPhone, mở thẻ Cấu hình rồi vuốt sang phải trên một cấu hình.";
+"guide.icloudExport.step2" = "Nhấn iCloud Drive. Cấu hình sẽ được lưu vào iCloud Drive › meow.";
+"guide.icloudExport.step3" = "Trên Apple TV, mở iCloud Drive trong meow và chọn cấu hình. Hãy mở meow trên iPhone trước để iPhone có thể gửi cấu hình.";
+"guide.icloudExport.done" = "Đã hiểu";
+"settings.section.help" = "Trợ giúp";
+"settings.label.icloudGuide" = "Gửi cấu hình tới Apple TV";
+"tv.icloud.howTo" = "Cách hoạt động";
+
+/* Crash Reports (MetricKit) */
+"settings.label.crashReports" = "Báo cáo sự cố";
+"crashReports.nav.title" = "Báo cáo sự cố";
+"crashReports.empty.title" = "Không có báo cáo sự cố";
+"crashReports.empty.description" = "Mỗi khi meow thoát đột ngột hoặc bị treo, iOS sẽ gửi báo cáo cho meow ở lần khởi chạy sau, thường trong vòng một ngày.";
+"crashReports.footer" = "Báo cáo do iOS (MetricKit) cung cấp và chỉ lưu trên thiết bị này. Hãy chia sẻ một báo cáo khi bạn báo lỗi.";
+"crashReports.button.deleteAll" = "Xóa tất cả";
+"crashReports.deleteAll.title" = "Xóa tất cả báo cáo sự cố?";
+"crashReports.button.share" = "Chia sẻ";
+"crashReports.detail.process" = "Tiến trình";
+"crashReports.detail.version" = "Phiên bản";
+"crashReports.detail.os" = "Hệ điều hành";
+"crashReports.kind.crash" = "Thoát đột ngột";
+"crashReports.kind.hang" = "Treo";
+"crashReports.kind.cpu" = "Ngoại lệ CPU";
+"crashReports.kind.diskWrite" = "Ngoại lệ ghi đĩa";
+"crashReports.kind.launch" = "Khởi chạy chậm";
+
+/* Performance Metrics (MetricKit) */
+"settings.label.metrics" = "Chỉ số hiệu năng";
+"metrics.nav.title" = "Chỉ số hiệu năng";
+"metrics.empty.title" = "Chưa có chỉ số";
+"metrics.empty.description" = "Mỗi ngày một lần, iOS gửi cho meow bản tóm tắt về bộ nhớ, CPU, mạng và số lần thoát của ứng dụng và đường hầm trong ngày hôm trước.";
+"metrics.section.daily" = "Báo cáo hàng ngày";
+"metrics.section.lastWeek" = "7 ngày qua";
+"metrics.section.resources" = "Tài nguyên";
+"metrics.section.network" = "Mạng";
+"metrics.section.exits" = "Lần thoát";
+"metrics.deleteAll.title" = "Xóa tất cả chỉ số hiệu năng?";
+"metrics.footer.tunnel" = "iOS sẽ dừng đường hầm nếu nó dùng quá khoảng 50 MB bộ nhớ. Mỗi lần dừng được tính là một lần thoát do giới hạn bộ nhớ.";
+"metrics.source.app" = "Ứng dụng";
+"metrics.source.tunnel" = "Đường hầm";
+"metrics.label.peakMemory" = "Bộ nhớ cao nhất";
+"metrics.label.suspendedMemory" = "Bộ nhớ khi tạm ngưng (trung bình)";
+"metrics.label.cpuTime" = "Thời gian CPU";
+"metrics.label.foreground" = "Thời gian chạy tiền cảnh";
+"metrics.label.background" = "Thời gian chạy nền";
+"metrics.label.diskWrites" = "Dữ liệu ghi đĩa";
+"metrics.label.launch" = "Thời gian khởi chạy (trung vị)";
+"metrics.label.hangs" = "Số lần treo";
+"metrics.label.download" = "Đã tải xuống";
+"metrics.label.upload" = "Đã tải lên";
+"metrics.label.wifiDown" = "Tải xuống qua Wi-Fi";
+"metrics.label.wifiUp" = "Tải lên qua Wi-Fi";
+"metrics.label.cellDown" = "Tải xuống qua di động";
+"metrics.label.cellUp" = "Tải lên qua di động";
+"metrics.label.memoryLimitExits" = "Thoát do giới hạn bộ nhớ";
+"metrics.label.forcedExits" = "Thoát bất thường";
+"metrics.label.period" = "Khoảng thời gian";
+"metrics.row.peak %@" = "Cao nhất %@";
+"metrics.row.cpu %@" = "CPU %@";
+"metrics.row.exits %lld" = "Thoát bất thường: %lld";
+"metrics.exits.none" = "Không có lần thoát nào được ghi nhận";
+"metrics.exit.normal" = "Bình thường";
+"metrics.exit.abnormal" = "Bất thường";
+"metrics.exit.memoryLimit" = "Giới hạn bộ nhớ";
+"metrics.exit.memoryPressure" = "Áp lực bộ nhớ";
+"metrics.exit.watchdog" = "Bộ giám sát (watchdog)";
+"metrics.exit.cpuLimit" = "Giới hạn CPU";
+"metrics.exit.badAccess" = "Truy cập bộ nhớ không hợp lệ";
+"metrics.exit.illegalInstruction" = "Lệnh không hợp lệ";
+"metrics.exit.lockedFile" = "Tạm ngưng khi đang khóa tệp";
+"metrics.exit.taskAssertionTimeout" = "Hết thời gian tác vụ nền";

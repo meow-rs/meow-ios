@@ -1,0 +1,587 @@
+/* meow-ios — Turkish (tr) localization.
+
+   Covers the tr device locale. Key set is 1:1 with en.lproj — every key in
+   en.lproj/Localizable.strings appears here, in the same order, with a real
+   translation. Strings deliberately omitted from en.lproj (QA/OCR harness pins,
+   stable diagnostic reason codes, internal chart bindings, log-level Picker
+   .tag() values) must NOT be added here either — see en.lproj header for the
+   exclusion list.
+
+   Terminology follows meow-android values-tr (mobile + core) so both apps read
+   the same: "config" → "yapılandırma", "profile" → "profil", "engine" →
+   "çekirdek", "Route Mode" → "Yönlendirme modu", Rule / Global / Direct →
+   Kural / Global / Doğrudan, Upload / Download → Yükleme / İndirme,
+   "latency" → "gecikme", "Logs" → "Günlükler". "Proxy" stays "proxy".
+
+   Style:
+     - Sentence case for titles, buttons and toggles, as in meow-android
+       values-tr ("Proxy grupları", "Bu ay").
+     - Never attach a Turkish suffix to a placeholder ("%@'i") — vowel harmony
+       can't adapt at runtime. Use "Etiket: %@", "%@ için", "%@ üzerinden", or
+       put the suffix on a fixed noun ("%@ yapılandırmasını").
+     - Counts stay plural-neutral (Turkish nouns are singular after numerals).
+     - Ellipsis is the single character "…" (U+2026), matching en.lproj. */
+
+
+/* Tab bar */
+"tabs.subscriptions" = "Yapılandırmalar";
+"tabs.proxyGroups" = "Proxy grupları";
+"tabs.utility" = "Araçlar";
+"tabs.settings" = "Ayarlar";
+
+
+/* Common */
+"common.ok" = "Tamam";
+"common.cancel" = "İptal";
+"common.close" = "Kapat";
+"common.error" = "Hata";
+"common.delete" = "Sil";
+
+
+/* Home screen */
+"home.nav.title" = "meow";
+"home.profile.none" = "Profil seçilmedi";
+"home.toggle.connect" = "Bağlan";
+"home.toggle.connecting" = "Bağlanıyor…";
+"home.toggle.disconnect" = "Bağlantıyı kes";
+"home.toggle.disconnecting" = "Bağlantı kesiliyor…";
+"home.badge.disconnected" = "Bağlı değil";
+"home.badge.preparing" = "Hazırlanıyor…";
+"home.badge.connecting" = "Bağlanıyor";
+"home.badge.connected" = "Bağlı";
+"home.badge.disconnecting" = "Bağlantı kesiliyor";
+"home.toggle.preparing" = "Hazırlanıyor…";
+"home.packet.ingress" = "Gelen";
+"home.packet.egress" = "Giden";
+"home.traffic.upload" = "Yükleme";
+"home.traffic.download" = "İndirme";
+"home.traffic.total %@" = "Toplam: %@";
+"home.routeMode.title" = "Yönlendirme modu";
+"home.routeMode.rule" = "Kural";
+"home.routeMode.all" = "Global";
+"home.routeMode.direct" = "Doğrudan";
+"home.proxyGroups.header" = "Proxy grupları";
+"home.proxyGroups.placeholder.connected" = "Gruplar yükleniyor…";
+"home.proxyGroups.placeholder.connecting" = "Bağlanıyor — gruplar çekirdek başlayınca görünecek.";
+"home.proxyGroups.placeholder.disconnected" = "Kullanılabilir grupları yüklemek için bağlanın.";
+"home.nav.connections" = "Bağlantılar";
+"home.nav.rules" = "Kurallar";
+"home.nav.providers" = "Sağlayıcılar";
+"home.nav.diagnostics" = "Tanılama";
+"home.error.apiUnavailable" = "API kullanılamıyor";
+"home.error.selectFailed" = "Proxy seçilemedi";
+"home.error.tunnelFailed.title" = "Tünel başlatılamadı";
+"home.error.dismiss" = "Kapat";
+
+
+/* Subscriptions */
+"subscriptions.nav.title" = "Yapılandırmalar";
+"subscriptions.home.addTitle" = "Yapılandırma ekle";
+"subscriptions.home.addSubtitle" = "Bir URL ekleyin veya yerel bir YAML profilini içe aktarın.";
+"subscriptions.section.profiles" = "Profiller";
+"subscriptions.section.engine" = "Çekirdek";
+"subscriptions.add.nav.title" = "Yapılandırma ekle";
+"subscriptions.add.field.name" = "Ad";
+"subscriptions.add.field.url" = "URL";
+"subscriptions.add.button.add" = "Ekle";
+"subscriptions.add.button.adding" = "Ekleniyor…";
+"subscriptions.editInfo.swipe" = "Bilgileri düzenle";
+"subscriptions.refresh.swipe" = "Yenile";
+"subscriptions.editInfo.nav.title" = "Yapılandırmayı düzenle";
+"subscriptions.editInfo.button.save" = "Kaydet";
+"subscriptions.editInfo.footer" = "URL değişiklikleri bir sonraki yenilemede geçerli olur.";
+"subscriptions.editInfo.updateInterval" = "Otomatik güncelleme";
+"subscriptions.editInfo.updateInterval.footer" = "meow, uygulamayı açtığınızda seçilen süre dolmuşsa bu yapılandırmayı yeniden alır. Hemen güncellemek için satırı sağa kaydırın.";
+"subscriptions.updateInterval.manual" = "Hiçbir zaman";
+"subscriptions.updateInterval.daily" = "Her gün";
+"subscriptions.updateInterval.weekly" = "Her hafta";
+"subscriptions.import.errorTitle" = "Yapılandırma içe aktarılamadı";
+"subscriptions.row.updated %@" = "Güncellendi: %@";
+"subscriptions.row.a11y.edit %@" = "%@ için YAML dosyasını düzenle";
+"subscriptions.row.a11y.refresh %@" = "%@ yapılandırmasını yenile";
+"subscriptions.row.a11y.editInfo %@" = "%@ yapılandırmasını yeniden adlandır veya bilgilerini düzenle";
+"subscriptions.row.a11y.editInfoHint" = "Ad ve URL düzenleyicisini açar";
+"subscriptions.row.a11y.exportQR %@" = "%@ için QR kodunu dışa aktar";
+"subscriptions.row.a11y.exportQRHint" = "Paylaşım bağlantısının taranabilir QR kodunu gösterir";
+"subscriptions.exportICloud.swipe" = "iCloud Drive";
+"subscriptions.row.a11y.exportICloud %@" = "%@ yapılandırmasını iCloud Drive'a kaydet";
+"subscriptions.exportICloud.done.title" = "iCloud Drive'a kaydedildi";
+"subscriptions.exportICloud.done.message %@" = "Şuraya kaydedildi: iCloud Drive › meow › %@. Apple TV'nizde de iCloud Drive altında görünecek.";
+"subscriptions.exportICloud.error.unavailable" = "Yapılandırmaları iCloud Drive'a kaydetmek için Ayarlar'da iCloud'a giriş yapın ve iCloud Drive'ı açın.";
+
+/* QR export sheet */
+"qrExport.nav.title" = "QR kodunu dışa aktar";
+"qrExport.picker.server" = "Sunucu";
+"qrExport.button.copy" = "Bağlantıyı kopyala";
+"qrExport.button.copied" = "Kopyalandı";
+"qrExport.button.share" = "Paylaş";
+"qrExport.empty" = "Dışa aktarılacak bir şey yok — bu profilde Shadowsocks sunucusu yok.";
+"qrExport.error.tooLong" = "Bu bağlantı QR kodu için çok uzun. Bunun yerine bağlantıyı kopyalayın veya paylaşın.";
+"qrExport.caption.subscription" = "Bu yapılandırma URL'sini başka bir istemciye aktarmak için tarayın.";
+"qrExport.caption.shadowsocks" = "Bu sunucuyu Shadowsocks uyumlu herhangi bir istemciye aktarmak için tarayın.";
+"qrExport.a11y.qrImage %@" = "%@ için QR kodu";
+"subscriptions.toolbar.a11y.add" = "Yapılandırma ekle";
+"subscriptions.toolbar.addFromURL" = "URL'den ekle";
+"subscriptions.toolbar.importFromFile" = "iCloud Drive'dan içe aktar…";
+"subscriptions.import.invalidEncoding" = "Seçilen dosya geçerli bir UTF-8 metni değil.";
+"subscriptions.error.plainHTTP" = "Bu yapılandırma URL'si şifrelenmemiş HTTP kullanıyor. iOS güvenli olmayan (HTTPS olmayan) bağlantıları engellediğinden yapılandırma indirilemiyor. Lütfen bunun yerine bir https:// URL'si kullanın.";
+"subscriptions.error.invalidURL" = "Yapılandırma URL'si geçerli değil. Yazım hatalarını kontrol edin ve URL'nin https:// ile başladığından emin olun.";
+"subscriptions.error.http %lld" = "Yapılandırma sunucusunun yanıtı: HTTP %lld. URL'nin hâlâ geçerli olduğunu kontrol edin veya sağlayıcınızdan yeni bir bağlantı isteyin.";
+"subscriptions.error.decodeFailed" = "İndirilen yapılandırma geçerli bir UTF-8 metni değil.";
+"subscriptions.error.conversionFailed %@" = "İndirilen içerik bir Clash yapılandırması ya da desteklenen bir abonelik (ss://, trojan://, vless://, vmess://) değil. Bunun bir web sayfası değil, Clash veya Mihomo abonelik bağlantısı olduğundan emin olun.\n\nÇekirdek: %@";
+"subscriptions.empty.title" = "Henüz yapılandırma yok";
+"subscriptions.empty.description" = "Mihomo veya Clash yapılandırma URL'si eklemek için + simgesine dokunun.";
+"subscriptions.empty.importFile" = "Dosya içe aktar";
+"subscriptions.toolbar.addShadowsocks" = "Shadowsocks sunucusu ekle";
+
+
+/* Deep-link import confirmation (meow://connect) */
+"deepLinkImport.nav.title" = "Yapılandırmayı içe aktar";
+"deepLinkImport.section.subscription" = "Bu bağlantı şunu eklemek istiyor:";
+"deepLinkImport.field.name" = "Ad";
+"deepLinkImport.field.host" = "Sunucu";
+"deepLinkImport.warning.insecure" = "Güvenli olmayan bağlantı — bu profil aktarım sırasında değiştirilebilir. Sağlayıcı sunuyorsa https:// bağlantısını tercih edin.";
+"deepLinkImport.warning.acknowledge" = "HTTP üzerinden içe aktarmanın riskini anlıyorum";
+"deepLinkImport.notice.duplicate" = "Bu URL'ye sahip bir yapılandırma zaten içe aktarılmış. Devam ederseniz yinelenen bir kopya eklenmez, mevcut yapılandırma yerinde güncellenir.";
+"deepLinkImport.button.import" = "İçe aktar";
+"deepLinkImport.button.update" = "Mevcut yapılandırmayı güncelle";
+"deepLinkImport.button.importAndActivate" = "İçe aktar ve etkinleştir";
+"a11y.deepLinkImport.cancel" = "İçe aktarmayı iptal et";
+"deepLinkImport.a11y.url %@" = "Yapılandırma URL'si: %@";
+
+
+/* Add Shadowsocks server sheet */
+"ssAdd.nav.title" = "Shadowsocks ekle";
+"ssAdd.section.link" = "Bağlantı";
+"ssAdd.button.scan" = "QR kodu tara";
+"ssAdd.button.applyLink" = "Bağlantıdan doldur";
+"ssAdd.error.invalidLink" = "Geçerli bir ss:// bağlantısı değil.";
+"ssAdd.section.server" = "Sunucu";
+"ssAdd.field.name" = "Ad";
+"ssAdd.field.server" = "Sunucu";
+"ssAdd.field.port" = "Port";
+"ssAdd.field.cipher" = "Şifreleme";
+"ssAdd.field.password" = "Parola";
+"ssAdd.toggle.udp" = "UDP";
+"ssAdd.section.plugin" = "Eklenti";
+"ssAdd.plugin.picker" = "Eklenti";
+"ssAdd.plugin.none" = "Yok";
+"ssAdd.plugin.ech" = "ECH-TLS tüneli";
+"ssAdd.plugin.obfs" = "simple-obfs";
+"ssAdd.plugin.v2ray" = "v2ray-plugin";
+"ssAdd.ech.footer" = "Çekirdeğe yerleşik SIP003 ech-tls-tunnel aktarımı.";
+"ssAdd.plugin.hostFallback.footer" = "Sunucu adresini kullanmak için Host alanını boş bırakın.";
+"ssAdd.field.obfsMode" = "Obfs modu";
+"ssAdd.field.obfsHost" = "Obfs Host";
+"ssAdd.toggle.v2rayTLS" = "TLS";
+"ssAdd.field.v2rayHost" = "Host";
+"ssAdd.field.v2rayPath" = "Yol";
+"ssAdd.toggle.v2rayMux" = "Mux";
+"ssAdd.field.sni" = "SNI";
+"ssAdd.field.path" = "Yol";
+"ssAdd.field.echConfig" = "ECH yapılandırması";
+"ssAdd.field.fingerprint" = "Parmak izi";
+"ssAdd.toggle.fastOpen" = "Fast Open";
+"ssAdd.plugin.passthrough %@" = "Bağlantıdaki eklenti: %@";
+"ssAdd.footer.profile" = "Yerleşik şablondan oluşturulan yerel bir profile kaydedilir. Eklenen diğer sunucular aynı profili günceller.";
+"ssAdd.button.add" = "Ekle";
+"ssAdd.button.adding" = "Ekleniyor…";
+"ssAdd.scanner.nav.title" = "QR kodu tara";
+"ssAdd.scanner.unavailable.title" = "Kamera kullanılamıyor";
+"ssAdd.scanner.unavailable.description" = "Bu cihazda tarama kullanılamıyor. Bunun yerine ss:// bağlantısını yapıştırın.";
+"ssAdd.scanner.denied.description" = "Kamera erişimi reddedildi. Ayarlar'dan etkinleştirin veya bunun yerine ss:// bağlantısını yapıştırın.";
+"ssAdd.profile.defaultName" = "Sunucularım";
+
+
+/* Connections */
+"connections.empty.title" = "Bağlantı yok";
+"connections.empty.description" = "Etkin trafik burada görünür.";
+"connections.toolbar.closeAll" = "Tümünü kapat";
+"connections.swipe.close" = "Kapat";
+"connections.nav.titleFormat %lld" = "Bağlantılar (%lld)";
+
+
+/* Utility hub */
+"utility.nav.title" = "Araçlar";
+"utility.nav.traffic" = "Trafik";
+"utility.nav.logs" = "Günlükler";
+"utility.nav.dns" = "DNS";
+
+
+/* DNS */
+"dns.empty.title" = "DNS sonucu yok";
+"dns.empty.description" = "Çekirdek alan adlarını çözümledikçe önbellekteki sorgular burada görünür.";
+"dns.nav.titleFormat %lld" = "DNS (%lld)";
+"dns.row.unknownUpstream" = "Bilinmiyor";
+"dns.row.ttl %lld" = "TTL %lld sn";
+
+
+/* Rules */
+"rules.empty.title" = "Kural yok";
+"rules.empty.description" = "Bir profil yüklendiğinde kurallar burada görünür.";
+"rules.nav.titleFormat %lld" = "Kurallar (%lld)";
+"rules.button.edit" = "Düzenle";
+
+/* Rules editor (structured per-rule edit sheet) */
+"rulesEditor.nav.title" = "Kuralları düzenle";
+"rulesEditor.empty.title" = "Kural yok";
+"rulesEditor.empty.description" = "İlk kuralı eklemek için + simgesine dokunun.";
+"rulesEditor.button.add" = "Ekle";
+"rulesEditor.button.addChinaPreset" = "Çin için DIRECT ön ayarı ekle";
+"rulesEditor.button.cancel" = "İptal";
+"rulesEditor.button.save" = "Kaydet";
+"rulesEditor.button.saving" = "Kaydediliyor…";
+
+/* Single-rule editor sheet */
+"ruleEditor.nav.title" = "Kural";
+"ruleEditor.section.type" = "Tür";
+"ruleEditor.section.payload" = "Değer";
+"ruleEditor.section.proxy" = "Proxy";
+"ruleEditor.field.type" = "Tür";
+"ruleEditor.field.payload" = "Değer";
+"ruleEditor.field.proxy" = "Proxy";
+"ruleEditor.field.proxy.custom" = "Özel ad";
+"ruleEditor.field.noResolve" = "no-resolve";
+"ruleEditor.field.noResolve.footer" = "Eşleştirmeden önce DNS çözümlemesi yapılmaz. Yalnızca zaten çözümlenmiş hedeflerle eşleşmesi gereken IP kuralları için kullanın.";
+"ruleEditor.button.cancel" = "İptal";
+"ruleEditor.button.save" = "Kaydet";
+
+
+/* Logs */
+"logs.picker.level" = "Düzey";
+"logs.level.debug" = "hata ayıklama";
+"logs.level.info" = "bilgi";
+"logs.level.warning" = "uyarı";
+"logs.level.error" = "hata";
+"logs.toggle.autoScroll" = "Otomatik kaydırma";
+"logs.empty.title" = "Günlük kaydı yok";
+"logs.empty.description" = "Tünel etkinken günlükler burada görünür.";
+"logs.nav.titleFormat %lld" = "Günlükler (%lld)";
+
+
+/* Providers */
+"providers.empty.title" = "Sağlayıcı yok";
+"providers.empty.description" = "Bir profil yüklendiğinde sağlayıcılar burada görünür.";
+"providers.nav.titleFormat %lld" = "Sağlayıcılar (%lld)";
+"providers.a11y.healthCheck %@" = "%@ için sağlık kontrolü";
+"providers.a11y.test %@" = "%@ proxy'sini test et";
+
+
+/* Yaml Editor */
+"yamlEditor.nav.title" = "Yapılandırmayı düzenle";
+"yamlEditor.empty.title" = "Boş yapılandırma";
+"yamlEditor.empty.description" = "Düzenlemeye başlamak için bir Clash YAML yapılandırması yapıştırın.";
+"yamlEditor.button.cancel" = "İptal";
+"yamlEditor.button.save" = "Kaydet";
+"yamlEditor.button.saving" = "Kaydediliyor…";
+"yamlEditor.a11y.cancel" = "Değişiklikleri sil ve düzenleyiciyi kapat";
+"yamlEditor.a11y.save" = "Yapılandırmayı kaydet";
+"yamlEditor.error.invalid" = "Geçersiz yapılandırma";
+
+
+/* Settings */
+"settings.nav.title" = "Ayarlar";
+"settings.section.general" = "Genel";
+"settings.toggle.allowLan" = "Yerel ağa izin ver";
+"settings.toggle.onDemand" = "İsteğe bağlı bağlan";
+"settings.toggle.blockHTTP3" = "HTTP/3 (QUIC) trafiğini engelle";
+"settings.toggle.blockHTTP3.footer" = "443 numaralı porta giden UDP trafiğini ve SVCB/HTTPS DNS kayıtlarını engelleyerek TCP/HTTP2 kullanımını zorunlu kılar.";
+"settings.toggle.ipv6" = "IPv6'yı etkinleştir";
+"settings.toggle.ipv6.footer" = "AAAA kayıtlarını çözümler ve IPv6 trafiğini tünel üzerinden yönlendirir. Kapalıyken tünel yalnızca IPv4 kullanır ve AAAA sorguları engellenir.";
+"settings.picker.logLevel" = "Günlük düzeyi";
+"settings.logLevel.debug" = "Hata ayıklama";
+"settings.logLevel.info" = "Bilgi";
+"settings.logLevel.warning" = "Uyarı";
+"settings.logLevel.error" = "Hata";
+"settings.logLevel.silent" = "Sessiz";
+"settings.label.appIcon" = "Uygulama simgesi";
+"settings.appIcon.primary" = "Varsayılan";
+"settings.appIcon.leap" = "Sıçrayış";
+"settings.appIcon.sunset" = "Gün batımı";
+"settings.appIcon.midnight" = "Gece yarısı";
+"settings.section.diagnostics" = "Tanılama";
+"settings.label.diagnostics" = "Tanılama";
+"settings.label.exportLogs" = "Günlükleri dışa aktar";
+"settings.section.about" = "Hakkında";
+"settings.about.version" = "Sürüm";
+"settings.about.memory" = "Bellek";
+
+
+/* App Icon picker */
+"appIconPicker.nav.title" = "Uygulama simgesi";
+"appIconPicker.error.failed" = "iOS simge değişikliğini reddetti. Rehberli Erişim'den çıkın veya cihaz yönetimi profilinizi kontrol edin, ardından tekrar deneyin.";
+"appIconPicker.unsupported.title" = "Alternatif simgeler kullanılamıyor";
+"appIconPicker.unsupported.description" = "Bu cihaz uygulama simgesini değiştiremiyor.";
+
+
+/* User Diagnostics */
+"userDiagnostics.nav.title" = "Tanılama";
+"userDiagnostics.section.directTcp" = "Doğrudan TCP";
+"userDiagnostics.section.proxyHttp" = "Proxy üzerinden HTTP";
+"userDiagnostics.section.dns" = "DNS çözümleyici";
+"userDiagnostics.empty.title" = "VPN gerekli";
+"userDiagnostics.empty.description" = "Proxy üzerinden HTTP ve DNS çözümleyici testlerini çalıştırmak için proxy'ye bağlanın.";
+"userDiagnostics.button.test" = "Test et";
+"userDiagnostics.button.testing" = "Test ediliyor…";
+"userDiagnostics.error.parseHostPort" = "host:port biçimi bekleniyor (ör. 1.1.1.1:443)";
+
+
+/* Traffic */
+"traffic.nav.title" = "Trafik";
+"traffic.empty.title" = "Henüz trafik verisi yok";
+"traffic.empty.description" = "Kullanımı kaydetmeye başlamak için VPN'i başlatın.";
+"traffic.label.speed" = "Hız";
+"traffic.label.last7Days" = "Son 7 gün";
+"traffic.tile.today" = "Bugün";
+"traffic.tile.thisMonth" = "Bu ay";
+
+
+/* tvOS home screen (TVContentView) — the tvOS target compiles App/Resources
+   but not App/Sources/Views, so it reuses home.* / subscriptions.* above and
+   adds only what has no iPhone counterpart. */
+"tv.subscription.section" = "Abonelik";
+"tv.subscription.field.url" = "Abonelik URL'si";
+"tv.subscription.error.invalidURL" = "Bir http:// veya https:// abonelik URL'si girin.";
+"tv.profiles.section" = "Profiller";
+"tv.profiles.empty" = "Henüz profil yok. Başlamak için bir abonelik URL'si ekleyin.";
+"tv.connect.hint.noProfile" = "Bağlanmak için bir abonelik ekleyin.";
+"tv.icloud.button" = "iCloud Drive";
+"tv.icloud.title" = "iCloud Drive'dan içe aktar";
+"tv.icloud.instructions" = "iPhone veya Mac'inizde .yaml dosyalarını iCloud Drive › meow klasörüne kaydedin — ya da iPhone'unuzdaki meow uygulamasında bir yapılandırmayı kaydırıp iCloud Drive'a dokunun — ardından bunları buraya göndermek için iPhone'unuzda meow uygulamasını açın.";
+"tv.icloud.empty" = "Henüz iCloud Drive'dan yapılandırma yok.";
+"tv.icloud.noAccount" = "iCloud Drive'dan yapılandırma içe aktarmak için Ayarlar'da iCloud'a giriş yapın.";
+"tv.icloud.failed %@" = "Yapılandırmalar iCloud'dan yüklenemedi: %@";
+
+
+/* Home Screen widgets (Widgets/ — the extension ships this same file) */
+"widget.tunnel.name" = "VPN";
+"widget.tunnel.description" = "meow bağlantı durumunu görün ve VPN'i açıp kapatın.";
+"widget.routeMode.description" = "Bağlıyken meow trafiğinin nasıl yönlendirileceğini değiştirin.";
+"widget.status.setup" = "Kurulum için meow'u açın";
+"widget.routeMode.rule.long" = "Kural tabanlı proxy";
+"widget.routeMode.all.long" = "Tüm trafik proxy üzerinden";
+"widget.routeMode.direct.long" = "Doğrudan bağlantı";
+"widget.toggle.label" = "VPN";
+"widget.control.name" = "meow VPN";
+"widget.control.on" = "Açık";
+"widget.control.off" = "Kapalı";
+"widget.control.setup" = "Kurulum gerekli";
+"widget.error.notConfigured" = "Önce meow uygulamasını açıp bir profil seçin.";
+"widget.intent.toggle.title" = "meow VPN'i aç veya kapat";
+"widget.intent.toggle.value" = "Açık";
+"widget.intent.routeMode.title" = "Yönlendirme modunu ayarla";
+"widget.intent.routeMode.mode" = "Mod";
+
+
+/* Fullscreen diagnostics overlay (ContentView) */
+"content.diagnostics.nav.title" = "Tanılama";
+
+
+/* Accessibility — ContentView / diagnostics overlay */
+"a11y.content.diagnostics.close" = "Tanılama panelini kapat";
+"a11y.content.diagnostics.closeHint" = "Tanılama panelini kapatır ve ana ekrana döner";
+
+
+/* Accessibility — Common */
+"a11y.common.dismissAlert" = "Hata uyarısını kapat";
+
+
+/* Accessibility — Home */
+"a11y.home.proxyGroups.none" = "Kullanılabilir grup yok";
+
+
+/* Accessibility — Rules list */
+"a11y.rules.row %@ %@ %@" = "Kural %@, %@, %@ üzerinden";
+"a11y.rules.error %@" = "Hata: %@";
+
+
+/* Accessibility — Logs */
+"a11y.logs.row.label %@ %@" = "%1$@ %2$@";
+"a11y.logs.errorBanner.label %@" = "Hata: %@";
+
+
+/* Accessibility — YAML editor */
+"yamlEditor.a11y.errorBanner %@" = "Hata: %@";
+"yamlEditor.a11y.saving" = "Kaydediliyor";
+"yamlEditor.a11y.save.hint" = "Yapılandırmayı doğrular ve kaydeder";
+"a11y.yamlEditor.textView" = "YAML yapılandırma düzenleyicisi";
+"a11y.yamlEditor.errorLines %@" = "Hatalı satırlar: %@";
+
+
+/* Accessibility — Providers */
+"a11y.providers.row.delay.label" = "Gecikme";
+"a11y.providers.row.delay.value %lld" = "%lld milisaniye";
+"a11y.providers.errorBanner.label %@" = "Hata: %@";
+
+
+/* Accessibility — Connections */
+"a11y.connections.row.upload %@" = "Yüklenen: %@";
+"a11y.connections.row.download %@" = "İndirilen: %@";
+"a11y.connections.row.label %@ %@ %@ %@ %@" = "%@, %@, yüklenen %@, indirilen %@, %@ üzerinden";
+"a11y.connections.errorBanner %@" = "Uyarı: %@";
+
+
+/* Accessibility — DNS */
+"a11y.dns.row.label %@ %@ %@ %lld" = "%@, %@, sunucu %@, TTL %lld saniye";
+"a11y.dns.errorBanner %@" = "Uyarı: %@";
+
+
+/* Accessibility — Rule editor (single-rule sheet) */
+"a11y.ruleEditor.noResolve.hint" = "Bu kuralı eşleştirmeden önce DNS çözümlemesini atlar";
+"a11y.ruleEditor.save.hint" = "Kuralı kaydeder ve düzenleyiciyi kapatır";
+
+
+/* Accessibility — DiagnosticsViewController (auto-run checks) */
+"a11y.diagnostics.button.run.hint" = "Etkin VPN tüneli üzerinde tüm tanılama kontrollerini çalıştırır";
+"a11y.diagnostics.running" = "Tanılama çalışıyor";
+"a11y.diagnostics.check.tunExists" = "TUN arayüzü";
+"a11y.diagnostics.check.dnsOk" = "DNS çözümleyici";
+"a11y.diagnostics.check.tcpProxyOk" = "TCP proxy'si";
+"a11y.diagnostics.check.http204Ok" = "HTTP 204 kontrolü";
+"a11y.diagnostics.result.pass %@" = "%@: başarılı";
+"a11y.diagnostics.result.fail %@ %@" = "%1$@: başarısız, %2$@";
+
+
+/* Accessibility — Subscriptions */
+"subscriptions.row.a11y.selected" = "Seçili";
+"subscriptions.row.a11y.notSelected" = "Seçili değil";
+"subscriptions.row.a11y.selectHint" = "Bu yapılandırmayı etkinleştirir";
+"subscriptions.row.a11y.editHint" = "YAML düzenleyicisini açar";
+"subscriptions.row.a11y.refreshHint" = "En son yapılandırmayı uzak URL'den alır";
+"subscriptions.editInfo.a11y.updateIntervalHint" = "Bu yapılandırmanın ne sıklıkla yeniden alınacağını seçer";
+
+
+/* Accessibility — Traffic charts */
+"a11y.traffic.speedChart.value %@ %@" = "Yükleme saniyede %@, indirme saniyede %@";
+"a11y.traffic.historyChart.value %@ %@" = "Toplam yüklenen %@, toplam indirilen %@";
+"a11y.traffic.chart.axis.time" = "Zaman";
+"a11y.traffic.chart.seconds %@" = "%@ saniye";
+"a11y.traffic.chart.axis.speed" = "Hız";
+"a11y.traffic.chart.axis.day" = "Gün";
+"a11y.traffic.chart.axis.data" = "Veri miktarı";
+
+
+/* Accessibility — Settings */
+"a11y.settings.allowLan.hint" = "Yerel ağınızdaki diğer cihazların proxy üzerinden bağlanmasına izin verir.";
+"a11y.settings.onDemand.hint" = "Ağ etkinliği gerektirdiğinde tüneli otomatik olarak başlatır.";
+"a11y.settings.blockHTTP3.hint" = "443 numaralı porta giden UDP trafiğini ve SVCB/HTTPS DNS kayıtlarını engelleyerek HTTP/3 ve QUIC'i devre dışı bırakır; böylece bağlantılar TCP ve HTTP/2 kullanmaya zorlanır.";
+"a11y.settings.ipv6.hint" = "AAAA kayıtlarını çözümleyerek ve IPv6 trafiğini tünel üzerinden yönlendirerek IPv6'yı etkinleştirir. Kapalıyken tünel yalnızca IPv4 kullanır ve AAAA sorguları engellenir.";
+"a11y.settings.appIcon.hint" = "Ana ekranda gösterilen uygulama simgesini değiştirir.";
+"a11y.settings.exportLogs.hint" = "Son bir saatin uygulama günlüklerini bir dosyaya kaydeder.";
+"a11y.settings.exportLogs.inProgress" = "Dışa aktarılıyor";
+"a11y.settings.memory.unavailable" = "Mevcut değil";
+
+
+/* Accessibility — App Icon picker */
+"a11y.appIconPicker.option.hint" = "Bu görseli Ana ekran simgesi olarak ayarlar.";
+
+
+/* Accessibility — Rules editor (structured list) */
+"a11y.rulesEditor.row.payloadEmpty" = "Eşleşme değeri yok";
+"a11y.rulesEditor.row.proxy %@" = "%@ hedefine yönlendirir";
+"a11y.rulesEditor.error %@" = "Hata: %@";
+"a11y.rulesEditor.row.hint" = "Kural düzenleyicisini açar.";
+"a11y.rulesEditor.row.position %lld %lld" = "%1$lld. kural, toplam %2$lld";
+"a11y.rulesEditor.row.moveUp" = "Yukarı taşı";
+"a11y.rulesEditor.row.moveDown" = "Aşağı taşı";
+"a11y.rulesEditor.row.delete" = "Kuralı sil";
+
+
+/* Accessibility — Proxy groups */
+"a11y.proxyGroups.group.expanded" = "Genişletilmiş";
+"a11y.proxyGroups.group.collapsed" = "Daraltılmış";
+"a11y.proxyGroups.group.hint" = "Bu gruptaki proxy'leri gösterir veya gizler.";
+"a11y.proxyGroups.group.action.testAll" = "Tüm proxy'lerin gecikmesini test et";
+"a11y.proxyGroups.proxy.hint" = "Bu proxy'yi grup için seçer.";
+"a11y.proxyGroups.proxy.action.ping" = "Gecikmeyi test et";
+"a11y.proxyGroups.proxy.delay %@" = "%@ milisaniye";
+"a11y.proxyGroups.proxy.delay.testing" = "Gecikme test ediliyor";
+"a11y.proxyGroups.proxy.delay.none" = "Gecikme test edilmedi";
+
+
+/* Accessibility — User Diagnostics */
+"a11y.userDiagnostics.directTcp.input" = "Sunucu ve port";
+"a11y.userDiagnostics.proxyHttp.input" = "HTTP URL'si";
+"a11y.userDiagnostics.dns.input" = "Alan adı";
+"a11y.userDiagnostics.directTcp.test" = "Doğrudan TCP bağlantısını test et";
+"a11y.userDiagnostics.proxyHttp.test" = "Proxy üzerinden HTTP isteğini test et";
+"a11y.userDiagnostics.dns.test" = "DNS çözümlemesini test et";
+"a11y.userDiagnostics.result.httpStatus %@ %@" = "HTTP durumu %@, %@ milisaniye";
+"a11y.userDiagnostics.result.success %@" = "Başarılı, %@ milisaniye";
+"a11y.userDiagnostics.result.failure %@" = "Başarısız: %@";
+"a11y.userDiagnostics.errorBanner %@" = "Hata: %@";
+
+/* iCloud Drive export guide */
+"guide.icloudExport.title" = "Apple TV'nize yapılandırma gönderin";
+"guide.icloudExport.subtitle" = "iPhone'unuzdaki meow uygulamasından yapılandırmayı iCloud Drive'a kaydedin; Apple TV onu içe aktarabilir.";
+"guide.icloudExport.step1" = "iPhone'unuzda Yapılandırmalar sekmesini açın ve bir yapılandırmayı sağa kaydırın.";
+"guide.icloudExport.step2" = "iCloud Drive'a dokunun. Yapılandırma iCloud Drive › meow klasörüne kaydedilir.";
+"guide.icloudExport.step3" = "Apple TV'nizdeki meow uygulamasında iCloud Drive'ı açın ve yapılandırmayı seçin. Yapılandırmanın gönderilebilmesi için önce iPhone'unuzda meow uygulamasını açın.";
+"guide.icloudExport.done" = "Anladım";
+"settings.section.help" = "Yardım";
+"settings.label.icloudGuide" = "Yapılandırmaları Apple TV'ye gönder";
+"tv.icloud.howTo" = "Nasıl çalışır?";
+
+/* Crash Reports (MetricKit) */
+"settings.label.crashReports" = "Çökme raporları";
+"crashReports.nav.title" = "Çökme raporları";
+"crashReports.empty.title" = "Çökme raporu yok";
+"crashReports.empty.description" = "iOS, çökme ve donma raporlarını meow uygulamasına sonraki bir açılışta, genellikle bir gün içinde iletir.";
+"crashReports.footer" = "Raporlar iOS (MetricKit) tarafından oluşturulur ve bu cihazda kalır. Bir sorun bildirirken raporu paylaşabilirsiniz.";
+"crashReports.button.deleteAll" = "Tümünü sil";
+"crashReports.deleteAll.title" = "Tüm çökme raporları silinsin mi?";
+"crashReports.button.share" = "Paylaş";
+"crashReports.detail.process" = "İşlem";
+"crashReports.detail.version" = "Sürüm";
+"crashReports.detail.os" = "İşletim sistemi";
+"crashReports.kind.crash" = "Çökme";
+"crashReports.kind.hang" = "Donma";
+"crashReports.kind.cpu" = "CPU istisnası";
+"crashReports.kind.diskWrite" = "Disk yazma istisnası";
+"crashReports.kind.launch" = "Yavaş açılış";
+
+/* Performance Metrics (MetricKit) */
+"settings.label.metrics" = "Performans ölçümleri";
+"metrics.nav.title" = "Performans ölçümleri";
+"metrics.empty.title" = "Henüz ölçüm yok";
+"metrics.empty.description" = "iOS, günde bir kez uygulamanın ve tünelin önceki güne ait bellek, CPU, ağ ve çıkış özetini meow uygulamasına gönderir.";
+"metrics.section.daily" = "Günlük raporlar";
+"metrics.section.lastWeek" = "Son 7 gün";
+"metrics.section.resources" = "Kaynaklar";
+"metrics.section.network" = "Ağ";
+"metrics.section.exits" = "Çıkışlar";
+"metrics.deleteAll.title" = "Tüm performans ölçümleri silinsin mi?";
+"metrics.footer.tunnel" = "Tünelin bellek kullanımı yaklaşık 50 MB sınırını aşarsa iOS tüneli durdurur. Her durdurma bir bellek sınırı çıkışı olarak sayılır.";
+"metrics.source.app" = "Uygulama";
+"metrics.source.tunnel" = "Tünel";
+"metrics.label.peakMemory" = "En yüksek bellek";
+"metrics.label.suspendedMemory" = "Askıdaki bellek (ort.)";
+"metrics.label.cpuTime" = "CPU süresi";
+"metrics.label.foreground" = "Ön plan süresi";
+"metrics.label.background" = "Arka plan süresi";
+"metrics.label.diskWrites" = "Disk yazmaları";
+"metrics.label.launch" = "Açılış süresi (medyan)";
+"metrics.label.hangs" = "Donma sayısı";
+"metrics.label.download" = "İndirilen";
+"metrics.label.upload" = "Yüklenen";
+"metrics.label.wifiDown" = "Wi-Fi indirme";
+"metrics.label.wifiUp" = "Wi-Fi yükleme";
+"metrics.label.cellDown" = "Hücresel indirme";
+"metrics.label.cellUp" = "Hücresel yükleme";
+"metrics.label.memoryLimitExits" = "Bellek sınırı çıkışları";
+"metrics.label.forcedExits" = "Anormal çıkışlar";
+"metrics.label.period" = "Dönem";
+"metrics.row.peak %@" = "En yüksek: %@";
+"metrics.row.cpu %@" = "CPU: %@";
+"metrics.row.exits %lld" = "Anormal çıkış: %lld";
+"metrics.exits.none" = "Kayıtlı çıkış yok";
+"metrics.exit.normal" = "Normal";
+"metrics.exit.abnormal" = "Anormal";
+"metrics.exit.memoryLimit" = "Bellek sınırı";
+"metrics.exit.memoryPressure" = "Bellek baskısı";
+"metrics.exit.watchdog" = "Watchdog zaman aşımı";
+"metrics.exit.cpuLimit" = "CPU sınırı";
+"metrics.exit.badAccess" = "Geçersiz bellek erişimi";
+"metrics.exit.illegalInstruction" = "Geçersiz komut";
+"metrics.exit.lockedFile" = "Kilitli dosyayla askıya alındı";
+"metrics.exit.taskAssertionTimeout" = "Arka plan görevi zaman aşımı";
