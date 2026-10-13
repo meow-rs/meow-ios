@@ -60,6 +60,36 @@
 "home.error.dismiss" = "Dismiss";
 
 
+/* Proxy detail page (long-press a node on Proxy Groups) */
+"proxyDetail.type" = "Proxy Type";
+"proxyDetail.udp" = "UDP Relay";
+"proxyDetail.supported" = "Supported";
+"proxyDetail.unsupported" = "Not supported";
+"proxyDetail.connectHint" = "Tests need the VPN connected.";
+"proxyDetail.tcpLatency" = "TCP Relay Latency";
+"proxyDetail.udpLatency" = "UDP Relay Latency";
+"proxyDetail.exitIP" = "External IP Address";
+"proxyDetail.nat" = "NAT Type";
+"proxyDetail.download" = "Download Bandwidth";
+"proxyDetail.upload" = "Upload Bandwidth";
+"proxyDetail.test" = "Test";
+"proxyDetail.testing" = "Testing…";
+"proxyDetail.tapToTest" = "Tap to test";
+"proxyDetail.failed" = "Failed";
+"proxyDetail.timeout" = "Timeout";
+"proxyDetail.udpUnsupported" = "This node does not relay UDP";
+"proxyDetail.nat.fullCone" = "Full Cone (NAT1)";
+"proxyDetail.nat.restrictedCone" = "Restricted Cone (NAT2)";
+"proxyDetail.nat.portRestrictedCone" = "Port Restricted Cone (NAT3)";
+"proxyDetail.nat.cone" = "Cone (filtering unknown)";
+"proxyDetail.nat.symmetric" = "Symmetric (NAT4)";
+"proxyDetail.nat.unknown" = "Unknown";
+"proxyDetail.nat.sourceHidden" = "The node's UDP relay does not report where replies come from, so its NAT type cannot be told";
+"proxyGroups.tips" = "Tips";
+"proxyGroups.tips.tap" = "Tap a node to switch to it.";
+"proxyGroups.tips.longPress" = "Long-press a node to open its details and test it on its own:";
+
+
 /* Subscriptions */
 "subscriptions.nav.title" = "Configs";
 "subscriptions.home.addTitle" = "Add Config";
@@ -483,6 +513,7 @@
 "a11y.proxyGroups.proxy.delay %@" = "%@ milliseconds";
 "a11y.proxyGroups.proxy.delay.testing" = "Testing latency";
 "a11y.proxyGroups.proxy.delay.none" = "Latency not tested";
+"a11y.proxyGroups.proxy.action.details" = "Details";
 
 
 /* Accessibility — User Diagnostics */

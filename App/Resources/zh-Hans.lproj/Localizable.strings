@@ -66,6 +66,36 @@
 "home.error.dismiss" = "忽略";
 
 
+/* Proxy detail page (long-press a node on Proxy Groups) */
+"proxyDetail.type" = "代理类型";
+"proxyDetail.udp" = "UDP 转发";
+"proxyDetail.supported" = "支持";
+"proxyDetail.unsupported" = "不支持";
+"proxyDetail.connectHint" = "测试需要先连接 VPN。";
+"proxyDetail.tcpLatency" = "TCP 转发延迟";
+"proxyDetail.udpLatency" = "UDP 转发延迟";
+"proxyDetail.exitIP" = "出口 IP 地址";
+"proxyDetail.nat" = "NAT 类型";
+"proxyDetail.download" = "下载带宽";
+"proxyDetail.upload" = "上传带宽";
+"proxyDetail.test" = "测试";
+"proxyDetail.testing" = "测试中…";
+"proxyDetail.tapToTest" = "点击测试";
+"proxyDetail.failed" = "失败";
+"proxyDetail.timeout" = "超时";
+"proxyDetail.udpUnsupported" = "该节点不支持 UDP 转发";
+"proxyDetail.nat.fullCone" = "完全锥形（NAT1）";
+"proxyDetail.nat.restrictedCone" = "受限锥形（NAT2）";
+"proxyDetail.nat.portRestrictedCone" = "端口受限锥形（NAT3）";
+"proxyDetail.nat.cone" = "锥形（过滤行为未知）";
+"proxyDetail.nat.symmetric" = "对称型（NAT4）";
+"proxyDetail.nat.unknown" = "未知";
+"proxyDetail.nat.sourceHidden" = "该节点的 UDP 转发不报告回包来源，无法判断 NAT 类型";
+"proxyGroups.tips" = "使用提示";
+"proxyGroups.tips.tap" = "单击节点：切换到该节点。";
+"proxyGroups.tips.longPress" = "长按节点：打开节点详情，单独测试该节点：";
+
+
 /* Subscriptions */
 "subscriptions.nav.title" = "配置";
 "subscriptions.home.addTitle" = "添加配置";
@@ -487,6 +517,7 @@
 "a11y.proxyGroups.proxy.delay %@" = "%@ 毫秒";
 "a11y.proxyGroups.proxy.delay.testing" = "正在测试延迟";
 "a11y.proxyGroups.proxy.delay.none" = "尚未测试延迟";
+"a11y.proxyGroups.proxy.action.details" = "详情";
 
 
 /* Accessibility — User Diagnostics */

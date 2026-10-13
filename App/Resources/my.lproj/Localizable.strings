@@ -70,6 +70,36 @@
 "home.error.dismiss" = "ပိတ်ရန်";
 
 
+/* Proxy detail page (long-press a node on Proxy Groups) */
+"proxyDetail.type" = "ပရောက်စီ အမျိုးအစား";
+"proxyDetail.udp" = "UDP ထပ်ဆင့်ပို့ခြင်း";
+"proxyDetail.supported" = "ပံ့ပိုးသည်";
+"proxyDetail.unsupported" = "မပံ့ပိုးပါ";
+"proxyDetail.connectHint" = "စစ်ဆေးရန် VPN ချိတ်ဆက်ထားရပါမည်။";
+"proxyDetail.tcpLatency" = "TCP ထပ်ဆင့် ကြန့်ကြာချိန်";
+"proxyDetail.udpLatency" = "UDP ထပ်ဆင့် ကြန့်ကြာချိန်";
+"proxyDetail.exitIP" = "ပြင်ပ IP လိပ်စာ";
+"proxyDetail.nat" = "NAT အမျိုးအစား";
+"proxyDetail.download" = "ဒေါင်းလုဒ် bandwidth";
+"proxyDetail.upload" = "အပ်လုဒ် bandwidth";
+"proxyDetail.test" = "စစ်ဆေးရန်";
+"proxyDetail.testing" = "စစ်ဆေးနေသည်…";
+"proxyDetail.tapToTest" = "စစ်ဆေးရန် နှိပ်ပါ";
+"proxyDetail.failed" = "မအောင်မြင်ပါ";
+"proxyDetail.timeout" = "အချိန်ကုန်";
+"proxyDetail.udpUnsupported" = "ဤ node သည် UDP ကို ထပ်ဆင့်မပို့ပါ";
+"proxyDetail.nat.fullCone" = "Full Cone (NAT1)";
+"proxyDetail.nat.restrictedCone" = "Restricted Cone (NAT2)";
+"proxyDetail.nat.portRestrictedCone" = "Port Restricted Cone (NAT3)";
+"proxyDetail.nat.cone" = "Cone (filtering မသိရ)";
+"proxyDetail.nat.symmetric" = "Symmetric (NAT4)";
+"proxyDetail.nat.unknown" = "မသိရ";
+"proxyDetail.nat.sourceHidden" = "ဤ node ၏ UDP ထပ်ဆင့်ပို့မှုသည် ပြန်စာ၏ ရင်းမြစ်ကို မဖော်ပြသဖြင့် NAT အမျိုးအစားကို မသိနိုင်ပါ";
+"proxyGroups.tips" = "အကြံပြုချက်များ";
+"proxyGroups.tips.tap" = "node တစ်ခုသို့ ပြောင်းရန် ၎င်းကို နှိပ်ပါ။";
+"proxyGroups.tips.longPress" = "node တစ်ခု၏ အသေးစိတ်ကို ဖွင့်ပြီး ၎င်းတစ်ခုတည်းကို စစ်ဆေးရန် ကြာကြာ ဖိထားပါ -";
+
+
 /* Subscriptions */
 "subscriptions.nav.title" = "Config များ";
 "subscriptions.home.addTitle" = "Config ထည့်ရန်";
@@ -493,6 +523,7 @@
 "a11y.proxyGroups.proxy.delay %@" = "%@ မီလီစက္ကန့်";
 "a11y.proxyGroups.proxy.delay.testing" = "ကြန့်ကြာချိန် စစ်ဆေးနေသည်";
 "a11y.proxyGroups.proxy.delay.none" = "ကြန့်ကြာချိန် မစစ်ဆေးရသေးပါ";
+"a11y.proxyGroups.proxy.action.details" = "အသေးစိတ်";
 
 
 /* Accessibility — User Diagnostics */

@@ -74,6 +74,36 @@
 "home.error.dismiss" = "Kapat";
 
 
+/* Proxy detail page (long-press a node on Proxy Groups) */
+"proxyDetail.type" = "Proxy türü";
+"proxyDetail.udp" = "UDP aktarımı";
+"proxyDetail.supported" = "Destekleniyor";
+"proxyDetail.unsupported" = "Desteklenmiyor";
+"proxyDetail.connectHint" = "Testler için VPN bağlı olmalıdır.";
+"proxyDetail.tcpLatency" = "TCP aktarım gecikmesi";
+"proxyDetail.udpLatency" = "UDP aktarım gecikmesi";
+"proxyDetail.exitIP" = "Harici IP adresi";
+"proxyDetail.nat" = "NAT türü";
+"proxyDetail.download" = "İndirme bant genişliği";
+"proxyDetail.upload" = "Yükleme bant genişliği";
+"proxyDetail.test" = "Test";
+"proxyDetail.testing" = "Test ediliyor…";
+"proxyDetail.tapToTest" = "Test etmek için dokunun";
+"proxyDetail.failed" = "Başarısız";
+"proxyDetail.timeout" = "Zaman aşımı";
+"proxyDetail.udpUnsupported" = "Bu düğüm UDP aktarmıyor";
+"proxyDetail.nat.fullCone" = "Tam koni (NAT1)";
+"proxyDetail.nat.restrictedCone" = "Kısıtlı koni (NAT2)";
+"proxyDetail.nat.portRestrictedCone" = "Port kısıtlı koni (NAT3)";
+"proxyDetail.nat.cone" = "Koni (filtreleme bilinmiyor)";
+"proxyDetail.nat.symmetric" = "Simetrik (NAT4)";
+"proxyDetail.nat.unknown" = "Bilinmiyor";
+"proxyDetail.nat.sourceHidden" = "Düğümün UDP aktarımı yanıtların kaynağını bildirmiyor, bu yüzden NAT türü belirlenemiyor";
+"proxyGroups.tips" = "İpuçları";
+"proxyGroups.tips.tap" = "Bir düğüme geçmek için ona dokunun.";
+"proxyGroups.tips.longPress" = "Ayrıntılarını açmak ve yalnızca onu test etmek için bir düğüme uzun basın:";
+
+
 /* Subscriptions */
 "subscriptions.nav.title" = "Yapılandırmalar";
 "subscriptions.home.addTitle" = "Yapılandırma ekle";
@@ -497,6 +527,7 @@
 "a11y.proxyGroups.proxy.delay %@" = "%@ milisaniye";
 "a11y.proxyGroups.proxy.delay.testing" = "Gecikme test ediliyor";
 "a11y.proxyGroups.proxy.delay.none" = "Gecikme test edilmedi";
+"a11y.proxyGroups.proxy.action.details" = "Ayrıntılar";
 
 
 /* Accessibility — User Diagnostics */

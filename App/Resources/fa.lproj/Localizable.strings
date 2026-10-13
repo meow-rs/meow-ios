@@ -76,6 +76,36 @@
 "home.error.dismiss" = "بستن";
 
 
+/* Proxy detail page (long-press a node on Proxy Groups) */
+"proxyDetail.type" = "نوع پروکسی";
+"proxyDetail.udp" = "رله UDP";
+"proxyDetail.supported" = "پشتیبانی می‌شود";
+"proxyDetail.unsupported" = "پشتیبانی نمی‌شود";
+"proxyDetail.connectHint" = "برای تست‌ها باید VPN وصل باشد.";
+"proxyDetail.tcpLatency" = "تأخیر رله TCP";
+"proxyDetail.udpLatency" = "تأخیر رله UDP";
+"proxyDetail.exitIP" = "آدرس IP خارجی";
+"proxyDetail.nat" = "نوع NAT";
+"proxyDetail.download" = "پهنای باند دانلود";
+"proxyDetail.upload" = "پهنای باند آپلود";
+"proxyDetail.test" = "تست";
+"proxyDetail.testing" = "در حال تست…";
+"proxyDetail.tapToTest" = "برای تست ضربه بزنید";
+"proxyDetail.failed" = "ناموفق";
+"proxyDetail.timeout" = "پایان مهلت";
+"proxyDetail.udpUnsupported" = "این گره UDP را رله نمی‌کند";
+"proxyDetail.nat.fullCone" = "مخروطی کامل (NAT1)";
+"proxyDetail.nat.restrictedCone" = "مخروطی محدود (NAT2)";
+"proxyDetail.nat.portRestrictedCone" = "مخروطی با محدودیت پورت (NAT3)";
+"proxyDetail.nat.cone" = "مخروطی (فیلترینگ نامشخص)";
+"proxyDetail.nat.symmetric" = "متقارن (NAT4)";
+"proxyDetail.nat.unknown" = "نامشخص";
+"proxyDetail.nat.sourceHidden" = "رله UDP این گره منبع پاسخ‌ها را گزارش نمی‌کند، بنابراین نوع NAT قابل تشخیص نیست";
+"proxyGroups.tips" = "راهنما";
+"proxyGroups.tips.tap" = "برای جابه‌جایی به یک گره، روی آن ضربه بزنید.";
+"proxyGroups.tips.longPress" = "برای باز کردن جزئیات یک گره و تست جداگانهٔ آن، آن را لمس طولانی کنید:";
+
+
 /* Subscriptions */
 "subscriptions.nav.title" = "پیکربندی‌ها";
 "subscriptions.home.addTitle" = "افزودن پیکربندی";
@@ -499,6 +529,7 @@
 "a11y.proxyGroups.proxy.delay %@" = "%@ میلی‌ثانیه";
 "a11y.proxyGroups.proxy.delay.testing" = "در حال تست تأخیر";
 "a11y.proxyGroups.proxy.delay.none" = "تأخیر تست نشده است";
+"a11y.proxyGroups.proxy.action.details" = "جزئیات";
 
 
 /* Accessibility — User Diagnostics */

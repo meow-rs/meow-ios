@@ -180,6 +180,39 @@ int meow_engine_test_dns(const char *host, int timeout_ms, char *out, int out_ca
 int meow_proxy_select(const char *group, const char *name);
 
 /**
+ * Run one diagnostic probe through the proxy named `proxy` and return its
+ * JSON answer: `udp-latency`, `http-get` (GET of `arg`), `nat`, `download`
+ * or `upload` — see `probe` for each answer's shape. A probe that measured
+ * nothing answers `{"error": …, "code": …}`, with `code` one of `failed`,
+ * `timeout`, `udp-unsupported`, `bad-request`, `no-proxy`,
+ * `engine-stopped` or `cancelled`.
+ *
+ * Blocks the calling thread until the probe ends (20 s at most). `id`
+ * names the probe for `meow_cancel_proxy_probe`. Never returns NULL; free
+ * the answer with `meow_string_free`.
+ *
+ * # Safety
+ * `proxy`, `kind` and `arg` must each be a NUL-terminated UTF-8 C string
+ * or NULL (read as empty).
+ */
+char *meow_probe_proxy(int64_t id, const char *proxy, const char *kind, const char *arg);
+
+/**
+ * End probe `id` early; its `meow_probe_proxy` call returns a `cancelled`
+ * answer. A cancel that arrives before its probe starts still ends it. A
+ * no-op once the probe has ended.
+ */
+void meow_cancel_proxy_probe(int64_t id);
+
+/**
+ * Free a string returned by `meow_probe_proxy`. NULL is a no-op.
+ *
+ * # Safety
+ * `s` must be NULL or a pointer from `meow_probe_proxy`, freed only once.
+ */
+void meow_string_free(char *s);
+
+/**
  * Patch a Clash YAML config for iOS: strips `subscriptions`; keeps the
  * user's `dns` block but pins the fake-ip keys the tunnel requires on top
  * (supported user nameservers stay first, unsupported DHCP resolvers are

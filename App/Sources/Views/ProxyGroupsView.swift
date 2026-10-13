@@ -14,6 +14,8 @@ struct ProxyGroupsView: View {
     @State private var inflightDelay: Set<String> = []
     @State private var inflightGroupTest: Set<String> = []
     @State private var loadError: String?
+    @State private var detailTarget: ProxyDetailTarget?
+    @State private var showingTips = false
 
     var body: some View {
         ScrollView {
@@ -64,6 +66,9 @@ struct ProxyGroupsView: View {
                                 onPingGroup: {
                                     Task { await pingGroup(group) }
                                 },
+                                onOpen: { proxy in
+                                    detailTarget = ProxyDetailTarget(name: proxy, testURL: group.testURL)
+                                },
                             )
                         }
                     }
@@ -77,6 +82,22 @@ struct ProxyGroupsView: View {
         .navigationBarTitleDisplayMode(.inline)
         .task(id: vpnManager.stage) { await refresh() }
         .refreshable { await refresh() }
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button {
+                    showingTips = true
+                } label: {
+                    Label("proxyGroups.tips", systemImage: "info.circle")
+                }
+                .accessibilityIdentifier("proxyGroups.tipsButton")
+            }
+        }
+        .sheet(isPresented: $showingTips) { ProxyGroupsTipsSheet() }
+        .navigationDestination(item: $detailTarget) { target in
+            ProxyDetailView(model: ProxyDetailModel(name: target.name, testURL: target.testURL, api: meowAPI))
+        }
+        // The long press that opens a node's details answers with a tick.
+        .sensoryFeedback(.impact, trigger: detailTarget) { _, target in target != nil }
     }
 
     private var placeholderKey: LocalizedStringKey {
@@ -155,11 +176,9 @@ private extension ProxyGroupsView {
         return error.localizedDescription
     }
 
-    static let delayTestURL = "http://www.gstatic.com/generate_204"
-
     func ping(proxy: String) async {
         inflightDelay.insert(proxy)
-        _ = try? await meowAPI.testDelay(proxy: proxy, url: Self.delayTestURL)
+        _ = try? await meowAPI.testDelay(proxy: proxy, url: MeowAPI.delayTestURL)
         await refresh()
         inflightDelay.remove(proxy)
     }
@@ -174,10 +193,61 @@ private extension ProxyGroupsView {
         inflightGroupTest.insert(group.name)
         let members = Set(group.children.map(\.name))
         inflightDelay.formUnion(members)
-        _ = try? await meowAPI.testGroupDelay(group: group.name, url: Self.delayTestURL)
+        _ = try? await meowAPI.testGroupDelay(group: group.name, url: MeowAPI.delayTestURL)
         await refresh()
         inflightGroupTest.remove(group.name)
         inflightDelay.subtract(members)
+    }
+}
+
+/// The node a detail page is open for, and the URL its group tests with.
+private struct ProxyDetailTarget: Hashable {
+    let name: String
+    let testURL: String?
+}
+
+/// The info button's sheet. A long press is not something anyone finds by
+/// looking, so this says what a node row answers to and what its detail
+/// page offers — the page's own row titles, so the two never drift.
+private struct ProxyGroupsTipsSheet: View {
+    @Environment(\.dismiss) private var dismiss
+
+    private var details: [LocalizedStringResource] {
+        ["proxyDetail.type", "proxyDetail.udp"] + ProxyProbe.allCases.map(\.title)
+    }
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("proxyGroups.tips.tap")
+                    Text("proxyGroups.tips.longPress")
+                        .padding(.top, 6)
+                    ForEach(details, id: \.key) { label in
+                        HStack(alignment: .firstTextBaseline, spacing: 8) {
+                            Text(verbatim: "•")
+                                .accessibilityHidden(true)
+                            Text(label)
+                        }
+                        .padding(.leading, 8)
+                    }
+                    Text("proxyDetail.connectHint")
+                        .font(.footnote)
+                        .foregroundStyle(AppTheme.mutedText)
+                        .padding(.top, 6)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(20)
+            }
+            .navigationTitle("proxyGroups.tips")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("common.close") { dismiss() }
+                }
+            }
+        }
+        .presentationDetents([.medium, .large])
     }
 }
 
@@ -190,6 +260,8 @@ private struct ProxyGroupCard: View {
     var onSelect: (String) -> Void
     var onPing: (String) -> Void
     var onPingGroup: () -> Void
+    /// A long press on a node: open its detail page.
+    var onOpen: (String) -> Void
 
     var body: some View {
         GlassCard {
@@ -290,12 +362,14 @@ private struct ProxyGroupCard: View {
         .frame(minHeight: 44)
         .contentShape(Rectangle())
         .onTapGesture { onSelect(child.name) }
+        .onLongPressGesture { onOpen(child.name) }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(child.name)
         .accessibilityValue(delayValue(for: child))
         .accessibilityAddTraits(child.name == group.now ? [.isButton, .isSelected] : .isButton)
         .accessibilityHint(Text("a11y.proxyGroups.proxy.hint"))
         .accessibilityAction(named: Text("a11y.proxyGroups.proxy.action.ping")) { onPing(child.name) }
+        .accessibilityAction(named: Text("a11y.proxyGroups.proxy.action.details")) { onOpen(child.name) }
         .accessibilityIdentifier("home.proxy.\(group.id.identifierSlug).\(child.name.identifierSlug)")
     }
 

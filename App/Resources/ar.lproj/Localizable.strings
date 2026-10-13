@@ -73,6 +73,36 @@
 "home.error.dismiss" = "تجاهل";
 
 
+/* Proxy detail page (long-press a node on Proxy Groups) */
+"proxyDetail.type" = "نوع البروكسي";
+"proxyDetail.udp" = "ترحيل UDP";
+"proxyDetail.supported" = "مدعوم";
+"proxyDetail.unsupported" = "غير مدعوم";
+"proxyDetail.connectHint" = "تتطلب الاختبارات اتصال VPN.";
+"proxyDetail.tcpLatency" = "زمن استجابة ترحيل TCP";
+"proxyDetail.udpLatency" = "زمن استجابة ترحيل UDP";
+"proxyDetail.exitIP" = "عنوان IP الخارجي";
+"proxyDetail.nat" = "نوع NAT";
+"proxyDetail.download" = "سرعة التنزيل";
+"proxyDetail.upload" = "سرعة الرفع";
+"proxyDetail.test" = "اختبار";
+"proxyDetail.testing" = "جارٍ الاختبار…";
+"proxyDetail.tapToTest" = "انقر للاختبار";
+"proxyDetail.failed" = "فشل";
+"proxyDetail.timeout" = "انتهت المهلة";
+"proxyDetail.udpUnsupported" = "هذه العقدة لا تُرحّل UDP";
+"proxyDetail.nat.fullCone" = "مخروطي كامل (NAT1)";
+"proxyDetail.nat.restrictedCone" = "مخروطي مقيّد (NAT2)";
+"proxyDetail.nat.portRestrictedCone" = "مخروطي مقيّد بالمنفذ (NAT3)";
+"proxyDetail.nat.cone" = "مخروطي (التصفية غير معروفة)";
+"proxyDetail.nat.symmetric" = "متماثل (NAT4)";
+"proxyDetail.nat.unknown" = "غير معروف";
+"proxyDetail.nat.sourceHidden" = "ترحيل UDP لهذه العقدة لا يُبلغ عن مصدر الردود، لذا يتعذّر تحديد نوع NAT";
+"proxyGroups.tips" = "تلميحات";
+"proxyGroups.tips.tap" = "انقر على عقدة للتبديل إليها.";
+"proxyGroups.tips.longPress" = "اضغط مطولًا على عقدة لفتح تفاصيلها واختبارها بمفردها:";
+
+
 /* Subscriptions */
 "subscriptions.nav.title" = "التكوينات";
 "subscriptions.home.addTitle" = "إضافة تكوين";
@@ -496,6 +526,7 @@
 "a11y.proxyGroups.proxy.delay %@" = "%@ مللي ثانية";
 "a11y.proxyGroups.proxy.delay.testing" = "جارٍ اختبار زمن الاستجابة";
 "a11y.proxyGroups.proxy.delay.none" = "لم يُختبر زمن الاستجابة";
+"a11y.proxyGroups.proxy.action.details" = "التفاصيل";
 
 
 /* Accessibility — User Diagnostics */

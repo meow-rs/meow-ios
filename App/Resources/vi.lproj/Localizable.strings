@@ -71,6 +71,36 @@
 "home.error.dismiss" = "Bỏ qua";
 
 
+/* Proxy detail page (long-press a node on Proxy Groups) */
+"proxyDetail.type" = "Loại proxy";
+"proxyDetail.udp" = "Chuyển tiếp UDP";
+"proxyDetail.supported" = "Hỗ trợ";
+"proxyDetail.unsupported" = "Không hỗ trợ";
+"proxyDetail.connectHint" = "Cần kết nối VPN để chạy kiểm tra.";
+"proxyDetail.tcpLatency" = "Độ trễ chuyển tiếp TCP";
+"proxyDetail.udpLatency" = "Độ trễ chuyển tiếp UDP";
+"proxyDetail.exitIP" = "Địa chỉ IP bên ngoài";
+"proxyDetail.nat" = "Loại NAT";
+"proxyDetail.download" = "Băng thông tải xuống";
+"proxyDetail.upload" = "Băng thông tải lên";
+"proxyDetail.test" = "Kiểm tra";
+"proxyDetail.testing" = "Đang kiểm tra…";
+"proxyDetail.tapToTest" = "Chạm để kiểm tra";
+"proxyDetail.failed" = "Thất bại";
+"proxyDetail.timeout" = "Hết giờ";
+"proxyDetail.udpUnsupported" = "Nút này không chuyển tiếp UDP";
+"proxyDetail.nat.fullCone" = "Full Cone (NAT1)";
+"proxyDetail.nat.restrictedCone" = "Restricted Cone (NAT2)";
+"proxyDetail.nat.portRestrictedCone" = "Port Restricted Cone (NAT3)";
+"proxyDetail.nat.cone" = "Cone (chưa rõ cách lọc)";
+"proxyDetail.nat.symmetric" = "Symmetric (NAT4)";
+"proxyDetail.nat.unknown" = "Không rõ";
+"proxyDetail.nat.sourceHidden" = "Bộ chuyển tiếp UDP của nút không báo nguồn gói trả lời nên không xác định được loại NAT";
+"proxyGroups.tips" = "Mẹo sử dụng";
+"proxyGroups.tips.tap" = "Chạm vào một nút để chuyển sang nút đó.";
+"proxyGroups.tips.longPress" = "Nhấn giữ một nút để mở chi tiết và kiểm tra riêng nút đó:";
+
+
 /* Subscriptions */
 "subscriptions.nav.title" = "Cấu hình";
 "subscriptions.home.addTitle" = "Thêm cấu hình";
@@ -494,6 +524,7 @@
 "a11y.proxyGroups.proxy.delay %@" = "%@ mili giây";
 "a11y.proxyGroups.proxy.delay.testing" = "Đang kiểm tra độ trễ";
 "a11y.proxyGroups.proxy.delay.none" = "Chưa kiểm tra độ trễ";
+"a11y.proxyGroups.proxy.action.details" = "Chi tiết";
 
 
 /* Accessibility — User Diagnostics */

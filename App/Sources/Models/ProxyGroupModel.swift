@@ -8,6 +8,10 @@ struct ProxyGroupModel: Identifiable, Equatable {
     let name: String
     let type: String
     let now: String?
+    /// The group's health-check URL, if it has one. The proxy detail page
+    /// tests TCP latency against it, so its result matches the group's own
+    /// checks.
+    let testURL: String?
     let children: [Child]
 
     struct Child: Identifiable, Equatable {
@@ -50,6 +54,7 @@ struct ProxyGroupModel: Identifiable, Equatable {
                     name: group.name,
                     type: group.type,
                     now: group.now,
+                    testURL: group.testUrl,
                     children: children,
                 )
             }

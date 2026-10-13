@@ -10,6 +10,11 @@ struct Proxy: Decodable, Identifiable {
     let now: String?
     let all: [String]?
     let history: [History]?
+    /// Whether the proxy relays UDP. Nil from engines that predate the field.
+    var udp: Bool?
+    /// A group's health-check URL; nil for plain proxies and for groups
+    /// without one.
+    var testUrl: String?
 
     /// `history[].time` is deliberately not decoded: the UI only reads
     /// `delay`, and the engine's `time` wire format changed once already

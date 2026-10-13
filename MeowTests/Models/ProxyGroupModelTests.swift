@@ -83,4 +83,21 @@ struct ProxyGroupModelTests {
         let names = ProxyGroupModel.build(from: dict).map(\.name)
         #expect(names == ["Auto", "Picker"])
     }
+
+    @Test
+    func `a group carries its health-check URL for the proxy detail page`() throws {
+        var auto = proxy("Auto", type: "URLTest", all: ["DIRECT"])
+        auto.testUrl = "https://cp.cloudflare.com/"
+        let dict: [String: Proxy] = [
+            "DIRECT": proxy("DIRECT", type: "Direct"),
+            "Auto": auto,
+            "Picker": proxy("Picker", type: "Selector", all: ["DIRECT"]),
+        ]
+
+        let groups = ProxyGroupModel.build(from: dict)
+        let urlTest = try #require(groups.first { $0.name == "Auto" })
+        let picker = try #require(groups.first { $0.name == "Picker" })
+        #expect(urlTest.testURL == "https://cp.cloudflare.com/")
+        #expect(picker.testURL == nil)
+    }
 }

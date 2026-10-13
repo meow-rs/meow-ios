@@ -23,6 +23,7 @@ mod diagnostics;
 mod engine;
 mod file_log;
 mod logging;
+mod probe;
 pub mod rss;
 mod subscription;
 mod tun2socks;
@@ -284,6 +285,9 @@ pub unsafe extern "C" fn meow_engine_start(config_path: *const c_char) -> c_int 
 #[no_mangle]
 pub extern "C" fn meow_engine_stop() {
     logging::bridge_log("meow_engine_stop");
+    // A probe holds a route snapshot, so it would keep dialing through the
+    // stopped engine's proxies until its own budget ran out.
+    probe::cancel_all();
     engine::stop();
 }
 
@@ -573,6 +577,60 @@ pub unsafe extern "C" fn meow_proxy_select(group: *const c_char, name: *const c_
     } else {
         set_error(format!("'{target}' is not a member of '{group_name}'"));
         -4
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Proxy detail probes
+// ---------------------------------------------------------------------------
+
+/// Run one diagnostic probe through the proxy named `proxy` and return its
+/// JSON answer: `udp-latency`, `http-get` (GET of `arg`), `nat`, `download`
+/// or `upload` — see `probe` for each answer's shape. A probe that measured
+/// nothing answers `{"error": …, "code": …}`, with `code` one of `failed`,
+/// `timeout`, `udp-unsupported`, `bad-request`, `no-proxy`,
+/// `engine-stopped` or `cancelled`.
+///
+/// Blocks the calling thread until the probe ends (20 s at most). `id`
+/// names the probe for `meow_cancel_proxy_probe`. Never returns NULL; free
+/// the answer with `meow_string_free`.
+///
+/// # Safety
+/// `proxy`, `kind` and `arg` must each be a NUL-terminated UTF-8 C string
+/// or NULL (read as empty).
+#[no_mangle]
+pub unsafe extern "C" fn meow_probe_proxy(
+    id: i64,
+    proxy: *const c_char,
+    kind: *const c_char,
+    arg: *const c_char,
+) -> *mut c_char {
+    let proxy = cstr_to_str(proxy).unwrap_or_default();
+    let kind = cstr_to_str(kind).unwrap_or_default();
+    let arg = cstr_to_str(arg).unwrap_or_default();
+    let answer = probe::run_guarded(id, proxy, kind, arg);
+    // serde_json escapes control characters, so the answer has no NUL.
+    CString::new(answer)
+        .unwrap_or_else(|_| CString::new(r#"{"error":"bad answer","code":"failed"}"#).unwrap())
+        .into_raw()
+}
+
+/// End probe `id` early; its `meow_probe_proxy` call returns a `cancelled`
+/// answer. A cancel that arrives before its probe starts still ends it. A
+/// no-op once the probe has ended.
+#[no_mangle]
+pub extern "C" fn meow_cancel_proxy_probe(id: i64) {
+    probe::cancel(id);
+}
+
+/// Free a string returned by `meow_probe_proxy`. NULL is a no-op.
+///
+/// # Safety
+/// `s` must be NULL or a pointer from `meow_probe_proxy`, freed only once.
+#[no_mangle]
+pub unsafe extern "C" fn meow_string_free(s: *mut c_char) {
+    if !s.is_null() {
+        drop(CString::from_raw(s));
     }
 }
 

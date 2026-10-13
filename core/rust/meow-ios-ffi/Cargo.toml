@@ -52,6 +52,11 @@ serde = { version = "1", features = ["derive"] }
 serde_yaml = "0.9"
 serde_json = "1"
 
+# Proxy detail probes (src/probe): HTTP heads and random payloads/ids. Both
+# already in the engine's dependency graph.
+httparse = "1"
+rand = "0.9"
+
 # Low-level
 libc = "0.2"
 anyhow = "1"
@@ -200,6 +205,10 @@ meow-tunnel = { git = "https://github.com/madeye/meow-rs", rev = "a663364469b3b7
 meow-listener = { git = "https://github.com/madeye/meow-rs", rev = "a663364469b3b7dc2b46d2e0f4530e50a54108ee", default-features = false, features = ["listener-mixed"] }
 meow-api = { git = "https://github.com/madeye/meow-rs", rev = "a663364469b3b7dc2b46d2e0f4530e50a54108ee" }
 meow-proxy = { git = "https://github.com/madeye/meow-rs", rev = "a663364469b3b7dc2b46d2e0f4530e50a54108ee" }
+# The probes' `https` requests (src/probe/http.rs) go through the engine's
+# own `TlsLayer`, as its latency test does. Already built for the outbounds
+# via meow-config's `boring-tls`; listed for the direct `use`.
+meow-transport = { git = "https://github.com/madeye/meow-rs", rev = "a663364469b3b7dc2b46d2e0f4530e50a54108ee", default-features = false, features = ["tls"] }
 
 [build-dependencies]
 cbindgen = "0.28"
@@ -212,6 +221,9 @@ cbindgen = "0.28"
 # fixture MMDB directly and prove the env-derived path resolves correctly.
 tempfile = "3"
 maxminddb = "0.27"
+# The probe tests' fake UDP relays implement meow-common's async-trait
+# `ProxyPacketConn`.
+async-trait = "0.1"
 # `test-util` enables `#[tokio::test(start_paused = true)]`, which gives
 # the dial-watchdog regression tests virtual time. Without it the tests
 # would either block on real wall-clock sleeps (slow CI) or shrink their

@@ -14,12 +14,15 @@
 #import <mach/mach.h>
 #import <malloc/malloc.h>
 
-// keep in sync with MeowShared/Sources/MeowIPC/DiagnosticsIPC.swift and
-// MeowShared/Sources/MeowIPC/ProxyControlIPC.swift tag values
+// keep in sync with MeowShared/Sources/MeowIPC/DiagnosticsIPC.swift,
+// MeowShared/Sources/MeowIPC/ProxyControlIPC.swift and
+// MeowShared/Sources/MeowIPC/ProxyProbeIPC.swift tag values
 static const uint8_t kDiagTagCanned     = 0x01;
 static const uint8_t kDiagTagUser       = 0x02;
 static const uint8_t kDiagTagMemory     = 0x03;
 static const uint8_t kProxyTagSelect    = 0x04;
+static const uint8_t kProxyTagProbe     = 0x05;
+static const uint8_t kProxyTagCancel    = 0x06;
 
 static os_log_t gLog;
 
@@ -264,6 +267,60 @@ static os_log_t gLog;
                            ?: [NSData data];
             if (completionHandler) completionHandler(data);
         });
+        return;
+    }
+
+    // Proxy probe (0x05 + JSON): one diagnostic through one named proxy,
+    // for the proxy detail page:
+    //
+    //   { "id": 42, "proxy": "🇭🇰 01", "kind": "nat", "arg": "" }
+    //
+    // The reply is the FFI's JSON answer verbatim. `meow_probe_proxy` blocks
+    // its queue thread until the probe ends (20 s at most); a 0x06 with the
+    // same id ends it early.
+    if (messageData.length >= 2 &&
+        ((const uint8_t *)messageData.bytes)[0] == kProxyTagProbe) {
+        NSData *body = [messageData subdataWithRange:NSMakeRange(1, messageData.length - 1)];
+        NSDictionary *request = [NSJSONSerialization JSONObjectWithData:body options:0 error:nil];
+        if (![request isKindOfClass:[NSDictionary class]]) {
+            if (completionHandler) completionHandler(nil);
+            return;
+        }
+        NSNumber *probeID = request[@"id"];
+        NSString *proxy   = request[@"proxy"];
+        NSString *kind    = request[@"kind"];
+        NSString *arg     = request[@"arg"];
+        if (![probeID isKindOfClass:[NSNumber class]] ||
+            ![proxy   isKindOfClass:[NSString class]] ||
+            ![kind    isKindOfClass:[NSString class]]) {
+            if (completionHandler) completionHandler(nil);
+            return;
+        }
+        if (![arg isKindOfClass:[NSString class]]) arg = @"";
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+            char *answer = meow_probe_proxy(probeID.longLongValue,
+                                            proxy.UTF8String, kind.UTF8String, arg.UTF8String);
+            NSData *data = answer ? [NSData dataWithBytes:answer length:strlen(answer)]
+                                  : [NSData data];
+            meow_string_free(answer);
+            if (completionHandler) completionHandler(data);
+        });
+        return;
+    }
+
+    // Proxy probe cancel (0x06 + JSON): { "id": 42 }. Non-blocking; replies
+    // `{}` so the app's call returns.
+    if (messageData.length >= 2 &&
+        ((const uint8_t *)messageData.bytes)[0] == kProxyTagCancel) {
+        NSData *body = [messageData subdataWithRange:NSMakeRange(1, messageData.length - 1)];
+        NSDictionary *request = [NSJSONSerialization JSONObjectWithData:body options:0 error:nil];
+        NSNumber *probeID = [request isKindOfClass:[NSDictionary class]] ? request[@"id"] : nil;
+        if (![probeID isKindOfClass:[NSNumber class]]) {
+            if (completionHandler) completionHandler(nil);
+            return;
+        }
+        meow_cancel_proxy_probe(probeID.longLongValue);
+        if (completionHandler) completionHandler([@"{}" dataUsingEncoding:NSUTF8StringEncoding]);
         return;
     }
 

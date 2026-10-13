@@ -73,6 +73,36 @@
 "home.error.dismiss" = "Закрыть";
 
 
+/* Proxy detail page (long-press a node on Proxy Groups) */
+"proxyDetail.type" = "Тип прокси";
+"proxyDetail.udp" = "Ретрансляция UDP";
+"proxyDetail.supported" = "Поддерживается";
+"proxyDetail.unsupported" = "Не поддерживается";
+"proxyDetail.connectHint" = "Для тестов нужно подключение VPN.";
+"proxyDetail.tcpLatency" = "Задержка TCP";
+"proxyDetail.udpLatency" = "Задержка UDP";
+"proxyDetail.exitIP" = "Внешний IP-адрес";
+"proxyDetail.nat" = "Тип NAT";
+"proxyDetail.download" = "Скорость загрузки";
+"proxyDetail.upload" = "Скорость отдачи";
+"proxyDetail.test" = "Тест";
+"proxyDetail.testing" = "Проверка…";
+"proxyDetail.tapToTest" = "Нажмите, чтобы проверить";
+"proxyDetail.failed" = "Ошибка";
+"proxyDetail.timeout" = "Тайм-аут";
+"proxyDetail.udpUnsupported" = "Узел не передаёт UDP";
+"proxyDetail.nat.fullCone" = "Полный конус (NAT1)";
+"proxyDetail.nat.restrictedCone" = "Ограниченный конус (NAT2)";
+"proxyDetail.nat.portRestrictedCone" = "Конус с ограничением по порту (NAT3)";
+"proxyDetail.nat.cone" = "Конус (фильтрация неизвестна)";
+"proxyDetail.nat.symmetric" = "Симметричный (NAT4)";
+"proxyDetail.nat.unknown" = "Неизвестно";
+"proxyDetail.nat.sourceHidden" = "UDP-ретрансляция узла не сообщает источник ответов, поэтому тип NAT определить нельзя";
+"proxyGroups.tips" = "Подсказки";
+"proxyGroups.tips.tap" = "Нажмите на узел, чтобы переключиться на него.";
+"proxyGroups.tips.longPress" = "Нажмите и удерживайте узел, чтобы открыть подробности и проверить только его:";
+
+
 /* Subscriptions */
 "subscriptions.nav.title" = "Конфигурации";
 "subscriptions.home.addTitle" = "Добавить конфигурацию";
@@ -496,6 +526,7 @@
 "a11y.proxyGroups.proxy.delay %@" = "Задержка в миллисекундах: %@";
 "a11y.proxyGroups.proxy.delay.testing" = "Проверка задержки";
 "a11y.proxyGroups.proxy.delay.none" = "Задержка не проверялась";
+"a11y.proxyGroups.proxy.action.details" = "Подробности";
 
 
 /* Accessibility — User Diagnostics */

@@ -130,6 +130,17 @@ final class MeowAPI: @unchecked Sendable {
         return try await get("/proxies")
     }
 
+    /// One proxy as the engine describes it (`GET /proxies/{name}`).
+    func getProxy(name: String) async throws -> Proxy {
+        if Self.usesMockTransport {
+            guard let proxy = Self.mockProxies().proxies[name] else {
+                throw MeowAPIError.http(status: 404)
+            }
+            return proxy
+        }
+        return try await get("/proxies/\(name.urlEscaped)")
+    }
+
     func getConfigs() async throws -> ConfigsResponse {
         if Self.usesMockTransport {
             return .init(mode: "rule")
@@ -224,12 +235,15 @@ final class MeowAPI: @unchecked Sendable {
     /// Resolves the running PacketTunnel session, if any. Returns nil
     /// when no manager is loaded or the tunnel isn't connected — the
     /// caller falls back to the loopback path in that case.
-    private static func tunnelSession() async -> NETunnelProviderSession? {
+    static func tunnelSession() async -> NETunnelProviderSession? {
         guard let managers = try? await NETunnelProviderManager.loadAllFromPreferences() else {
             return nil
         }
         return managers.first?.connection as? NETunnelProviderSession
     }
+
+    /// What latency tests fetch when the group names no URL of its own.
+    static let delayTestURL = "http://www.gstatic.com/generate_204"
 
     func testDelay(proxy: String, url: String, timeout: Int = 5000) async throws -> Int {
         if Self.usesMockTransport {

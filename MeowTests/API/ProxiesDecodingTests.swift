@@ -42,4 +42,24 @@ struct ProxiesDecodingTests {
         let resp = try decode(historyJSON: #"{"delay": 42}"#)
         #expect(resp.proxies["node-01"]?.history?.last?.delay == 42)
     }
+
+    /// The proxy detail page shows `udp`, and tests TCP latency against the
+    /// group's `testUrl`; older engines send neither.
+    @Test
+    func `udp and testUrl decode when present and stay nil when absent`() throws {
+        let json = #"""
+        {"proxies": {
+            "node-01": {"name": "node-01", "type": "Trojan", "udp": false, "history": []},
+            "Auto": {"name": "Auto", "type": "URLTest", "udp": true, "now": "node-01",
+                     "all": ["node-01"], "testUrl": "https://cp.cloudflare.com/", "history": []},
+            "old-node": {"name": "old-node", "type": "Shadowsocks", "history": []}
+        }}
+        """#
+        let proxies = try JSONDecoder().decode(ProxiesResponse.self, from: Data(json.utf8)).proxies
+        #expect(proxies["node-01"]?.udp == false)
+        #expect(proxies["node-01"]?.testUrl == nil)
+        #expect(proxies["Auto"]?.udp == true)
+        #expect(proxies["Auto"]?.testUrl == "https://cp.cloudflare.com/")
+        #expect(proxies["old-node"]?.udp == nil)
+    }
 }

@@ -14,18 +14,9 @@ extension MeowAPI {
     }
 
     static func mockProxies() -> ProxiesResponse {
-        let history: [Proxy.History] = [
-            .init(delay: 82),
-            .init(delay: 76),
-        ]
-        let singaporeHistory: [Proxy.History] = [
-            .init(delay: 138),
-            .init(delay: 121),
-        ]
-        let westHistory: [Proxy.History] = [
-            .init(delay: 192),
-            .init(delay: 168),
-        ]
+        let history: [Proxy.History] = [.init(delay: 82), .init(delay: 76)]
+        let singaporeHistory: [Proxy.History] = [.init(delay: 138), .init(delay: 121)]
+        let westHistory: [Proxy.History] = [.init(delay: 192), .init(delay: 168)]
         let proxies: [String: Proxy] = [
             "GLOBAL": .init(
                 name: "GLOBAL",
@@ -47,17 +38,27 @@ extension MeowAPI {
                 now: "Tokyo 01",
                 all: ["Tokyo 01", "Singapore 02", "US West 03"],
                 history: nil,
+                testUrl: "https://cp.cloudflare.com/generate_204",
             ),
-            "Tokyo 01": .init(name: "Tokyo 01", type: "Shadowsocks", now: nil, all: nil, history: history),
+            "Tokyo 01": .init(name: "Tokyo 01", type: "Shadowsocks", now: nil, all: nil, history: history, udp: true),
             "Singapore 02": .init(
                 name: "Singapore 02",
                 type: "VLESS",
                 now: nil,
                 all: nil,
                 history: singaporeHistory,
+                udp: true,
             ),
-            "US West 03": .init(name: "US West 03", type: "Trojan", now: nil, all: nil, history: westHistory),
-            "DIRECT": .init(name: "DIRECT", type: "Direct", now: nil, all: nil, history: nil),
+            // No UDP relay, so its detail page shows the UDP tests as unavailable.
+            "US West 03": .init(
+                name: "US West 03",
+                type: "Trojan",
+                now: nil,
+                all: nil,
+                history: westHistory,
+                udp: false,
+            ),
+            "DIRECT": .init(name: "DIRECT", type: "Direct", now: nil, all: nil, history: nil, udp: true),
         ]
         return .init(proxies: proxies)
     }
