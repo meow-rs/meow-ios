@@ -10,6 +10,13 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
+# An explicit `bash` runs steps with `-eo pipefail`. The implicit default is
+# plain `bash -e`, where a step's status is its pipeline's last command's, so
+# `xcodebuild test … | xcbeautify` passed even when the build or a test failed.
+defaults:
+  run:
+    shell: bash
+
 jobs:
   lint:
     runs-on: macos-14
