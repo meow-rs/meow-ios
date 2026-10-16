@@ -50,7 +50,7 @@ struct IPGeoLookupTests {
     func `a country code reads as its flag and name, the database's own codes as they are`() {
         let english = Locale(identifier: "en_US")
         #expect(regionFlag("CN").unicodeScalars.map(\.value) == [0x1F1E8, 0x1F1F3])
-        #expect(IPGeo(country: "CN").regionLabel(locale: english) == "\(regionFlag("CN")) China")
+        #expect(IPGeo(country: "JP").regionLabel(locale: english) == "\(regionFlag("JP")) Japan")
         #expect(IPGeo(country: "GOOGLE").regionLabel(locale: english) == "GOOGLE")
         #expect(IPGeo().regionLabel(locale: english) == nil)
         #expect(IPGeo(country: "PRIVATE").isPrivate)
