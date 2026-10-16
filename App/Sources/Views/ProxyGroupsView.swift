@@ -304,6 +304,9 @@ private struct ProxyGroupCard: View {
                 .accessibilityAddTraits(.isButton)
                 .accessibilityHint(Text("a11y.proxyGroups.group.hint"))
                 .accessibilityAction(named: Text("a11y.proxyGroups.group.action.testAll")) { onPingGroup() }
+                // On the header alone: set on the whole card it would also
+                // replace every member row's `home.proxy.<group>.<proxy>`.
+                .accessibilityIdentifier("home.group.\(group.id.identifierSlug)")
 
                 if isExpanded {
                     Divider()
@@ -315,7 +318,6 @@ private struct ProxyGroupCard: View {
                 }
             }
         }
-        .accessibilityIdentifier("home.group.\(group.id.identifierSlug)")
     }
 
     /// Lightning-bolt tap target that fires the whole-group delay test;
