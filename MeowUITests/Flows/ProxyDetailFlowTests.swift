@@ -28,9 +28,13 @@ final class ProxyDetailFlowTests: XCTestCase {
         let tcp = meow.app.descendants(matching: .any)["proxyDetail.probe.tcpLatency"]
         XCTAssertTrue(tcp.waitForExistence(timeout: 5))
         tcp.tap()
-        // The mock engine's delay for Tokyo 01.
-        expectation(for: NSPredicate(format: "label CONTAINS %@", "76 ms"), evaluatedWith: tcp)
-        waitForExpectations(timeout: 10)
+        // The mock engine's delay for Tokyo 01. A query rather than
+        // `waitForExpectations`, which Swift 6 rejects here: it sends the
+        // non-Sendable test case to the main actor.
+        let measured = meow.app.descendants(matching: .any).matching(
+            NSPredicate(format: "identifier == %@ AND label CONTAINS %@", "proxyDetail.probe.tcpLatency", "76 ms"),
+        ).firstMatch
+        XCTAssertTrue(measured.waitForExistence(timeout: 10))
     }
 
     func testTipsSheetExplainsTheLongPress() {

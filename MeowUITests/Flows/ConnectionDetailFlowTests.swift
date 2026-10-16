@@ -32,32 +32,31 @@ final class ConnectionDetailFlowTests: XCTestCase {
         meow.app.descendants(matching: .any)["connectionDetail.\(id)"]
     }
 
-    private func waitForLabel(_ element: XCUIElement, containing text: String) {
-        expectation(for: NSPredicate(format: "label CONTAINS %@", text), evaluatedWith: element)
-        waitForExpectations(timeout: 10)
+    /// Waits for the field `id` to read `text`. A query rather than
+    /// `waitForExpectations`, which Swift 6 rejects here: it sends the
+    /// non-Sendable test case to the main actor.
+    private func waitForField(_ meow: MeowApp, _ id: String, containing text: String) -> Bool {
+        meow.app.descendants(matching: .any).matching(
+            NSPredicate(format: "identifier == %@ AND label CONTAINS %@", "connectionDetail.\(id)", text),
+        ).firstMatch.waitForExistence(timeout: 10)
     }
 
     func testDetailShowsTheMatchedRuleAndOpensRulesOnIt() {
         let meow = openConnection("sim-2")
-        let status = field(meow, "status")
-        XCTAssertTrue(status.waitForExistence(timeout: 5))
-        waitForLabel(status, containing: "Active")
-        waitForLabel(field(meow, "remoteIP"), containing: "140.82.112.4")
+        XCTAssertTrue(waitForField(meow, "status", containing: "Active"))
+        XCTAssertTrue(waitForField(meow, "remoteIP", containing: "140.82.112.4"))
 
         // mockRules()[1] is `DOMAIN-SUFFIX,github.com,Proxy`.
-        let rule = field(meow, "rule")
-        waitForLabel(rule, containing: "Rule #2")
-        rule.tap()
+        XCTAssertTrue(waitForField(meow, "rule", containing: "Rule #2"))
+        field(meow, "rule").tap()
         XCTAssertTrue(meow.app.descendants(matching: .any)["rules.row.1"].waitForExistence(timeout: 5))
     }
 
     func testDirectFlowWithoutAnIPFindsItInTheDNSCache() {
         let meow = openConnection("sim-3")
-        let remote = field(meow, "remoteIP")
-        XCTAssertTrue(remote.waitForExistence(timeout: 5))
         // mockDnsResults' answer for apple.com.
-        waitForLabel(remote, containing: "17.253.144.10")
-        XCTAssertTrue(remote.label.contains("From the DNS cache"))
+        XCTAssertTrue(waitForField(meow, "remoteIP", containing: "17.253.144.10"))
+        XCTAssertTrue(field(meow, "remoteIP").label.contains("From the DNS cache"))
         XCTAssertTrue(field(meow, "dnsMode").label.contains("fake-ip"))
     }
 
@@ -70,7 +69,7 @@ final class ConnectionDetailFlowTests: XCTestCase {
         XCTAssertTrue(close.waitForExistence(timeout: 5))
         close.tap()
 
-        waitForLabel(field(meow, "status"), containing: "Closed")
+        XCTAssertTrue(waitForField(meow, "status", containing: "Closed"))
         XCTAssertFalse(menu.exists)
     }
 }
