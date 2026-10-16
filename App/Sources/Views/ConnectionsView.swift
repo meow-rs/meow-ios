@@ -6,6 +6,7 @@ struct ConnectionsView: View {
     @State private var connections: [Connection] = []
     @State private var query: String = ""
     @State private var errorMessage: String?
+    @State private var detailTarget: ConnectionDetailTarget?
 
     var body: some View {
         List {
@@ -45,10 +46,13 @@ struct ConnectionsView: View {
                 .accessibilityIdentifier("connections.toolbar.closeAll")
             }
         }
+        .navigationDestination(item: $detailTarget) { target in
+            ConnectionDetailView(model: ConnectionDetailModel(connection: target.connection, api: api))
+        }
         .task { await poll() }
     }
 
-    // swiftlint:disable:next function_body_length
+    /// Tapping a row opens its detail page, where it can also be closed.
     private func row(for conn: Connection) -> some View {
         let slug = conn.id.identifierSlug
         let host = Self.title(for: conn)
@@ -58,51 +62,48 @@ struct ConnectionsView: View {
         let up = ByteCountFormatter.string(fromByteCount: conn.upload, countStyle: .binary)
         let down = ByteCountFormatter.string(fromByteCount: conn.download, countStyle: .binary)
         let chain = conn.chains.reversed().joined(separator: " › ")
-        return GlassCard {
-            VStack(alignment: .leading, spacing: 4) {
-                HStack {
-                    Text(address)
-                        .font(.headline)
-                        .lineLimit(1)
-                        .accessibilityIdentifier("connections.row.\(slug).host")
-                    Spacer()
-                    Text(network)
-                        .font(.caption.monospaced())
-                        .padding(.horizontal, 6)
-                        .padding(.vertical, 2)
-                        .background(.secondary.opacity(0.15), in: .capsule)
-                }
-                HStack(spacing: 10) {
-                    Label(up, systemImage: "arrow.up")
-                        .accessibilityLabel(Text("a11y.connections.row.upload \(up)"))
-                    Label(down, systemImage: "arrow.down")
-                        .accessibilityLabel(Text("a11y.connections.row.download \(down)"))
-                    Spacer()
-                    Text(chain)
-                        .font(.caption.monospaced())
+        return Button {
+            detailTarget = ConnectionDetailTarget(connection: conn)
+        } label: {
+            GlassCard {
+                VStack(alignment: .leading, spacing: 4) {
+                    HStack {
+                        Text(address)
+                            .font(.headline)
+                            .lineLimit(1)
+                            .accessibilityIdentifier("connections.row.\(slug).host")
+                        Spacer()
+                        Text(network)
+                            .font(.caption.monospaced())
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(.secondary.opacity(0.15), in: .capsule)
+                    }
+                    HStack(spacing: 10) {
+                        Label(up, systemImage: "arrow.up")
+                            .accessibilityLabel(Text("a11y.connections.row.upload \(up)"))
+                        Label(down, systemImage: "arrow.down")
+                            .accessibilityLabel(Text("a11y.connections.row.download \(down)"))
+                        Spacer()
+                        Text(chain)
+                            .font(.caption.monospaced())
+                            .foregroundStyle(.secondary)
+                            .lineLimit(1)
+                            .accessibilityIdentifier("connections.row.\(slug).chain")
+                    }
+                    Text("\(conn.rule) · \(conn.rulePayload)")
+                        .font(.caption2)
                         .foregroundStyle(.secondary)
-                        .lineLimit(1)
-                        .accessibilityIdentifier("connections.row.\(slug).chain")
+                        .accessibilityIdentifier("connections.row.\(slug).rule")
                 }
-                Text("\(conn.rule) · \(conn.rulePayload)")
-                    .font(.caption2)
-                    .foregroundStyle(.secondary)
-                    .accessibilityIdentifier("connections.row.\(slug).rule")
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel(Text("a11y.connections.row.label \(address) \(network) \(up) \(down) \(chain)"))
             }
-            .accessibilityElement(children: .combine)
-            .accessibilityLabel(Text("a11y.connections.row.label \(address) \(network) \(up) \(down) \(chain)"))
         }
+        .buttonStyle(.plain)
         .listRowBackground(Color.clear)
         .listRowSeparator(.hidden)
         .accessibilityIdentifier("connections.row.\(slug)")
-        .swipeActions {
-            Button(role: .destructive) {
-                Task { try? await api.closeConnection(id: conn.id) }
-            } label: {
-                Label("connections.swipe.close", systemImage: "xmark")
-            }
-            .accessibilityIdentifier("connections.row.\(slug).close")
-        }
     }
 
     /// Row title: sniffed host, else destination IP (direct-IP connections
@@ -137,5 +138,19 @@ struct ConnectionsView: View {
             }
             try? await Task.sleep(for: .seconds(1))
         }
+    }
+}
+
+/// Keyed by the connection's id, so a poll that refreshes the list's copy
+/// does not count as a different page.
+private struct ConnectionDetailTarget: Hashable {
+    let connection: Connection
+
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.connection.id == rhs.connection.id
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(connection.id)
     }
 }

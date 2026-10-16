@@ -89,6 +89,8 @@ extension MeowAPI {
                         host: "www.gstatic.com",
                         destinationPort: "443",
                         destinationIP: "142.250.72.14",
+                        sourceIP: "127.0.0.1",
+                        dnsMode: "normal",
                     ),
                     upload: 42496,
                     download: 384_000,
@@ -104,15 +106,41 @@ extension MeowAPI {
                         host: "github.com",
                         destinationPort: "443",
                         destinationIP: "140.82.112.4",
+                        sourceIP: "127.0.0.1",
+                        dnsMode: "normal",
                     ),
                     upload: 18944,
                     download: 96512,
                     start: "2026-06-28T09:41:07Z",
                     chains: ["Auto", "Proxy"],
-                    rule: "MATCH",
-                    rulePayload: "",
+                    // mockRules()[1]: the detail page shows "Rule #2".
+                    rule: "DOMAIN-SUFFIX",
+                    rulePayload: "github.com",
                 ),
+                mockDirectConnection(),
             ],
+        )
+    }
+
+    /// A fake-IP flow dialed DIRECT: the engine reports no destination IP,
+    /// so the detail page finds it in the DNS cache.
+    private static func mockDirectConnection() -> Connection {
+        .init(
+            id: "sim-3",
+            metadata: .init(
+                network: "tcp",
+                host: "apple.com",
+                destinationPort: "443",
+                destinationIP: nil,
+                sourceIP: "127.0.0.1",
+                dnsMode: "fake-ip",
+            ),
+            upload: 3072,
+            download: 15360,
+            start: "2026-06-28T09:41:12Z",
+            chains: ["DIRECT"],
+            rule: "DOMAIN-SUFFIX",
+            rulePayload: "apple.com",
         )
     }
 

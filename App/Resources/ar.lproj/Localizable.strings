@@ -226,8 +226,37 @@
 "connections.empty.title" = "لا توجد اتصالات";
 "connections.empty.description" = "ستظهر حركة البيانات النشطة هنا.";
 "connections.toolbar.closeAll" = "إغلاق الكل";
-"connections.swipe.close" = "إغلاق";
 "connections.nav.titleFormat %lld" = "الاتصالات (%lld)";
+
+
+/* Connection detail */
+"connectionDetail.title" = "الاتصال";
+"connectionDetail.host" = "المضيف";
+"connectionDetail.date" = "الوقت";
+"connectionDetail.status" = "الحالة";
+"connectionDetail.active" = "نشط";
+"connectionDetail.closed" = "مغلق";
+"connectionDetail.lastSeen %@" = "آخر نشاط: %@";
+"connectionDetail.duration" = "المدة";
+"connectionDetail.policy" = "السياسة";
+"connectionDetail.rule" = "القاعدة";
+"connectionDetail.ruleNumber %lld" = "القاعدة رقم %lld";
+"connectionDetail.rule.final" = "لم تطابق أي قاعدة (DIRECT)";
+"connectionDetail.rule.global" = "الوضع الشامل";
+"connectionDetail.rule.direct" = "الوضع المباشر";
+"connectionDetail.network" = "الشبكة";
+"connectionDetail.localIP" = "عنوان IP المحلي";
+"connectionDetail.remoteIP" = "عنوان IP البعيد";
+"connectionDetail.remoteIP.dnsCache" = "من ذاكرة DNS المؤقتة";
+"connectionDetail.remoteIP.byProxy" = "يُحَلّ بواسطة الخادم الوكيل";
+"connectionDetail.remoteRegion" = "منطقة عنوان IP البعيد";
+"connectionDetail.remoteASN" = "رقم ASN لعنوان IP البعيد";
+"connectionDetail.remoteOrg" = "مؤسسة عنوان IP البعيد";
+"connectionDetail.region.private" = "شبكة خاصة";
+"connectionDetail.sniffHost" = "المضيف المُكتشَف";
+"connectionDetail.dnsMode" = "وضع DNS";
+"connectionDetail.close" = "إغلاق الاتصال";
+"connectionDetail.more" = "خيارات إضافية";
 
 
 /* Utility hub */

@@ -22,6 +22,7 @@
 mod diagnostics;
 mod engine;
 mod file_log;
+mod ip_info;
 mod logging;
 mod probe;
 pub mod rss;
@@ -623,15 +624,44 @@ pub extern "C" fn meow_cancel_proxy_probe(id: i64) {
     probe::cancel(id);
 }
 
-/// Free a string returned by `meow_probe_proxy`. NULL is a no-op.
+/// Free a string returned by `meow_probe_proxy` or `meow_lookup_ip`. NULL is
+/// a no-op.
 ///
 /// # Safety
-/// `s` must be NULL or a pointer from `meow_probe_proxy`, freed only once.
+/// `s` must be NULL or a pointer from `meow_probe_proxy` or `meow_lookup_ip`,
+/// freed only once.
 #[no_mangle]
 pub unsafe extern "C" fn meow_string_free(s: *mut c_char) {
     if !s.is_null() {
         drop(CString::from_raw(s));
     }
+}
+
+// ---------------------------------------------------------------------------
+// Connection detail: offline IP lookup
+// ---------------------------------------------------------------------------
+
+/// Where `ip` is registered, from the GeoX databases in `dir` (the App
+/// Group config dir the app stages them into): `{"country": "CN", "asn":
+/// 136958, "org": "…"}`, with each field it has no answer for left out, so
+/// an unparseable IP or a missing database gets `{}`. `country` is an ISO
+/// 3166-1 code or one of the database's own (`GOOGLE`, `PRIVATE`…).
+///
+/// Runs in the calling process and needs no engine. Never returns NULL;
+/// free the answer with `meow_string_free`.
+///
+/// # Safety
+/// `dir` and `ip` must each be a NUL-terminated UTF-8 C string or NULL
+/// (read as empty).
+#[no_mangle]
+pub unsafe extern "C" fn meow_lookup_ip(dir: *const c_char, ip: *const c_char) -> *mut c_char {
+    let dir = cstr_to_str(dir).unwrap_or_default();
+    let ip = cstr_to_str(ip).unwrap_or_default();
+    let answer = ip_info::lookup_json(dir, ip);
+    // serde_json escapes control characters, so the answer has no NUL.
+    CString::new(answer)
+        .unwrap_or_else(|_| CString::new("{}").unwrap())
+        .into_raw()
 }
 
 // ---------------------------------------------------------------------------

@@ -227,8 +227,37 @@
 "connections.empty.title" = "Bağlantı yok";
 "connections.empty.description" = "Etkin trafik burada görünür.";
 "connections.toolbar.closeAll" = "Tümünü kapat";
-"connections.swipe.close" = "Kapat";
 "connections.nav.titleFormat %lld" = "Bağlantılar (%lld)";
+
+
+/* Connection detail */
+"connectionDetail.title" = "Bağlantı";
+"connectionDetail.host" = "Ana makine";
+"connectionDetail.date" = "Tarih";
+"connectionDetail.status" = "Durum";
+"connectionDetail.active" = "Etkin";
+"connectionDetail.closed" = "Kapalı";
+"connectionDetail.lastSeen %@" = "Son görülme: %@";
+"connectionDetail.duration" = "Süre";
+"connectionDetail.policy" = "Politika";
+"connectionDetail.rule" = "Kural";
+"connectionDetail.ruleNumber %lld" = "Kural #%lld";
+"connectionDetail.rule.final" = "Hiçbir kural eşleşmedi (DIRECT)";
+"connectionDetail.rule.global" = "Global mod";
+"connectionDetail.rule.direct" = "Doğrudan mod";
+"connectionDetail.network" = "Ağ";
+"connectionDetail.localIP" = "Yerel IP";
+"connectionDetail.remoteIP" = "Uzak IP";
+"connectionDetail.remoteIP.dnsCache" = "DNS önbelleğinden";
+"connectionDetail.remoteIP.byProxy" = "Proxy sunucusu tarafından çözümlenir";
+"connectionDetail.remoteRegion" = "Uzak IP bölgesi";
+"connectionDetail.remoteASN" = "Uzak IP ASN";
+"connectionDetail.remoteOrg" = "Uzak IP kuruluşu";
+"connectionDetail.region.private" = "Özel ağ";
+"connectionDetail.sniffHost" = "Algılanan ana makine";
+"connectionDetail.dnsMode" = "DNS modu";
+"connectionDetail.close" = "Bağlantıyı kapat";
+"connectionDetail.more" = "Diğer seçenekler";
 
 
 /* Utility hub */

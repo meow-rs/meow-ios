@@ -2020,6 +2020,7 @@ dependencies = [
  "libc",
  "log",
  "lwip",
+ "maxminddb",
  "meow-api",
  "meow-common",
  "meow-config",

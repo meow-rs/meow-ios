@@ -14,15 +14,9 @@ struct ExitIP: Equatable {
     /// The ISP, or failing that the AS organisation.
     let org: String?
 
-    /// The country's flag, from its code's regional indicator symbols.
+    /// The country's flag.
     var flagEmoji: String? {
-        countryCode.map { code in
-            var flag = ""
-            flag.unicodeScalars.append(contentsOf: code.unicodeScalars.compactMap {
-                Unicode.Scalar(0x1F1E6 + $0.value - 0x41)
-            })
-            return flag
-        }
+        countryCode.map(regionFlag)
     }
 
     /// The country in the UI language. The services answer in English
@@ -45,6 +39,16 @@ struct ExitIP: Equatable {
         case let (nil, org): org
         }
     }
+}
+
+/// The flag of the region an upper-case ISO 3166-1 alpha-2 `code` names,
+/// from its letters' regional indicator symbols.
+func regionFlag(_ code: String) -> String {
+    var flag = ""
+    flag.unicodeScalars.append(contentsOf: code.unicodeScalars.compactMap {
+        Unicode.Scalar(0x1F1E6 + $0.value - 0x41)
+    })
+    return flag
 }
 
 struct ExitIPLookupError: Error, LocalizedError, Equatable {

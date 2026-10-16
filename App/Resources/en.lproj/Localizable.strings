@@ -213,8 +213,37 @@
 "connections.empty.title" = "No connections";
 "connections.empty.description" = "Active traffic will appear here.";
 "connections.toolbar.closeAll" = "Close All";
-"connections.swipe.close" = "Close";
 "connections.nav.titleFormat %lld" = "Connections (%lld)";
+
+
+/* Connection detail */
+"connectionDetail.title" = "Connection";
+"connectionDetail.host" = "Host";
+"connectionDetail.date" = "Date";
+"connectionDetail.status" = "Status";
+"connectionDetail.active" = "Active";
+"connectionDetail.closed" = "Closed";
+"connectionDetail.lastSeen %@" = "Last seen %@";
+"connectionDetail.duration" = "Duration";
+"connectionDetail.policy" = "Policy";
+"connectionDetail.rule" = "Rule";
+"connectionDetail.ruleNumber %lld" = "Rule #%lld";
+"connectionDetail.rule.final" = "No rule matched (DIRECT)";
+"connectionDetail.rule.global" = "Global mode";
+"connectionDetail.rule.direct" = "Direct mode";
+"connectionDetail.network" = "Network";
+"connectionDetail.localIP" = "Local IP";
+"connectionDetail.remoteIP" = "Remote IP";
+"connectionDetail.remoteIP.dnsCache" = "From the DNS cache";
+"connectionDetail.remoteIP.byProxy" = "Resolved by the proxy server";
+"connectionDetail.remoteRegion" = "Remote IP Region";
+"connectionDetail.remoteASN" = "Remote IP ASN";
+"connectionDetail.remoteOrg" = "Remote IP Organization";
+"connectionDetail.region.private" = "Private network";
+"connectionDetail.sniffHost" = "Sniffed Host";
+"connectionDetail.dnsMode" = "DNS Mode";
+"connectionDetail.close" = "Close Connection";
+"connectionDetail.more" = "More options";
 
 
 /* Utility hub */

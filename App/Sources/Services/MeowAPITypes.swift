@@ -43,13 +43,13 @@ struct Connection: Decodable, Identifiable {
     let rule: String
     let rulePayload: String
 
-    /// Only the fields ConnectionsView reads — same lesson as
-    /// `Proxy.History.time` above: every extra field decoded here is a way
-    /// for the WHOLE /connections payload to become undecodable. meow-rs
-    /// serializes `Metadata` (meow-common metadata.rs) with ports as JSON
-    /// numbers (`u16`) and `sourceIP`/`destinationIP` as nullable —
+    /// Only the fields ConnectionsView and ConnectionDetailView read — same
+    /// lesson as `Proxy.History.time` above: every extra field decoded here
+    /// is a way for the WHOLE /connections payload to become undecodable.
+    /// meow-rs serializes `Metadata` (meow-common metadata.rs) with ports as
+    /// JSON numbers (`u16`) and `sourceIP`/`destinationIP` as nullable —
     /// decoding the port as `String` blanked the screen the moment any
-    /// connection was active.
+    /// connection was active. Every field here is optional on the wire.
     struct Metadata: Decodable {
         let network: String
         let host: String
@@ -57,14 +57,34 @@ struct Connection: Decodable, Identifiable {
         /// port and mihomo-compat string ports.
         let destinationPort: String
         /// Nullable on the wire (`Option<IpAddr>`); shown when `host` is
-        /// empty (no SNI/DNS sniff, direct-IP connection).
+        /// empty (no SNI/DNS sniff, direct-IP connection). The engine clears
+        /// it when it turns a fake IP back into `host`.
         let destinationIP: String?
+        /// Nullable on the wire. Loopback on iOS: tun2socks hands every flow
+        /// to the engine's local mixed listener.
+        let sourceIP: String?
+        /// `normal`, `fake-ip`, or `mapping` (what configs call redir-host).
+        let dnsMode: String
+        /// The host name sniffed from the first bytes (TLS SNI, HTTP Host);
+        /// empty when sniffing is off or found nothing.
+        let sniffHost: String
 
-        init(network: String, host: String, destinationPort: String, destinationIP: String?) {
+        init(
+            network: String,
+            host: String,
+            destinationPort: String,
+            destinationIP: String?,
+            sourceIP: String? = nil,
+            dnsMode: String = "",
+            sniffHost: String = "",
+        ) {
             self.network = network
             self.host = host
             self.destinationPort = destinationPort
             self.destinationIP = destinationIP
+            self.sourceIP = sourceIP
+            self.dnsMode = dnsMode
+            self.sniffHost = sniffHost
         }
 
         init(from decoder: Decoder) throws {
@@ -72,6 +92,9 @@ struct Connection: Decodable, Identifiable {
             network = try container.decodeIfPresent(String.self, forKey: .network) ?? ""
             host = try container.decodeIfPresent(String.self, forKey: .host) ?? ""
             destinationIP = try container.decodeIfPresent(String.self, forKey: .destinationIP)
+            sourceIP = try? container.decodeIfPresent(String.self, forKey: .sourceIP)
+            dnsMode = (try? container.decodeIfPresent(String.self, forKey: .dnsMode)) ?? ""
+            sniffHost = (try? container.decodeIfPresent(String.self, forKey: .sniffHost)) ?? ""
             if let port = try? container.decode(String.self, forKey: .destinationPort) {
                 destinationPort = port
             } else if let port = try? container.decode(Int.self, forKey: .destinationPort) {
@@ -86,7 +109,7 @@ struct Connection: Decodable, Identifiable {
 /// Top-level so `Connection.Metadata` stays within swiftlint's 1-level
 /// type-nesting budget.
 private enum ConnectionMetadataKeys: String, CodingKey {
-    case network, host, destinationPort, destinationIP
+    case network, host, destinationPort, destinationIP, sourceIP, dnsMode, sniffHost
 }
 
 struct ConnectionsResponse: Decodable {

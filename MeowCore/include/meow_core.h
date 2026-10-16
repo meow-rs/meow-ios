@@ -205,12 +205,30 @@ char *meow_probe_proxy(int64_t id, const char *proxy, const char *kind, const ch
 void meow_cancel_proxy_probe(int64_t id);
 
 /**
- * Free a string returned by `meow_probe_proxy`. NULL is a no-op.
+ * Free a string returned by `meow_probe_proxy` or `meow_lookup_ip`. NULL is
+ * a no-op.
  *
  * # Safety
- * `s` must be NULL or a pointer from `meow_probe_proxy`, freed only once.
+ * `s` must be NULL or a pointer from `meow_probe_proxy` or `meow_lookup_ip`,
+ * freed only once.
  */
 void meow_string_free(char *s);
+
+/**
+ * Where `ip` is registered, from the GeoX databases in `dir` (the App
+ * Group config dir the app stages them into): `{"country": "CN", "asn":
+ * 136958, "org": "…"}`, with each field it has no answer for left out, so
+ * an unparseable IP or a missing database gets `{}`. `country` is an ISO
+ * 3166-1 code or one of the database's own (`GOOGLE`, `PRIVATE`…).
+ *
+ * Runs in the calling process and needs no engine. Never returns NULL;
+ * free the answer with `meow_string_free`.
+ *
+ * # Safety
+ * `dir` and `ip` must each be a NUL-terminated UTF-8 C string or NULL
+ * (read as empty).
+ */
+char *meow_lookup_ip(const char *dir, const char *ip);
 
 /**
  * Patch a Clash YAML config for iOS: strips `subscriptions`; keeps the

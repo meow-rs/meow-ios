@@ -63,6 +63,13 @@ struct ConnectionsTests {
         #expect(conns[1].metadata?.destinationIP == "142.250.72.14")
         #expect(conns[1].metadata?.destinationPort == "8443")
         #expect(conns[1].metadata?.network == "udp")
+        // What the detail page shows besides.
+        #expect(conns[0].metadata?.sourceIP == "172.19.0.1")
+        #expect(conns[0].metadata?.dnsMode == "fake-ip")
+        #expect(conns[0].metadata?.sniffHost == "")
+        #expect(conns[0].startDate == Date(timeIntervalSince1970: 1_783_779_180))
+        #expect(conns[1].metadata?.sourceIP == nil)
+        #expect(conns[1].metadata?.dnsMode == "normal")
     }
 
     private static let engineFixture = """
@@ -143,6 +150,10 @@ struct ConnectionsTests {
         #expect(resp.uploadTotal == 3)
         let conns = try #require(resp.connections)
         #expect(conns[0].metadata?.destinationPort == "443")
+        // Fields the payload leaves out read as unknown.
+        #expect(conns[0].metadata?.sourceIP == nil)
+        #expect(conns[0].metadata?.dnsMode == "")
+        #expect(conns[0].metadata?.sniffHost == "")
         #expect(conns[1].metadata == nil)
     }
 

@@ -226,8 +226,37 @@
 "connections.empty.title" = "Нет соединений";
 "connections.empty.description" = "Здесь появится активный трафик.";
 "connections.toolbar.closeAll" = "Закрыть все";
-"connections.swipe.close" = "Закрыть";
 "connections.nav.titleFormat %lld" = "Соединения (%lld)";
+
+
+/* Connection detail */
+"connectionDetail.title" = "Соединение";
+"connectionDetail.host" = "Хост";
+"connectionDetail.date" = "Время";
+"connectionDetail.status" = "Состояние";
+"connectionDetail.active" = "Активно";
+"connectionDetail.closed" = "Закрыто";
+"connectionDetail.lastSeen %@" = "Последняя активность: %@";
+"connectionDetail.duration" = "Длительность";
+"connectionDetail.policy" = "Политика";
+"connectionDetail.rule" = "Правило";
+"connectionDetail.ruleNumber %lld" = "Правило №%lld";
+"connectionDetail.rule.final" = "Ни одно правило не подошло (DIRECT)";
+"connectionDetail.rule.global" = "Глобальный режим";
+"connectionDetail.rule.direct" = "Прямой режим";
+"connectionDetail.network" = "Сеть";
+"connectionDetail.localIP" = "Локальный IP";
+"connectionDetail.remoteIP" = "Удалённый IP";
+"connectionDetail.remoteIP.dnsCache" = "Из кэша DNS";
+"connectionDetail.remoteIP.byProxy" = "Разрешается прокси-сервером";
+"connectionDetail.remoteRegion" = "Регион удалённого IP";
+"connectionDetail.remoteASN" = "ASN удалённого IP";
+"connectionDetail.remoteOrg" = "Организация удалённого IP";
+"connectionDetail.region.private" = "Частная сеть";
+"connectionDetail.sniffHost" = "Определённый хост";
+"connectionDetail.dnsMode" = "Режим DNS";
+"connectionDetail.close" = "Закрыть соединение";
+"connectionDetail.more" = "Дополнительные действия";
 
 
 /* Utility hub */

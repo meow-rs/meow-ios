@@ -56,6 +56,10 @@ serde_json = "1"
 # already in the engine's dependency graph.
 httparse = "1"
 rand = "0.9"
+# Connection detail IP lookups (src/ip_info.rs) read the staged GeoX
+# databases from the app process. Already in the engine's graph (meow-rules'
+# GEOIP / IP-ASN rules) with `mmap` on, so this adds no code.
+maxminddb = { version = "0.27", features = ["mmap"] }
 
 # Low-level
 libc = "0.2"
@@ -215,12 +219,10 @@ cbindgen = "0.28"
 
 [dev-dependencies]
 # `xdg_home_dir_tests` probes the env-var wire-up via meow-config's GeoIP
-# load path. No FFI-side GeoIP / CN-range table is loaded at runtime any
-# longer — meow's resolver owns the GEOIP rule path — but the test keeps
-# `maxminddb` (dev-only, zero shipping impact) so it can also open the
-# fixture MMDB directly and prove the env-derived path resolves correctly.
+# load path, and also opens the fixture MMDB directly (with `maxminddb`,
+# now a regular dependency for `ip_info`) to prove the env-derived path
+# resolves correctly.
 tempfile = "3"
-maxminddb = "0.27"
 # The probe tests' fake UDP relays implement meow-common's async-trait
 # `ProxyPacketConn`.
 async-trait = "0.1"

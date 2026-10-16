@@ -223,8 +223,37 @@
 "connections.empty.title" = "ချိတ်ဆက်မှု မရှိပါ";
 "connections.empty.description" = "လက်ရှိ ဒေတာ အသွားအလာ ဤနေရာတွင် ပေါ်လာမည်။";
 "connections.toolbar.closeAll" = "အားလုံး ပိတ်ရန်";
-"connections.swipe.close" = "ပိတ်ရန်";
 "connections.nav.titleFormat %lld" = "ချိတ်ဆက်မှုများ (%lld)";
+
+
+/* Connection detail */
+"connectionDetail.title" = "ချိတ်ဆက်မှု";
+"connectionDetail.host" = "Host";
+"connectionDetail.date" = "အချိန်";
+"connectionDetail.status" = "အခြေအနေ";
+"connectionDetail.active" = "လက်ရှိ";
+"connectionDetail.closed" = "ပိတ်ပြီး";
+"connectionDetail.lastSeen %@" = "နောက်ဆုံး တွေ့ချိန်: %@";
+"connectionDetail.duration" = "ကြာချိန်";
+"connectionDetail.policy" = "မူဝါဒ";
+"connectionDetail.rule" = "စည်းမျဉ်း";
+"connectionDetail.ruleNumber %lld" = "စည်းမျဉ်း #%lld";
+"connectionDetail.rule.final" = "ကိုက်ညီသော စည်းမျဉ်း မရှိပါ (DIRECT)";
+"connectionDetail.rule.global" = "Global မုဒ်";
+"connectionDetail.rule.direct" = "တိုက်ရိုက် မုဒ်";
+"connectionDetail.network" = "ကွန်ရက်";
+"connectionDetail.localIP" = "စက်တွင်း IP";
+"connectionDetail.remoteIP" = "အဝေးမှ IP";
+"connectionDetail.remoteIP.dnsCache" = "DNS cache မှ";
+"connectionDetail.remoteIP.byProxy" = "Proxy ဆာဗာက ဖြေရှင်းသည်";
+"connectionDetail.remoteRegion" = "အဝေးမှ IP ဒေသ";
+"connectionDetail.remoteASN" = "အဝေးမှ IP ASN";
+"connectionDetail.remoteOrg" = "အဝေးမှ IP အဖွဲ့အစည်း";
+"connectionDetail.region.private" = "သီးသန့် ကွန်ရက်";
+"connectionDetail.sniffHost" = "ရှာဖွေတွေ့ရှိသော host";
+"connectionDetail.dnsMode" = "DNS မုဒ်";
+"connectionDetail.close" = "ချိတ်ဆက်မှု ပိတ်ရန်";
+"connectionDetail.more" = "နောက်ထပ် ရွေးချယ်မှုများ";
 
 
 /* Utility hub */

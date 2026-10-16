@@ -219,8 +219,37 @@
 "connections.empty.title" = "无连接";
 "connections.empty.description" = "活动流量将显示在此处。";
 "connections.toolbar.closeAll" = "全部关闭";
-"connections.swipe.close" = "关闭";
 "connections.nav.titleFormat %lld" = "连接 (%lld)";
+
+
+/* Connection detail */
+"connectionDetail.title" = "连接详情";
+"connectionDetail.host" = "主机";
+"connectionDetail.date" = "时间";
+"connectionDetail.status" = "状态";
+"connectionDetail.active" = "活跃";
+"connectionDetail.closed" = "已关闭";
+"connectionDetail.lastSeen %@" = "最后活跃 %@";
+"connectionDetail.duration" = "时长";
+"connectionDetail.policy" = "策略";
+"connectionDetail.rule" = "规则";
+"connectionDetail.ruleNumber %lld" = "第 %lld 条规则";
+"connectionDetail.rule.final" = "未匹配任何规则（直连）";
+"connectionDetail.rule.global" = "全局模式";
+"connectionDetail.rule.direct" = "直连模式";
+"connectionDetail.network" = "网络";
+"connectionDetail.localIP" = "本地 IP";
+"connectionDetail.remoteIP" = "远程 IP";
+"connectionDetail.remoteIP.dnsCache" = "来自 DNS 缓存";
+"connectionDetail.remoteIP.byProxy" = "由代理服务器解析";
+"connectionDetail.remoteRegion" = "远程 IP 地区";
+"connectionDetail.remoteASN" = "远程 IP ASN";
+"connectionDetail.remoteOrg" = "远程 IP 组织";
+"connectionDetail.region.private" = "私有网络";
+"connectionDetail.sniffHost" = "嗅探域名";
+"connectionDetail.dnsMode" = "DNS 模式";
+"connectionDetail.close" = "断开连接";
+"connectionDetail.more" = "更多选项";
 
 
 /* Utility hub */

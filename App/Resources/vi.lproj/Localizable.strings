@@ -224,8 +224,37 @@
 "connections.empty.title" = "Không có kết nối";
 "connections.empty.description" = "Lưu lượng đang hoạt động sẽ xuất hiện ở đây.";
 "connections.toolbar.closeAll" = "Đóng tất cả";
-"connections.swipe.close" = "Đóng";
 "connections.nav.titleFormat %lld" = "Kết nối (%lld)";
+
+
+/* Connection detail */
+"connectionDetail.title" = "Kết nối";
+"connectionDetail.host" = "Máy chủ";
+"connectionDetail.date" = "Thời gian";
+"connectionDetail.status" = "Trạng thái";
+"connectionDetail.active" = "Đang mở";
+"connectionDetail.closed" = "Đã đóng";
+"connectionDetail.lastSeen %@" = "Hoạt động lần cuối: %@";
+"connectionDetail.duration" = "Thời lượng";
+"connectionDetail.policy" = "Chính sách";
+"connectionDetail.rule" = "Quy tắc";
+"connectionDetail.ruleNumber %lld" = "Quy tắc #%lld";
+"connectionDetail.rule.final" = "Không khớp quy tắc nào (DIRECT)";
+"connectionDetail.rule.global" = "Chế độ toàn cục";
+"connectionDetail.rule.direct" = "Chế độ trực tiếp";
+"connectionDetail.network" = "Mạng";
+"connectionDetail.localIP" = "IP cục bộ";
+"connectionDetail.remoteIP" = "IP từ xa";
+"connectionDetail.remoteIP.dnsCache" = "Từ bộ nhớ đệm DNS";
+"connectionDetail.remoteIP.byProxy" = "Do máy chủ proxy phân giải";
+"connectionDetail.remoteRegion" = "Khu vực IP từ xa";
+"connectionDetail.remoteASN" = "ASN của IP từ xa";
+"connectionDetail.remoteOrg" = "Tổ chức của IP từ xa";
+"connectionDetail.region.private" = "Mạng riêng";
+"connectionDetail.sniffHost" = "Tên miền dò được";
+"connectionDetail.dnsMode" = "Chế độ DNS";
+"connectionDetail.close" = "Đóng kết nối";
+"connectionDetail.more" = "Tùy chọn khác";
 
 
 /* Utility hub */

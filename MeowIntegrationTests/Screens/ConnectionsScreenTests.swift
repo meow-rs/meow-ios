@@ -3,8 +3,8 @@ import Foundation
 import Testing
 
 /// End-to-end contract for `ConnectionsView` (T4.5) — drives the view
-/// against a stubbed `MeowAPI` and asserts polling cadence, swipe-to-close
-/// dispatch, Close-All dispatch, and search-filter behavior.
+/// against a stubbed `MeowAPI` and asserts polling cadence, the detail
+/// page's close dispatch, Close-All dispatch, and search-filter behavior.
 ///
 /// `.disabled("blocked on T4.5")` — this suite depends on two things the
 /// T4.5 Connections Screen task delivers:
@@ -50,12 +50,12 @@ struct ConnectionsScreenTests {
     @Test(
         .disabled("blocked on T4.5"),
     )
-    func `swipe-to-close row dispatches DELETE /connections/{id}`() {
-        // Seed stub with one `Connection { id: "abc-123", … }`; invoke the
-        // row's swipe-action Close button via the harness; assert a
-        // DELETE to `/connections/abc-123` was captured. Confirms the
-        // id → URL binding in the row's swipeActions block.
-        Issue.record("ConnectionsScreenTests.swipeToClose not implemented — skeleton gated on T4.5")
+    func `detail page's Close Connection dispatches DELETE /connections/{id}`() {
+        // Seed stub with one `Connection { id: "abc-123", … }`; tap its row,
+        // then the detail page's menu → Close Connection via the harness;
+        // assert a DELETE to `/connections/abc-123` was captured. Confirms
+        // the id → URL binding in `ConnectionDetailSources.live`.
+        Issue.record("ConnectionsScreenTests.detailClose not implemented — skeleton gated on T4.5")
     }
 
     @Test(

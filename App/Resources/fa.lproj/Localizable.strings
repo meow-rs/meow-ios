@@ -229,8 +229,37 @@
 "connections.empty.title" = "اتصالی وجود ندارد";
 "connections.empty.description" = "ترافیک فعال اینجا نمایش داده می‌شود.";
 "connections.toolbar.closeAll" = "بستن همه";
-"connections.swipe.close" = "بستن";
 "connections.nav.titleFormat %lld" = "اتصال‌ها (%lld)";
+
+
+/* Connection detail */
+"connectionDetail.title" = "اتصال";
+"connectionDetail.host" = "میزبان";
+"connectionDetail.date" = "زمان";
+"connectionDetail.status" = "وضعیت";
+"connectionDetail.active" = "فعال";
+"connectionDetail.closed" = "بسته‌شده";
+"connectionDetail.lastSeen %@" = "آخرین فعالیت: %@";
+"connectionDetail.duration" = "مدت";
+"connectionDetail.policy" = "سیاست";
+"connectionDetail.rule" = "قانون";
+"connectionDetail.ruleNumber %lld" = "قانون شمارهٔ %lld";
+"connectionDetail.rule.final" = "هیچ قانونی مطابقت نداشت (DIRECT)";
+"connectionDetail.rule.global" = "حالت سراسری";
+"connectionDetail.rule.direct" = "حالت مستقیم";
+"connectionDetail.network" = "شبکه";
+"connectionDetail.localIP" = "IP محلی";
+"connectionDetail.remoteIP" = "IP راه دور";
+"connectionDetail.remoteIP.dnsCache" = "از حافظهٔ نهان DNS";
+"connectionDetail.remoteIP.byProxy" = "توسط سرور پروکسی تفکیک می‌شود";
+"connectionDetail.remoteRegion" = "منطقهٔ IP راه دور";
+"connectionDetail.remoteASN" = "ASN مربوط به IP راه دور";
+"connectionDetail.remoteOrg" = "سازمان IP راه دور";
+"connectionDetail.region.private" = "شبکهٔ خصوصی";
+"connectionDetail.sniffHost" = "میزبان شناسایی‌شده";
+"connectionDetail.dnsMode" = "حالت DNS";
+"connectionDetail.close" = "بستن اتصال";
+"connectionDetail.more" = "گزینه‌های بیشتر";
 
 
 /* Utility hub */

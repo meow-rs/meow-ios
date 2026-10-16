@@ -11,14 +11,28 @@ struct RulesView: View {
     @State private var rules: [Rule] = []
     @State private var errorMessage: String?
     @State private var presentingEditor = false
+    /// A rule to scroll to and mark, set when a connection's detail page
+    /// opens the list on the rule that matched it.
+    private let focusIndex: Int?
+
+    init(focusIndex: Int? = nil) {
+        self.focusIndex = focusIndex
+    }
 
     var body: some View {
-        List {
-            ForEach(Array(rules.enumerated()), id: \.element.id) { index, rule in
-                row(for: rule, index: index)
+        ScrollViewReader { proxy in
+            List {
+                ForEach(Array(rules.enumerated()), id: \.element.id) { index, rule in
+                    row(for: rule, index: index)
+                }
+            }
+            .listStyle(.plain)
+            .onChange(of: rules.count) {
+                if let focusIndex, rules.indices.contains(focusIndex) {
+                    proxy.scrollTo(rules[focusIndex].id, anchor: .center)
+                }
             }
         }
-        .listStyle(.plain)
         .overlay {
             if rules.isEmpty {
                 ContentUnavailableView(
@@ -83,6 +97,12 @@ struct RulesView: View {
                     .foregroundStyle(.secondary)
                     .lineLimit(1)
                     .accessibilityIdentifier("rules.row.\(index).proxy")
+            }
+        }
+        .overlay {
+            if index == focusIndex {
+                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                    .strokeBorder(AppTheme.accent, lineWidth: 2)
             }
         }
         .listRowBackground(Color.clear)
