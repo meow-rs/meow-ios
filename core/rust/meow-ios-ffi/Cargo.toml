@@ -71,6 +71,11 @@ lwip = "0.3"
 # to a release tag normally; bump deliberately rather than tracking main.
 # Each crate is a workspace member of meow-rs/meow-rs.
 #
+# TEMPORARY, do not merge as is: rev 94187304 is v0.23.0 plus meow-rs#759,
+# the iOS/tvOS build fix (kcptun's `set_tclass_v6` is not in socket2 on
+# Apple mobile targets; 0.22.0 and 0.23.0 do not compile for them). Repin to
+# the release or main commit that carries #759.
+#
 # Tag v0.23.0 (d32a8ce8, 2026-10-16). What the a663364 → v0.23.0 range
 # changes for this crate:
 # - Embedder API (engine.rs): a routing install is one `update_routing`
@@ -207,7 +212,7 @@ lwip = "0.3"
 # VMess AEAD interop fix. meow-dns runs in fake-ip mode: the FFI config
 # parser pins `enhanced-mode: fake-ip` with `fake-ip-range: 28.0.0.0/8`
 # (the 2026-07-17 redir-host/DoT switch was reverted in PR #321).
-meow-common = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.23.0" }
+meow-common = { git = "https://github.com/meow-rs/meow-rs", rev = "94187304f6f089476345fde56ec217da0c2af561" }
 # `boring-tls` activates BoringSSL-backed TLS in meow-transport so ECH
 # (RFC 9460 SVCB / HTTPS ECHConfigList) and uTLS fingerprinting work for
 # proxy outbound. Without it, any proxy entry with `ech-opts:` set is
@@ -232,16 +237,16 @@ meow-common = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.23.0" }
 # the crate doesn't compile for tvOS at all. Fixed upstream in
 # shadowsocks/shadowsocks-rust#2162; see the `[patch.crates-io]` note below
 # for why we still carry a git pin.
-meow-config = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.23.0", features = ["boring-tls", "anytls"] }
-meow-dns = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.23.0" }
-meow-tunnel = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.23.0" }
-meow-listener = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.23.0", default-features = false, features = ["listener-mixed"] }
-meow-api = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.23.0" }
-meow-proxy = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.23.0" }
+meow-config = { git = "https://github.com/meow-rs/meow-rs", rev = "94187304f6f089476345fde56ec217da0c2af561", features = ["boring-tls", "anytls"] }
+meow-dns = { git = "https://github.com/meow-rs/meow-rs", rev = "94187304f6f089476345fde56ec217da0c2af561" }
+meow-tunnel = { git = "https://github.com/meow-rs/meow-rs", rev = "94187304f6f089476345fde56ec217da0c2af561" }
+meow-listener = { git = "https://github.com/meow-rs/meow-rs", rev = "94187304f6f089476345fde56ec217da0c2af561", default-features = false, features = ["listener-mixed"] }
+meow-api = { git = "https://github.com/meow-rs/meow-rs", rev = "94187304f6f089476345fde56ec217da0c2af561" }
+meow-proxy = { git = "https://github.com/meow-rs/meow-rs", rev = "94187304f6f089476345fde56ec217da0c2af561" }
 # The probes' `https` requests (src/probe/http.rs) go through the engine's
 # own `TlsLayer`, as its latency test does. Already built for the outbounds
 # via meow-config's `boring-tls`; listed for the direct `use`.
-meow-transport = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.23.0", default-features = false, features = ["tls"] }
+meow-transport = { git = "https://github.com/meow-rs/meow-rs", rev = "94187304f6f089476345fde56ec217da0c2af561", default-features = false, features = ["tls"] }
 
 [build-dependencies]
 cbindgen = "0.28"
