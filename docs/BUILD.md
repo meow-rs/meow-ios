@@ -72,7 +72,7 @@ will be silently overwritten.
 
 There is no Go toolchain. The NetworkExtension memory ceiling (50 MB resident
 on iOS) forbids the Go runtime, so the proxy engine is
-[`meow-rs`](https://github.com/madeye/meow-rs) embedded into our FFI
+[`meow-rs`](https://github.com/meow-rs/meow-rs) embedded into our FFI
 crate as a Cargo dependency. Only one static library ships.
 
 `scripts/build-rust.sh` produces `MeowCore/Frameworks/MeowCore.xcframework`
@@ -84,14 +84,6 @@ so source compiles before the `.a` exists, but link fails without it.
 The XCFramework carries four slices — `aarch64-apple-ios{,-sim}` and
 `aarch64-apple-tvos{,-sim}` — built in that order, so a break on the newer
 tvOS pair can't silently cost the shipping iOS platform.
-
-The tvOS slices carry two environment-level workarounds for boring-sys 4.x
-(which predates tvOS): `BORING_BSSL_RUST_CPPLIB=c++` so the link asks for
-libc++ rather than a libstdc++ Apple SDKs don't ship, and a simulator-only
-CMake toolchain file (`core/rust/meow-ios-ffi/cmake/tvos-simulator.cmake`)
-so BoringSSL is configured against the simulator SDK instead of CMake's
-device default. Both live in `scripts/build-rust.sh` with the exit condition
-(boring-sys ≥ 5 in the tree) spelled out next to them.
 
 ```sh
 ./scripts/build-rust.sh   # → MeowCore.xcframework
@@ -110,10 +102,11 @@ device default. Both live in `scripts/build-rust.sh` with the exit condition
   QA's CI size gate.
 - `cbindgen` emits `meow_core.h` from `build.rs` on every build.
 - meow-rs crates pulled as git deps (`meow-common`, `meow-config`,
-  `meow-dns`, `meow-tunnel`, `meow-api`, `meow-proxy`) from
-  `github.com/madeye/meow-rs`. The FFI crate owns the tokio runtime,
-  hosts the meow-rs engine directly, and dispatches tun2socks flows
-  in-process through `meow_tunnel::tcp::handle_tcp` — no SOCKS5 loopback.
+  `meow-dns`, `meow-tunnel`, `meow-listener`, `meow-api`, `meow-proxy`,
+  `meow-transport`) from `github.com/meow-rs/meow-rs`, pinned to a release
+  tag. The FFI crate owns the tokio runtime, hosts the meow-rs engine
+  directly, and dispatches tun2socks flows in-process through
+  `meow_tunnel::tcp::handle_tcp` — no SOCKS5 loopback.
 
 ## Running locally
 

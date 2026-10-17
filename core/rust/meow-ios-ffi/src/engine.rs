@@ -17,10 +17,16 @@ use anyhow::{Context, Result};
 use dashmap::DashMap;
 use meow_api::log_stream::{LogBroadcastLayer, LogMessage};
 use meow_api::ApiServer;
+use meow_common::TunnelMode;
+use meow_config::proxy_provider::ProxyProvider;
+use meow_config::proxy_provider_refresh::ProxyProviderRefreshSupervisor;
 use meow_config::raw::RawConfig;
-use meow_config::{load_config, load_config_from_str, Config};
+use meow_config::rule_provider::RuleProvider;
+use meow_config::rule_provider_refresh::RefreshSupervisor;
+use meow_config::{load_config, load_config_from_str, Config, RebuildResult};
 use meow_dns::DnsServer;
 use meow_listener::{MixedListener, SnifferRuntime};
+use meow_proxy::dialer::ProxyRegistry;
 use meow_tunnel::{Statistics, Tunnel};
 use parking_lot::{Mutex, RwLock};
 use std::collections::HashMap;
@@ -48,24 +54,37 @@ fn bind_socket_addr(listen: &str, port: u16) -> Result<SocketAddr> {
 
 struct EngineState {
     stats: Arc<Statistics>,
-    tunnel: Tunnel,
+    live: LiveConfig,
     mixed_dial_addr: Option<SocketAddr>,
     dns_dial_addr: Option<SocketAddr>,
-    /// Shared with the REST `ApiServer` (it receives a clone of this Arc) so
-    /// a hot-reload can refresh what `GET /configs` reports and what a later
-    /// REST `PUT /configs` diffs against.
-    raw_config: Arc<RwLock<RawConfig>>,
     api_task: Option<JoinHandle<()>>,
     listener_tasks: Vec<JoinHandle<()>>,
+}
+
+/// The running config a hot reload commits into. Every `Arc` here is shared
+/// with the REST `ApiServer`, so `reload` and a REST mutation update the same
+/// registries — what `GET /configs` and `GET /providers/*` report is what
+/// routes. The refresh supervisors' loops hold the registry `Arc`s they were
+/// spawned with, so a commit swaps the registries' *contents*, never the
+/// `Arc`s themselves.
+#[derive(Clone)]
+struct LiveConfig {
+    tunnel: Tunnel,
+    raw_config: Arc<RwLock<RawConfig>>,
+    proxy_providers: Arc<DashMap<String, Arc<ProxyProvider>>>,
+    rule_providers: Arc<RwLock<HashMap<String, Arc<RuleProvider>>>>,
+    rule_provider_refresh: Arc<RefreshSupervisor>,
+    proxy_provider_refresh: Arc<ProxyProviderRefreshSupervisor>,
+    /// Process-lifetime registry provider nodes resolve `dialer-proxy`
+    /// against (meow-rs #489). Installed into the tunnel once at start; a
+    /// reload must rebuild against this same handle, because the tunnel only
+    /// ever republishes the route map into the one it was given.
+    provider_dialer_registry: ProxyRegistry,
 }
 
 fn slot() -> &'static Mutex<Option<EngineState>> {
     static S: OnceLock<Mutex<Option<EngineState>>> = OnceLock::new();
     S.get_or_init(|| Mutex::new(None))
-}
-
-fn install_tls_provider() {
-    let _ = rustls::crypto::ring::default_provider().install_default();
 }
 
 /// Normalize the effective YAML before `load_config`: iOS owns exactly one
@@ -218,6 +237,31 @@ fn load_stripped_config(config_path: &str) -> Result<Config> {
     Ok(cfg)
 }
 
+/// Reload-side twin of `load_stripped_config`: the same strip, parsed into a
+/// `RawConfig` but not built. `reload` rebuilds against the live provider
+/// set, so a full `load_config` here would construct (and fetch) a second
+/// provider generation only to throw it away. No temp file either — the
+/// provider cache dir comes from `config_path` itself.
+fn load_stripped_raw_config(config_path: &str) -> Result<RawConfig> {
+    let original = std::fs::read_to_string(config_path)
+        .with_context(|| format!("reading config from {config_path}"))?;
+    let stripped = prepare_ios_config(&original)?;
+    meow_config::parse_raw_yaml(&stripped).context("parsing stripped config")
+}
+
+/// `mode:` the way `meow_config::build_config` reads it: unset is `rule`, an
+/// unknown value falls back to `rule` with a warning, or fails under `strict`.
+fn raw_mode(raw: &RawConfig) -> Result<TunnelMode> {
+    match raw.mode.as_deref().unwrap_or("rule").parse::<TunnelMode>() {
+        Ok(mode) => Ok(mode),
+        Err(e) if raw.strict.unwrap_or(false) => anyhow::bail!("mode: {e} (strict mode)"),
+        Err(e) => {
+            tracing::warn!("mode: {e}; defaulting to 'rule'");
+            Ok(TunnelMode::Rule)
+        }
+    }
+}
+
 /// Same strip as `load_stripped_config` but for in-memory YAML (editor
 /// validation). No cache_dir involved, so we skip the temp-file dance.
 ///
@@ -320,7 +364,6 @@ pub fn start(config_path: &str) -> Result<()> {
         return Ok(());
     }
 
-    install_tls_provider();
     install_tracing_subscriber();
 
     let cfg = load_stripped_config(config_path)?;
@@ -354,10 +397,17 @@ pub fn start(config_path: &str) -> Result<()> {
         ),
     ));
 
-    let tunnel = Tunnel::new(resolver.clone());
+    // Same order as meow-app's startup: share the config's resolver slot,
+    // install the provider dialer registry before the first routing install
+    // (provider nodes resolve `dialer-proxy` against it, and the tunnel only
+    // publishes into a registry it already holds), then publish proxies and
+    // rules in one step. The route table keeps `dialer_registry` alive for
+    // the inline proxies' own `dialer-proxy` chains (meow-rs #533).
+    let tunnel = Tunnel::new_with_slot(Arc::clone(&cfg.dns.resolver_slot));
+    tunnel.set_dialer_registry(cfg.provider_dialer_registry.clone());
     tunnel.set_mode(cfg.general.mode);
-    tunnel.update_rules(cfg.rules);
-    tunnel.update_proxies(cfg.proxies);
+    tunnel.set_connection_notes(cfg.general.connection_notes);
+    tunnel.update_routing(cfg.proxies, cfg.rules, cfg.dialer_registry);
 
     // Start the tunnel's background tasks — the UDP NAT sweeper, which evicts
     // sessions idle > DEFAULT_UDP_IDLE (60 s) every DEFAULT_SWEEP_INTERVAL
@@ -416,10 +466,11 @@ pub fn start(config_path: &str) -> Result<()> {
     // and resolver want is already on disk before the engine starts. The
     // upstream fetcher checks `meow_config::default_geosite_path()`
     // (`geosite.dat`) — which never exists in our layout, since we ship
-    // `geosite.mrs` — and would otherwise spawn `reqwest`/`hyper`/
-    // `tokio-rustls`/`aws-lc-rs` plus buffer a multi-MB download body in
-    // process, blowing past the 50 MB NE jetsam cap within ~0.6 s of
-    // launch (per-process-limit kill, observed via `idevicesyslog`).
+    // `geosite.mrs` — and would otherwise buffer a multi-MB download body
+    // in process (`meow_config::internal_http::fetch` returns the whole
+    // body as a `Vec<u8>`). The earlier reqwest-based fetcher did the same
+    // and blew past the 50 MB NE jetsam cap within ~0.6 s of launch
+    // (per-process-limit kill, observed via `idevicesyslog`).
     //
     // If a future build ever stops bundling one of the DBs, the FFI must
     // re-introduce a fetch — but in a memory-bounded form (streamed to
@@ -471,17 +522,36 @@ pub fn start(config_path: &str) -> Result<()> {
         }
     }
 
-    // `ApiServer::new` grew from 5 to 9 parameters to serve the new
-    // `/providers/*`, `/rules`, `/listeners`, and `/logs` routes (and a 10th,
-    // `external_ui`, in 0.16.0). Build the required shapes from the loaded
-    // Config.
-    let proxy_providers = {
-        let map: DashMap<_, _> = cfg.proxy_providers.into_iter().collect();
-        Arc::new(map)
+    // Provider registries plus their `interval:` refresh supervisors, shared
+    // with the REST `ApiServer` and with `reload` (see `LiveConfig`).
+    let proxy_providers: Arc<DashMap<_, _>> = Arc::new(cfg.proxy_providers.into_iter().collect());
+    let rule_providers = Arc::new(RwLock::new(cfg.rule_providers));
+    let rule_provider_refresh = Arc::new(RefreshSupervisor::default());
+    let proxy_provider_refresh = Arc::new(ProxyProviderRefreshSupervisor::default());
+    {
+        // Both supervisors and the deferred fetches `tokio::spawn`; see the
+        // runtime-enter note on the background tasks above.
+        let _enter = crate::get_engine_runtime().enter();
+        // Providers are cache-first since meow-rs 0.23 (#748/#750): a load
+        // serves the on-disk copy and leaves the remote revalidation owed.
+        // Rule providers get that fetch from `reconcile`; proxy providers
+        // (and any whose `proxy:` could not resolve before the routing
+        // install above) from `spawn_deferred_initial_fetches`. Skipping
+        // either would pin a provider to its startup cache until the next
+        // `interval:` tick, or forever without one.
+        rule_provider_refresh.reconcile(&rule_providers);
+        proxy_provider_refresh.reconcile(&proxy_providers, cfg.raw.proxy_providers.as_ref());
+        meow_config::proxy_provider::spawn_deferred_initial_fetches(&proxy_providers);
+    }
+    let live = LiveConfig {
+        tunnel: tunnel.clone(),
+        raw_config,
+        proxy_providers,
+        rule_providers,
+        rule_provider_refresh,
+        proxy_provider_refresh,
+        provider_dialer_registry: cfg.provider_dialer_registry,
     };
-    let rule_providers = Arc::new(RwLock::new(
-        cfg.rule_providers.into_iter().collect::<HashMap<_, _>>(),
-    ));
     let listeners = cfg.listeners.named.clone();
     let log_tx = log_broadcast_tx().clone();
 
@@ -494,15 +564,24 @@ pub fn start(config_path: &str) -> Result<()> {
             tunnel.clone(),
             addr,
             cfg.api.secret.clone(),
-            config_path.to_string(),
-            raw_config.clone(),
+            Some(config_path.to_string()),
+            Arc::clone(&live.raw_config),
             log_tx,
-            proxy_providers,
-            rule_providers,
+            Arc::clone(&live.proxy_providers),
+            Arc::clone(&live.rule_providers),
+            Arc::clone(&live.rule_provider_refresh),
+            Arc::clone(&live.proxy_provider_refresh),
             listeners,
             // external_ui (0.16.0): directory for the /ui web frontend.
             // The NE serves no web UI — the iOS app is the frontend.
             None,
+            // No DNS server handle: the DNS listener task is owned by
+            // `listener_tasks` (engine runtime, aborted by `stop`). The host
+            // app's only config mutation is `PATCH /configs` with `mode`, never
+            // a config body that would make meow-api swap this listener's
+            // resolver or rebind it.
+            Arc::new(RwLock::new(None)),
+            live.provider_dialer_registry.clone(),
         );
         // Spawn on the dedicated API runtime, NOT the engine runtime: a burst
         // of REST calls (e.g. the host app's per-stage `/proxies` + `/configs`
@@ -522,17 +601,17 @@ pub fn start(config_path: &str) -> Result<()> {
 
     *slot().lock() = Some(EngineState {
         stats,
-        tunnel,
+        live,
         mixed_dial_addr,
         dns_dial_addr,
-        raw_config,
         api_task,
         listener_tasks,
     });
     Ok(())
 }
 
-/// Hot-reload mode/rules/proxies from `config_path` into the running engine.
+/// Hot-reload mode/rules/proxies/providers from `config_path` into the
+/// running engine.
 ///
 /// Unlike `stop` → `start`, existing flows are NOT closed: in-flight
 /// connection handlers hold `Arc` clones of the old route table and drain
@@ -540,21 +619,101 @@ pub fn start(config_path: &str) -> Result<()> {
 /// disruption. Selector-group state resets (the proxies map is rebuilt), so
 /// the host app must replay persisted selections after a successful reload.
 ///
+/// This is the commit `PUT /configs` performs in meow-api, minus its DNS/TUN
+/// reconcile, and it takes the same `CONFIG_MUTATION` lane so it cannot
+/// interleave with a REST mutation. The rebuild reuses the live proxy
+/// providers for unchanged declarations (no refetch) and binds new ones to
+/// the start-time `provider_dialer_registry`; then the provider sets are
+/// committed into the registries the REST API serves, with their refresh
+/// loops reconciled. A fresh `load_config` here instead would bind the
+/// reloaded provider nodes to a registry the tunnel never publishes into, so
+/// their `dialer-proxy` chains would fail closed, and `/providers/*` would
+/// keep reporting the start-time providers.
+///
+/// A provider the new config declares (or redefines) is committed empty and
+/// filled by a detached initial fetch, cache first, so its groups have no
+/// members until that lands. Upstream keeps that fetch out of the
+/// `CONFIG_MUTATION` lane on purpose, so one slow feed cannot stall every
+/// other commit.
+///
 /// Deliberately NOT reloaded (they are bound once at `start`): listeners,
 /// the DNS server/resolver, fake-IP, and the REST controller itself. Changes
-/// to those still require a stop→start. Proxy/rule *providers* are also
-/// start-time state here; a reload swaps only the inline rules/proxies.
+/// to those still require a stop→start.
 pub fn reload(config_path: &str) -> Result<()> {
-    // Load + validate BEFORE touching the running engine: on a parse or
-    // semantic error the old config keeps running untouched.
-    let cfg = load_stripped_config(config_path)?;
+    // Parse BEFORE touching the running engine; the rebuild below is the
+    // remaining validation. On any error the old config keeps running
+    // untouched.
+    let mut raw = load_stripped_raw_config(config_path)?;
+    let strict = raw.strict.unwrap_or(false);
+    let mode = raw_mode(&raw)?;
+    let connection_notes = raw.connection_notes.unwrap_or(false);
+    let cache_dir = meow_config::resource_cache_dir_for_config_path(config_path);
+    // Clone the handles out instead of holding the slot lock: the rebuild
+    // can fetch rule providers, and `traffic()` polls this lock every second.
+    let live = slot()
+        .lock()
+        .as_ref()
+        .map(|s| s.live.clone())
+        .context("engine not running")?;
 
-    let guard = slot().lock();
-    let state = guard.as_ref().context("engine not running")?;
-    state.tunnel.set_mode(cfg.general.mode);
-    state.tunnel.update_proxies(cfg.proxies);
-    state.tunnel.update_rules(cfg.rules);
-    *state.raw_config.write() = cfg.raw;
+    crate::get_engine_runtime().block_on(async move {
+        // `build_config` does this on the start path; the rebuild expects
+        // DNS-sourced ECH already inlined into `raw`.
+        if let Some(proxies) = raw.proxies.as_mut() {
+            meow_config::ech_dns::preresolve_ech(proxies, strict)
+                .await
+                .map_err(|e| anyhow::anyhow!("{e} (strict mode)"))?;
+        }
+
+        let _lane = meow_api::routes::CONFIG_MUTATION.lock().await;
+        let providers: HashMap<String, Arc<ProxyProvider>> = live
+            .proxy_providers
+            .iter()
+            .map(|entry| (entry.key().clone(), Arc::clone(entry.value())))
+            .collect();
+        let resolver_slot = live.tunnel.resolver_slot();
+        let registry = live.provider_dialer_registry.clone();
+        // Blocking pool, as meow-api does: the rebuild loads rule providers
+        // synchronously.
+        let (raw, rebuilt) = tokio::task::spawn_blocking(move || {
+            let rebuilt = meow_config::rebuild_from_raw_runtime(
+                &raw,
+                Some(&resolver_slot),
+                &providers,
+                Some(&cache_dir),
+                &registry,
+            );
+            (raw, rebuilt)
+        })
+        .await
+        .context("config rebuild task failed")?;
+        let RebuildResult {
+            proxies,
+            rules,
+            dialer_registry,
+            rule_providers,
+            proxy_providers,
+            ..
+        } = rebuilt?;
+
+        live.tunnel.set_mode(mode);
+        live.tunnel.set_connection_notes(connection_notes);
+        live.tunnel.update_routing(proxies, rules, dialer_registry);
+        // Commit point: the routed groups and rules already reference these
+        // provider objects. Both calls also reconcile the refresh loops and
+        // start any fetch a new provider owes.
+        live.rule_provider_refresh
+            .commit_registry(&live.rule_providers, rule_providers);
+        meow_api::routes::commit_proxy_providers(
+            &live.proxy_providers,
+            &proxy_providers,
+            strict,
+            raw.proxy_providers.as_ref(),
+            &live.proxy_provider_refresh,
+        );
+        *live.raw_config.write() = raw;
+        anyhow::Ok(())
+    })?;
     info!("meow-rs engine config hot-reloaded");
     Ok(())
 }
@@ -598,7 +757,7 @@ pub fn traffic() -> (i64, i64) {
 }
 
 pub fn tunnel() -> Option<Tunnel> {
-    slot().lock().as_ref().map(|s| s.tunnel.clone())
+    slot().lock().as_ref().map(|s| s.live.tunnel.clone())
 }
 
 pub fn mixed_dial_addr() -> Option<SocketAddr> {
@@ -610,7 +769,6 @@ pub fn dns_dial_addr() -> Option<SocketAddr> {
 }
 
 pub fn validate(yaml: &str) -> Result<()> {
-    install_tls_provider();
     // Match start()'s strip behaviour so the editor doesn't surface
     // port-collision errors for fields iOS ignores anyway.
     let _ = load_stripped_config_from_str(yaml)?;
@@ -1121,15 +1279,16 @@ mod config_parse_tests {
             cfg.proxies.values().partition(|p| p.members().is_some());
 
         // Fixture has 141 ss proxies + 22 groups. Expected runtime totals:
-        //   leaves = 141 ss + 3 built-ins (DIRECT, REJECT, REJECT-DROP) = 144
+        //   leaves = 141 ss + 6 built-ins (DIRECT, REJECT, REJECT-DROP, plus
+        //            COMPATIBLE, PASS, PASS-RULE since meow-rs 0.22) = 147
         //   groups = 22 user-defined (Proxies, 20 categories, Direct, Final)
         //            + the injected mihomo-compat GLOBAL selector (meow-rs
         //            0.18, #313) = 23. The app hides GLOBAL in
         //            ProxyGroupModel, so it never reaches the UI.
         assert_eq!(
             leaves.len(),
-            144,
-            "expected 141 ss proxies + 3 built-ins; if this drops to 3, \
+            147,
+            "expected 141 ss proxies + 6 built-ins; if this drops to 6, \
              meow-config was built without the `ss` feature — see commit \
              enabling default features on the meow-config dep",
         );
@@ -1183,5 +1342,142 @@ rules:
                  compiled out or the parser rejected the minimal entry",
             );
         }
+    }
+}
+
+#[cfg(test)]
+mod reload_tests {
+    //! `reload` commits into the live provider registries instead of loading
+    //! a second provider generation (see its doc comment). The engine slot is
+    //! process-global; this is the only test that starts the engine, and the
+    //! configs bind no sockets (no `mixed-port`, `dns.listen`, or
+    //! `external-controller`).
+    use super::{reload, slot, start, stop, LiveConfig};
+    use meow_common::TunnelMode;
+    use std::path::Path;
+    use std::sync::Arc;
+
+    /// Stops the engine even when an assertion fails mid-test.
+    struct StopOnDrop;
+
+    impl Drop for StopOnDrop {
+        fn drop(&mut self) {
+            stop();
+        }
+    }
+
+    /// Members of the routed `PROXY` group, i.e. the provider nodes routing
+    /// actually sees.
+    fn proxy_members(live: &LiveConfig) -> Vec<String> {
+        live.tunnel.route_snapshot().proxies["PROXY"]
+            .members()
+            .expect("PROXY is a group")
+    }
+
+    fn live() -> LiveConfig {
+        slot()
+            .lock()
+            .as_ref()
+            .map(|s| s.live.clone())
+            .expect("engine running")
+    }
+
+    fn write_provider(dir: &Path, file: &str, node: &str) {
+        let payload = format!(
+            "proxies:\n  - {{name: {node}, type: socks5, server: 127.0.0.1, port: 1080}}\n"
+        );
+        std::fs::write(dir.join(file), payload).expect("write provider payload");
+    }
+
+    fn config(mode: &str, provider: &str, file: &str, extra_group: &str) -> String {
+        format!(
+            r#"
+mode: {mode}
+proxy-providers:
+  {provider}:
+    type: file
+    path: ./{file}
+proxy-groups:
+  - name: PROXY
+    type: select
+    use: [{provider}]
+{extra_group}
+rules:
+  - MATCH,PROXY
+"#
+        )
+    }
+
+    #[test]
+    fn reload_commits_into_the_live_provider_registries() {
+        let tmp = tempfile::tempdir().expect("temp config dir");
+        let config_path = tmp.path().join("effective-config.yaml");
+        let config_path_str = config_path.to_str().expect("utf-8 config path");
+        write_provider(tmp.path(), "nodes.yaml", "node-a");
+        write_provider(tmp.path(), "other.yaml", "node-b");
+
+        std::fs::write(&config_path, config("rule", "nodes", "nodes.yaml", "")).unwrap();
+        start(config_path_str).expect("engine start");
+        let _stop = StopOnDrop;
+        let started = live();
+        let provider = Arc::clone(
+            started
+                .proxy_providers
+                .get("nodes")
+                .expect("provider loaded at start")
+                .value(),
+        );
+        assert_eq!(proxy_members(&started), ["node-a"]);
+
+        // Same provider declaration, new group and mode: the provider object
+        // is reused (no second generation, no refetch) and the rebuilt map
+        // reaches the start-time dialer registry provider nodes resolve
+        // `dialer-proxy` against.
+        let extra = "  - name: EXTRA\n    type: select\n    proxies: [DIRECT]";
+        std::fs::write(&config_path, config("global", "nodes", "nodes.yaml", extra)).unwrap();
+        reload(config_path_str).expect("reload");
+        let reloaded = live();
+        let route = reloaded.tunnel.route_snapshot();
+        assert!(route.proxies.contains_key("EXTRA"));
+        assert_eq!(reloaded.tunnel.mode(), TunnelMode::Global);
+        assert!(
+            Arc::ptr_eq(
+                reloaded.proxy_providers.get("nodes").unwrap().value(),
+                &provider
+            ),
+            "an unchanged provider declaration must keep its live object"
+        );
+        assert!(reloaded
+            .provider_dialer_registry
+            .resolve_name("EXTRA")
+            .is_some());
+        assert_eq!(reloaded.raw_config.read().mode.as_deref(), Some("global"));
+
+        // A config that fails to parse leaves the running one untouched.
+        std::fs::write(&config_path, "proxy-groups: [").unwrap();
+        assert!(reload(config_path_str).is_err());
+        assert!(live().tunnel.route_snapshot().proxies.contains_key("EXTRA"));
+
+        // Swapping the provider declaration swaps the registry the REST API
+        // serves (`/providers/proxies`) rather than leaving the start-time
+        // entry behind.
+        std::fs::write(&config_path, config("rule", "other", "other.yaml", "")).unwrap();
+        reload(config_path_str).expect("reload with a new provider");
+        let swapped = live();
+        assert!(swapped.proxy_providers.get("nodes").is_none());
+        assert!(swapped.proxy_providers.get("other").is_some());
+        // A newly declared provider is committed empty and filled by the
+        // detached initial fetch `commit_proxy_providers` starts.
+        let deadline = std::time::Instant::now() + std::time::Duration::from_secs(10);
+        while proxy_members(&swapped).is_empty() && std::time::Instant::now() < deadline {
+            std::thread::sleep(std::time::Duration::from_millis(20));
+        }
+        assert_eq!(proxy_members(&swapped), ["node-b"]);
+        assert!(!swapped
+            .tunnel
+            .route_snapshot()
+            .proxies
+            .contains_key("EXTRA"));
+        assert_eq!(swapped.tunnel.mode(), TunnelMode::Rule);
     }
 }

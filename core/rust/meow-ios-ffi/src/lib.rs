@@ -84,7 +84,7 @@ pub(crate) fn get_engine_runtime() -> &'static tokio::runtime::Runtime {
         // Stack size is 1 MiB (tokio's default is 2 MiB). This is a *virtual*
         // limit, not a resident allocation: Darwin demand-pages thread stacks,
         // so RSS tracks the deepest poll actually executed, not the cap. The
-        // deeper real frames are on this runtime: BoringSSL/rustls handshakes
+        // deeper real frames are on this runtime: BoringSSL handshakes
         // inside layered transports plus relay combinator frames.
         build_runtime(
             "meow-engine",

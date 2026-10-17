@@ -342,15 +342,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cf370abdafd54d13e54a620e8c3e1145f28e46cc9d704bc6d94414559df41763"
 
 [[package]]
-name = "iprange"
-version = "0.6.7"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "37209be0ad225457e63814401415e748e2453a5297f9b637338f5fb8afa4ec00"
-dependencies = [
- "ipnet",
-]
-
-[[package]]
 name = "itertools"
 version = "0.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -454,8 +445,8 @@ dependencies = [
 
 [[package]]
 name = "meow-common"
-version = "0.21.2"
-source = "git+https://github.com/madeye/meow-rs?rev=a663364469b3b7dc2b46d2e0f4530e50a54108ee#a663364469b3b7dc2b46d2e0f4530e50a54108ee"
+version = "0.23.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.23.0#d32a8ce8b1a768fd666fe03f9611783d7b5a57cd"
 dependencies = [
  "async-trait",
  "bytes",
@@ -478,11 +469,10 @@ dependencies = [
 
 [[package]]
 name = "meow-rules"
-version = "0.21.2"
-source = "git+https://github.com/madeye/meow-rs?rev=a663364469b3b7dc2b46d2e0f4530e50a54108ee#a663364469b3b7dc2b46d2e0f4530e50a54108ee"
+version = "0.23.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.23.0#d32a8ce8b1a768fd666fe03f9611783d7b5a57cd"
 dependencies = [
  "ipnet",
- "iprange",
  "maxminddb",
  "meow-common",
  "meow-trie",
@@ -495,8 +485,8 @@ dependencies = [
 
 [[package]]
 name = "meow-trie"
-version = "0.21.2"
-source = "git+https://github.com/madeye/meow-rs?rev=a663364469b3b7dc2b46d2e0f4530e50a54108ee#a663364469b3b7dc2b46d2e0f4530e50a54108ee"
+version = "0.23.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.23.0#d32a8ce8b1a768fd666fe03f9611783d7b5a57cd"
 
 [[package]]
 name = "minimal-lexical"

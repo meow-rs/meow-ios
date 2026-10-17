@@ -42,12 +42,6 @@ tracing-appender = "0.2"
 log = "0.4"
 oslog = { version = "0.2", default-features = false, features = ["logger"] }
 
-# `rustls` is declared so `engine::start` can install the ring crypto
-# provider once at process init for any HTTPS the meow engine itself
-# opens (subscription fetch, HTTPS outbound, …). The tun2socks UDP/53 path
-# delegates DNS parse/serialize to the local meow-dns listener, so this is
-# the only direct rustls consumer.
-rustls = { version = "0.23", default-features = false, features = ["ring", "logging", "std", "tls12"] }
 serde = { version = "1", features = ["derive"] }
 serde_yaml = "0.9"
 serde_json = "1"
@@ -75,9 +69,44 @@ lwip = "0.3"
 
 # Embedded meow-rs engine (formerly mihomo-rust, renamed upstream). Pinned
 # to a release tag normally; bump deliberately rather than tracking main.
-# Each crate is a workspace member of madeye/meow-rs.
+# Each crate is a workspace member of meow-rs/meow-rs.
 #
-# HEAD: a663364 — meow-rs main 2026-09-07 (workspace version 0.21.2;
+# Tag v0.23.0 (d32a8ce8, 2026-10-16). What the a663364 → v0.23.0 range
+# changes for this crate:
+# - Embedder API (engine.rs): a routing install is one `update_routing`
+#   that also takes the build's `dialer_registry` (#533), the tunnel shares
+#   the config's resolver slot (`Tunnel::new_with_slot`, #514), and it is
+#   handed the process-lifetime provider dialer registry once, before the
+#   first install (`set_dialer_registry`, #489). `ApiServer::new` also takes
+#   the provider refresh supervisors, a DNS server handle and that registry.
+#   `engine::reload` now rebuilds against the live providers and commits
+#   them like `PUT /configs`, under the shared `CONFIG_MUTATION` lane.
+# - Providers are cache-first (#748/#750): a load serves the on-disk copy
+#   and leaves the remote fetch owed, which `engine::start` settles via the
+#   supervisors' `reconcile` and `spawn_deferred_initial_fetches`. Those
+#   supervisors also run `interval:` refresh for rule and proxy providers
+#   (#543/#625); nothing on iOS refreshed providers before. No
+#   `set_provider_fetch_deadline`: an uncached HTTP provider still holds
+#   `meow_engine_start` until its fetch finishes, as before.
+# - TLS: boring/tokio-boring 5.2 + quiche 0.30. quiche accepts boring
+#   >=4.19,<6, so one BoringSSL copy is shared, and boring-sys 5's native
+#   tvOS support retired the build-rust.sh / cmake toolchain workarounds.
+#   rustls left the engine in #500; the FFI's own rustls/ring provider
+#   install had no consumer left and is gone too.
+# - New built-ins COMPATIBLE, PASS and PASS-RULE with mihomo semantics;
+#   opt-in `connection-notes:` per-flow notes behind `GET /connections/{id}`
+#   (#754); `/connections` reports the node a group actually used.
+# - Fixes on paths the NE runs: simple-obfs empty Host for hosts Go would
+#   reject (#755), bare IPv6 nameserver literals (#738), bracketed IPv6
+#   `server:` (#701), REALITY honours `client-fingerprint` (#712),
+#   server-first protocols through SS outbounds (#695), and WebSocket write
+#   backpressure, mux stream cleanup and muxcool UDP size checks (#745).
+# - Size: meow-proxy's `ss` feature now carries in-process shadow-tls,
+#   restls and jls, and `kcptun` joined the defaults (KCP + smux + snappy +
+#   FEC). They run only when a profile uses them but ship in the NE binary;
+#   the archive job's PacketTunnel size gate is the check.
+#
+# Previous pin a663364 — meow-rs main 2026-09-07 (workspace version 0.21.2;
 # the v0.21.2 tag itself is a docs/version bump directly on 0.21.1, so
 # everything below is post-tag main). Bumped deliberately for the iOS
 # 1.7.0 TestFlight cut.
@@ -178,7 +207,7 @@ lwip = "0.3"
 # VMess AEAD interop fix. meow-dns runs in fake-ip mode: the FFI config
 # parser pins `enhanced-mode: fake-ip` with `fake-ip-range: 28.0.0.0/8`
 # (the 2026-07-17 redir-host/DoT switch was reverted in PR #321).
-meow-common = { git = "https://github.com/madeye/meow-rs", rev = "a663364469b3b7dc2b46d2e0f4530e50a54108ee" }
+meow-common = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.23.0" }
 # `boring-tls` activates BoringSSL-backed TLS in meow-transport so ECH
 # (RFC 9460 SVCB / HTTPS ECHConfigList) and uTLS fingerprinting work for
 # proxy outbound. Without it, any proxy entry with `ech-opts:` set is
@@ -203,16 +232,16 @@ meow-common = { git = "https://github.com/madeye/meow-rs", rev = "a663364469b3b7
 # the crate doesn't compile for tvOS at all. Fixed upstream in
 # shadowsocks/shadowsocks-rust#2162; see the `[patch.crates-io]` note below
 # for why we still carry a git pin.
-meow-config = { git = "https://github.com/madeye/meow-rs", rev = "a663364469b3b7dc2b46d2e0f4530e50a54108ee", features = ["boring-tls", "anytls"] }
-meow-dns = { git = "https://github.com/madeye/meow-rs", rev = "a663364469b3b7dc2b46d2e0f4530e50a54108ee" }
-meow-tunnel = { git = "https://github.com/madeye/meow-rs", rev = "a663364469b3b7dc2b46d2e0f4530e50a54108ee" }
-meow-listener = { git = "https://github.com/madeye/meow-rs", rev = "a663364469b3b7dc2b46d2e0f4530e50a54108ee", default-features = false, features = ["listener-mixed"] }
-meow-api = { git = "https://github.com/madeye/meow-rs", rev = "a663364469b3b7dc2b46d2e0f4530e50a54108ee" }
-meow-proxy = { git = "https://github.com/madeye/meow-rs", rev = "a663364469b3b7dc2b46d2e0f4530e50a54108ee" }
+meow-config = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.23.0", features = ["boring-tls", "anytls"] }
+meow-dns = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.23.0" }
+meow-tunnel = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.23.0" }
+meow-listener = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.23.0", default-features = false, features = ["listener-mixed"] }
+meow-api = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.23.0" }
+meow-proxy = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.23.0" }
 # The probes' `https` requests (src/probe/http.rs) go through the engine's
 # own `TlsLayer`, as its latency test does. Already built for the outbounds
 # via meow-config's `boring-tls`; listed for the direct `use`.
-meow-transport = { git = "https://github.com/madeye/meow-rs", rev = "a663364469b3b7dc2b46d2e0f4530e50a54108ee", default-features = false, features = ["tls"] }
+meow-transport = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.23.0", default-features = false, features = ["tls"] }
 
 [build-dependencies]
 cbindgen = "0.28"
@@ -278,11 +307,3 @@ lwip = { git = "https://github.com/madeye/lwip", rev = "5f6f0dfe025c967157ff328d
 # Re-test Shadowsocks throughput and all three cipher families on device after
 # touching this pin.
 shadowsocks = { git = "https://github.com/shadowsocks/shadowsocks-rust", rev = "db65eaa8244603e5ef7c5fbc60add10e41a5477a" }
-
-# No boring pin, on purpose. boring 5.x is the first line with tvOS support,
-# but quiche 0.29 (hysteria2's QUIC stack since #500) requires boring ^4, so
-# a 5.x pin here would break resolution. The two boring-sys 4.x tvOS gaps —
-# `-lstdc++` on link and the device SDK being chosen for the simulator — are
-# closed from the environment instead: see the tvOS case in
-# scripts/build-rust.sh and cmake/tvos-simulator.cmake. Once quiche moves to
-# boring 5, bump and delete both workarounds.
