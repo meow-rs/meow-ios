@@ -71,11 +71,23 @@ lwip = "0.3"
 # to a release tag normally; bump deliberately rather than tracking main.
 # Each crate is a workspace member of meow-rs/meow-rs.
 #
-# Tag v0.23.1 (9bf2445a, 2026-10-17): v0.23.0 plus the iOS/tvOS build fix
-# (meow-rs#759: kcptun's `set_tclass_v6` is not in socket2 on Apple mobile
-# targets, so 0.22.0 and 0.23.0 do not compile for them) and zip 9 for the
-# `external-ui-download` feature (#761), which this crate does not enable.
-# What the a663364 → v0.23.1 range changes for this crate:
+# Tag v0.24.0 (b63ec4b5, 2026-10-18). What v0.23.1 → v0.24.0 changes for
+# this crate, all additive (no embedder API change):
+# - `GET /statistics` (#764): the upload and download each proxy carried
+#   since the engine started, TCP and UDP, with a group's traffic at the
+#   member that carried it and a `dialer-proxy` front hop also at the
+#   dialer group's member (#766). The totals count each connection once.
+# - UDP counts toward the totals (#764): the mixed listener's SOCKS5 UDP
+#   relay, which tun2socks's UDP sessions go through, now dials via the
+#   tunnel's counting helper, so `meow_engine_traffic` and `/traffic`
+#   include QUIC and other UDP flows.
+# - Connection notes name the `dialer-proxy` hop (#765).
+#
+# Tag v0.23.1 (9bf2445a, 2026-10-17) was v0.23.0 plus the iOS/tvOS build
+# fix (meow-rs#759: kcptun's `set_tclass_v6` is not in socket2 on Apple
+# mobile targets, so 0.22.0 and 0.23.0 do not compile for them) and zip 9
+# for the `external-ui-download` feature (#761), which this crate does not
+# enable. What the a663364 → v0.23.1 range changed for this crate:
 # - Embedder API (engine.rs): a routing install is one `update_routing`
 #   that also takes the build's `dialer_registry` (#533), the tunnel shares
 #   the config's resolver slot (`Tunnel::new_with_slot`, #514), and it is
@@ -210,7 +222,7 @@ lwip = "0.3"
 # VMess AEAD interop fix. meow-dns runs in fake-ip mode: the FFI config
 # parser pins `enhanced-mode: fake-ip` with `fake-ip-range: 28.0.0.0/8`
 # (the 2026-07-17 redir-host/DoT switch was reverted in PR #321).
-meow-common = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.23.1" }
+meow-common = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.24.0" }
 # `boring-tls` activates BoringSSL-backed TLS in meow-transport so ECH
 # (RFC 9460 SVCB / HTTPS ECHConfigList) and uTLS fingerprinting work for
 # proxy outbound. Without it, any proxy entry with `ech-opts:` set is
@@ -235,16 +247,16 @@ meow-common = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.23.1" }
 # the crate doesn't compile for tvOS at all. Fixed upstream in
 # shadowsocks/shadowsocks-rust#2162; see the `[patch.crates-io]` note below
 # for why we still carry a git pin.
-meow-config = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.23.1", features = ["boring-tls", "anytls"] }
-meow-dns = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.23.1" }
-meow-tunnel = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.23.1" }
-meow-listener = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.23.1", default-features = false, features = ["listener-mixed"] }
-meow-api = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.23.1" }
-meow-proxy = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.23.1" }
+meow-config = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.24.0", features = ["boring-tls", "anytls"] }
+meow-dns = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.24.0" }
+meow-tunnel = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.24.0" }
+meow-listener = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.24.0", default-features = false, features = ["listener-mixed"] }
+meow-api = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.24.0" }
+meow-proxy = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.24.0" }
 # The probes' `https` requests (src/probe/http.rs) go through the engine's
 # own `TlsLayer`, as its latency test does. Already built for the outbounds
 # via meow-config's `boring-tls`; listed for the direct `use`.
-meow-transport = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.23.1", default-features = false, features = ["tls"] }
+meow-transport = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.24.0", default-features = false, features = ["tls"] }
 
 [build-dependencies]
 cbindgen = "0.28"

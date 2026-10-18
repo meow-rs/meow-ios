@@ -445,8 +445,8 @@ dependencies = [
 
 [[package]]
 name = "meow-common"
-version = "0.23.1"
-source = "git+https://github.com/meow-rs/meow-rs?tag=v0.23.1#9bf2445a1f378e504d475627d63f1a481ad12d83"
+version = "0.24.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.24.0#b63ec4b5e5403a95a492bab765624a65dc6b96df"
 dependencies = [
  "async-trait",
  "bytes",
@@ -469,8 +469,8 @@ dependencies = [
 
 [[package]]
 name = "meow-rules"
-version = "0.23.1"
-source = "git+https://github.com/meow-rs/meow-rs?tag=v0.23.1#9bf2445a1f378e504d475627d63f1a481ad12d83"
+version = "0.24.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.24.0#b63ec4b5e5403a95a492bab765624a65dc6b96df"
 dependencies = [
  "ipnet",
  "maxminddb",
@@ -485,8 +485,8 @@ dependencies = [
 
 [[package]]
 name = "meow-trie"
-version = "0.23.1"
-source = "git+https://github.com/meow-rs/meow-rs?tag=v0.23.1#9bf2445a1f378e504d475627d63f1a481ad12d83"
+version = "0.24.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.24.0#b63ec4b5e5403a95a492bab765624a65dc6b96df"
 
 [[package]]
 name = "minimal-lexical"
