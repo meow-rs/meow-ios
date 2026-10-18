@@ -56,6 +56,9 @@ public struct TrafficSnapshot: Codable, Sendable, Equatable {
     public var heapFreeKB: Int64
     public var tcpConns: Int64
     public var pumpTick: Int64
+    /// The totals split by the kind of network they went out on. Nil from an
+    /// extension that predates the split.
+    public var interfaces: InterfaceTraffic?
 
     public init(
         uploadBytes: Int64 = 0,
@@ -70,6 +73,7 @@ public struct TrafficSnapshot: Codable, Sendable, Equatable {
         heapFreeKB: Int64 = 0,
         tcpConns: Int64 = 0,
         pumpTick: Int64 = 0,
+        interfaces: InterfaceTraffic? = nil,
     ) {
         self.uploadBytes = uploadBytes
         self.downloadBytes = downloadBytes
@@ -83,6 +87,40 @@ public struct TrafficSnapshot: Codable, Sendable, Equatable {
         self.heapFreeKB = heapFreeKB
         self.tcpConns = tcpConns
         self.pumpTick = pumpTick
+        self.interfaces = interfaces
+    }
+}
+
+/// Bytes sent and received.
+public struct ByteTotals: Codable, Sendable, Equatable {
+    public var upload: Int64
+    public var download: Int64
+
+    public var total: Int64 {
+        upload + download
+    }
+
+    public init(upload: Int64 = 0, download: Int64 = 0) {
+        self.upload = upload
+        self.download = download
+    }
+}
+
+/// One engine run's traffic by the kind of network it left the device on,
+/// as the extension's path monitor saw it (`meow_engine_interface_traffic`).
+public struct InterfaceTraffic: Codable, Sendable, Equatable {
+    public var wifiEthernet: ByteTotals
+    public var cellular: ByteTotals
+    public var other: ByteTotals
+
+    public init(
+        wifiEthernet: ByteTotals = .init(),
+        cellular: ByteTotals = .init(),
+        other: ByteTotals = .init(),
+    ) {
+        self.wifiEthernet = wifiEthernet
+        self.cellular = cellular
+        self.other = other
     }
 }
 

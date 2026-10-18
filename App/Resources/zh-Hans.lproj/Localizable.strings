@@ -255,8 +255,21 @@
 /* Utility hub */
 "utility.nav.title" = "工具";
 "utility.nav.traffic" = "流量";
+"utility.nav.statistics" = "统计";
 "utility.nav.logs" = "日志";
 "utility.nav.dns" = "DNS";
+
+
+/* Statistics */
+"statistics.nav.title" = "统计";
+"statistics.startDate" = "启动时间";
+"statistics.uptime" = "运行时长";
+"statistics.interfaces" = "网络接口";
+"statistics.wifiEthernet" = "Wi-Fi / 以太网";
+"statistics.cellular" = "蜂窝数据";
+"statistics.otherNetworks" = "其他网络";
+"statistics.policies" = "策略";
+"statistics.offline" = "连接 VPN 后可用。";
 
 
 /* DNS */

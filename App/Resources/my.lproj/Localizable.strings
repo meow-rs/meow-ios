@@ -259,8 +259,21 @@
 /* Utility hub */
 "utility.nav.title" = "ကိရိယာများ";
 "utility.nav.traffic" = "ဒေတာ အသွားအလာ";
+"utility.nav.statistics" = "စာရင်းအင်း";
 "utility.nav.logs" = "မှတ်တမ်းများ";
 "utility.nav.dns" = "DNS";
+
+
+/* Statistics */
+"statistics.nav.title" = "စာရင်းအင်း";
+"statistics.startDate" = "စတင်ချိန်";
+"statistics.uptime" = "လည်ပတ်ချိန်";
+"statistics.interfaces" = "အင်တာဖေ့စ်များ";
+"statistics.wifiEthernet" = "Wi-Fi / Ethernet";
+"statistics.cellular" = "မိုဘိုင်းဒေတာ";
+"statistics.otherNetworks" = "အခြားကွန်ရက်များ";
+"statistics.policies" = "မူဝါဒများ";
+"statistics.offline" = "အသုံးပြုရန် VPN ချိတ်ဆက်ပါ။";
 
 
 /* DNS */

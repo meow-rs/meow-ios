@@ -262,8 +262,21 @@
 /* Utility hub */
 "utility.nav.title" = "الأدوات";
 "utility.nav.traffic" = "حركة البيانات";
+"utility.nav.statistics" = "الإحصائيات";
 "utility.nav.logs" = "السجلات";
 "utility.nav.dns" = "DNS";
+
+
+/* Statistics */
+"statistics.nav.title" = "الإحصائيات";
+"statistics.startDate" = "وقت البدء";
+"statistics.uptime" = "مدة التشغيل";
+"statistics.interfaces" = "الواجهات";
+"statistics.wifiEthernet" = "\U200FWi-Fi / إيثرنت";
+"statistics.cellular" = "بيانات الجوال";
+"statistics.otherNetworks" = "شبكات أخرى";
+"statistics.policies" = "السياسات";
+"statistics.offline" = "اتصل بشبكة VPN لاستخدام هذه الميزة.";
 
 
 /* DNS */

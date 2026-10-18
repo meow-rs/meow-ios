@@ -363,6 +363,9 @@ pub fn start(config_path: &str) -> Result<()> {
     if slot().lock().is_some() {
         return Ok(());
     }
+    // The interface split follows the totals, which restart from zero with
+    // this run.
+    crate::network_traffic::restart();
 
     install_tracing_subscriber();
 

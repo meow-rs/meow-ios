@@ -1,4 +1,5 @@
 import Foundation
+import MeowModels
 
 struct Proxy: Decodable, Identifiable {
     var id: String {
@@ -190,6 +191,12 @@ struct LogEntry: Decodable {
         guard let data = jsonString.data(using: .utf8) else { return nil }
         return try? JSONDecoder().decode(LogEntry.self, from: data)
     }
+}
+
+/// `GET /statistics` (meow-rs #764): what each proxy carried this engine
+/// run, by name. The engine's totals beside it are the snapshot's already.
+struct StatisticsResponse: Decodable {
+    let proxies: [String: ByteTotals]
 }
 
 /// Cached DNS lookup surfaced by `GET /dns/results` (meow-api routes.rs).

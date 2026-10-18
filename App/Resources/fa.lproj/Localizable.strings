@@ -265,8 +265,21 @@
 /* Utility hub */
 "utility.nav.title" = "ابزارها";
 "utility.nav.traffic" = "ترافیک";
+"utility.nav.statistics" = "آمار";
 "utility.nav.logs" = "گزارش‌ها";
 "utility.nav.dns" = "DNS";
+
+
+/* Statistics */
+"statistics.nav.title" = "آمار";
+"statistics.startDate" = "زمان شروع";
+"statistics.uptime" = "مدت فعالیت";
+"statistics.interfaces" = "رابط‌ها";
+"statistics.wifiEthernet" = "\U200FWi-Fi / اترنت";
+"statistics.cellular" = "داده تلفن همراه";
+"statistics.otherNetworks" = "شبکه‌های دیگر";
+"statistics.policies" = "سیاست‌ها";
+"statistics.offline" = "پس از اتصال VPN در دسترس است.";
 
 
 /* DNS */

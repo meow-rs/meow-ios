@@ -1,13 +1,14 @@
 import XCTest
 
 final class UtilityScreenTests: XCTestCase {
-    func testUtilityHubShowsTrafficLogsAndDnsEntries() {
+    func testUtilityHubShowsTrafficStatisticsLogsAndDnsEntries() {
         let meow = MeowApp(resetState: true)
         meow.launch()
         meow.utilityTab.tap()
 
         XCTAssertTrue(meow.app.navigationBars["Utility"].waitForExistence(timeout: 5))
         XCTAssertTrue(meow.app.buttons["utility.nav.traffic"].waitForExistence(timeout: 5))
+        XCTAssertTrue(meow.app.buttons["utility.nav.statistics"].exists)
         XCTAssertTrue(meow.app.buttons["utility.nav.logs"].exists)
         XCTAssertTrue(meow.app.buttons["utility.nav.dns"].exists)
     }

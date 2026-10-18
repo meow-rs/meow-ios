@@ -1,4 +1,5 @@
 import Foundation
+import MeowModels
 
 /// Simulator-only mock responses for `MeowAPI`. There is no meow engine
 /// running in the simulator, so every endpoint returns canned fixtures
@@ -164,6 +165,16 @@ extension MeowAPI {
                 proxies: providerProxies,
             ),
         ])
+    }
+
+    /// Adds up to `AppIPCBridge`'s mock totals at tick 0.
+    static func mockProxyTraffic() -> [String: ByteTotals] {
+        [
+            "DIRECT": .init(upload: 96_468_992, download: 1_073_741_824),
+            "Tokyo 01": .init(upload: 343_932_928, download: 2_469_396_480),
+            "Singapore 02": .init(upload: 46_137_344, download: 299_008_000),
+            "REJECT": .init(),
+        ]
     }
 
     static func mockDnsResults(search: String?) -> [DnsResult] {

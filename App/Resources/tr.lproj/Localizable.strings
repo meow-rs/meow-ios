@@ -263,8 +263,21 @@
 /* Utility hub */
 "utility.nav.title" = "Araçlar";
 "utility.nav.traffic" = "Trafik";
+"utility.nav.statistics" = "İstatistikler";
 "utility.nav.logs" = "Günlükler";
 "utility.nav.dns" = "DNS";
+
+
+/* Statistics */
+"statistics.nav.title" = "İstatistikler";
+"statistics.startDate" = "Başlangıç zamanı";
+"statistics.uptime" = "Çalışma süresi";
+"statistics.interfaces" = "Arayüzler";
+"statistics.wifiEthernet" = "Wi-Fi / Ethernet";
+"statistics.cellular" = "Mobil veri";
+"statistics.otherNetworks" = "Diğer ağlar";
+"statistics.policies" = "Politikalar";
+"statistics.offline" = "VPN bağlıyken kullanılabilir.";
 
 
 /* DNS */

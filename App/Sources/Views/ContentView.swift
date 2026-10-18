@@ -142,7 +142,8 @@ private func initialTab() -> ContentTab {
         return .subscriptions
     }
     // Traffic/Logs moved under Utility; keep old screenshot tab names working.
-    if rawTab == "traffic" || rawTab == "logs" || rawTab == "dns" {
+    // Statistics lives there too.
+    if ["traffic", "statistics", "logs", "dns"].contains(rawTab) {
         return .utility
     }
     return ContentTab(rawValue: rawTab) ?? .subscriptions

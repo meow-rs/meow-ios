@@ -1,5 +1,6 @@
 import Foundation
 import MeowIPC
+import MeowModels
 import NetworkExtension
 import os
 
@@ -329,6 +330,20 @@ final class MeowAPI: @unchecked Sendable {
             return Self.mockProviders()
         }
         return try await get("/providers/proxies")
+    }
+
+    /// What each proxy carried this engine run, by name. Nil from an engine
+    /// that predates `GET /statistics`.
+    func getProxyTraffic() async throws -> [String: ByteTotals]? {
+        if Self.usesMockTransport {
+            return Self.mockProxyTraffic()
+        }
+        do {
+            let response: StatisticsResponse = try await get("/statistics")
+            return response.proxies
+        } catch MeowAPIError.http(status: 404) {
+            return nil
+        }
     }
 
     func getDnsResults(search: String? = nil, limit: Int = 256) async throws -> [DnsResult] {

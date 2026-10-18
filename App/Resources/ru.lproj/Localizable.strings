@@ -262,8 +262,21 @@
 /* Utility hub */
 "utility.nav.title" = "Утилиты";
 "utility.nav.traffic" = "Трафик";
+"utility.nav.statistics" = "Статистика";
 "utility.nav.logs" = "Журнал";
 "utility.nav.dns" = "DNS";
+
+
+/* Statistics */
+"statistics.nav.title" = "Статистика";
+"statistics.startDate" = "Время запуска";
+"statistics.uptime" = "Время работы";
+"statistics.interfaces" = "Интерфейсы";
+"statistics.wifiEthernet" = "Wi-Fi / Ethernet";
+"statistics.cellular" = "Мобильные данные";
+"statistics.otherNetworks" = "Другие сети";
+"statistics.policies" = "Политики";
+"statistics.offline" = "Доступно после подключения VPN.";
 
 
 /* DNS */

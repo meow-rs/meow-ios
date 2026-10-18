@@ -24,6 +24,7 @@ mod engine;
 mod file_log;
 mod ip_info;
 mod logging;
+mod network_traffic;
 mod probe;
 pub mod rss;
 mod subscription;
@@ -375,6 +376,41 @@ pub unsafe extern "C" fn meow_engine_traffic(out_upload: *mut i64, out_download:
     }
     if !out_download.is_null() {
         *out_download = down;
+    }
+}
+
+/// Report the kind of network the engine's sockets now go out on, one of the
+/// `MEOW_NETWORK_KIND_*` constants (`MEOW_NETWORK_KIND_NONE` while there is
+/// none). What the totals gained since the last report is charged to the
+/// previous kind; see `meow_engine_interface_traffic`. Safe to call before
+/// `meow_engine_start`: the kind carries over to the runs that follow.
+///
+/// Returns 0 on success, -1 on an unknown kind.
+#[no_mangle]
+pub extern "C" fn meow_engine_set_network_kind(kind: c_int) -> c_int {
+    let Ok(kind) = network_traffic::Kind::from_c(kind) else {
+        set_error(format!("unknown network kind {kind}"));
+        return -1;
+    };
+    network_traffic::set_kind(kind);
+    0
+}
+
+/// Write the running engine's `meow_engine_traffic` totals split by the
+/// kind of network they went out on, as reported through
+/// `meow_engine_set_network_kind`. Bytes counted while no kind was known go
+/// to the next one reported, so the split can trail the totals. Restarts
+/// from zero with every `meow_engine_start`.
+///
+/// # Safety
+/// `out`, if non-NULL, must reference a writable `MeowInterfaceTraffic`.
+#[no_mangle]
+pub unsafe extern "C" fn meow_engine_interface_traffic(
+    out: *mut network_traffic::MeowInterfaceTraffic,
+) {
+    let split = network_traffic::read();
+    if !out.is_null() {
+        *out = split;
     }
 }
 

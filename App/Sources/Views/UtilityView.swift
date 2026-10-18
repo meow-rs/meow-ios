@@ -1,7 +1,7 @@
 import SwiftUI
 
 private enum UtilityDestination: String, Identifiable {
-    case traffic, logs, dns
+    case traffic, statistics, logs, dns
 
     var id: String {
         rawValue
@@ -9,6 +9,7 @@ private enum UtilityDestination: String, Identifiable {
 }
 
 struct UtilityView: View {
+    @Environment(MeowAPI.self) private var meowAPI
     @State private var destination: UtilityDestination? = Self.screenshotUtilityDestination()
 
     var body: some View {
@@ -20,6 +21,14 @@ struct UtilityView: View {
                         systemImage: "chart.bar.fill",
                         identifier: "utility.nav.traffic",
                     ) { destination = .traffic }
+
+                    Divider().padding(.leading, 42)
+
+                    NavRow(
+                        title: "utility.nav.statistics",
+                        systemImage: "chart.pie.fill",
+                        identifier: "utility.nav.statistics",
+                    ) { destination = .statistics }
 
                     Divider().padding(.leading, 42)
 
@@ -49,6 +58,8 @@ struct UtilityView: View {
             switch target {
             case .traffic:
                 TrafficView()
+            case .statistics:
+                StatisticsView(model: StatisticsModel(api: meowAPI))
             case .logs:
                 LogsView()
             case .dns:
@@ -67,6 +78,7 @@ struct UtilityView: View {
 
         switch args[i + 1] {
         case "traffic": return .traffic
+        case "statistics": return .statistics
         case "logs": return .logs
         case "dns": return .dns
         default: return nil

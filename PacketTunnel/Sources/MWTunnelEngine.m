@@ -6,6 +6,7 @@
 #import "MWDarwinBridge.h"
 #import "MWEngineLog.h"
 #import "meow_core.h"
+#import <Network/Network.h>
 #import <stdatomic.h>
 #import <os/log.h>
 #import <mach/mach.h>
@@ -30,6 +31,9 @@ static const int kLocalDNSPort = 1053;
     _Atomic uint64_t _ingressEpoch;
     _Atomic int64_t _ingressPackets;
     dispatch_source_t _trafficTimer;
+    // Reports the network the engine's sockets go out on, for the split the
+    // traffic snapshots carry (meow_engine_interface_traffic).
+    nw_path_monitor_t _pathMonitor;
     int64_t _lastUp;
     int64_t _lastDown;
     NSTimeInterval _lastTime;
@@ -133,6 +137,7 @@ static const int kLocalDNSPort = 1053;
     }
 
     [self startIngressLoop];
+    [self startPathMonitor];
     [self startTrafficPump];
     return YES;
 }
@@ -159,11 +164,15 @@ static const int kLocalDNSPort = 1053;
     if (![self startRuntimeWithError:error]) {
         atomic_store_explicit(&_ingressRunning, NO, memory_order_relaxed);
         atomic_fetch_add_explicit(&_ingressEpoch, 1, memory_order_relaxed);
+        [self stopPathMonitor];
         [self releaseWriterContext];
         _started = NO;
         return NO;
     }
 
+    // The path monitor keeps running: the engine's split restarts from zero
+    // with its totals, on the network it last heard of.
+    //
     // Do not call startIngressLoop here. The original readPackets chain remains
     // armed across the in-place restart; arming another read on the same
     // NEPacketTunnelFlow can violate the one-read-at-a-time contract.
@@ -214,6 +223,7 @@ static const int kLocalDNSPort = 1053;
     atomic_fetch_add_explicit(&_ingressEpoch, 1, memory_order_relaxed);
 
     [self stopTrafficPump];
+    [self stopPathMonitor];
 
     // BLOCKING stop: wait for the tun2socks run task — and its egress callback
     // loop — to fully terminate before releasing the writer ctx below.
@@ -276,6 +286,42 @@ static const int kLocalDNSPort = 1053;
     }];
 }
 
+// MARK: - Network path
+
+// The extension's own sockets bypass its tunnel, so its default path is the
+// physical network the engine dials out on.
+static int MWNetworkKindForPath(nw_path_t path) {
+    if (nw_path_get_status(path) != nw_path_status_satisfied) return MEOW_NETWORK_KIND_NONE;
+    if (nw_path_uses_interface_type(path, nw_interface_type_wifi) ||
+        nw_path_uses_interface_type(path, nw_interface_type_wired)) {
+        return MEOW_NETWORK_KIND_WIFI_ETHERNET;
+    }
+    if (nw_path_uses_interface_type(path, nw_interface_type_cellular)) return MEOW_NETWORK_KIND_CELLULAR;
+    return MEOW_NETWORK_KIND_OTHER;
+}
+
+- (void)startPathMonitor {
+    nw_path_monitor_t monitor = nw_path_monitor_create();
+    nw_path_monitor_set_queue(monitor,
+        dispatch_queue_create("com.tangzixiang.meow.PacketTunnel.path", DISPATCH_QUEUE_SERIAL));
+    nw_path_monitor_set_update_handler(monitor, ^(nw_path_t _Nonnull path) {
+        int kind = MWNetworkKindForPath(path);
+        os_log_info(gLog, "path: network kind %d", kind);
+        meow_engine_set_network_kind(kind);
+    });
+    nw_path_monitor_start(monitor);
+    _pathMonitor = monitor;
+}
+
+- (void)stopPathMonitor {
+    if (!_pathMonitor) return;
+    nw_path_monitor_cancel(_pathMonitor);
+    _pathMonitor = nil;
+    // The kind outlives the engine in the Rust core; the next start's bytes
+    // wait for its own monitor's first report instead of going to this one's.
+    meow_engine_set_network_kind(MEOW_NETWORK_KIND_NONE);
+}
+
 // MARK: - Traffic pump (500 ms interval)
 
 - (void)startTrafficPump {
@@ -309,6 +355,8 @@ static const int kLocalDNSPort = 1053;
     os_log_debug(gLog, "engine: emitTrafficSnapshot tick=%d", _pumpTick);
     int64_t up = 0, down = 0;
     meow_engine_traffic(&up, &down);
+    MeowInterfaceTraffic split = {0};
+    meow_engine_interface_traffic(&split);
 
     NSTimeInterval now = [[NSDate date] timeIntervalSinceReferenceDate];
     double dt = MAX(0.001, now - _lastTime);
@@ -361,6 +409,14 @@ static const int kLocalDNSPort = 1053;
         @"heapFreeKB":     @(heapFreeKB),
         @"tcpConns":       @(tcpConns),
         @"pumpTick":       @(_pumpTick),
+        @"interfaces": @{
+            @"wifiEthernet": @{@"upload": @(split.wifi_ethernet_upload),
+                               @"download": @(split.wifi_ethernet_download)},
+            @"cellular":     @{@"upload": @(split.cellular_upload),
+                               @"download": @(split.cellular_download)},
+            @"other":        @{@"upload": @(split.other_upload),
+                               @"download": @(split.other_download)},
+        },
     };
 
     NSError *err = nil;

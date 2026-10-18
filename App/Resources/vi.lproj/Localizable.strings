@@ -260,8 +260,21 @@
 /* Utility hub */
 "utility.nav.title" = "Tiện ích";
 "utility.nav.traffic" = "Lưu lượng";
+"utility.nav.statistics" = "Thống kê";
 "utility.nav.logs" = "Nhật ký";
 "utility.nav.dns" = "DNS";
+
+
+/* Statistics */
+"statistics.nav.title" = "Thống kê";
+"statistics.startDate" = "Thời điểm bắt đầu";
+"statistics.uptime" = "Thời gian hoạt động";
+"statistics.interfaces" = "Giao diện mạng";
+"statistics.wifiEthernet" = "Wi-Fi / Ethernet";
+"statistics.cellular" = "Dữ liệu di động";
+"statistics.otherNetworks" = "Mạng khác";
+"statistics.policies" = "Chính sách";
+"statistics.offline" = "Kết nối VPN để sử dụng.";
 
 
 /* DNS */

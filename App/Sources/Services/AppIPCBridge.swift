@@ -234,6 +234,13 @@ private extension AppIPCBridge {
             heapFreeKB: 8192,
             tcpConns: 24,
             pumpTick: tick,
+            interfaces: InterfaceTraffic(
+                wifiEthernet: ByteTotals(
+                    upload: 412_090_368 + (tick * 94208),
+                    download: 3_221_225_472 + (tick * 524_288),
+                ),
+                cellular: ByteTotals(upload: 74_448_896, download: 620_920_832),
+            ),
         )
     }
 }

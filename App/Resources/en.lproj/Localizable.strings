@@ -249,8 +249,21 @@
 /* Utility hub */
 "utility.nav.title" = "Utility";
 "utility.nav.traffic" = "Traffic";
+"utility.nav.statistics" = "Statistics";
 "utility.nav.logs" = "Logs";
 "utility.nav.dns" = "DNS";
+
+
+/* Statistics */
+"statistics.nav.title" = "Statistics";
+"statistics.startDate" = "Start Date";
+"statistics.uptime" = "Uptime";
+"statistics.interfaces" = "Interfaces";
+"statistics.wifiEthernet" = "Wi-Fi / Ethernet";
+"statistics.cellular" = "Cellular Data";
+"statistics.otherNetworks" = "Other Networks";
+"statistics.policies" = "Policies";
+"statistics.offline" = "Connect the VPN to use this.";
 
 
 /* DNS */

@@ -13,6 +13,29 @@
 #include <stdlib.h>
 
 /**
+ * The network kinds `meow_engine_set_network_kind` takes; `0` is none.
+ */
+#define MEOW_NETWORK_KIND_NONE 0
+
+#define MEOW_NETWORK_KIND_WIFI_ETHERNET 1
+
+#define MEOW_NETWORK_KIND_CELLULAR 2
+
+#define MEOW_NETWORK_KIND_OTHER 3
+
+/**
+ * One engine run's bytes by the kind of network they went out on.
+ */
+typedef struct MeowInterfaceTraffic {
+    int64_t wifi_ethernet_upload;
+    int64_t wifi_ethernet_download;
+    int64_t cellular_upload;
+    int64_t cellular_download;
+    int64_t other_upload;
+    int64_t other_download;
+} MeowInterfaceTraffic;
+
+/**
  * C-compatible egress callback. Called from the tun2socks tokio runtime
  * whenever tun2socks produces a packet bound for Swift's `NEPacketTunnelFlow`.
  * Swift guarantees `ctx` remains live between `meow_tun_start` and
@@ -113,6 +136,29 @@ int64_t meow_active_tcp_conns(void);
  * Pointers, if non-NULL, must reference writable 64-bit integer slots.
  */
 void meow_engine_traffic(int64_t *out_upload, int64_t *out_download);
+
+/**
+ * Report the kind of network the engine's sockets now go out on, one of the
+ * `MEOW_NETWORK_KIND_*` constants (`MEOW_NETWORK_KIND_NONE` while there is
+ * none). What the totals gained since the last report is charged to the
+ * previous kind; see `meow_engine_interface_traffic`. Safe to call before
+ * `meow_engine_start`: the kind carries over to the runs that follow.
+ *
+ * Returns 0 on success, -1 on an unknown kind.
+ */
+int meow_engine_set_network_kind(int kind);
+
+/**
+ * Write the running engine's `meow_engine_traffic` totals split by the
+ * kind of network they went out on, as reported through
+ * `meow_engine_set_network_kind`. Bytes counted while no kind was known go
+ * to the next one reported, so the split can trail the totals. Restarts
+ * from zero with every `meow_engine_start`.
+ *
+ * # Safety
+ * `out`, if non-NULL, must reference a writable `MeowInterfaceTraffic`.
+ */
+void meow_engine_interface_traffic(struct MeowInterfaceTraffic *out);
 
 /**
  * Convert a subscription body (Clash YAML, or base64-wrapped / plain v2rayN
