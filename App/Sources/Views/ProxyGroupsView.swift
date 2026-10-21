@@ -186,8 +186,9 @@ private extension ProxyGroupsView {
     /// One-tap batch test for a whole group (issue #255). The engine
     /// probes every member and records the outcomes in each proxy's
     /// history, so a single `refresh()` afterwards repaints all badges.
-    /// Failures are silent, matching the per-proxy `ping` — a 504 batch
-    /// overrun still leaves partial results in the histories.
+    /// Failures are silent, matching the per-proxy `ping` — a 504 only
+    /// means no member passed, and every probe that finished is still in
+    /// the histories.
     func pingGroup(_ group: ProxyGroupModel) async {
         guard !inflightGroupTest.contains(group.name) else { return }
         inflightGroupTest.insert(group.name)

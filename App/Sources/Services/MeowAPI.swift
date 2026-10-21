@@ -271,10 +271,12 @@ final class MeowAPI: @unchecked Sendable {
     /// (`GET /group/{name}/delay`). The engine probes members with bounded
     /// concurrency (16) under a *single* `timeout` budget for the whole
     /// batch — hence the larger default than the per-proxy test — and
-    /// records each outcome in the proxy's delay history, so callers
+    /// records each finished probe in the proxy's delay history, so callers
     /// refresh `/proxies` afterwards to pick up the new badges. Returns
-    /// the name → delay map; a whole-batch overrun surfaces as
-    /// `MeowAPIError.http(status: 504)` even when some members completed.
+    /// the name → delay map of the members that passed within `timeout`
+    /// (meow-rs #783); a member that failed, or was still probing at the
+    /// deadline (cancelled, nothing recorded), is left out. Only a batch in
+    /// which no member passed is `MeowAPIError.http(status: 504)`.
     @discardableResult
     func testGroupDelay(group: String, url: String, timeout: Int = 10000) async throws -> [String: Int] {
         if Self.usesMockTransport {

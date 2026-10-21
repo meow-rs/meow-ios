@@ -1975,8 +1975,8 @@ dependencies = [
 
 [[package]]
 name = "meow-anytls"
-version = "0.24.0"
-source = "git+https://github.com/meow-rs/meow-rs?tag=v0.24.0#b63ec4b5e5403a95a492bab765624a65dc6b96df"
+version = "0.26.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.26.0#3e123030915233c5ffa599d72ee60908e65281eb"
 dependencies = [
  "anyhow",
  "bytes",
@@ -1998,8 +1998,8 @@ dependencies = [
 
 [[package]]
 name = "meow-api"
-version = "0.24.0"
-source = "git+https://github.com/meow-rs/meow-rs?tag=v0.24.0#b63ec4b5e5403a95a492bab765624a65dc6b96df"
+version = "0.26.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.26.0#3e123030915233c5ffa599d72ee60908e65281eb"
 dependencies = [
  "anyhow",
  "axum",
@@ -2033,8 +2033,8 @@ dependencies = [
 
 [[package]]
 name = "meow-common"
-version = "0.24.0"
-source = "git+https://github.com/meow-rs/meow-rs?tag=v0.24.0#b63ec4b5e5403a95a492bab765624a65dc6b96df"
+version = "0.26.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.26.0#3e123030915233c5ffa599d72ee60908e65281eb"
 dependencies = [
  "async-trait",
  "bytes",
@@ -2057,8 +2057,8 @@ dependencies = [
 
 [[package]]
 name = "meow-config"
-version = "0.24.0"
-source = "git+https://github.com/meow-rs/meow-rs?tag=v0.24.0#b63ec4b5e5403a95a492bab765624a65dc6b96df"
+version = "0.26.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.26.0#3e123030915233c5ffa599d72ee60908e65281eb"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -2087,8 +2087,8 @@ dependencies = [
 
 [[package]]
 name = "meow-dns"
-version = "0.24.0"
-source = "git+https://github.com/meow-rs/meow-rs?tag=v0.24.0#b63ec4b5e5403a95a492bab765624a65dc6b96df"
+version = "0.26.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.26.0#3e123030915233c5ffa599d72ee60908e65281eb"
 dependencies = [
  "async-trait",
  "dashmap 6.2.1",
@@ -2150,8 +2150,8 @@ dependencies = [
 
 [[package]]
 name = "meow-listener"
-version = "0.24.0"
-source = "git+https://github.com/meow-rs/meow-rs?tag=v0.24.0#b63ec4b5e5403a95a492bab765624a65dc6b96df"
+version = "0.26.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.26.0#3e123030915233c5ffa599d72ee60908e65281eb"
 dependencies = [
  "base64",
  "libc",
@@ -2167,8 +2167,8 @@ dependencies = [
 
 [[package]]
 name = "meow-proxy"
-version = "0.24.0"
-source = "git+https://github.com/meow-rs/meow-rs?tag=v0.24.0#b63ec4b5e5403a95a492bab765624a65dc6b96df"
+version = "0.26.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.26.0#3e123030915233c5ffa599d72ee60908e65281eb"
 dependencies = [
  "aes 0.8.4",
  "argon2",
@@ -2213,8 +2213,8 @@ dependencies = [
 
 [[package]]
 name = "meow-rules"
-version = "0.24.0"
-source = "git+https://github.com/meow-rs/meow-rs?tag=v0.24.0#b63ec4b5e5403a95a492bab765624a65dc6b96df"
+version = "0.26.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.26.0#3e123030915233c5ffa599d72ee60908e65281eb"
 dependencies = [
  "ipnet",
  "maxminddb",
@@ -2229,8 +2229,8 @@ dependencies = [
 
 [[package]]
 name = "meow-transport"
-version = "0.24.0"
-source = "git+https://github.com/meow-rs/meow-rs?tag=v0.24.0#b63ec4b5e5403a95a492bab765624a65dc6b96df"
+version = "0.26.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.26.0#3e123030915233c5ffa599d72ee60908e65281eb"
 dependencies = [
  "aes 0.9.3",
  "aes-gcm 0.10.3",
@@ -2275,13 +2275,13 @@ dependencies = [
 
 [[package]]
 name = "meow-trie"
-version = "0.24.0"
-source = "git+https://github.com/meow-rs/meow-rs?tag=v0.24.0#b63ec4b5e5403a95a492bab765624a65dc6b96df"
+version = "0.26.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.26.0#3e123030915233c5ffa599d72ee60908e65281eb"
 
 [[package]]
 name = "meow-tunnel"
-version = "0.24.0"
-source = "git+https://github.com/meow-rs/meow-rs?tag=v0.24.0#b63ec4b5e5403a95a492bab765624a65dc6b96df"
+version = "0.26.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.26.0#3e123030915233c5ffa599d72ee60908e65281eb"
 dependencies = [
  "async-trait",
  "dashmap 6.2.1",
@@ -4152,9 +4152,9 @@ dependencies = [
 
 [[package]]
 name = "webpki-root-certs"
-version = "1.0.7"
+version = "1.0.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f31141ce3fc3e300ae89b78c0dd67f9708061d1d2eda54b8209346fd6be9a92c"
+checksum = "58ec80e73fd8baf57bf0d9615554c75348bda990d6d5bbeab964dd068319fecb"
 dependencies = [
  "rustls-pki-types",
 ]

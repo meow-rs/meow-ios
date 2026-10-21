@@ -445,8 +445,8 @@ dependencies = [
 
 [[package]]
 name = "meow-common"
-version = "0.24.0"
-source = "git+https://github.com/meow-rs/meow-rs?tag=v0.24.0#b63ec4b5e5403a95a492bab765624a65dc6b96df"
+version = "0.26.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.26.0#3e123030915233c5ffa599d72ee60908e65281eb"
 dependencies = [
  "async-trait",
  "bytes",
@@ -469,8 +469,8 @@ dependencies = [
 
 [[package]]
 name = "meow-rules"
-version = "0.24.0"
-source = "git+https://github.com/meow-rs/meow-rs?tag=v0.24.0#b63ec4b5e5403a95a492bab765624a65dc6b96df"
+version = "0.26.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.26.0#3e123030915233c5ffa599d72ee60908e65281eb"
 dependencies = [
  "ipnet",
  "maxminddb",
@@ -485,8 +485,8 @@ dependencies = [
 
 [[package]]
 name = "meow-trie"
-version = "0.24.0"
-source = "git+https://github.com/meow-rs/meow-rs?tag=v0.24.0#b63ec4b5e5403a95a492bab765624a65dc6b96df"
+version = "0.26.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.26.0#3e123030915233c5ffa599d72ee60908e65281eb"
 
 [[package]]
 name = "minimal-lexical"
@@ -719,9 +719,9 @@ dependencies = [
 
 [[package]]
 name = "rustls-webpki"
-version = "0.103.13"
+version = "0.103.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "61c429a8649f110dddef65e2a5ad240f747e85f7758a6bccc7e5777bd33f756e"
+checksum = "4443b1b6d39d7c663139942cc4558262562d2c84123bb6282ef177009ca8b281"
 dependencies = [
  "ring",
  "rustls-pki-types",
@@ -1081,14 +1081,14 @@ version = "0.26.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "521bc38abb08001b01866da9f51eb7c5d647a19260e00054a8c7fd5f9e57f7a9"
 dependencies = [
- "webpki-roots 1.0.7",
+ "webpki-roots 1.0.10",
 ]
 
 [[package]]
 name = "webpki-roots"
-version = "1.0.7"
+version = "1.0.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "52f5ee44c96cf55f1b349600768e3ece3a8f26010c05265ab73f945bb1a2eb9d"
+checksum = "1c1c8e20c8a38fc7d65abfe74eb7280e4aa667e8eec8bc84996d2874810748d9"
 dependencies = [
  "rustls-pki-types",
 ]
