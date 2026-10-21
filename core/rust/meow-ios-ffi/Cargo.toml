@@ -56,6 +56,12 @@ rand = "0.9"
 maxminddb = { version = "0.27", features = ["mmap"] }
 
 # Low-level
+# Cargo.lock holds libc at 0.2.189 on purpose: 0.2.190 dropped
+# `RTM_IFINFO2` from its iOS/tvOS bindings, and sysinfo 0.32 (pulled by
+# meow-api for the host-metrics routes) still imports it, so a newer libc
+# fails `cargo build --target aarch64-apple-ios` inside sysinfo. Re-check
+# after a `cargo update` by building one Apple slice; lift the pin once
+# meow-rs moves to a sysinfo release that no longer needs the constant.
 libc = "0.2"
 anyhow = "1"
 
@@ -64,8 +70,30 @@ base64 = "0.22"
 url = "2"
 urlencoding = "2"
 
-# tun2socks
-lwip = "0.3"
+# tun2socks: the madeye lwip fork, consumed as `meow-lwip` from the meow-rs
+# tree at the same tag as the engine crates below (upstream vendored it in
+# #411 because crates.io forbids git deps in published manifests). The
+# library name is still `lwip`, so `use lwip::...` is unchanged, and the
+# former `[patch.crates-io]` git pin on madeye/lwip 5f6f0dfe is gone.
+#
+# The fork replaces upstream ssrlive/lwip's shared-state-plus-LWIP_MUTEX
+# design with a single-owner core: one task (spawned by
+# NetStack::with_buffer_size, so it lands on the tun2socks runtime) makes
+# every lwIP C call, and TcpStream/TcpListener/UdpSocket/NetStack are pure
+# channel endpoints. There is no lock, which structurally removes the
+# 0.3.15 poll_next UAF under flow churn (handles never touch C state), the
+# spin-lock livelock family (project_lwip_timer_livelock), the
+# guard-held-across-Pending deadlock, and the hand-rolled waker bugs
+# (poll_flush Pending-without-waker). Frames are dropped (not deadlocked)
+# on pbuf_alloc failure; close-after-tx-shutdown sets TF_RXCLOSED so
+# FIN_WAIT_2 pcbs reap in 20 s instead of leaking; and, new in-tree since
+# the fork rev (meow-rs #696), tcp_recv_cb hands a fully closed pcb back to
+# lwIP on peer FIN, because lwIP frees TIME_WAIT pcbs without calling errf
+# and a later handle drop would touch a recycled memp slot. Consumer
+# contract: one live stack generation per process; run_tun2socks awaits
+# NetStack::core_done() at teardown to enforce it. crates.io `lwip` 0.4.0
+# has none of this.
+lwip = { package = "meow-lwip", git = "https://github.com/meow-rs/meow-rs", tag = "v0.26.0" }
 
 # Embedded meow-rs engine (formerly mihomo-rust, renamed upstream). Pinned
 # to a release tag normally; bump deliberately rather than tracking main.
@@ -235,8 +263,8 @@ lwip = "0.3"
 #   Vision + mux gate narrowed to sing-mux so Mux.Cool is allowed
 #   (#424/#445).
 # - meow-rs vendored the madeye/lwip fork in-tree as `meow-lwip` (#409,
-#   #411), but only behind `listener-tun`, which this crate does not
-#   enable — so it does not collide with our own `lwip` patch below.
+#   #411), behind `listener-tun`, which this crate does not enable; this
+#   crate now consumes that vendored copy directly (see `lwip` above).
 #
 # Base 0.20.1 (c5557577) picked up the AnyTLS outbound + REALITY
 # rework (#377: REALITY moved in-tree onto rustls primitives so it no longer
@@ -277,8 +305,12 @@ meow-common = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.26.0" }
 # impl unconditionally imports `BatchRecvMessage` / `BatchSendMessage`, which
 # `net/udp.rs` cfg-gates to a narrower OS list. The two lists disagree, so
 # the crate doesn't compile for tvOS at all. Fixed upstream in
-# shadowsocks/shadowsocks-rust#2162; see the `[patch.crates-io]` note below
-# for why we still carry a git pin.
+# shadowsocks/shadowsocks-rust#2162, shipped in shadowsocks 1.25.0
+# (2026-08-26), which meow-proxy's `^1.21` resolves from the registry — the
+# git pin on the merge commit is gone. The registry release requires
+# shadowsocks-crypto ^0.8 (the pinned merge commit was on 0.7), so the AEAD
+# stack moved again; re-test Shadowsocks throughput and all three cipher
+# families on device after touching this.
 meow-config = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.26.0", features = ["boring-tls", "anytls"] }
 meow-dns = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.26.0" }
 meow-tunnel = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.26.0" }
@@ -291,7 +323,7 @@ meow-proxy = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.26.0" }
 meow-transport = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.26.0", default-features = false, features = ["tls"] }
 
 [build-dependencies]
-cbindgen = "0.28"
+cbindgen = "0.29"
 
 [dev-dependencies]
 # `xdg_home_dir_tests` probes the env-var wire-up via meow-config's GeoIP
@@ -318,39 +350,3 @@ lto = true
 codegen-units = 1
 strip = "symbols"
 panic = "abort"
-
-# Patched lwip. rev 5f6f0dfe = the bd627695 single-owner core plus two
-# build.rs-only cherry-picks from the rust branch (tvOS SDK/bindgen support
-# and correct simulator detection for aarch64-apple-ios-sim, which
-# previously built the simulator slice against the device SDK; plus the
-# Windows bcrypt link fix). rev bd627695 replaces the upstream shared-state-plus-
-# LWIP_MUTEX design with a single-owner core: one task (spawned by
-# NetStack::with_buffer_size, so it lands on the tun2socks runtime) makes
-# every lwIP C call, and TcpStream/TcpListener/UdpSocket/NetStack are pure
-# channel endpoints. There is no lock anymore, which structurally removes
-# the wedge classes the earlier patch revs fixed piecemeal or worked
-# around: the 0.3.15 poll_next UAF under flow churn (handles no longer
-# touch C state at all), the spin-lock livelock family
-# (project_lwip_timer_livelock), the guard-held-across-Pending deadlock,
-# and hand-rolled waker bugs (poll_flush Pending-without-waker). Earlier
-# behavioral fixes are preserved in the rewrite: frames are dropped (not
-# deadlocked) on pbuf_alloc failure, and close-after-tx-shutdown sets
-# TF_RXCLOSED so FIN_WAIT_2 pcbs reap in 20 s instead of leaking.
-#
-# Consumer contract: one live stack generation per process; run_tun2socks
-# awaits NetStack::core_done() at teardown to enforce it.
-#
-# Upstream to https://github.com/ssrlive/lwip and drop the patch if they
-# take it.
-[patch.crates-io]
-lwip = { git = "https://github.com/madeye/lwip", rev = "5f6f0dfe025c967157ff328d94efe488852d8755" }
-# shadowsocks/shadowsocks-rust#2162 (the tvOS/watchOS cfg fix described above)
-# merged on 2026-08-08, but crates.io still ships 1.24.0 (2025-12-11) which
-# predates the fix. Pin the merge commit until 1.25.0 ships, then drop this
-# line and let meow-proxy resolve from the registry again.
-#
-# Not tvOS-only: 1.24 -> 1.25 also moves shadowsocks-crypto 0.6 -> 0.7, which
-# swaps the AEAD stack (new aes / cipher / hmac / sha1 majors) for iOS as well.
-# Re-test Shadowsocks throughput and all three cipher families on device after
-# touching this pin.
-shadowsocks = { git = "https://github.com/shadowsocks/shadowsocks-rust", rev = "db65eaa8244603e5ef7c5fbc60add10e41a5477a" }

@@ -19,7 +19,7 @@ subscription — meow does not provide proxy servers.
 Latest version: **2.0** (October 2026) — meow for Apple TV (send a config
 from your iPhone through iCloud), Home Screen / Lock Screen / Control Center
 widgets, subscriptions that update themselves, iPad and iPhone Duo layouts,
-crash reports under Settings › Diagnostics, and the meow-rs 0.21.2 engine
+crash reports under Settings › Diagnostics, and the meow-rs 0.26.0 engine
 (BoringSSL-only TLS, Hysteria2 on quiche, XHTTP transport). See the
 [release notes](https://github.com/meow-rs/meow-ios/releases) for per-version
 changelogs.
