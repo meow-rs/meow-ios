@@ -8,10 +8,7 @@ struct LintDiagnostic {
 
 enum ClashConfigLinter {
     static func lint(_ yaml: String) -> [LintDiagnostic] {
-        guard let node = try? Yams.compose(yaml: yaml) else {
-            return []
-        }
-        guard let root = node.mapping else { return [] }
+        guard let node = try? Yams.compose(yaml: yaml), let root = node.mapping else { return [] }
         var diags: [LintDiagnostic] = []
         checkScalarTypos(node, into: &diags)
         checkProxies(root, into: &diags)

@@ -209,11 +209,9 @@ enum ShadowsocksConfigBuilder {
     }
 
     static func render(servers: [ShadowsocksServer]) throws -> String {
-        guard var root = try Yams.compose(yaml: shadowsocksTemplateYAML) else {
-            throw BuildError.templateBroken
-        }
-
-        guard let existing = root["proxies"]?.sequence.map({ Array($0) }) else {
+        guard var root = try Yams.compose(yaml: shadowsocksTemplateYAML),
+              let existing = root["proxies"]?.sequence.map({ Array($0) })
+        else {
             throw BuildError.templateBroken
         }
         root["proxies"] = Node(existing + servers.map(proxyNode))
