@@ -110,7 +110,7 @@ final class VpnManager {
         guard let manager else { return }
         do {
             let prefs = Preferences.load(from: AppGroup.defaults)
-            try await TunnelControl.start(manager, onDemand: prefs.onDemand)
+            try await TunnelControl.start(manager, onDemand: prefs.onDemand, options: Self.startOptions())
         } catch {
             lastError = error.localizedDescription
             stage = .error
@@ -150,9 +150,27 @@ final class VpnManager {
 
     // MARK: - Private
 
+    #if os(macOS)
+        /// The system extension embedded in the macOS app (project.yml
+        /// `PacketTunnelMac`).
+        static let providerBundleIdentifier = "com.tangzixiang.meow.mac.PacketTunnel"
+    #else
+        static let providerBundleIdentifier = "com.tangzixiang.meow.PacketTunnel"
+    #endif
+
+    /// The macOS extension can't read the app's container, so the config and
+    /// preferences travel with the start; elsewhere the App Group has them.
+    private static func startOptions() throws -> [String: NSObject]? {
+        #if os(macOS)
+            try TunnelHostIPC.startOptions(for: .current(.start))
+        #else
+            nil
+        #endif
+    }
+
     private func configureIfNeeded(_ mgr: NETunnelProviderManager) {
         let proto = (mgr.protocolConfiguration as? NETunnelProviderProtocol) ?? NETunnelProviderProtocol()
-        proto.providerBundleIdentifier = "com.tangzixiang.meow.PacketTunnel"
+        proto.providerBundleIdentifier = Self.providerBundleIdentifier
         // RFC 5737 TEST-NET-1 placeholder — iOS 26 rejects non-RFC strings
         // (e.g. "meow") at NEPacketTunnelNetworkSettings construction with
         // "invalid tunnel remote address". The real proxy endpoint lives in
@@ -210,10 +228,31 @@ final class VpnManager {
                 if status == .disconnected, let msg = SharedStore.readState()?.errorMessage, !msg.isEmpty {
                     self.lastError = msg
                 }
+                #if os(macOS)
+                    // The macOS app only sees the extension's state while the
+                    // tunnel is up, so a failed start never reaches the mirror
+                    // above; NE keeps the error the provider failed with.
+                    if status == .disconnected, self.stage == .connecting {
+                        self.reportLastDisconnectError()
+                    }
+                #endif
                 self.applyConnectionStatus(status)
             }
         }
     }
+
+    #if os(macOS)
+        private func reportLastDisconnectError() {
+            // VpnManager lives as long as the app, so a strong capture is fine.
+            manager?.connection.fetchLastDisconnectError { error in
+                guard let error else { return }
+                let message = error.localizedDescription
+                Task { @MainActor in
+                    self.lastError = message
+                }
+            }
+        }
+    #endif
 
     /// Update `stage` and fire `onConnected` on the non-connected → connected
     /// edge. Exposed at `internal` so `@testable` consumers can exercise the

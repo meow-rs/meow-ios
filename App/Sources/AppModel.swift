@@ -75,9 +75,20 @@ final class AppModel {
             appIconStore = AppIconStore()
             metricKitReporter = MetricKitReporter()
         #endif
-        ipcBridge.onTrafficDidUpdate = { [utilityTrafficChart] snapshot in
-            utilityTrafficChart.ingest(snapshot)
-        }
+        #if os(macOS)
+            // The extension's `traffic` notification can beat the bridge's
+            // mirror write (or not cross from root at all), so the
+            // accumulator also ingests right after each mirrored snapshot.
+            // A repeated snapshot credits nothing.
+            ipcBridge.onTrafficDidUpdate = { [utilityTrafficChart, dailyTrafficAccumulator] snapshot in
+                utilityTrafficChart.ingest(snapshot)
+                dailyTrafficAccumulator.ingestCurrent()
+            }
+        #else
+            ipcBridge.onTrafficDidUpdate = { [utilityTrafficChart] snapshot in
+                utilityTrafficChart.ingest(snapshot)
+            }
+        #endif
     }
 
     func bootstrap() async {
@@ -130,6 +141,11 @@ final class AppModel {
     /// User can re-pick if they want; stale entries are otherwise harmless.
     private func replaySelectedProxies() async {
         defer { replayGeneration &+= 1 }
+        #if os(macOS)
+            // Mirror the credentials the extension minted for this start
+            // before reading them below; the mirror otherwise trails by a poll.
+            await ipcBridge.refreshFromExtension()
+        #endif
         let api = meowAPI
         // Retarget the client at the credentials the extension minted while
         // bringing the tunnel up. On a fresh install the credential file was

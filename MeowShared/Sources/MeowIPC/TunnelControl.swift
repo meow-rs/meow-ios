@@ -20,8 +20,13 @@
         /// Claim the VPN slot and start the tunnel. Re-enables the
         /// configuration if another VPN app took the slot, restores the
         /// on-demand rule, and syncs on-demand to the user's pref — saving
-        /// only when something changed.
-        public static func start(_ manager: NETunnelProviderManager, onDemand: Bool) async throws {
+        /// only when something changed. `options` reach the provider's
+        /// `startTunnel(options:)`; the macOS app passes `TunnelHostIPC`'s.
+        public static func start(
+            _ manager: NETunnelProviderManager,
+            onDemand: Bool,
+            options: [String: NSObject]? = nil,
+        ) async throws {
             var dirty = false
             if !manager.isEnabled {
                 manager.isEnabled = true
@@ -39,7 +44,7 @@
                 try await manager.saveToPreferences()
                 try await manager.loadFromPreferences()
             }
-            try await startTunnel(manager)
+            try await startTunnel(manager, options: options)
         }
 
         /// Turn on-demand off before an intentional stop. iOS reclaims the NE
@@ -86,12 +91,12 @@
         /// app mutating the shared VPN preferences between our load and our
         /// `startVPNTunnel()` call can leave the object stale; the documented
         /// recovery is to reload from preferences and try again.
-        private static func startTunnel(_ manager: NETunnelProviderManager) async throws {
+        private static func startTunnel(_ manager: NETunnelProviderManager, options: [String: NSObject]?) async throws {
             do {
-                try manager.connection.startVPNTunnel()
+                try manager.connection.startVPNTunnel(options: options)
             } catch let error as NEVPNError where error.code == .configurationStale {
                 try await manager.loadFromPreferences()
-                try manager.connection.startVPNTunnel()
+                try manager.connection.startVPNTunnel(options: options)
             }
         }
     }

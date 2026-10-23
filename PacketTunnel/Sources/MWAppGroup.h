@@ -10,6 +10,8 @@ extern NSString *const MWAppGroupIdentifier;
 @property (class, nonatomic, readonly) NSURL *effectiveConfigURL;
 @property (class, nonatomic, readonly) NSURL *stateURL;
 @property (class, nonatomic, readonly) NSURL *trafficURL;
+/// REST-API port + secret the engine mints; mirrors `AppGroup.apiCredentialsURL`.
+@property (class, nonatomic, readonly) NSURL *apiCredentialsURL;
 /// MetricKit payloads; mirrors `AppGroup.metricKitDirectoryURL`.
 @property (class, nonatomic, readonly) NSURL *metricKitDirectoryURL;
 /// Daily MetricKit metrics; mirrors `AppGroup.metricKitMetricsDirectoryURL`.

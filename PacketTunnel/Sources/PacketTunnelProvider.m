@@ -9,20 +9,31 @@
 #import "MWDiagnosticsRunner.h"
 #import "MWEngineLog.h"
 #import "MWMetricKitSubscriber.h"
+#import "MWGeoAssets.h"
 #import "meow_core.h"
 #import <os/log.h>
 #import <mach/mach.h>
 #import <malloc/malloc.h>
 
 // keep in sync with MeowShared/Sources/MeowIPC/DiagnosticsIPC.swift,
-// MeowShared/Sources/MeowIPC/ProxyControlIPC.swift and
-// MeowShared/Sources/MeowIPC/ProxyProbeIPC.swift tag values
+// MeowShared/Sources/MeowIPC/ProxyControlIPC.swift,
+// MeowShared/Sources/MeowIPC/ProxyProbeIPC.swift and
+// MeowShared/Sources/MeowIPC/TunnelHostIPC.swift tag values
 static const uint8_t kDiagTagCanned     = 0x01;
 static const uint8_t kDiagTagUser       = 0x02;
 static const uint8_t kDiagTagMemory     = 0x03;
 static const uint8_t kProxyTagSelect    = 0x04;
 static const uint8_t kProxyTagProbe     = 0x05;
 static const uint8_t kProxyTagCancel    = 0x06;
+static const uint8_t kHostTagSnapshot   = 0x07;
+static const uint8_t kHostTagIntent     = 0x08;
+static const uint8_t kHostTagLog        = 0x09;
+
+// keep in sync with TunnelHostIPC.startOptionKey
+static NSString *const kHostIntentOptionKey = @"meowHostIntent";
+
+// Upper bound on a 0x09 reply: the newest part of the two-file log ring.
+static const NSUInteger kHostLogReplyMaxBytes = 4 * 1024 * 1024;
 
 static os_log_t gLog;
 
@@ -64,6 +75,19 @@ static os_log_t gLog;
 
     NSString *server  = self.protocolConfiguration.serverAddress ?: @"192.0.2.1";
     NSString *profileID = (NSString *)options[@"profileID"];
+
+    // The macOS app hands over the config and preferences with the start
+    // (TunnelHostIPC). An on-demand start carries no options and runs on
+    // the copies saved by the last one.
+    NSData *hostIntent = (NSData *)options[kHostIntentOptionKey];
+    if ([hostIntent isKindOfClass:[NSData class]]) {
+        [self saveHostIntent:[NSJSONSerialization JSONObjectWithData:hostIntent options:0 error:nil]];
+    }
+#if TARGET_OS_OSX
+    // Nothing else puts the geo databases where this process's engine
+    // looks for them: the app stages its own copy in its own container.
+    [MWGeoAssets stageIfNeeded];
+#endif
     // The IPv6 route configuration must match the FFI's AAAA-forwarding toggle
     // (set from the same pref in MWTunnelEngine). Read it here so the TUN claims
     // a v6 address + ::/0 route only when the user enabled IPv6.
@@ -324,7 +348,97 @@ static os_log_t gLog;
         return;
     }
 
+    // Host snapshot (0x07): what the macOS app would otherwise read from the
+    // shared container — state.json, traffic.json, api-credentials.json.
+    if (messageData.length == 1 &&
+        ((const uint8_t *)messageData.bytes)[0] == kHostTagSnapshot) {
+        NSMutableDictionary *snapshot = [NSMutableDictionary dictionary];
+        snapshot[@"state"]   = [MWSharedStore readState];
+        snapshot[@"traffic"] = [MWSharedStore readTraffic];
+        snapshot[@"api"]     = [MWSharedStore readAPICredentials];
+        NSData *data = [NSJSONSerialization dataWithJSONObject:snapshot options:0 error:nil]
+                       ?: [NSData data];
+        if (completionHandler) completionHandler(data);
+        return;
+    }
+
+    // Host intent (0x08 + JSON): the macOS app's replacement for the queued
+    // App Group intent + `command` notification. Saves the config and
+    // preferences it carries first, so a reload picks them up.
+    //
+    //   { "command": "reload", "profileID": "…", "configYAML": "…",
+    //     "preferences": { "com.meow.mixedPort": 7890, … } }
+    if (messageData.length >= 2 &&
+        ((const uint8_t *)messageData.bytes)[0] == kHostTagIntent) {
+        NSData *body = [messageData subdataWithRange:NSMakeRange(1, messageData.length - 1)];
+        NSDictionary *intent = [NSJSONSerialization JSONObjectWithData:body options:0 error:nil];
+        if (![intent isKindOfClass:[NSDictionary class]]) {
+            if (completionHandler) completionHandler(nil);
+            return;
+        }
+        [self saveHostIntent:intent];
+        [self handleIntent:intent];
+        if (completionHandler) completionHandler([@"{}" dataUsingEncoding:NSUTF8StringEncoding]);
+        return;
+    }
+
+    // Host log (0x09): the newest part of the tunnel log ring, oldest line
+    // first, for the macOS app's log export.
+    if (messageData.length == 1 &&
+        ((const uint8_t *)messageData.bytes)[0] == kHostTagLog) {
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
+            NSURL *active = [[[MWAppGroup containerURL] URLByAppendingPathComponent:@"logs" isDirectory:YES]
+                URLByAppendingPathComponent:@"meow-tunnel.log"];
+            NSMutableData *log = [NSMutableData data];
+            NSData *rotated = [NSData dataWithContentsOfURL:[active URLByAppendingPathExtension:@"1"]];
+            if (rotated) [log appendData:rotated];
+            NSData *current = [NSData dataWithContentsOfURL:active];
+            if (current) [log appendData:current];
+            NSData *reply = log;
+            if (log.length > kHostLogReplyMaxBytes) {
+                reply = [log subdataWithRange:NSMakeRange(log.length - kHostLogReplyMaxBytes,
+                                                          kHostLogReplyMaxBytes)];
+            }
+            if (completionHandler) completionHandler(reply);
+        });
+        return;
+    }
+
     if (completionHandler) completionHandler(nil);
+}
+
+// MARK: - Host intents (macOS)
+
+/// Saves the config and preferences a macOS host intent carries where the
+/// engine reads them: config.yaml and the defaults. iOS and tvOS never send
+/// them — the app writes both into the shared App Group itself.
+- (void)saveHostIntent:(NSDictionary *)intent {
+    if (![intent isKindOfClass:[NSDictionary class]]) return;
+
+    NSString *yaml = intent[@"configYAML"];
+    if ([yaml isKindOfClass:[NSString class]]) {
+        NSURL *url = [MWAppGroup configURL];
+        [[NSFileManager defaultManager] createDirectoryAtURL:[url URLByDeletingLastPathComponent]
+                                 withIntermediateDirectories:YES
+                                                  attributes:nil
+                                                       error:nil];
+        NSError *err = nil;
+        if (![yaml writeToURL:url atomically:YES encoding:NSUTF8StringEncoding error:&err]) {
+            os_log_error(gLog, "host config write failed: %{public}@", err);
+        }
+    }
+
+    NSDictionary *prefs = intent[@"preferences"];
+    if ([prefs isKindOfClass:[NSDictionary class]]) {
+        NSUserDefaults *defaults = [MWAppGroup defaults];
+        for (NSString *key in @[MWPrefKeyMixedPort, MWPrefKeyLogLevel, MWPrefKeyAllowLan,
+                                MWPrefKeyBlockHTTP3, MWPrefKeyIPv6Enabled]) {
+            id value = prefs[key];
+            if ([value isKindOfClass:[NSNumber class]] || [value isKindOfClass:[NSString class]]) {
+                [defaults setObject:value forKey:key];
+            }
+        }
+    }
 }
 
 // MARK: - IPC intent handling

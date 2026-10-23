@@ -1,7 +1,8 @@
 import MeowModels
 
-// The tvOS app compiles Services/ too, and tvOS has no WidgetKit.
-#if canImport(WidgetKit)
+// The tvOS and macOS apps compile Services/ too. tvOS has no WidgetKit, and
+// only the iOS app ships widgets.
+#if os(iOS)
     import WidgetKit
 #endif
 
@@ -45,7 +46,7 @@ enum WidgetReloader {
     }
 
     private static func reloadAll() {
-        #if canImport(WidgetKit)
+        #if os(iOS)
             WidgetCenter.shared.reloadAllTimelines()
             // The Control Center switch shows the tunnel state too.
             ControlCenter.shared.reloadAllControls()

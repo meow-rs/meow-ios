@@ -3,6 +3,9 @@ import MeowIPC
 import MeowModels
 import Observation
 import os
+#if os(macOS)
+    import NetworkExtension
+#endif
 
 /// App-side IPC: posts tunnel intents to the extension and observes the state
 /// and traffic snapshots the extension writes to the shared container.
@@ -31,28 +34,42 @@ final class AppIPCBridge {
     /// (proxy-selection replay) must listen here too.
     var onEngineDidRestart: (() -> Void)?
 
+    #if os(macOS)
+        private var hostPollTask: Task<Void, Never>?
+        private var hostSession: NETunnelProviderSession?
+        private var lastMirroredCredentials: TunnelHostSnapshot.APICredentials?
+    #endif
+
     func start() {
         if Self.usesMockIPC {
             startMockIPC()
             return
         }
 
-        reloadState()
-        reloadTraffic()
-        stateObserver = DarwinBridge.addObserver(for: .state) { [weak self] in
-            Task { @MainActor in self?.reloadState() }
-        }
-        trafficObserver = DarwinBridge.addObserver(for: .traffic) { [weak self] in
-            Task { @MainActor in self?.reloadTraffic() }
-        }
-        reloadedObserver = DarwinBridge.addObserver(for: .reloaded) { [weak self] in
-            Task { @MainActor in self?.onEngineDidRestart?() }
-        }
+        #if os(macOS)
+            startHostMirror()
+        #else
+            reloadState()
+            reloadTraffic()
+            stateObserver = DarwinBridge.addObserver(for: .state) { [weak self] in
+                Task { @MainActor in self?.reloadState() }
+            }
+            trafficObserver = DarwinBridge.addObserver(for: .traffic) { [weak self] in
+                Task { @MainActor in self?.reloadTraffic() }
+            }
+            reloadedObserver = DarwinBridge.addObserver(for: .reloaded) { [weak self] in
+                Task { @MainActor in self?.onEngineDidRestart?() }
+            }
+        #endif
     }
 
     func stop() {
         mockTrafficTask?.cancel()
         mockTrafficTask = nil
+        #if os(macOS)
+            hostPollTask?.cancel()
+            hostPollTask = nil
+        #endif
         stateObserver.map { DarwinBridge.removeObserver($0) }
         trafficObserver.map { DarwinBridge.removeObserver($0) }
         reloadedObserver.map { DarwinBridge.removeObserver($0) }
@@ -71,16 +88,20 @@ final class AppIPCBridge {
             return
         }
 
-        let intent = TunnelIntent(command: command, profileID: profileID?.uuidString)
-        do {
-            try SharedStore.queueIntent(intent)
-            DarwinBridge.post(.command)
-        } catch {
-            // Queue failures are local-only (JSON encoding, disk write); log
-            // via OSLog in a real build. The observable-state layer is the
-            // user-visible surface, so we don't need to elevate here.
-            Self.log.error("failed to queue intent: \(String(describing: error), privacy: .public)")
-        }
+        #if os(macOS)
+            sendToHost(command, profileID: profileID)
+        #else
+            let intent = TunnelIntent(command: command, profileID: profileID?.uuidString)
+            do {
+                try SharedStore.queueIntent(intent)
+                DarwinBridge.post(.command)
+            } catch {
+                // Queue failures are local-only (JSON encoding, disk write); log
+                // via OSLog in a real build. The observable-state layer is the
+                // user-visible surface, so we don't need to elevate here.
+                Self.log.error("failed to queue intent: \(String(describing: error), privacy: .public)")
+            }
+        #endif
     }
 
     private func reloadState() {
@@ -99,7 +120,9 @@ final class AppIPCBridge {
     private func reloadTraffic() {
         if let traffic = SharedStore.readTraffic() {
             currentTraffic = traffic
-            relayMemstats(traffic)
+            #if !os(macOS)
+                relayMemstats(traffic)
+            #endif
             onTrafficDidUpdate?(traffic)
         }
     }
@@ -244,3 +267,122 @@ private extension AppIPCBridge {
         )
     }
 }
+
+#if os(macOS)
+    /// The macOS extension is a system extension running as root, so it
+    /// can't write into the app's container or reliably reach it with
+    /// Darwin notifications. The bridge pulls its snapshot over
+    /// `TunnelHostIPC` instead and writes it into the app's own container,
+    /// which every App Group reader (this bridge, `DailyTrafficAccumulator`,
+    /// `AppGroup.apiCredentials()`) then reads unchanged.
+    extension AppIPCBridge {
+        /// How often the bridge pulls while the tunnel is up; the extension
+        /// refreshes its traffic snapshot every 500 ms.
+        private static let hostPollInterval: Duration = .seconds(1)
+
+        func startHostMirror() {
+            reloadState()
+            reloadTraffic()
+            hostPollTask?.cancel()
+            hostPollTask = Task { @MainActor [weak self] in
+                while !Task.isCancelled {
+                    await self?.refreshFromExtension()
+                    try? await Task.sleep(for: Self.hostPollInterval)
+                }
+            }
+        }
+
+        /// Pull and mirror one snapshot now. `AppModel` awaits this before
+        /// replaying proxy selections so the REST credentials the engine just
+        /// minted are on disk first.
+        func refreshFromExtension() async {
+            guard let session = await connectedSession() else {
+                markStoppedIfStale()
+                return
+            }
+            do {
+                let reply = try await TunnelHostIPC.send(TunnelHostIPC.snapshotRequest, over: session)
+                try mirror(TunnelHostIPC.decodeSnapshot(reply))
+            } catch {
+                Self.log.debug("snapshot pull failed: \(String(describing: error), privacy: .public)")
+            }
+        }
+
+        /// The extension's latest log lines, for the log export. Nil while
+        /// the tunnel is down.
+        func fetchTunnelLog() async -> Data? {
+            guard let session = await connectedSession() else { return nil }
+            return try? await TunnelHostIPC.send(TunnelHostIPC.logRequest, over: session)
+        }
+
+        func sendToHost(_ command: TunnelCommand, profileID: UUID?) {
+            // `start` is VpnManager's: it carries the same payload as start
+            // options, and there's no running provider to message yet.
+            guard command != .start else { return }
+            Task { @MainActor in
+                guard let session = await connectedSession() else { return }
+                do {
+                    let message = try TunnelHostIPC.encodeIntent(.current(command, profileID: profileID))
+                    _ = try await TunnelHostIPC.send(message, over: session)
+                    if command == .reload {
+                        // The reload swapped the proxy groups; replay once it's
+                        // in. The extension also posts `reloaded`, but nothing
+                        // guarantees that crosses from root to this user.
+                        onEngineDidRestart?()
+                    }
+                } catch {
+                    let reason = String(describing: error)
+                    Self.log.error("intent \(command.rawValue, privacy: .public) failed: \(reason, privacy: .public)")
+                }
+            }
+        }
+
+        private func connectedSession() async -> NETunnelProviderSession? {
+            if hostSession == nil {
+                hostSession = await MeowAPI.tunnelSession()
+            }
+            guard let session = hostSession else { return nil }
+            switch session.status {
+            case .connected, .reasserting:
+                return session
+            case .invalid:
+                // The configuration was removed or replaced; load the new one
+                // on the next pull.
+                hostSession = nil
+                return nil
+            default:
+                return nil
+            }
+        }
+
+        private func mirror(_ snapshot: TunnelHostSnapshot) {
+            if let api = snapshot.api, api != lastMirroredCredentials,
+               let data = try? JSONEncoder().encode(api)
+            {
+                try? FileManager.default.createDirectory(at: AppGroup.containerURL, withIntermediateDirectories: true)
+                if (try? data.write(to: AppGroup.apiCredentialsURL, options: .atomic)) != nil {
+                    lastMirroredCredentials = api
+                }
+            }
+            if let state = snapshot.state {
+                try? SharedStore.writeState(state)
+                reloadState()
+            }
+            if let traffic = snapshot.traffic, traffic != currentTraffic {
+                try? SharedStore.writeTraffic(traffic)
+                reloadTraffic()
+            }
+        }
+
+        /// The extension's last word before it stopped may never have been
+        /// pulled; once NE says the tunnel is down, don't leave a mirrored
+        /// "connected" behind for the next start to read as a restart.
+        private func markStoppedIfStale() {
+            guard currentState.stage.isActive else { return }
+            var state = currentState
+            state.stage = .stopped
+            try? SharedStore.writeState(state)
+            reloadState()
+        }
+    }
+#endif

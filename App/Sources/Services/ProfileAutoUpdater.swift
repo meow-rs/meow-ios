@@ -117,8 +117,7 @@ final class ProfileAutoUpdater {
     /// network stub or a live timer.
     static func isDue(_ profile: Profile, at date: Date) -> Bool {
         // Local YAML imports have no remote to refetch.
-        guard !profile.url.isEmpty else { return false }
-        guard let window = profile.updateInterval.refreshAfter else { return false }
+        guard !profile.url.isEmpty, let window = profile.updateInterval.refreshAfter else { return false }
         let age = date.timeIntervalSince(profile.lastUpdated)
         // A stamp in the future can only come from a device clock that has
         // since been corrected backwards. Treat it as due: the refresh

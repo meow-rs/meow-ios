@@ -74,4 +74,8 @@ final class UtilityLogsStore {
             }
         }
     }
+
+    func clear() {
+        allEntries.removeAll()
+    }
 }

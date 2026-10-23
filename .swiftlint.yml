@@ -3,6 +3,7 @@ included:
   # PacketTunnelTV has no sources of its own — it compiles PacketTunnel/Sources
   # verbatim — so there is nothing extra to add for the tvOS extension.
   - AppTV
+  - AppMac
   - PacketTunnel
   - Widgets
   - MeowShared/Sources
