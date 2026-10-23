@@ -40,6 +40,10 @@
     return [self readDictFromURL:[MWAppGroup trafficURL]];
 }
 
++ (nullable NSDictionary *)readAPICredentials {
+    return [self readDictFromURL:[MWAppGroup apiCredentialsURL]];
+}
+
 + (BOOL)queueIntent:(NSDictionary *)intent error:(NSError **)error {
     NSData *data = [NSJSONSerialization dataWithJSONObject:intent options:0 error:error];
     if (!data) return NO;

@@ -8,7 +8,21 @@ public enum AppGroup {
     /// Group container itself is read-only — only its `Library/Caches` is
     /// writable — so the root moves one level down there. `MWAppGroup.m`
     /// mirrors this so both processes resolve the same paths.
+    ///
+    /// On macOS nothing is shared: the tunnel is a system extension running
+    /// as root, whose App Group container would be root's rather than the
+    /// user's. Each side keeps the same layout in its own Application Support
+    /// folder, and the app mirrors what the extension reports over
+    /// `TunnelHostIPC`.
     public static var containerURL: URL {
+        #if os(macOS)
+            return URL.applicationSupportDirectory.appending(path: "meow", directoryHint: .isDirectory)
+        #else
+            return sharedContainerURL
+        #endif
+    }
+
+    private static var sharedContainerURL: URL {
         guard let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: identifier) else {
             fatalError("App Group container unavailable — entitlements missing '\(identifier)'")
         }
@@ -120,8 +134,17 @@ public enum AppGroup {
 
     /// UserDefaults suite shared between app and extension. Force-unwrap is
     /// safe once entitlements are wired — missing suite indicates a config bug
-    /// that should fail loudly.
+    /// that should fail loudly. On macOS the app's own defaults: the extension
+    /// gets the preferences it reads through `TunnelHostIPC` instead.
     public static var defaults: UserDefaults {
+        #if os(macOS)
+            return .standard
+        #else
+            return sharedDefaults
+        #endif
+    }
+
+    private static var sharedDefaults: UserDefaults {
         guard let d = UserDefaults(suiteName: identifier) else {
             fatalError("Shared UserDefaults unavailable for suite '\(identifier)'")
         }

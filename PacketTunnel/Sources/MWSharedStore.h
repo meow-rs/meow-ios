@@ -6,6 +6,7 @@
 + (nullable NSDictionary *)readState;
 + (BOOL)writeTraffic:(NSDictionary *)traffic error:(NSError **)error;
 + (nullable NSDictionary *)readTraffic;
++ (nullable NSDictionary *)readAPICredentials;
 + (BOOL)queueIntent:(NSDictionary *)intent error:(NSError **)error;
 + (nullable NSDictionary *)takeIntent;
 @end

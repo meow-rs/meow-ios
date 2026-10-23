@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Build meow-ios-ffi for iOS + tvOS (device and simulator) and pack the four
-# static libs into a single XCFramework.
+# Build meow-ios-ffi for iOS + tvOS (device and simulator) and macOS (Apple
+# Silicon) and pack the five static libs into a single XCFramework.
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -17,6 +17,9 @@ TARGETS_REQUIRED=(
     aarch64-apple-ios-sim
     aarch64-apple-tvos
     aarch64-apple-tvos-sim
+    # The macOS app is Apple Silicon only (project.yml `meow-macos`), so one
+    # arm64 slice — no universal lipo step.
+    aarch64-apple-darwin
 )
 PROFILE="release"
 
@@ -30,7 +33,8 @@ PROFILE="release"
 # below is handed exactly the one variable its platform needs.
 IPHONEOS_MIN="${IPHONEOS_DEPLOYMENT_TARGET:-18.0}"
 TVOS_MIN="${TVOS_DEPLOYMENT_TARGET:-17.0}"
-unset IPHONEOS_DEPLOYMENT_TARGET TVOS_DEPLOYMENT_TARGET
+MACOS_MIN="${MACOSX_DEPLOYMENT_TARGET:-15.0}"
+unset IPHONEOS_DEPLOYMENT_TARGET TVOS_DEPLOYMENT_TARGET MACOSX_DEPLOYMENT_TARGET
 
 for target in "${TARGETS_REQUIRED[@]}"; do
     if ! rustup target list --installed | grep -qx "$target"; then
@@ -46,6 +50,9 @@ for target in "${TARGETS_REQUIRED[@]}"; do
     case "$target" in
         *-apple-tvos*)
             build_env=("TVOS_DEPLOYMENT_TARGET=$TVOS_MIN")
+            ;;
+        *-apple-darwin)
+            build_env=("MACOSX_DEPLOYMENT_TARGET=$MACOS_MIN")
             ;;
         *)
             build_env=("IPHONEOS_DEPLOYMENT_TARGET=$IPHONEOS_MIN")

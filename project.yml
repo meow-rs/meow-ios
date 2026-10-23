@@ -7,6 +7,9 @@ options:
     # NEPacketTunnelProvider landed on tvOS in 17.0 — there is no earlier
     # floor worth supporting because the whole app is the tunnel.
     tvOS: "17.0"
+    # Developer ID only, Apple Silicon only. 15.0 is the floor for the
+    # SwiftUI window/menu-bar APIs the Mac shell uses.
+    macOS: "15.0"
   createIntermediateGroups: true
   generateEmptyDirectories: true
   groupSortPosition: top
@@ -473,6 +476,179 @@ targets:
             /usr/bin/xcrun strip -Sx "$TARGET_BUILD_DIR/$EXECUTABLE_PATH"
           fi
 
+  meow-macos:
+    type: application
+    platform: macOS
+    sources:
+      - path: AppMac/Sources
+      # Same split as meow-tvos: the model + service layer and the app
+      # composition are shared verbatim, only the view layer is the Mac's
+      # own — see AppMac/README.md.
+      - path: App/Sources/Models
+      - path: App/Sources/Services
+      - path: App/Sources/AppModel.swift
+      - path: App/Sources/AppModelContainer.swift
+      - path: AppMac/Assets.xcassets
+      # Strings only. The iOS catalog holds Home Screen icon sets, and the
+      # GeoIP/geosite databases ship inside the system extension, which
+      # stages them into its own container (MWGeoAssets).
+      - path: App/Resources
+        optional: true
+        excludes:
+          - "**/*.md"
+          - "Assets.xcassets"
+          - "Assets.xcassets/**"
+          - "GeoData"
+          - "GeoData/**"
+    info:
+      path: AppMac/Info.plist
+      properties:
+        CFBundleDisplayName: meow
+        CFBundleShortVersionString: "2.0"
+        CFBundleVersion: "2026100401"
+        LSMinimumSystemVersion: $(MACOSX_DEPLOYMENT_TARGET)
+        LSApplicationCategoryType: public.app-category.utilities
+        NSHumanReadableCopyright: "© 2026 meow"
+        NSAppTransportSecurity:
+          NSAllowsArbitraryLoads: false
+          NSAllowsLocalNetworking: true
+        CFBundleURLTypes:
+          - CFBundleURLName: com.tangzixiang.meow.deeplink
+            CFBundleURLSchemes:
+              - meow
+    entitlements:
+      path: AppMac/AppMac.entitlements
+      properties:
+        # Not sandboxed: Developer ID distribution, and the app has to
+        # install a system extension and read the user's files freely.
+        com.apple.developer.networking.networkextension:
+          - packet-tunnel-provider
+        com.apple.developer.system-extension.install: true
+    settings:
+      base:
+        # Its own identifier, not the iOS one: the iOS app also runs on
+        # Apple Silicon Macs (SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD), and the
+        # two must not share a VPN configuration or a defaults domain.
+        PRODUCT_BUNDLE_IDENTIFIER: com.tangzixiang.meow.mac
+        PRODUCT_NAME: meow
+        MACOSX_DEPLOYMENT_TARGET: "15.0"
+        SUPPORTED_PLATFORMS: macosx
+        ARCHS: arm64
+        ENABLE_HARDENED_RUNTIME: YES
+        COMBINE_HIDPI_IMAGES: YES
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        CODE_SIGN_ENTITLEMENTS: AppMac/AppMac.entitlements
+        SWIFT_OBJC_BRIDGING_HEADER: App/Sources/BridgingHeader.h
+        GENERATE_INFOPLIST_FILE: NO
+        CLANG_ENABLE_MODULES: YES
+        HEADER_SEARCH_PATHS:
+          - $(SRCROOT)/MeowCore/include
+        LIBRARY_SEARCH_PATHS:
+          - $(SRCROOT)/MeowCore/Frameworks
+        OTHER_LDFLAGS:
+          - -ObjC
+          # boring-sys (via meow-transport boring-tls feature) vendors
+          # BoringSSL C++ — link libc++ so std::__1 symbols resolve.
+          - -lc++
+    dependencies:
+      # Lands in Contents/Library/SystemExtensions, where
+      # OSSystemExtensionRequest looks for it.
+      - target: PacketTunnelMac
+        embed: true
+        codeSign: true
+      - package: MeowShared
+        product: MeowModels
+      - package: MeowShared
+        product: MeowIPC
+      - package: Yams
+      - framework: MeowCore/Frameworks/MeowCore.xcframework
+        embed: false
+        optional: true
+      - sdk: SystemConfiguration.framework
+    postBuildScripts:
+      - name: Strip Release binary (strip -Sx)
+        runOnlyWhenInstalling: false
+        basedOnDependencyAnalysis: false
+        script: |
+          if [ "$CONFIGURATION" = "Release" ]; then
+            /usr/bin/xcrun strip -Sx "$TARGET_BUILD_DIR/$EXECUTABLE_PATH"
+          fi
+
+  PacketTunnelMac:
+    type: system-extension
+    platform: macOS
+    # The same provider again, hosted as a Network Extension system
+    # extension: Developer ID apps can't ship an app-extension provider. It
+    # runs as root, not as the user, so it doesn't share the app's files —
+    # everything crosses over TunnelHostIPC instead (see AppMac/README.md).
+    # Unsandboxed, like the app: the system doesn't require a sandbox for a
+    # Developer ID system extension, and one would keep the engine from
+    # reading the socket tables that name a flow's process.
+    sources:
+      - path: PacketTunnel/Sources
+      - path: PacketTunnelMac/main.m
+      - path: App/Resources/GeoData
+        buildPhase: resources
+    info:
+      path: PacketTunnelMac/Info.plist
+      properties:
+        CFBundleDisplayName: meow Tunnel
+        CFBundlePackageType: SYSX
+        CFBundleShortVersionString: "2.0"
+        CFBundleVersion: "2026100401"
+        LSMinimumSystemVersion: $(MACOSX_DEPLOYMENT_TARGET)
+        NetworkExtension:
+          # Must start with one of the extension's app groups.
+          NEMachServiceName: $(TeamIdentifierPrefix)com.tangzixiang.meow.mac.tunnel
+          NEProviderClasses:
+            com.apple.networkextension.packet-tunnel: PacketTunnelProvider
+    entitlements:
+      path: PacketTunnelMac/PacketTunnelMac.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - $(TeamIdentifierPrefix)com.tangzixiang.meow.mac
+        # Developer ID export rewrites this to
+        # packet-tunnel-provider-systemextension.
+        com.apple.developer.networking.networkextension:
+          - packet-tunnel-provider
+    settings:
+      base:
+        # Has to extend the app's identifier.
+        PRODUCT_BUNDLE_IDENTIFIER: com.tangzixiang.meow.mac.PacketTunnel
+        # System extensions are conventionally named after their identifier.
+        PRODUCT_NAME: $(PRODUCT_BUNDLE_IDENTIFIER)
+        MACOSX_DEPLOYMENT_TARGET: "15.0"
+        SUPPORTED_PLATFORMS: macosx
+        ARCHS: arm64
+        ENABLE_HARDENED_RUNTIME: YES
+        SKIP_INSTALL: YES
+        CODE_SIGN_ENTITLEMENTS: PacketTunnelMac/PacketTunnelMac.entitlements
+        GENERATE_INFOPLIST_FILE: NO
+        CLANG_ENABLE_MODULES: YES
+        HEADER_SEARCH_PATHS:
+          - $(SRCROOT)/MeowCore/include
+        LIBRARY_SEARCH_PATHS:
+          - $(SRCROOT)/MeowCore/Frameworks
+        OTHER_LDFLAGS:
+          - -ObjC
+          # boring-sys (via meow-transport boring-tls feature) vendors
+          # BoringSSL C++ — link libc++ so std::__1 symbols resolve.
+          - -lc++
+    dependencies:
+      - framework: MeowCore/Frameworks/MeowCore.xcframework
+        embed: false
+        optional: true
+      - sdk: SystemConfiguration.framework
+    postBuildScripts:
+      - name: Strip Release binary (strip -Sx)
+        runOnlyWhenInstalling: false
+        basedOnDependencyAnalysis: false
+        script: |
+          if [ "$CONFIGURATION" = "Release" ]; then
+            /usr/bin/xcrun strip -Sx "$TARGET_BUILD_DIR/$EXECUTABLE_PATH"
+          fi
+
 schemes:
   meow-ios:
     build:
@@ -502,6 +678,16 @@ schemes:
       targets:
         meow-tvos: all
         PacketTunnelTV: all
+    run:
+      config: Debug
+    archive:
+      config: Release
+
+  meow-macos:
+    build:
+      targets:
+        meow-macos: all
+        PacketTunnelMac: all
     run:
       config: Debug
     archive:

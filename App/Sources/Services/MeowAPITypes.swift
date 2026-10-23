@@ -186,6 +186,13 @@ struct ConfigsResponse: Decodable {
 struct LogEntry: Decodable {
     let type: String
     let payload: String
+    /// When the app received the line. The engine's log stream carries no
+    /// timestamp of its own; the macOS Logs page shows this one.
+    var receivedAt = Date()
+
+    private enum CodingKeys: String, CodingKey {
+        case type, payload
+    }
 
     static func from(jsonString: String) -> LogEntry? {
         guard let data = jsonString.data(using: .utf8) else { return nil }
