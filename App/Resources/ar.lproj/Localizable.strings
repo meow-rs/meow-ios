@@ -265,6 +265,7 @@
 "utility.nav.statistics" = "الإحصائيات";
 "utility.nav.logs" = "السجلات";
 "utility.nav.dns" = "DNS";
+"utility.nav.pawPrint" = "بصمة القط";
 
 
 /* Statistics */
@@ -277,6 +278,32 @@
 "statistics.otherNetworks" = "شبكات أخرى";
 "statistics.policies" = "السياسات";
 "statistics.offline" = "اتصل بشبكة VPN لاستخدام هذه الميزة.";
+
+/* Paw Print (the engine logbook) */
+"logbook.empty" = "لم يُسجَّل شيء بعد";
+"logbook.emptyHint" = "تُحفظ هنا لمدة أسبوع عمليات تشغيل النواة وإيقافها، وحالات الخروج غير السليم، وإخفاقات الإعدادات والمزوّدين، وتبديلات البروكسي الوسيط وفحوصه.";
+"logbook.readFailed %@" = "تعذّرت قراءة بصمة القط: \U2068%@\U2069";
+"logbook.first %@" = "أول مرة  %@";
+"logbook.last %@" = "آخر مرة  %@";
+"logbook.search" = "البحث في الأحداث…";
+"logbook.filter" = "تصفية الأحداث";
+"logbook.filterAll" = "كل الأحداث";
+"logbook.filterEmpty %@" = "لا توجد أحداث «\U2068%@\U2069» بعد";
+"logbook.kind.engineStart" = "بدء تشغيل النواة";
+"logbook.kind.engineStop" = "إيقاف النواة";
+"logbook.kind.engineUncleanExit" = "خروج غير سليم";
+"logbook.kind.configReload" = "إعادة تحميل الإعدادات";
+"logbook.kind.configChange" = "تغيير الإعدادات";
+"logbook.kind.subscriptionUpdate" = "تحديث الاشتراك";
+"logbook.kind.proxyProviderUpdate" = "تحديث مزوّد البروكسي";
+"logbook.kind.ruleProviderUpdate" = "تحديث مجموعة القواعد";
+"logbook.kind.geodataUpdate" = "تحديث البيانات الجغرافية";
+"logbook.kind.dialerProxySwitch" = "تبديل البروكسي الوسيط";
+"logbook.kind.dialerProxyCheck" = "فحص البروكسي الوسيط";
+"logbook.kind.networkInterface" = "واجهة الصادر";
+"logbook.kind.listenerStart" = "بدء المستمع";
+"logbook.kind.logbookCleared" = "مُسحت بصمة القط";
+"logbook.kind.logbookReset" = "أُعيد إنشاء بصمة القط";
 
 
 /* DNS */

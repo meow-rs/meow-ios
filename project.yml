@@ -118,6 +118,8 @@ targets:
           # boring-sys (via meow-transport boring-tls feature) vendors
           # BoringSSL C++ — link libc++ so std::__1 symbols resolve.
           - -lc++
+          # The engine's logbook (Paw Print) runs on the system SQLite.
+          - -lsqlite3
     dependencies:
       - target: PacketTunnel
         embed: true
@@ -245,6 +247,8 @@ targets:
           # boring-sys (via meow-transport boring-tls feature) vendors
           # BoringSSL C++ — link libc++ so std::__1 symbols resolve.
           - -lc++
+          # The engine's logbook (Paw Print) runs on the system SQLite.
+          - -lsqlite3
     dependencies:
       - framework: MeowCore/Frameworks/MeowCore.xcframework
         embed: false
@@ -388,6 +392,8 @@ targets:
           # boring-sys (via meow-transport boring-tls feature) vendors
           # BoringSSL C++ — link libc++ so std::__1 symbols resolve.
           - -lc++
+          # The engine's logbook (Paw Print) runs on the system SQLite.
+          - -lsqlite3
     dependencies:
       - target: PacketTunnelTV
         embed: true
@@ -459,6 +465,8 @@ targets:
           # boring-sys (via meow-transport boring-tls feature) vendors
           # BoringSSL C++ — link libc++ so std::__1 symbols resolve.
           - -lc++
+          # The engine's logbook (Paw Print) runs on the system SQLite.
+          - -lsqlite3
     dependencies:
       - framework: MeowCore/Frameworks/MeowCore.xcframework
         embed: false

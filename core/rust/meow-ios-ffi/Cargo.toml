@@ -93,11 +93,24 @@ urlencoding = "2"
 # contract: one live stack generation per process; run_tun2socks awaits
 # NetStack::core_done() at teardown to enforce it. crates.io `lwip` 0.4.0
 # has none of this.
-lwip = { package = "meow-lwip", git = "https://github.com/meow-rs/meow-rs", tag = "v0.26.0" }
+lwip = { package = "meow-lwip", git = "https://github.com/meow-rs/meow-rs", rev = "fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6" }
 
 # Embedded meow-rs engine (formerly mihomo-rust, renamed upstream). Pinned
 # to a release tag normally; bump deliberately rather than tracking main.
 # Each crate is a workspace member of meow-rs/meow-rs.
+#
+# Rev fa7a7d6d (meow-rs main, 2026-10-22) = tag v0.26.1 plus #788, for the
+# Paw Print page. v0.26.1 only re-resolved meow-rs's own Cargo.lock, which
+# a git dependency does not use, so for this crate the change is #788
+# alone. Back to a tag at the next meow-rs release.
+# - Logbook (#769, ADR-0014): meow-common is built with `logbook`.
+#   engine.rs opens it (`logbook::apply`), records `engine_started` and
+#   `engine_stopped`, and calls `dropped_providers.record()` after each
+#   commit (`start` and `reload`), as meow-app and the Android FFI do.
+# - #788: on iOS and tvOS that SQLite is the system libsqlite3 (rusqlite's
+#   `bundled` is left off there), so every target that links MeowCore
+#   passes `-lsqlite3` (project.yml) and the PacketTunnel does not carry
+#   its own copy (about 1 MiB).
 #
 # Tag v0.26.0 (3e123030, 2026-10-21). iOS skipped v0.25.0, so this covers
 # v0.24.0 → v0.26.0. No embedder API change; engine.rs is untouched.
@@ -106,12 +119,6 @@ lwip = { package = "meow-lwip", git = "https://github.com/meow-rs/meow-rs", tag 
 #   never the iOS system store, so Apple's trust-store updates do not reach
 #   it. 1.0.10 drops "emSign ECC Root CA - G3"; 1.0.7 still trusted the
 #   compromised chain.
-# - Logbook (#769, ADR-0014) is behind meow-common's `logbook` feature,
-#   which nothing here enables: no SQLite in the NE, and every producer is a
-#   no-op. An iOS logbook page would enable it, call `logbook::apply`,
-#   `engine_started` and `engine_stopped`, and call
-#   `dropped_providers.record()` after each commit (`start` and `reload`),
-#   as meow-app and the Android FFI do.
 # - `dialer-proxy` chains (#768, #773, #775, #777, #778): a front group
 #   skips members that cannot reach the chained server, keeps an outbound's
 #   chains on the member that carries them, checks a failing outbound
@@ -282,7 +289,7 @@ lwip = { package = "meow-lwip", git = "https://github.com/meow-rs/meow-rs", tag 
 # VMess AEAD interop fix. meow-dns runs in fake-ip mode: the FFI config
 # parser pins `enhanced-mode: fake-ip` with `fake-ip-range: 28.0.0.0/8`
 # (the 2026-07-17 redir-host/DoT switch was reverted in PR #321).
-meow-common = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.26.0" }
+meow-common = { git = "https://github.com/meow-rs/meow-rs", rev = "fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6", features = ["logbook"] }
 # `boring-tls` activates BoringSSL-backed TLS in meow-transport so ECH
 # (RFC 9460 SVCB / HTTPS ECHConfigList) and uTLS fingerprinting work for
 # proxy outbound. Without it, any proxy entry with `ech-opts:` set is
@@ -311,16 +318,16 @@ meow-common = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.26.0" }
 # shadowsocks-crypto ^0.8 (the pinned merge commit was on 0.7), so the AEAD
 # stack moved again; re-test Shadowsocks throughput and all three cipher
 # families on device after touching this.
-meow-config = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.26.0", features = ["boring-tls", "anytls"] }
-meow-dns = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.26.0" }
-meow-tunnel = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.26.0" }
-meow-listener = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.26.0", default-features = false, features = ["listener-mixed"] }
-meow-api = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.26.0" }
-meow-proxy = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.26.0" }
+meow-config = { git = "https://github.com/meow-rs/meow-rs", rev = "fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6", features = ["boring-tls", "anytls"] }
+meow-dns = { git = "https://github.com/meow-rs/meow-rs", rev = "fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6" }
+meow-tunnel = { git = "https://github.com/meow-rs/meow-rs", rev = "fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6" }
+meow-listener = { git = "https://github.com/meow-rs/meow-rs", rev = "fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6", default-features = false, features = ["listener-mixed"] }
+meow-api = { git = "https://github.com/meow-rs/meow-rs", rev = "fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6" }
+meow-proxy = { git = "https://github.com/meow-rs/meow-rs", rev = "fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6" }
 # The probes' `https` requests (src/probe/http.rs) go through the engine's
 # own `TlsLayer`, as its latency test does. Already built for the outbounds
 # via meow-config's `boring-tls`; listed for the direct `use`.
-meow-transport = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.26.0", default-features = false, features = ["tls"] }
+meow-transport = { git = "https://github.com/meow-rs/meow-rs", rev = "fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6", default-features = false, features = ["tls"] }
 
 [build-dependencies]
 cbindgen = "0.29"

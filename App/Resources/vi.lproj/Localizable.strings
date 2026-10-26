@@ -263,6 +263,7 @@
 "utility.nav.statistics" = "Thống kê";
 "utility.nav.logs" = "Nhật ký";
 "utility.nav.dns" = "DNS";
+"utility.nav.pawPrint" = "Dấu chân mèo";
 
 
 /* Statistics */
@@ -275,6 +276,32 @@
 "statistics.otherNetworks" = "Mạng khác";
 "statistics.policies" = "Chính sách";
 "statistics.offline" = "Kết nối VPN để sử dụng.";
+
+/* Paw Print (the engine logbook) */
+"logbook.empty" = "Chưa có bản ghi nào";
+"logbook.emptyHint" = "Các lần khởi động và dừng lõi, lần thoát bất thường, lỗi cấu hình và nhà cung cấp, cùng các lần chuyển và kiểm tra proxy trung gian được lưu tại đây trong một tuần.";
+"logbook.readFailed %@" = "Không đọc được Dấu chân mèo: %@";
+"logbook.first %@" = "Lần đầu  %@";
+"logbook.last %@" = "Lần cuối  %@";
+"logbook.search" = "Tìm sự kiện…";
+"logbook.filter" = "Lọc sự kiện";
+"logbook.filterAll" = "Tất cả sự kiện";
+"logbook.filterEmpty %@" = "Chưa có sự kiện “%@” nào";
+"logbook.kind.engineStart" = "Lõi đã khởi động";
+"logbook.kind.engineStop" = "Lõi đã dừng";
+"logbook.kind.engineUncleanExit" = "Thoát bất thường";
+"logbook.kind.configReload" = "Tải lại cấu hình";
+"logbook.kind.configChange" = "Thay đổi cấu hình";
+"logbook.kind.subscriptionUpdate" = "Cập nhật gói đăng ký";
+"logbook.kind.proxyProviderUpdate" = "Cập nhật nhà cung cấp proxy";
+"logbook.kind.ruleProviderUpdate" = "Cập nhật bộ quy tắc";
+"logbook.kind.geodataUpdate" = "Cập nhật dữ liệu địa lý";
+"logbook.kind.dialerProxySwitch" = "Chuyển proxy trung gian";
+"logbook.kind.dialerProxyCheck" = "Kiểm tra proxy trung gian";
+"logbook.kind.networkInterface" = "Giao diện mạng đi";
+"logbook.kind.listenerStart" = "Khởi động cổng nghe";
+"logbook.kind.logbookCleared" = "Đã xóa Dấu chân mèo";
+"logbook.kind.logbookReset" = "Dấu chân mèo đã được tạo lại";
 
 
 /* DNS */

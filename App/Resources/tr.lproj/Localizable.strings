@@ -266,6 +266,7 @@
 "utility.nav.statistics" = "İstatistikler";
 "utility.nav.logs" = "Günlükler";
 "utility.nav.dns" = "DNS";
+"utility.nav.pawPrint" = "Pati İzi";
 
 
 /* Statistics */
@@ -278,6 +279,32 @@
 "statistics.otherNetworks" = "Diğer ağlar";
 "statistics.policies" = "Politikalar";
 "statistics.offline" = "VPN bağlıyken kullanılabilir.";
+
+/* Paw Print (the engine logbook) */
+"logbook.empty" = "Henüz kayıt yok";
+"logbook.emptyHint" = "Çekirdeğin başlatılıp durdurulması, beklenmedik kapanmalar, yapılandırma ve sağlayıcı hataları ile ön proxy geçişleri ve denetimleri burada bir hafta saklanır.";
+"logbook.readFailed %@" = "Pati İzi okunamadı: %@";
+"logbook.first %@" = "İlk  %@";
+"logbook.last %@" = "Son  %@";
+"logbook.search" = "Olay ara…";
+"logbook.filter" = "Olayları filtrele";
+"logbook.filterAll" = "Tüm olaylar";
+"logbook.filterEmpty %@" = "Henüz “%@” olayı yok";
+"logbook.kind.engineStart" = "Çekirdek başlatıldı";
+"logbook.kind.engineStop" = "Çekirdek durduruldu";
+"logbook.kind.engineUncleanExit" = "Beklenmedik kapanma";
+"logbook.kind.configReload" = "Yapılandırma yeniden yüklendi";
+"logbook.kind.configChange" = "Yapılandırma değişikliği";
+"logbook.kind.subscriptionUpdate" = "Abonelik güncellemesi";
+"logbook.kind.proxyProviderUpdate" = "Proxy sağlayıcı güncellemesi";
+"logbook.kind.ruleProviderUpdate" = "Kural seti güncellemesi";
+"logbook.kind.geodataUpdate" = "Coğrafi veri güncellemesi";
+"logbook.kind.dialerProxySwitch" = "Ön proxy geçişi";
+"logbook.kind.dialerProxyCheck" = "Ön proxy denetimi";
+"logbook.kind.networkInterface" = "Giden arayüz";
+"logbook.kind.listenerStart" = "Dinleyici başlatma";
+"logbook.kind.logbookCleared" = "Pati İzi temizlendi";
+"logbook.kind.logbookReset" = "Pati İzi sıfırlandı";
 
 
 /* DNS */

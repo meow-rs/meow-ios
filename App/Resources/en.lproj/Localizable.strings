@@ -252,6 +252,7 @@
 "utility.nav.statistics" = "Statistics";
 "utility.nav.logs" = "Logs";
 "utility.nav.dns" = "DNS";
+"utility.nav.pawPrint" = "Paw Print";
 
 
 /* Statistics */
@@ -264,6 +265,32 @@
 "statistics.otherNetworks" = "Other Networks";
 "statistics.policies" = "Policies";
 "statistics.offline" = "Connect the VPN to use this.";
+
+/* Paw Print (the engine logbook) */
+"logbook.empty" = "Nothing recorded yet";
+"logbook.emptyHint" = "Engine starts and stops, unclean exits, config and provider failures, and dialer proxy switches and checks are kept here for a week.";
+"logbook.readFailed %@" = "Could not read Paw Print: %@";
+"logbook.first %@" = "First  %@";
+"logbook.last %@" = "Last  %@";
+"logbook.search" = "Search events…";
+"logbook.filter" = "Filter events";
+"logbook.filterAll" = "All Events";
+"logbook.filterEmpty %@" = "No “%@” events yet";
+"logbook.kind.engineStart" = "Engine Started";
+"logbook.kind.engineStop" = "Engine Stopped";
+"logbook.kind.engineUncleanExit" = "Unclean Exit";
+"logbook.kind.configReload" = "Config Reload";
+"logbook.kind.configChange" = "Config Change";
+"logbook.kind.subscriptionUpdate" = "Subscription Update";
+"logbook.kind.proxyProviderUpdate" = "Proxy Provider Update";
+"logbook.kind.ruleProviderUpdate" = "Rule Set Update";
+"logbook.kind.geodataUpdate" = "Geodata Update";
+"logbook.kind.dialerProxySwitch" = "Dialer Proxy Switch";
+"logbook.kind.dialerProxyCheck" = "Dialer Proxy Check";
+"logbook.kind.networkInterface" = "Outbound Interface";
+"logbook.kind.listenerStart" = "Listener Start";
+"logbook.kind.logbookCleared" = "Paw Print Cleared";
+"logbook.kind.logbookReset" = "Paw Print Reset";
 
 
 /* DNS */

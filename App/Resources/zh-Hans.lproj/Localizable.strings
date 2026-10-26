@@ -258,6 +258,7 @@
 "utility.nav.statistics" = "统计";
 "utility.nav.logs" = "日志";
 "utility.nav.dns" = "DNS";
+"utility.nav.pawPrint" = "猫爪印";
 
 
 /* Statistics */
@@ -270,6 +271,32 @@
 "statistics.otherNetworks" = "其他网络";
 "statistics.policies" = "策略";
 "statistics.offline" = "连接 VPN 后可用。";
+
+/* Paw Print (the engine logbook) */
+"logbook.empty" = "暂无记录";
+"logbook.emptyHint" = "引擎的启动与停止、异常退出、配置与订阅失败、前置代理的切换与检查都会在这里保留一周。";
+"logbook.readFailed %@" = "无法读取猫爪印：%@";
+"logbook.first %@" = "首次  %@";
+"logbook.last %@" = "最近  %@";
+"logbook.search" = "搜索事件…";
+"logbook.filter" = "筛选事件";
+"logbook.filterAll" = "全部事件";
+"logbook.filterEmpty %@" = "还没有“%@”事件";
+"logbook.kind.engineStart" = "引擎启动";
+"logbook.kind.engineStop" = "引擎停止";
+"logbook.kind.engineUncleanExit" = "异常退出";
+"logbook.kind.configReload" = "配置重载";
+"logbook.kind.configChange" = "配置修改";
+"logbook.kind.subscriptionUpdate" = "订阅更新";
+"logbook.kind.proxyProviderUpdate" = "代理集合更新";
+"logbook.kind.ruleProviderUpdate" = "规则集更新";
+"logbook.kind.geodataUpdate" = "地理数据更新";
+"logbook.kind.dialerProxySwitch" = "前置代理切换";
+"logbook.kind.dialerProxyCheck" = "前置代理检查";
+"logbook.kind.networkInterface" = "出站网络接口";
+"logbook.kind.listenerStart" = "入站监听启动";
+"logbook.kind.logbookCleared" = "猫爪印已清空";
+"logbook.kind.logbookReset" = "猫爪印已重建";
 
 
 /* DNS */

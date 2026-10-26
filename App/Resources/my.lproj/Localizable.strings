@@ -262,6 +262,7 @@
 "utility.nav.statistics" = "စာရင်းအင်း";
 "utility.nav.logs" = "မှတ်တမ်းများ";
 "utility.nav.dns" = "DNS";
+"utility.nav.pawPrint" = "ကြောင်ခြေရာ";
 
 
 /* Statistics */
@@ -274,6 +275,32 @@
 "statistics.otherNetworks" = "အခြားကွန်ရက်များ";
 "statistics.policies" = "မူဝါဒများ";
 "statistics.offline" = "အသုံးပြုရန် VPN ချိတ်ဆက်ပါ။";
+
+/* Paw Print (the engine logbook) */
+"logbook.empty" = "မှတ်တမ်းတင်ထားခြင်း မရှိသေးပါ";
+"logbook.emptyHint" = "အင်ဂျင် စတင်ခြင်းနှင့် ရပ်တန့်ခြင်း၊ ပုံမှန်မဟုတ်သော ထွက်ခြင်း၊ ပြင်ဆင်မှုနှင့် ပံ့ပိုးသူ မအောင်မြင်မှုများ၊ ကြားခံ ပရောက်စီ ပြောင်းခြင်းနှင့် စစ်ဆေးခြင်းများကို ဤနေရာတွင် တစ်ပတ် သိမ်းထားသည်။";
+"logbook.readFailed %@" = "ကြောင်ခြေရာကို ဖတ်၍မရပါ- %@";
+"logbook.first %@" = "ပထမဆုံး  %@";
+"logbook.last %@" = "နောက်ဆုံး  %@";
+"logbook.search" = "ဖြစ်ရပ်များ ရှာရန်…";
+"logbook.filter" = "ဖြစ်ရပ်များ စစ်ထုတ်ရန်";
+"logbook.filterAll" = "ဖြစ်ရပ်အားလုံး";
+"logbook.filterEmpty %@" = "“%@” ဖြစ်ရပ် မရှိသေးပါ";
+"logbook.kind.engineStart" = "အင်ဂျင် စတင်ခြင်း";
+"logbook.kind.engineStop" = "အင်ဂျင် ရပ်တန့်ခြင်း";
+"logbook.kind.engineUncleanExit" = "ပုံမှန်မဟုတ်သော ထွက်ခြင်း";
+"logbook.kind.configReload" = "ပြင်ဆင်မှု ပြန်တင်ခြင်း";
+"logbook.kind.configChange" = "ပြင်ဆင်မှု ပြောင်းလဲခြင်း";
+"logbook.kind.subscriptionUpdate" = "စာရင်းသွင်းမှု အပ်ဒိတ်";
+"logbook.kind.proxyProviderUpdate" = "ပရောက်စီ ပံ့ပိုးသူ အပ်ဒိတ်";
+"logbook.kind.ruleProviderUpdate" = "စည်းမျဉ်းအစု အပ်ဒိတ်";
+"logbook.kind.geodataUpdate" = "ပထဝီဒေတာ အပ်ဒိတ်";
+"logbook.kind.dialerProxySwitch" = "ကြားခံ ပရောက်စီ ပြောင်းခြင်း";
+"logbook.kind.dialerProxyCheck" = "ကြားခံ ပရောက်စီ စစ်ဆေးခြင်း";
+"logbook.kind.networkInterface" = "အထွက် အင်တာဖေ့စ်";
+"logbook.kind.listenerStart" = "Listener စတင်ခြင်း";
+"logbook.kind.logbookCleared" = "ကြောင်ခြေရာ ရှင်းလင်းပြီး";
+"logbook.kind.logbookReset" = "ကြောင်ခြေရာ ပြန်စတင်ခြင်း";
 
 
 /* DNS */

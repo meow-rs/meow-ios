@@ -1,7 +1,7 @@
 import SwiftUI
 
 private enum UtilityDestination: String, Identifiable {
-    case traffic, statistics, logs, dns
+    case traffic, statistics, logs, dns, pawPrint
 
     var id: String {
         rawValue
@@ -45,6 +45,14 @@ struct UtilityView: View {
                         systemImage: "network",
                         identifier: "utility.nav.dns",
                     ) { destination = .dns }
+
+                    Divider().padding(.leading, 42)
+
+                    NavRow(
+                        title: "utility.nav.pawPrint",
+                        systemImage: "pawprint.fill",
+                        identifier: "utility.nav.pawPrint",
+                    ) { destination = .pawPrint }
                 }
             }
             .padding(16)
@@ -64,6 +72,8 @@ struct UtilityView: View {
                 LogsView()
             case .dns:
                 DnsView()
+            case .pawPrint:
+                LogbookView(model: LogbookModel())
             }
         }
     }
@@ -81,6 +91,7 @@ struct UtilityView: View {
         case "statistics": return .statistics
         case "logs": return .logs
         case "dns": return .dns
+        case "pawPrint": return .pawPrint
         default: return nil
         }
     }

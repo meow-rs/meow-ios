@@ -369,6 +369,12 @@ pub fn start(config_path: &str) -> Result<()> {
 
     install_tracing_subscriber();
 
+    // The logbook opens under the engine home (`$XDG_CONFIG_HOME/meow`, see
+    // `meow_core_set_home_dir`) before the load, so the load's own events —
+    // a provider that fails to fetch — are recorded.
+    let profile = std::fs::read_to_string(config_path).unwrap_or_default();
+    meow_common::logbook::apply(logbook_enabled(&profile));
+
     let cfg = load_stripped_config(config_path)?;
     let raw_config = Arc::new(RwLock::new(cfg.raw.clone()));
 
@@ -546,6 +552,8 @@ pub fn start(config_path: &str) -> Result<()> {
         proxy_provider_refresh.reconcile(&proxy_providers, cfg.raw.proxy_providers.as_ref());
         meow_config::proxy_provider::spawn_deferred_initial_fetches(&proxy_providers);
     }
+    // The providers the load left out, recorded once it is the running config.
+    cfg.dropped_providers.record();
     let live = LiveConfig {
         tunnel: tunnel.clone(),
         raw_config,
@@ -610,7 +618,22 @@ pub fn start(config_path: &str) -> Result<()> {
         api_task,
         listener_tasks,
     });
+    // Last: a start that fails before here is recorded as a failed stop.
+    meow_common::logbook::engine_started(config_path);
     Ok(())
+}
+
+/// The profile's `logbook.enable`, on unless it says otherwise — also when
+/// the YAML does not parse, so the failed load is recorded.
+pub fn logbook_enabled(yaml: &str) -> bool {
+    #[derive(serde::Deserialize)]
+    struct Profile {
+        logbook: Option<meow_config::raw::RawLogbook>,
+    }
+    let logbook = serde_yaml::from_str::<Profile>(yaml)
+        .ok()
+        .and_then(|profile| profile.logbook);
+    meow_config::raw::RawLogbook::enabled(logbook.as_ref())
 }
 
 /// Hot-reload mode/rules/proxies/providers from `config_path` into the
@@ -696,6 +719,7 @@ pub fn reload(config_path: &str) -> Result<()> {
             dialer_registry,
             rule_providers,
             proxy_providers,
+            dropped_providers,
             ..
         } = rebuilt?;
 
@@ -714,6 +738,10 @@ pub fn reload(config_path: &str) -> Result<()> {
             raw.proxy_providers.as_ref(),
             &live.proxy_provider_refresh,
         );
+        dropped_providers.record();
+        meow_common::logbook::reconfigure(meow_config::raw::RawLogbook::enabled(
+            raw.logbook.as_ref(),
+        ));
         *live.raw_config.write() = raw;
         anyhow::Ok(())
     })?;
@@ -744,6 +772,7 @@ pub fn stop() {
         h.abort();
         let _ = runtime.block_on(h);
     }
+    meow_common::logbook::engine_stopped(meow_common::logbook::Stop::Requested("app"));
     info!("meow-rs engine stopped");
 }
 
@@ -780,7 +809,7 @@ pub fn validate(yaml: &str) -> Result<()> {
 
 #[cfg(test)]
 mod tests {
-    use super::{load_stripped_config_from_str, prepare_ios_config};
+    use super::{load_stripped_config_from_str, logbook_enabled, prepare_ios_config};
     use std::net::SocketAddr;
 
     #[test]
@@ -1168,6 +1197,15 @@ proxies:
                 .and_then(|v| v.as_str()),
             Some("gvisor"),
         );
+    }
+
+    #[test]
+    fn the_logbook_is_on_unless_the_profile_turns_it_off() {
+        assert!(logbook_enabled("rules: [MATCH,DIRECT]\n"));
+        assert!(logbook_enabled("logbook: {}\n"));
+        assert!(logbook_enabled("logbook:\n  enable: true\n"));
+        assert!(!logbook_enabled("mode: rule\nlogbook:\n  enable: false\n"));
+        assert!(logbook_enabled("proxies: [\n"), "an unparsable profile");
     }
 
     #[test]

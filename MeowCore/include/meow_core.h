@@ -251,12 +251,12 @@ char *meow_probe_proxy(int64_t id, const char *proxy, const char *kind, const ch
 void meow_cancel_proxy_probe(int64_t id);
 
 /**
- * Free a string returned by `meow_probe_proxy` or `meow_lookup_ip`. NULL is
- * a no-op.
+ * Free a string returned by `meow_probe_proxy`, `meow_lookup_ip` or
+ * `meow_logbook_read`. NULL is a no-op.
  *
  * # Safety
- * `s` must be NULL or a pointer from `meow_probe_proxy` or `meow_lookup_ip`,
- * freed only once.
+ * `s` must be NULL or a pointer from `meow_probe_proxy`, `meow_lookup_ip` or
+ * `meow_logbook_read`, freed only once.
  */
 void meow_string_free(char *s);
 
@@ -275,6 +275,30 @@ void meow_string_free(char *s);
  * (read as empty).
  */
 char *meow_lookup_ip(const char *dir, const char *ip);
+
+/**
+ * A page of the engine's logbook under the engine home `home` (the App
+ * Group config dir), newest first, as `GET /logbook` serves it:
+ * `{"entries": [...], "rev": n, "more": bool}`, or `{"error": "..."}`.
+ * `before` pages back from an entry id, `since` polls for what was written
+ * after a page's `rev`; 0 leaves either unset. `level` is the lowest level
+ * returned, `kind` a kind or its area (`config` matches `config.reload`);
+ * NULL or empty for all.
+ *
+ * Runs in the calling process and needs no engine, so the app reads it
+ * while the VPN is down. Never returns NULL; free the answer with
+ * `meow_string_free`.
+ *
+ * # Safety
+ * `home`, `level` and `kind` must each be a NUL-terminated UTF-8 C string
+ * or NULL (read as empty).
+ */
+char *meow_logbook_read(const char *home,
+                        int64_t before,
+                        int64_t since,
+                        int limit,
+                        const char *level,
+                        const char *kind);
 
 /**
  * Patch a Clash YAML config for iOS: strips `subscriptions`; keeps the

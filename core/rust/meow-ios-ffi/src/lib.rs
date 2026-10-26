@@ -23,6 +23,7 @@ mod diagnostics;
 mod engine;
 mod file_log;
 mod ip_info;
+mod logbook;
 mod logging;
 mod network_traffic;
 mod probe;
@@ -277,6 +278,9 @@ pub unsafe extern "C" fn meow_engine_start(config_path: *const c_char) -> c_int 
     match engine::start(path) {
         Ok(()) => 0,
         Err(e) => {
+            meow_common::logbook::engine_stopped(meow_common::logbook::Stop::Failed(&format!(
+                "{e:#}"
+            )));
             set_error(format!("engine start failed: {}", e));
             -1
         }
@@ -660,12 +664,12 @@ pub extern "C" fn meow_cancel_proxy_probe(id: i64) {
     probe::cancel(id);
 }
 
-/// Free a string returned by `meow_probe_proxy` or `meow_lookup_ip`. NULL is
-/// a no-op.
+/// Free a string returned by `meow_probe_proxy`, `meow_lookup_ip` or
+/// `meow_logbook_read`. NULL is a no-op.
 ///
 /// # Safety
-/// `s` must be NULL or a pointer from `meow_probe_proxy` or `meow_lookup_ip`,
-/// freed only once.
+/// `s` must be NULL or a pointer from `meow_probe_proxy`, `meow_lookup_ip` or
+/// `meow_logbook_read`, freed only once.
 #[no_mangle]
 pub unsafe extern "C" fn meow_string_free(s: *mut c_char) {
     if !s.is_null() {
@@ -694,6 +698,47 @@ pub unsafe extern "C" fn meow_lookup_ip(dir: *const c_char, ip: *const c_char) -
     let dir = cstr_to_str(dir).unwrap_or_default();
     let ip = cstr_to_str(ip).unwrap_or_default();
     let answer = ip_info::lookup_json(dir, ip);
+    // serde_json escapes control characters, so the answer has no NUL.
+    CString::new(answer)
+        .unwrap_or_else(|_| CString::new("{}").unwrap())
+        .into_raw()
+}
+
+// ---------------------------------------------------------------------------
+// Paw Print: the engine's logbook
+// ---------------------------------------------------------------------------
+
+/// A page of the engine's logbook under the engine home `home` (the App
+/// Group config dir), newest first, as `GET /logbook` serves it:
+/// `{"entries": [...], "rev": n, "more": bool}`, or `{"error": "..."}`.
+/// `before` pages back from an entry id, `since` polls for what was written
+/// after a page's `rev`; 0 leaves either unset. `level` is the lowest level
+/// returned, `kind` a kind or its area (`config` matches `config.reload`);
+/// NULL or empty for all.
+///
+/// Runs in the calling process and needs no engine, so the app reads it
+/// while the VPN is down. Never returns NULL; free the answer with
+/// `meow_string_free`.
+///
+/// # Safety
+/// `home`, `level` and `kind` must each be a NUL-terminated UTF-8 C string
+/// or NULL (read as empty).
+#[no_mangle]
+pub unsafe extern "C" fn meow_logbook_read(
+    home: *const c_char,
+    before: i64,
+    since: i64,
+    limit: c_int,
+    level: *const c_char,
+    kind: *const c_char,
+) -> *mut c_char {
+    let home = cstr_to_str(home).unwrap_or_default();
+    let level = cstr_to_str(level).unwrap_or_default();
+    let kind = cstr_to_str(kind).unwrap_or_default();
+    let answer = std::panic::catch_unwind(|| {
+        logbook::read_page(std::path::Path::new(home), before, since, limit, level, kind)
+    })
+    .unwrap_or_else(|_| logbook::error_json("logbook read panicked"));
     // serde_json escapes control characters, so the answer has no NUL.
     CString::new(answer)
         .unwrap_or_else(|_| CString::new("{}").unwrap())

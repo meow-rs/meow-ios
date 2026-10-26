@@ -268,6 +268,7 @@
 "utility.nav.statistics" = "آمار";
 "utility.nav.logs" = "گزارش‌ها";
 "utility.nav.dns" = "DNS";
+"utility.nav.pawPrint" = "ردپای گربه";
 
 
 /* Statistics */
@@ -280,6 +281,32 @@
 "statistics.otherNetworks" = "شبکه‌های دیگر";
 "statistics.policies" = "سیاست‌ها";
 "statistics.offline" = "پس از اتصال VPN در دسترس است.";
+
+/* Paw Print (the engine logbook) */
+"logbook.empty" = "هنوز چیزی ثبت نشده است";
+"logbook.emptyHint" = "راه‌اندازی و توقف هسته، خروج‌های ناهنجار، خطاهای پیکربندی و ارائه‌دهنده و تعویض و بررسی پراکسی واسط به مدت یک هفته اینجا نگه داشته می‌شوند.";
+"logbook.readFailed %@" = "خواندن ردپای گربه ممکن نشد: \U2068%@\U2069";
+"logbook.first %@" = "نخستین بار  %@";
+"logbook.last %@" = "آخرین بار  %@";
+"logbook.search" = "جستجوی رویدادها…";
+"logbook.filter" = "فیلتر رویدادها";
+"logbook.filterAll" = "همه رویدادها";
+"logbook.filterEmpty %@" = "هنوز رویداد «\U2068%@\U2069» ثبت نشده است";
+"logbook.kind.engineStart" = "راه‌اندازی هسته";
+"logbook.kind.engineStop" = "توقف هسته";
+"logbook.kind.engineUncleanExit" = "خروج ناهنجار";
+"logbook.kind.configReload" = "بارگذاری دوباره پیکربندی";
+"logbook.kind.configChange" = "تغییر پیکربندی";
+"logbook.kind.subscriptionUpdate" = "به‌روزرسانی اشتراک";
+"logbook.kind.proxyProviderUpdate" = "به‌روزرسانی ارائه‌دهنده پراکسی";
+"logbook.kind.ruleProviderUpdate" = "به‌روزرسانی مجموعه قوانین";
+"logbook.kind.geodataUpdate" = "به‌روزرسانی داده‌های جغرافیایی";
+"logbook.kind.dialerProxySwitch" = "تعویض پراکسی واسط";
+"logbook.kind.dialerProxyCheck" = "بررسی پراکسی واسط";
+"logbook.kind.networkInterface" = "رابط خروجی";
+"logbook.kind.listenerStart" = "راه‌اندازی شنونده";
+"logbook.kind.logbookCleared" = "ردپای گربه پاک شد";
+"logbook.kind.logbookReset" = "ردپای گربه از نو ساخته شد";
 
 
 /* DNS */

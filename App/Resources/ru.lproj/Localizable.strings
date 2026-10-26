@@ -265,6 +265,7 @@
 "utility.nav.statistics" = "Статистика";
 "utility.nav.logs" = "Журнал";
 "utility.nav.dns" = "DNS";
+"utility.nav.pawPrint" = "Отпечатки лап";
 
 
 /* Statistics */
@@ -277,6 +278,32 @@
 "statistics.otherNetworks" = "Другие сети";
 "statistics.policies" = "Политики";
 "statistics.offline" = "Доступно после подключения VPN.";
+
+/* Paw Print (the engine logbook) */
+"logbook.empty" = "Пока ничего не записано";
+"logbook.emptyHint" = "Запуски и остановки ядра, аварийные завершения, ошибки конфигурации и провайдеров, смены и проверки промежуточного прокси хранятся здесь неделю.";
+"logbook.readFailed %@" = "Не удалось прочитать отпечатки лап: %@";
+"logbook.first %@" = "Впервые  %@";
+"logbook.last %@" = "Последний раз  %@";
+"logbook.search" = "Поиск событий…";
+"logbook.filter" = "Фильтр событий";
+"logbook.filterAll" = "Все события";
+"logbook.filterEmpty %@" = "Событий «%@» пока нет";
+"logbook.kind.engineStart" = "Запуск ядра";
+"logbook.kind.engineStop" = "Остановка ядра";
+"logbook.kind.engineUncleanExit" = "Аварийное завершение";
+"logbook.kind.configReload" = "Перезагрузка конфигурации";
+"logbook.kind.configChange" = "Изменение конфигурации";
+"logbook.kind.subscriptionUpdate" = "Обновление подписки";
+"logbook.kind.proxyProviderUpdate" = "Обновление провайдера прокси";
+"logbook.kind.ruleProviderUpdate" = "Обновление набора правил";
+"logbook.kind.geodataUpdate" = "Обновление геоданных";
+"logbook.kind.dialerProxySwitch" = "Смена промежуточного прокси";
+"logbook.kind.dialerProxyCheck" = "Проверка через промежуточный прокси";
+"logbook.kind.networkInterface" = "Исходящий интерфейс";
+"logbook.kind.listenerStart" = "Запуск слушателя";
+"logbook.kind.logbookCleared" = "Отпечатки лап очищены";
+"logbook.kind.logbookReset" = "Отпечатки лап пересозданы";
 
 
 /* DNS */
