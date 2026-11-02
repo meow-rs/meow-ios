@@ -19,7 +19,7 @@ defaults:
 
 jobs:
   lint:
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
       - name: SwiftLint
@@ -35,7 +35,7 @@ jobs:
     # PRD v1.1: single pure-Rust MeowCore.xcframework — no Go toolchain.
     # meow-rs is pulled as a cargo git dependency (pinned via Cargo.lock),
     # not a submodule, so no --recurse-submodules here.
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
       - name: Set up Rust (stable + iOS/tvOS targets)
@@ -101,7 +101,7 @@ jobs:
     # issue #294: this crate imported a since-removed FFI symbol
     # (meow_tun_set_accept_cap — TCP accept caps were deliberately removed,
     # issues #259/#260) and drifted out of CI undetected.
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
       - name: Set up Rust (stable)
