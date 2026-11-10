@@ -84,7 +84,11 @@ struct TVRouteModeMenu: View {
             return
         }
         do {
-            mode = try await RouteMode(wire: meowAPI.getConfigs().mode)
+            let wire = try await meowAPI.getConfigs().mode
+            // An answer that arrives after the tunnel went down describes
+            // an engine that is gone.
+            guard isConnected else { return }
+            mode = RouteMode(wire: wire)
         } catch {
             // Keeps what the row shows; the next refresh reads it again.
         }
