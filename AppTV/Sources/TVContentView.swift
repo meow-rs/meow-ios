@@ -2,8 +2,8 @@ import MeowModels
 import SwiftData
 import SwiftUI
 
-/// The whole tvOS app in one screen: title, connect button, subscription-URL
-/// field, profile list.
+/// The whole tvOS app in one screen: title, connect button, route mode,
+/// subscription-URL field, profile list.
 ///
 /// A re-implementation rather than a reuse of `ContentView`: everything under
 /// `App/Sources/Views` is iPhone-shaped (tab bar, sheets, swipe actions, the
@@ -105,6 +105,8 @@ struct TVContentView: View {
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
             }
+
+            TVRouteModeMenu()
         }
         .padding(40)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
