@@ -419,12 +419,28 @@
 
 /* Traffic */
 "traffic.nav.title" = "流量";
-"traffic.empty.title" = "暂无流量数据";
-"traffic.empty.description" = "启动 VPN 后开始记录用量。";
-"traffic.label.speed" = "速率";
-"traffic.label.last7Days" = "最近 7 天";
 "traffic.tile.today" = "今天";
 "traffic.tile.thisMonth" = "本月";
+"traffic.dataUsage" = "流量统计";
+"traffic.period.lastMonth" = "上月";
+"traffic.by.host" = "主机";
+"traffic.by.policy" = "策略";
+"traffic.by.network" = "网络";
+"traffic.details.title" = "流量详情";
+"traffic.details.period" = "时段";
+"traffic.details.groupBy" = "分组方式";
+"traffic.details.empty" = "此时段没有流量记录";
+"traffic.details.error %@" = "无法读取流量详情：%@";
+"traffic.details.footer" = "在本设备保存 62 天，约每分钟更新一次。";
+"traffic.details.clear" = "清除流量详情";
+"traffic.details.clearConfirm" = "删除最近 62 天按主机、策略和网络记录的流量？每日总量会保留。";
+"traffic.details.clearFailed %@" = "无法清除流量详情：%@";
+"traffic.details.unknown" = "未知";
+"traffic.details.otherIPs" = "其他 IP 地址";
+"traffic.details.otherIPsNote %lld" = "每天最多单独记录 %lld 个 IP 地址，当天超出后其他 IP 地址的流量都计入这里。";
+"traffic.network.wifi" = "Wi-Fi";
+"traffic.network.ethernet" = "以太网";
+"traffic.requests %lld" = "%lld 次请求";
 
 
 /* tvOS home screen (TVContentView) */
@@ -538,16 +554,6 @@
 "subscriptions.row.a11y.editHint" = "打开 YAML 编辑器";
 "subscriptions.row.a11y.refreshHint" = "从远程地址获取最新配置";
 "subscriptions.editInfo.a11y.updateIntervalHint" = "选择此配置自动重新拉取的频率";
-
-
-/* Accessibility — Traffic charts */
-"a11y.traffic.speedChart.value %@ %@" = "上传 %@/秒，下载 %@/秒";
-"a11y.traffic.historyChart.value %@ %@" = "共上传 %@，共下载 %@";
-"a11y.traffic.chart.axis.time" = "时间";
-"a11y.traffic.chart.seconds %@" = "%@ 秒";
-"a11y.traffic.chart.axis.speed" = "速度";
-"a11y.traffic.chart.axis.day" = "日期";
-"a11y.traffic.chart.axis.data" = "流量";
 
 
 /* Accessibility — Settings */

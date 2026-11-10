@@ -426,12 +426,28 @@
 
 /* Traffic */
 "traffic.nav.title" = "حركة البيانات";
-"traffic.empty.title" = "لم تُسجَّل أي حركة بيانات بعد";
-"traffic.empty.description" = "شغّل VPN لبدء تسجيل الاستخدام.";
-"traffic.label.speed" = "السرعة";
-"traffic.label.last7Days" = "آخر 7 أيام";
 "traffic.tile.today" = "اليوم";
 "traffic.tile.thisMonth" = "هذا الشهر";
+"traffic.dataUsage" = "استخدام البيانات";
+"traffic.period.lastMonth" = "الشهر الماضي";
+"traffic.by.host" = "المضيف";
+"traffic.by.policy" = "السياسة";
+"traffic.by.network" = "الشبكة";
+"traffic.details.title" = "تفاصيل حركة البيانات";
+"traffic.details.period" = "الفترة";
+"traffic.details.groupBy" = "التجميع حسب";
+"traffic.details.empty" = "لا توجد حركة بيانات مسجلة لهذه الفترة";
+"traffic.details.error %@" = "تعذّرت قراءة تفاصيل حركة البيانات: \U2068%@\U2069";
+"traffic.details.footer" = "تُحفظ على هذا الجهاز لمدة ٦٢ يومًا، وتُحدَّث مرة كل دقيقة تقريبًا.";
+"traffic.details.clear" = "مسح تفاصيل حركة البيانات";
+"traffic.details.clearConfirm" = "حذف حركة البيانات حسب المضيف والسياسة والشبكة لآخر ٦٢ يومًا؟ ستبقى الإجماليات اليومية.";
+"traffic.details.clearFailed %@" = "تعذّر مسح تفاصيل حركة البيانات: \U2068%@\U2069";
+"traffic.details.unknown" = "غير معروف";
+"traffic.details.otherIPs" = "عناوين IP أخرى";
+"traffic.details.otherIPsNote %lld" = "يُسجَّل كل يوم ما يصل إلى %lld عنوان IP كلٌّ على حدة. وتُحتسب هنا حركة البيانات إلى عناوين IP الأخرى في ذلك اليوم.";
+"traffic.network.wifi" = "Wi-Fi";
+"traffic.network.ethernet" = "إيثرنت";
+"traffic.requests %lld" = "%lld طلب";
 
 
 /* tvOS home screen (TVContentView) — the tvOS target compiles App/Resources
@@ -547,16 +563,6 @@
 "subscriptions.row.a11y.editHint" = "يفتح محرر YAML";
 "subscriptions.row.a11y.refreshHint" = "يجلب أحدث تكوين من عنوان URL البعيد";
 "subscriptions.editInfo.a11y.updateIntervalHint" = "يحدد مدى تكرار إعادة جلب هذا التكوين تلقائيًا";
-
-
-/* Accessibility — Traffic charts */
-"a11y.traffic.speedChart.value %@ %@" = "الرفع %@ في الثانية، التنزيل %@ في الثانية";
-"a11y.traffic.historyChart.value %@ %@" = "إجمالي الرفع %@، إجمالي التنزيل %@";
-"a11y.traffic.chart.axis.time" = "الوقت";
-"a11y.traffic.chart.seconds %@" = "الثانية %@";
-"a11y.traffic.chart.axis.speed" = "السرعة";
-"a11y.traffic.chart.axis.day" = "اليوم";
-"a11y.traffic.chart.axis.data" = "حجم البيانات";
 
 
 /* Accessibility — Settings */

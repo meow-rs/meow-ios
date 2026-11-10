@@ -374,6 +374,10 @@ pub fn start(config_path: &str) -> Result<()> {
     // a provider that fails to fetch — are recorded.
     let profile = std::fs::read_to_string(config_path).unwrap_or_default();
     meow_common::logbook::apply(logbook_enabled(&profile));
+    // The traffic ledger behind the Traffic page, in the same home
+    // (`traffic/`): it counts what the tunnel this start builds carries.
+    let (ledger_enabled, ledger_options) = traffic_ledger(&profile);
+    meow_common::traffic_ledger::apply(ledger_enabled, ledger_options);
 
     let cfg = load_stripped_config(config_path)?;
     let raw_config = Arc::new(RwLock::new(cfg.raw.clone()));
@@ -640,6 +644,34 @@ pub fn logbook_enabled(yaml: &str) -> bool {
     meow_config::raw::RawLogbook::enabled(logbook.as_ref())
 }
 
+/// The profile's `traffic-ledger`: on, with hosts, unless it says
+/// otherwise, as meow-app reads it; also when the YAML does not parse, so
+/// the run counts its traffic either way.
+pub fn traffic_ledger(yaml: &str) -> (bool, meow_common::traffic_ledger::Options) {
+    #[derive(serde::Deserialize)]
+    struct Profile {
+        #[serde(rename = "traffic-ledger")]
+        traffic_ledger: Option<meow_config::raw::RawTrafficLedger>,
+    }
+    let ledger = serde_yaml::from_str::<Profile>(yaml)
+        .ok()
+        .and_then(|profile| profile.traffic_ledger);
+    ledger_settings(ledger.as_ref())
+}
+
+/// `traffic-ledger`'s effective settings on iOS: never `apps`. Every flow
+/// reaches the engine from tun2socks on loopback, so the owning process a
+/// lookup would find is this extension, never the app that opened it.
+fn ledger_settings(
+    ledger: Option<&meow_config::raw::RawTrafficLedger>,
+) -> (bool, meow_common::traffic_ledger::Options) {
+    let options = meow_common::traffic_ledger::Options {
+        apps: false,
+        ..meow_config::raw::RawTrafficLedger::options(ledger)
+    };
+    (meow_config::raw::RawTrafficLedger::enabled(ledger), options)
+}
+
 /// Hot-reload mode/rules/proxies/providers from `config_path` into the
 /// running engine.
 ///
@@ -749,6 +781,8 @@ pub fn reload(config_path: &str) -> Result<()> {
         meow_common::logbook::reconfigure(meow_config::raw::RawLogbook::enabled(
             raw.logbook.as_ref(),
         ));
+        let (ledger_enabled, ledger_options) = ledger_settings(raw.traffic_ledger.as_ref());
+        meow_common::traffic_ledger::reconfigure(ledger_enabled, ledger_options);
         *live.raw_config.write() = raw;
         anyhow::Ok(())
     })?;
@@ -779,6 +813,10 @@ pub fn stop() {
         h.abort();
         let _ = runtime.block_on(h);
     }
+    // Write what the flows carried this run while `state` still holds the
+    // tunnel they count in: the extension may exit right after the stop,
+    // before the ledger's next write a minute on.
+    meow_common::traffic_ledger::flush();
     meow_common::logbook::engine_stopped(meow_common::logbook::Stop::Requested("app"));
     info!("meow-rs engine stopped");
 }
@@ -816,7 +854,9 @@ pub fn validate(yaml: &str) -> Result<()> {
 
 #[cfg(test)]
 mod tests {
-    use super::{load_stripped_config_from_str, logbook_enabled, prepare_ios_config};
+    use super::{
+        load_stripped_config_from_str, logbook_enabled, prepare_ios_config, traffic_ledger,
+    };
     use std::net::SocketAddr;
 
     #[test]
@@ -1216,6 +1256,37 @@ proxies:
     }
 
     #[test]
+    fn the_traffic_ledger_is_on_with_hosts_and_never_apps() {
+        use meow_common::traffic_ledger::Options;
+        let on = Options {
+            hosts: true,
+            apps: false,
+        };
+        assert_eq!(traffic_ledger("rules: [MATCH,DIRECT]\n"), (true, on));
+        assert_eq!(traffic_ledger("proxies: [\n"), (true, on), "unparsable");
+        assert_eq!(
+            traffic_ledger("traffic-ledger:\n  apps: true\n"),
+            (true, on),
+            "no app is known on iOS"
+        );
+        assert_eq!(
+            traffic_ledger("traffic-ledger:\n  hosts: false\n"),
+            (
+                true,
+                Options {
+                    hosts: false,
+                    apps: false
+                }
+            )
+        );
+        assert!(!traffic_ledger("traffic-ledger:\n  enable: false\n").0);
+        // `reload` reads it from the profile `prepare_ios_config` stripped.
+        let stripped =
+            prepare_ios_config("port: 7890\ntraffic-ledger:\n  enable: false\n").unwrap();
+        assert!(!traffic_ledger(&stripped).0);
+    }
+
+    #[test]
     fn strip_is_idempotent_on_clean_config() {
         let yaml = "mode: rule\nlog-level: info\n";
         let once = prepare_ios_config(yaml).expect("strip ok");
@@ -1393,6 +1464,11 @@ rules:
     }
 }
 
+/// Held by the tests that install the process-wide traffic ledger, as
+/// every engine `start` does.
+#[cfg(test)]
+pub(crate) static LEDGER_TESTS: parking_lot::Mutex<()> = parking_lot::Mutex::new(());
+
 #[cfg(test)]
 mod reload_tests {
     //! `reload` commits into the live provider registries instead of loading
@@ -1465,6 +1541,7 @@ rules:
         write_provider(tmp.path(), "other.yaml", "node-b");
 
         std::fs::write(&config_path, config("rule", "nodes", "nodes.yaml", "")).unwrap();
+        let _ledger = super::LEDGER_TESTS.lock();
         start(config_path_str).expect("engine start");
         let _stop = StopOnDrop;
         let started = live();

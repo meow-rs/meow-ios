@@ -2042,6 +2042,7 @@ dependencies = [
  "libc",
  "libproc",
  "parking_lot",
+ "psl",
  "rusqlite",
  "serde",
  "serde_json",

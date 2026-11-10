@@ -426,12 +426,28 @@
 
 /* Traffic */
 "traffic.nav.title" = "Трафик";
-"traffic.empty.title" = "Данных о трафике пока нет";
-"traffic.empty.description" = "Запустите VPN, чтобы начать учёт трафика.";
-"traffic.label.speed" = "Скорость";
-"traffic.label.last7Days" = "Последние 7 дней";
 "traffic.tile.today" = "Сегодня";
 "traffic.tile.thisMonth" = "В этом месяце";
+"traffic.dataUsage" = "Расход трафика";
+"traffic.period.lastMonth" = "Прошлый месяц";
+"traffic.by.host" = "Хост";
+"traffic.by.policy" = "Политика";
+"traffic.by.network" = "Сеть";
+"traffic.details.title" = "Подробности трафика";
+"traffic.details.period" = "Период";
+"traffic.details.groupBy" = "Группировка";
+"traffic.details.empty" = "За этот период трафик не записан";
+"traffic.details.error %@" = "Не удалось прочитать подробности трафика: %@";
+"traffic.details.footer" = "Хранится на устройстве 62 дня, обновляется примерно раз в минуту.";
+"traffic.details.clear" = "Очистить подробности трафика";
+"traffic.details.clearConfirm" = "Удалить трафик по хостам, политикам и сетям за последние 62 дня? Суточные итоги сохранятся.";
+"traffic.details.clearFailed %@" = "Не удалось очистить подробности трафика: %@";
+"traffic.details.unknown" = "Неизвестно";
+"traffic.details.otherIPs" = "Другие IP-адреса";
+"traffic.details.otherIPsNote %lld" = "Каждый день отдельно учитывается до %lld IP-адресов. Трафик к остальным IP-адресам за этот день учитывается здесь.";
+"traffic.network.wifi" = "Wi-Fi";
+"traffic.network.ethernet" = "Ethernet";
+"traffic.requests %lld" = "%lld запроса";
 
 
 /* tvOS home screen (TVContentView) — the tvOS target compiles App/Resources
@@ -547,16 +563,6 @@
 "subscriptions.row.a11y.editHint" = "Открывает редактор YAML";
 "subscriptions.row.a11y.refreshHint" = "Загружает последнюю версию конфигурации с удалённого URL";
 "subscriptions.editInfo.a11y.updateIntervalHint" = "Выбирает, как часто эта конфигурация обновляется автоматически";
-
-
-/* Accessibility — Traffic charts */
-"a11y.traffic.speedChart.value %@ %@" = "Отправка %@ в секунду, загрузка %@ в секунду";
-"a11y.traffic.historyChart.value %@ %@" = "Всего отправлено %@, всего загружено %@";
-"a11y.traffic.chart.axis.time" = "Время";
-"a11y.traffic.chart.seconds %@" = "Секунд: %@";
-"a11y.traffic.chart.axis.speed" = "Скорость";
-"a11y.traffic.chart.axis.day" = "День";
-"a11y.traffic.chart.axis.data" = "Объём данных";
 
 
 /* Accessibility — Settings */

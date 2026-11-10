@@ -2,40 +2,6 @@ import Foundation
 import MeowModels
 import Observation
 
-/// Rolling 60s upload/download rate samples for the Traffic utility screen.
-/// Hoisted out of `TrafficView` so the chart survives Utility hub back-navigation.
-@MainActor
-@Observable
-final class UtilityTrafficChartStore {
-    private(set) var samples: [TrafficRateSample] = []
-    private let window: TimeInterval = 60
-
-    func ingest(_ snapshot: TrafficSnapshot) {
-        // The IPC bridge calls this on every store refresh, not only on value
-        // changes (unlike the old `.onChange` in TrafficView) — skip repeats
-        // so chart sample IDs (timestamps) stay unique.
-        guard samples.last?.timestamp != snapshot.timestamp else { return }
-        let sample = TrafficRateSample(
-            timestamp: snapshot.timestamp,
-            uploadRate: snapshot.uploadRate,
-            downloadRate: snapshot.downloadRate,
-        )
-        samples.append(sample)
-        let cutoff = Date().addingTimeInterval(-window)
-        samples.removeAll { $0.timestamp < cutoff }
-    }
-}
-
-struct TrafficRateSample: Identifiable {
-    var id: Date {
-        timestamp
-    }
-
-    let timestamp: Date
-    let uploadRate: Int64
-    let downloadRate: Int64
-}
-
 /// Log ring buffer and live WebSocket subscription for the Logs utility screen.
 /// Hoisted so entries survive Utility hub back-navigation.
 @MainActor

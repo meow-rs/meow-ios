@@ -16,6 +16,21 @@ static os_log_t gLog;
 
 static const int kLocalDNSPort = 1053;
 
+// The traffic ledger files each day's traffic under the device's local date;
+// tell it the zone's UTC offset now and its next change (daylight saving).
+// Cheap and idempotent: the core ignores the zone it already has.
+static void MWPushTimeZone(void) {
+    NSTimeZone *zone = [NSTimeZone systemTimeZone];
+    NSDate *now = [NSDate date];
+    NSDate *next = [zone nextDaylightSavingTimeTransitionAfterDate:now];
+    int64_t nextAt = next ? (int64_t)next.timeIntervalSince1970 : 0;
+    // One second in, so the offset read is the one the change brings.
+    int32_t nextOffset = next
+        ? (int32_t)[zone secondsFromGMTForDate:[next dateByAddingTimeInterval:1]]
+        : 0;
+    meow_traffic_set_time_zone((int32_t)[zone secondsFromGMTForDate:now], nextAt, nextOffset);
+}
+
 @implementation MWTunnelEngine {
     NEPacketTunnelFlow *_flow;
     MWPacketWriter *_writer;
@@ -34,6 +49,8 @@ static const int kLocalDNSPort = 1053;
     // Reports the network the engine's sockets go out on, for the split the
     // traffic snapshots carry (meow_engine_interface_traffic).
     nw_path_monitor_t _pathMonitor;
+    // Re-sends the time zone to the traffic ledger when the user changes it.
+    id _timeZoneObserver;
     int64_t _lastUp;
     int64_t _lastDown;
     NSTimeInterval _lastTime;
@@ -76,6 +93,8 @@ static const int kLocalDNSPort = 1053;
     // are independent of the engine and safe to run this early.
     meow_core_init();
     meow_core_set_home_dir(homeDir.UTF8String);
+    // Before the start, so the first traffic is filed under the local day.
+    MWPushTimeZone();
 
     if (![self writeEffectiveConfigWithPrefs:prefs error:error]) {
         return NO;
@@ -138,6 +157,7 @@ static const int kLocalDNSPort = 1053;
 
     [self startIngressLoop];
     [self startPathMonitor];
+    [self startTimeZoneObserver];
     [self startTrafficPump];
     return YES;
 }
@@ -165,6 +185,7 @@ static const int kLocalDNSPort = 1053;
         atomic_store_explicit(&_ingressRunning, NO, memory_order_relaxed);
         atomic_fetch_add_explicit(&_ingressEpoch, 1, memory_order_relaxed);
         [self stopPathMonitor];
+        [self stopTimeZoneObserver];
         [self releaseWriterContext];
         _started = NO;
         return NO;
@@ -224,6 +245,7 @@ static const int kLocalDNSPort = 1053;
 
     [self stopTrafficPump];
     [self stopPathMonitor];
+    [self stopTimeZoneObserver];
 
     // BLOCKING stop: wait for the tun2socks run task — and its egress callback
     // loop — to fully terminate before releasing the writer ctx below.
@@ -292,10 +314,10 @@ static const int kLocalDNSPort = 1053;
 // physical network the engine dials out on.
 static int MWNetworkKindForPath(nw_path_t path) {
     if (nw_path_get_status(path) != nw_path_status_satisfied) return MEOW_NETWORK_KIND_NONE;
-    if (nw_path_uses_interface_type(path, nw_interface_type_wifi) ||
-        nw_path_uses_interface_type(path, nw_interface_type_wired)) {
-        return MEOW_NETWORK_KIND_WIFI_ETHERNET;
-    }
+    // Wi-Fi and Ethernet share the Statistics split; the traffic ledger
+    // names them apart.
+    if (nw_path_uses_interface_type(path, nw_interface_type_wifi)) return MEOW_NETWORK_KIND_WIFI_ETHERNET;
+    if (nw_path_uses_interface_type(path, nw_interface_type_wired)) return MEOW_NETWORK_KIND_ETHERNET;
     if (nw_path_uses_interface_type(path, nw_interface_type_cellular)) return MEOW_NETWORK_KIND_CELLULAR;
     return MEOW_NETWORK_KIND_OTHER;
 }
@@ -320,6 +342,26 @@ static int MWNetworkKindForPath(nw_path_t path) {
     // The kind outlives the engine in the Rust core; the next start's bytes
     // wait for its own monitor's first report instead of going to this one's.
     meow_engine_set_network_kind(MEOW_NETWORK_KIND_NONE);
+}
+
+// MARK: - Time zone
+
+- (void)startTimeZoneObserver {
+    if (_timeZoneObserver) return;
+    _timeZoneObserver = [[NSNotificationCenter defaultCenter]
+        addObserverForName:NSSystemTimeZoneDidChangeNotification
+                    object:nil
+                     queue:nil
+                usingBlock:^(NSNotification *note) {
+        [NSTimeZone resetSystemTimeZone];
+        MWPushTimeZone();
+    }];
+}
+
+- (void)stopTimeZoneObserver {
+    if (!_timeZoneObserver) return;
+    [[NSNotificationCenter defaultCenter] removeObserver:_timeZoneObserver];
+    _timeZoneObserver = nil;
 }
 
 // MARK: - Traffic pump (500 ms interval)
@@ -394,6 +436,13 @@ static int MWNetworkKindForPath(nw_path_t path) {
     [memline writeToURL:statsURL atomically:NO encoding:NSUTF8StringEncoding error:nil];
 
     _pumpTick++;
+    // Every minute: the zone again, in case its change notification never
+    // reached this process, and the next daylight-saving change once one
+    // has passed.
+    if (_pumpTick % 120 == 0) {
+        [NSTimeZone resetSystemTimeZone];
+        MWPushTimeZone();
+    }
 
     NSTimeInterval epoch = now + NSTimeIntervalSince1970;
     NSDictionary *snapshot = @{

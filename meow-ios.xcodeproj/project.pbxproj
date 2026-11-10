@@ -23,6 +23,7 @@
 		0BDA436570A2C655E8210F0C /* TunnelSettingsLANExclusionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703008DEDF15E37B8C951A9A /* TunnelSettingsLANExclusionTests.swift */; };
 		0D7669C4305C607B8C449A54 /* GeoAssetStagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8C1AC6AD4590D6827E6188 /* GeoAssetStagerTests.swift */; };
 		0E433B9C6F0193A405BF64B1 /* ProxyDetailModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5047C31C67B7D8B797A6BF /* ProxyDetailModelTests.swift */; };
+		0EDB73C6B2F3E4B06B4F1357 /* TrafficDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6CE6FDC56D15D6F222A2C1 /* TrafficDetailsView.swift */; };
 		0F1539BAA354ECB4CD8CA9D4 /* GeoLite2-ASN.mmdb in Resources */ = {isa = PBXBuildFile; fileRef = 1509E80EF5E3A28E045FE8C9 /* GeoLite2-ASN.mmdb */; };
 		0F59DC382F259493E472348F /* URLProtocolStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819D62E17DBC5BC82869FA81 /* URLProtocolStub.swift */; };
 		1137D58805A0BC5B8349F070 /* ExitIPLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4E4B345EC9483CC7250003 /* ExitIPLookup.swift */; };
@@ -47,6 +48,7 @@
 		22AE25ED78A117A470B73579 /* IPGeoLookupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1209622954AFE968C8CF3FFE /* IPGeoLookupTests.swift */; };
 		22E944694E324F3ADF9FA5BE /* IPGeoLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9977C39CE9E973BDDFFA4DF2 /* IPGeoLookup.swift */; };
 		230EFED607EB6C5CC2C130F2 /* ConnectionDetailFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E7939BAEBFED08E689A80E /* ConnectionDetailFlowTests.swift */; };
+		245AAA086E6FEFD208443DE2 /* TrafficLedgerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9AA9F2221366C46CA54B086 /* TrafficLedgerTests.swift */; };
 		247B39FC868019403BC0B1BE /* MWTunnelSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B56935362D1576450CB4A3 /* MWTunnelSettings.m */; };
 		2534B8CDD2E40D5F2105C9EF /* ShadowsocksServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F650A5FA59D90978E2D8BC6 /* ShadowsocksServer.swift */; };
 		2559D24694DC95B6B14CA311 /* MetricKitReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C0C728420637134DE22109 /* MetricKitReporter.swift */; };
@@ -74,6 +76,7 @@
 		33E77D1331C9AA6795569373 /* ExportQRFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00F6BDADF0FACF2ED3B0447 /* ExportQRFlowTests.swift */; };
 		4AC8ACDA899647DAB7D9536C /* ConnectionDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6424EFC4123CBC9F5D9BD838 /* ConnectionDetailModel.swift */; };
 		56E7DD455F3115C4F4C83406 /* IPGeoLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9977C39CE9E973BDDFFA4DF2 /* IPGeoLookup.swift */; };
+		5CCF59229CD908063ED7F48F /* TrafficLedger.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB17ADE0B16E6A1E039E6E4 /* TrafficLedger.swift */; };
 		616833D9DCF413B034E1B6D0 /* ProxyDetailFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A085877AB93CC442DA08DA6D /* ProxyDetailFlowTests.swift */; };
 		34358821D3A262F7D08C62D9 /* MeowIPC in Frameworks */ = {isa = PBXBuildFile; productRef = 0CA41BA11AE3954D104A7AB8 /* MeowIPC */; };
 		34B4F8F808C424CBAF8E7EA9 /* MWSharedStore.m in Sources */ = {isa = PBXBuildFile; fileRef = AB83B7A37D165EF0E16A47BA /* MWSharedStore.m */; };
@@ -141,6 +144,7 @@
 		680C4EDF0525403D50D059E6 /* geosite.mrs in Resources */ = {isa = PBXBuildFile; fileRef = F58373225092C298E65BB090 /* geosite.mrs */; };
 		684752187B329EEE17E6EA1C /* MWAppGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = E605B002F990CE95032AA3A8 /* MWAppGroup.m */; };
 		69D41C24951F8DC29F2CE014 /* ProxyProberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3583A2E8BF806751D296D9 /* ProxyProberTests.swift */; };
+		6A2C995F5B593FE780B5110C /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 9DE0D19D7C87F71D286968E8 /* Localizable.stringsdict */; };
 		6A844E6BF259DEC60C66D7D9 /* clash_minimal.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 47CD1F1E7DD00599AF2A5238 /* clash_minimal.yaml */; };
 		6C389E61C0E0EE2B66316EF5 /* MeowCore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B807F37D85605FF0AD1427F5 /* MeowCore.xcframework */; };
 		6E6C228991125641DCC0C8F3 /* ICloudRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE2AC85C91B47EDF654C19D /* ICloudRelay.swift */; };
@@ -180,6 +184,7 @@
 		938E95C0263F042450113B67 /* ShadowsocksAddServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B378E3EF2591C9CD059E98 /* ShadowsocksAddServiceTests.swift */; };
 		94FA8AB54FFDDD7D188A8C2A /* PacketTunnel.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 459136B958385ACB511D5D14 /* PacketTunnel.appex */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		950321E56E363CFF790829A8 /* StatisticsFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58087483FB3BC6CBE8C29B1D /* StatisticsFlowTests.swift */; };
+		95EF8ADCF08B72E01A9B687A /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 9DE0D19D7C87F71D286968E8 /* Localizable.stringsdict */; };
 		9609134F0D274943E5E18297 /* LogsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F1B0B431DA0DD132F917FF /* LogsTests.swift */; };
 		96429731A395DD34652DF189 /* ProxyGroupModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A820C8680856C83B4C8EF7F /* ProxyGroupModel.swift */; };
 		997AE63C0D074EA6370C5DA8 /* SwiftDataTestContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7B8DF88EDD0D51301DD316 /* SwiftDataTestContainer.swift */; };
@@ -188,6 +193,7 @@
 		9ADDC891C0BCC6053E86E2E2 /* SubscriptionConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601ADF66737508CC359C4936 /* SubscriptionConverter.swift */; };
 		9B151396D66CF06ECFAAD59C /* PacketTunnelTV.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 421A985E92CD32B07F712279 /* PacketTunnelTV.appex */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9CA348F75912B27BFF93B1FC /* ICloudExportGuideTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CB2FDDE14D4053A9015FBD /* ICloudExportGuideTests.swift */; };
+		9CB060F41BE0696F58682876 /* TrafficLedgerModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F49AB8D7DE1983B509EBA46 /* TrafficLedgerModelTests.swift */; };
 		9D59A8F980E180CECE858F27 /* DnsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2E8157E43AE62A3A59DDD5C /* DnsTests.swift */; };
 		9D8A3062281941D5B04CD09D /* YamlEditorFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA2BC08659A01899A4DB2CC /* YamlEditorFlowTests.swift */; };
 		9DAD82C550F44D6A48D1675D /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 5E3965E4A9673CFDC438D5F0 /* Yams */; };
@@ -227,6 +233,7 @@
 		BA844D3302038958647DC227 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D5CF6C1DB2C326705BE75B5 /* SystemConfiguration.framework */; };
 		BB311FD51E9A58A69F148EE5 /* ProfileAutoUpdaterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB7C1CA9DE54ED874D50571 /* ProfileAutoUpdaterTests.swift */; };
 		BB349570A0007E98FA1205B2 /* ICloudRelayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB2E1ADC6497BAC02DC29E5 /* ICloudRelayTests.swift */; };
+		BC7C5279ECEB115F2EE93A15 /* TrafficLedgerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6C8B31CAE4792F7BB5C068 /* TrafficLedgerModel.swift */; };
 		BD6AED15527913757A1F8B78 /* MetricKitReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C0C728420637134DE22109 /* MetricKitReporter.swift */; };
 		BFE14D587EFAA1BC4CDDFD7E /* ICloudDriveExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7957678F8E4A3C18D3F2C5A /* ICloudDriveExporter.swift */; };
 		C05561AA0530BFF897CDEB8F /* MeowAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E114A82C37433E90AFEAD0E /* MeowAPI.swift */; };
@@ -235,6 +242,7 @@
 		C1187CD2F55A4E1F99C1FB54 /* GeoAssetStager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20AB821D2884D05E4EA7E831 /* GeoAssetStager.swift */; };
 		C12A1DC80F02BF9348895EAF /* MWPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 468AB5369E33BCD92920CF52 /* MWPreferences.m */; };
 		C138DAD384194A987015FA3F /* ShadowsocksServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F650A5FA59D90978E2D8BC6 /* ShadowsocksServer.swift */; };
+		C2507F0CA79592000755D5FF /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 9DE0D19D7C87F71D286968E8 /* Localizable.stringsdict */; };
 		C3D8E6DA3FF3FD5ADB35CB44 /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 0F003FBFB707CEEDEE53316F /* Yams */; };
 		C58EE1AF7B24B7192EB4E258 /* MWEngineLog.m in Sources */ = {isa = PBXBuildFile; fileRef = FA317DD319BE5DA6206036F1 /* MWEngineLog.m */; };
 		C5C3E779D3F8D11692184272 /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DA03AE8CBDF12804F48FC2 /* StatisticsView.swift */; };
@@ -373,6 +381,7 @@
 		07F26833565125E909FB9CAC /* AppLayoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLayoutTests.swift; sourceTree = "<group>"; };
 		08020B398C102C110F6A8567 /* SharedStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedStoreTests.swift; sourceTree = "<group>"; };
 		0BFCF3227F40A3F1D0480671 /* FakeProxyProbeTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeProxyProbeTransport.swift; sourceTree = "<group>"; };
+		0F49AB8D7DE1983B509EBA46 /* TrafficLedgerModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrafficLedgerModelTests.swift; sourceTree = "<group>"; };
 		0F650A5FA59D90978E2D8BC6 /* ShadowsocksServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowsocksServer.swift; sourceTree = "<group>"; };
 		0F7D2469CF78975F683F7263 /* RouteModeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteModeWidget.swift; sourceTree = "<group>"; };
 		0F8A47B96274873533987FFA /* MeowTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = MeowTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -390,6 +399,7 @@
 		1CCF322677C8A124E9D9107D /* MWDiagnosticsRunner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MWDiagnosticsRunner.m; sourceTree = "<group>"; };
 		1D917306DA4C61CA7C982B0B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1DB0CE6B72F82E76AA9997D5 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1E6C8B31CAE4792F7BB5C068 /* TrafficLedgerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrafficLedgerModel.swift; sourceTree = "<group>"; };
 		1F7BB3C0C2648B6097E52E53 /* UtilityScreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityScreenTests.swift; sourceTree = "<group>"; };
 		20AB821D2884D05E4EA7E831 /* GeoAssetStager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoAssetStager.swift; sourceTree = "<group>"; };
 		211A39E7346D43B2BC093B69 /* fa */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fa; path = fa.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -438,6 +448,7 @@
 		5E114A82C37433E90AFEAD0E /* MeowAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeowAPI.swift; sourceTree = "<group>"; };
 		5EC73D84B5978335B9C07A8A /* TrafficScreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrafficScreenTests.swift; sourceTree = "<group>"; };
 		5EEF0D1CF99CA135B39D3676 /* MWPreferences.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MWPreferences.h; sourceTree = "<group>"; };
+		5EFEAD965777AA398A4C689E /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ar; path = ar.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		601ADF66737508CC359C4936 /* SubscriptionConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionConverter.swift; sourceTree = "<group>"; };
 		6052B63FD334E86DC81BAE1E /* ShadowsocksURIParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowsocksURIParserTests.swift; sourceTree = "<group>"; };
 		620106BFB5E8593748590EBA /* MWTunnelEngine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MWTunnelEngine.m; sourceTree = "<group>"; };
@@ -479,6 +490,7 @@
 		8E8110225EBDEBDC762A0E20 /* ClashYAMLTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClashYAMLTextView.swift; sourceTree = "<group>"; };
 		8E8D0D6120471BD1DBC4ACFB /* NavRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavRow.swift; sourceTree = "<group>"; };
 		8F2EC54BA19FA9CC57BDD2AD /* ProxyGroupModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyGroupModelTests.swift; sourceTree = "<group>"; };
+		930A8011389941BCDD4C8BB2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		930ED8C12FBC2859BCDC56E4 /* VpnManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnManager.swift; sourceTree = "<group>"; };
 		960A8CF0608E401F8F95005D /* LogbookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookView.swift; sourceTree = "<group>"; };
 		992E16ADDEBA2F4304D4E797 /* EditableRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableRule.swift; sourceTree = "<group>"; };
@@ -548,12 +560,14 @@
 		D4CCD7DF28AF9F39A8E225D3 /* LockScreenViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockScreenViews.swift; sourceTree = "<group>"; };
 		D51C2BC68B7800884B68643F /* DiagnosticsLabelParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsLabelParserTests.swift; sourceTree = "<group>"; };
 		D5A3FCA37BA819ACC0A9D0EB /* AddShadowsocksFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddShadowsocksFlowTests.swift; sourceTree = "<group>"; };
+		D794DF6CCB38D37B4DF79BCB /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ru.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		D7A0587577F4B11031F0816D /* ProxiesDecodingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxiesDecodingTests.swift; sourceTree = "<group>"; };
 		DAEF8BEDC4B0E7EF70E37EE1 /* UtilitySessionStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilitySessionStoreTests.swift; sourceTree = "<group>"; };
 		DC63DA4613615F75070234DC /* TunnelWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TunnelWidget.swift; sourceTree = "<group>"; };
 		DD0D47E1D37E34301C40DC54 /* AppIconTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconTests.swift; sourceTree = "<group>"; };
 		DE188A928112C00405DFC5E4 /* ProxyDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyDetailModel.swift; sourceTree = "<group>"; };
 		DF623F1E34B38A27E15C6B36 /* QRCodeRendererTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeRendererTests.swift; sourceTree = "<group>"; };
+		DF6CE6FDC56D15D6F222A2C1 /* TrafficDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrafficDetailsView.swift; sourceTree = "<group>"; };
 		DFC4AC97B3877B1A566FBFF6 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		E07199B78B02A9197F7E2CDE /* ConnectionDetailModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionDetailModelTests.swift; sourceTree = "<group>"; };
 		E1CC4A5F15DE4B34917BF60B /* LogbookModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookModel.swift; sourceTree = "<group>"; };
@@ -580,6 +594,7 @@
 		F7957678F8E4A3C18D3F2C5A /* ICloudDriveExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICloudDriveExporter.swift; sourceTree = "<group>"; };
 		F8CA1E344F4BCAEA620233A3 /* ICloudExportGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICloudExportGuide.swift; sourceTree = "<group>"; };
 		F970EA608D1B86A217892A15 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F9AA9F2221366C46CA54B086 /* TrafficLedgerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrafficLedgerTests.swift; sourceTree = "<group>"; };
 		F9E7939BAEBFED08E689A80E /* ConnectionDetailFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionDetailFlowTests.swift; sourceTree = "<group>"; };
 		FA317DD319BE5DA6206036F1 /* MWEngineLog.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MWEngineLog.m; sourceTree = "<group>"; };
 		FA64C2503B8306CC64B9D23D /* MeowCoreBridgeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeowCoreBridgeTests.swift; sourceTree = "<group>"; };
@@ -588,6 +603,7 @@
 		FC654683AAE620AA9C1DCEBF /* TunBridgeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TunBridgeTests.swift; sourceTree = "<group>"; };
 		FD9FC97CA0606C12439B0684 /* EmojiGroupSelectNodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiGroupSelectNodeTests.swift; sourceTree = "<group>"; };
 		FE41537EBB7380469E247A65 /* TunnelSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TunnelSettings.swift; sourceTree = "<group>"; };
+		FEB17ADE0B16E6A1E039E6E4 /* TrafficLedger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrafficLedger.swift; sourceTree = "<group>"; };
 		FEDFCDB10E8D38E7F2F3291D /* TunnelEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TunnelEntry.swift; sourceTree = "<group>"; };
 		FEF29010A8460CAFFDADE05F /* TVContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVContentView.swift; sourceTree = "<group>"; };
 		FF4477B467A83D48708C8C26 /* PawPrintFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PawPrintFlowTests.swift; sourceTree = "<group>"; };
@@ -770,6 +786,7 @@
 			children = (
 				0F6E991913B1D605FBA1C392 /* GeoData */,
 				8895187DE158A91BFC1775BE /* Localizable.strings */,
+				9DE0D19D7C87F71D286968E8 /* Localizable.stringsdict */,
 				00F3DBAD225AF1027B18873A /* Assets.xcassets */,
 			);
 			path = Resources;
@@ -878,6 +895,9 @@
 				592FFFC5B60113A0A7B6137B /* StatisticsModel.swift */,
 				34DA03AE8CBDF12804F48FC2 /* StatisticsView.swift */,
 				3B1E9C4360B99CC50183F32A /* SubscriptionsView.swift */,
+				DF6CE6FDC56D15D6F222A2C1 /* TrafficDetailsView.swift */,
+				FEB17ADE0B16E6A1E039E6E4 /* TrafficLedger.swift */,
+				1E6C8B31CAE4792F7BB5C068 /* TrafficLedgerModel.swift */,
 				F1F87C9BC53D85684F46CF05 /* TrafficView.swift */,
 				E56D18B0FBFA455C9F60134A /* UserDiagnosticsView.swift */,
 				FB85D08A244615CFA035C0B3 /* UtilityView.swift */,
@@ -902,6 +922,7 @@
 				8F2EC54BA19FA9CC57BDD2AD /* ProxyGroupModelTests.swift */,
 				C2BB9ECB4E5C46D70B0CE6B2 /* RulesYAMLEditorTests.swift */,
 				6606404901BFF513FCCB9C87 /* StatisticsModelTests.swift */,
+				0F49AB8D7DE1983B509EBA46 /* TrafficLedgerModelTests.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -911,6 +932,7 @@
 			children = (
 				9CB2D2AB928A239AC09334A3 /* LogbookTests.swift */,
 				FA64C2503B8306CC64B9D23D /* MeowCoreBridgeTests.swift */,
+				F9AA9F2221366C46CA54B086 /* TrafficLedgerTests.swift */,
 			);
 			path = FFI;
 			sourceTree = "<group>";
@@ -1503,6 +1525,7 @@
 				63B152B9AED7714B67D9FA21 /* Country.mmdb in Resources */,
 				5D4A6997EDAAC8F162E93EE5 /* GeoLite2-ASN.mmdb in Resources */,
 				16FA48C705C2691763DE4187 /* Localizable.strings in Resources */,
+				6A2C995F5B593FE780B5110C /* Localizable.stringsdict in Resources */,
 				78FF8F364FDA872B48B74344 /* geosite.mrs in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1515,6 +1538,7 @@
 				A0E9FE055EA8C4B0133B5910 /* Country.mmdb in Resources */,
 				0F1539BAA354ECB4CD8CA9D4 /* GeoLite2-ASN.mmdb in Resources */,
 				1F65A4332745A913B8056198 /* Localizable.strings in Resources */,
+				C2507F0CA79592000755D5FF /* Localizable.stringsdict in Resources */,
 				680C4EDF0525403D50D059E6 /* geosite.mrs in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1538,6 +1562,7 @@
 			files = (
 				278F82062579E2C776F91AA5 /* Assets.xcassets in Resources */,
 				1B425023E3BA74B2E4B112DF /* Localizable.strings in Resources */,
+				95EF8ADCF08B72E01A9B687A /* Localizable.stringsdict in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1820,6 +1845,8 @@
 				66C7B352BBD0B772976ABB1B /* SubscriptionServiceTests.swift in Sources */,
 				997AE63C0D074EA6370C5DA8 /* SwiftDataTestContainer.swift in Sources */,
 				28CB589E0ACE5C617C7DCD42 /* TrafficAccumulatorTests.swift in Sources */,
+				9CB060F41BE0696F58682876 /* TrafficLedgerModelTests.swift in Sources */,
+				245AAA086E6FEFD208443DE2 /* TrafficLedgerTests.swift in Sources */,
 				0F59DC382F259493E472348F /* URLProtocolStub.swift in Sources */,
 				D95EF7A2FB411B4088E3255C /* URLValidationTests.swift in Sources */,
 				045DFF9802FC965259E31D7C /* UtilitySessionStoreTests.swift in Sources */,
@@ -1905,6 +1932,9 @@
 				07BE855FF6DC83A07129C654 /* SubscriptionDeepLink.swift in Sources */,
 				25E66559A88A13B0FEE0233B /* SubscriptionService.swift in Sources */,
 				0122F6AFBEC84D816DCA4CFA /* SubscriptionsView.swift in Sources */,
+				0EDB73C6B2F3E4B06B4F1357 /* TrafficDetailsView.swift in Sources */,
+				5CCF59229CD908063ED7F48F /* TrafficLedger.swift in Sources */,
+				BC7C5279ECEB115F2EE93A15 /* TrafficLedgerModel.swift in Sources */,
 				5C49A5DC6758BD9AB95DB5C2 /* TrafficView.swift in Sources */,
 				55FCE3874D6051B20C0A39AE /* UserDiagnosticsView.swift in Sources */,
 				2687DFC8A2EC27D66312C06F /* UtilitySessionStore.swift in Sources */,
@@ -1964,6 +1994,16 @@
 				66EEA26ED8A4895932CE53E3 /* zh-Hans */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		9DE0D19D7C87F71D286968E8 /* Localizable.stringsdict */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5EFEAD965777AA398A4C689E /* ar */,
+				930A8011389941BCDD4C8BB2 /* en */,
+				D794DF6CCB38D37B4DF79BCB /* ru */,
+			);
+			name = Localizable.stringsdict;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

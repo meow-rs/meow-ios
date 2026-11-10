@@ -413,12 +413,28 @@
 
 /* Traffic */
 "traffic.nav.title" = "Traffic";
-"traffic.empty.title" = "No traffic data yet";
-"traffic.empty.description" = "Start the VPN to begin recording usage.";
-"traffic.label.speed" = "Speed";
-"traffic.label.last7Days" = "Last 7 Days";
 "traffic.tile.today" = "Today";
 "traffic.tile.thisMonth" = "This Month";
+"traffic.dataUsage" = "Data Usage";
+"traffic.period.lastMonth" = "Last Month";
+"traffic.by.host" = "Host";
+"traffic.by.policy" = "Policy";
+"traffic.by.network" = "Network";
+"traffic.details.title" = "Traffic Details";
+"traffic.details.period" = "Period";
+"traffic.details.groupBy" = "Group By";
+"traffic.details.empty" = "No traffic recorded for this period";
+"traffic.details.error %@" = "Could not read the traffic details: %@";
+"traffic.details.footer" = "Kept on this device for 62 days, updated about once a minute.";
+"traffic.details.clear" = "Clear Traffic Details";
+"traffic.details.clearConfirm" = "Delete the traffic by host, policy and network of the last 62 days? The daily totals are kept.";
+"traffic.details.clearFailed %@" = "Could not clear the traffic details: %@";
+"traffic.details.unknown" = "Unknown";
+"traffic.details.otherIPs" = "Other IP addresses";
+"traffic.details.otherIPsNote %lld" = "Each day keeps up to %lld IP addresses apart. Traffic to further IP addresses that day is counted here.";
+"traffic.network.wifi" = "Wi-Fi";
+"traffic.network.ethernet" = "Ethernet";
+"traffic.requests %lld" = "%lld requests";
 
 
 /* tvOS home screen (TVContentView) — the tvOS target compiles App/Resources
@@ -534,16 +550,6 @@
 "subscriptions.row.a11y.editHint" = "Opens YAML editor";
 "subscriptions.row.a11y.refreshHint" = "Fetches the latest config from the remote URL";
 "subscriptions.editInfo.a11y.updateIntervalHint" = "Chooses how often this config refetches itself";
-
-
-/* Accessibility — Traffic charts */
-"a11y.traffic.speedChart.value %@ %@" = "Upload %@ per second, download %@ per second";
-"a11y.traffic.historyChart.value %@ %@" = "Total uploaded %@, total downloaded %@";
-"a11y.traffic.chart.axis.time" = "Time";
-"a11y.traffic.chart.seconds %@" = "%@ seconds";
-"a11y.traffic.chart.axis.speed" = "Speed";
-"a11y.traffic.chart.axis.day" = "Day";
-"a11y.traffic.chart.axis.data" = "Data volume";
 
 
 /* Accessibility — Settings */

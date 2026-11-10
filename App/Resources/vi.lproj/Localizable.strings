@@ -424,12 +424,28 @@
 
 /* Traffic */
 "traffic.nav.title" = "Lưu lượng";
-"traffic.empty.title" = "Chưa có dữ liệu lưu lượng";
-"traffic.empty.description" = "Kết nối VPN để bắt đầu ghi nhận mức sử dụng.";
-"traffic.label.speed" = "Tốc độ";
-"traffic.label.last7Days" = "7 ngày qua";
 "traffic.tile.today" = "Hôm nay";
 "traffic.tile.thisMonth" = "Tháng này";
+"traffic.dataUsage" = "Mức sử dụng dữ liệu";
+"traffic.period.lastMonth" = "Tháng trước";
+"traffic.by.host" = "Máy chủ";
+"traffic.by.policy" = "Chính sách";
+"traffic.by.network" = "Mạng";
+"traffic.details.title" = "Chi tiết lưu lượng";
+"traffic.details.period" = "Khoảng thời gian";
+"traffic.details.groupBy" = "Nhóm theo";
+"traffic.details.empty" = "Không có lưu lượng nào được ghi trong khoảng này";
+"traffic.details.error %@" = "Không đọc được chi tiết lưu lượng: %@";
+"traffic.details.footer" = "Lưu trên thiết bị này 62 ngày, cập nhật khoảng mỗi phút một lần.";
+"traffic.details.clear" = "Xóa chi tiết lưu lượng";
+"traffic.details.clearConfirm" = "Xóa lưu lượng theo máy chủ, chính sách và mạng của 62 ngày qua? Tổng theo ngày vẫn được giữ.";
+"traffic.details.clearFailed %@" = "Không xóa được chi tiết lưu lượng: %@";
+"traffic.details.unknown" = "Không rõ";
+"traffic.details.otherIPs" = "Địa chỉ IP khác";
+"traffic.details.otherIPsNote %lld" = "Mỗi ngày ghi riêng tối đa %lld địa chỉ IP. Lưu lượng đến các địa chỉ IP khác trong ngày đó được tính vào đây.";
+"traffic.network.wifi" = "Wi-Fi";
+"traffic.network.ethernet" = "Ethernet";
+"traffic.requests %lld" = "%lld yêu cầu";
 
 
 /* tvOS home screen (TVContentView) — the tvOS target compiles App/Resources
@@ -545,16 +561,6 @@
 "subscriptions.row.a11y.editHint" = "Mở trình chỉnh sửa YAML";
 "subscriptions.row.a11y.refreshHint" = "Tải cấu hình mới nhất từ URL từ xa";
 "subscriptions.editInfo.a11y.updateIntervalHint" = "Chọn tần suất tự động tải lại cấu hình này";
-
-
-/* Accessibility — Traffic charts */
-"a11y.traffic.speedChart.value %@ %@" = "Tải lên %@ mỗi giây, tải xuống %@ mỗi giây";
-"a11y.traffic.historyChart.value %@ %@" = "Tổng đã tải lên %@, tổng đã tải xuống %@";
-"a11y.traffic.chart.axis.time" = "Thời gian";
-"a11y.traffic.chart.seconds %@" = "%@ giây";
-"a11y.traffic.chart.axis.speed" = "Tốc độ";
-"a11y.traffic.chart.axis.day" = "Ngày";
-"a11y.traffic.chart.axis.data" = "Lượng dữ liệu";
 
 
 /* Accessibility — Settings */

@@ -309,7 +309,14 @@ lwip = { package = "meow-lwip", git = "https://github.com/meow-rs/meow-rs", tag 
 # VMess AEAD interop fix. meow-dns runs in fake-ip mode: the FFI config
 # parser pins `enhanced-mode: fake-ip` with `fake-ip-range: 28.0.0.0/8`
 # (the 2026-07-17 redir-host/DoT switch was reverted in PR #321).
-meow-common = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.29.0", features = ["logbook"] }
+# - Traffic ledger (meow-rs #875, `traffic-ledger`): every day's traffic by
+#   host, policy and network for 62 days under `<home>/traffic/`, on the
+#   same system libsqlite3 as the logbook. engine.rs opens it with the
+#   logbook (`traffic_ledger::apply`, never with `apps`: see
+#   `engine::traffic_ledger`) and writes it out at `stop`; the extension
+#   labels the network and sets the time zone, and the app reads and
+#   clears it in its own process (`meow_traffic_*`, traffic.rs).
+meow-common = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.29.0", features = ["logbook", "traffic-ledger"] }
 # `boring-tls` activates BoringSSL-backed TLS in meow-transport so ECH
 # (RFC 9460 SVCB / HTTPS ECHConfigList) and uTLS fingerprinting work for
 # proxy outbound. Without it, any proxy entry with `ech-opts:` set is
@@ -358,6 +365,9 @@ cbindgen = "0.29"
 # now a regular dependency for `ip_info`) to prove the env-derived path
 # resolves correctly.
 tempfile = "3"
+# traffic.rs's tests write the ledger with `traffic_ledger::add`, which
+# takes meow-common's `SmolStr` (already in the graph through it).
+smol_str = "0.3"
 # The probe tests' fake UDP relays implement meow-common's async-trait
 # `ProxyPacketConn`.
 async-trait = "0.1"

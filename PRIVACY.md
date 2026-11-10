@@ -1,6 +1,6 @@
 # Privacy Policy — meow-ios
 
-**Last updated:** 2026-06-28
+**Last updated:** 2026-11-10
 
 ## TL;DR
 
@@ -31,6 +31,11 @@ The following items are stored locally on your device and never leave it through
 - Proxy credentials contained in those configurations
 - Per-app routing preferences, DNS settings, selected proxy groups
 - Diagnostic logs written to the app's local sandbox
+- A traffic ledger: how much traffic each site (its domain or IP address),
+  policy and network carried each day, kept for 62 days and shown under
+  Utility > Traffic. Clear it there, or turn it off with
+  `traffic-ledger: {enable: false}` in your configuration
+  (`traffic-ledger: {hosts: false}` keeps policies and networks but no sites)
 
 You can delete all of this by deleting the app.
 

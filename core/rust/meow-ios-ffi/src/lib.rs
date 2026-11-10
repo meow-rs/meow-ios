@@ -29,6 +29,7 @@ mod network_traffic;
 mod probe;
 pub mod rss;
 mod subscription;
+mod traffic;
 mod tun2socks;
 
 #[cfg(test)]
@@ -386,17 +387,23 @@ pub unsafe extern "C" fn meow_engine_traffic(out_upload: *mut i64, out_download:
 /// Report the kind of network the engine's sockets now go out on, one of the
 /// `MEOW_NETWORK_KIND_*` constants (`MEOW_NETWORK_KIND_NONE` while there is
 /// none). What the totals gained since the last report is charged to the
-/// previous kind; see `meow_engine_interface_traffic`. Safe to call before
-/// `meow_engine_start`: the kind carries over to the runs that follow.
+/// previous kind; see `meow_engine_interface_traffic`. The traffic ledger
+/// files what flows carry from now on under the new network (`Wi-Fi`,
+/// `Ethernet`, `Cellular`, `Other`); no network leaves its label as it was.
+/// Safe to call before `meow_engine_start`: the kind carries over to the
+/// runs that follow.
 ///
 /// Returns 0 on success, -1 on an unknown kind.
 #[no_mangle]
 pub extern "C" fn meow_engine_set_network_kind(kind: c_int) -> c_int {
-    let Ok(kind) = network_traffic::Kind::from_c(kind) else {
+    let Ok(split_kind) = network_traffic::Kind::from_c(kind) else {
         set_error(format!("unknown network kind {kind}"));
         return -1;
     };
-    network_traffic::set_kind(kind);
+    network_traffic::set_kind(split_kind);
+    if let Some(label) = network_traffic::ledger_label(kind) {
+        let _ = std::panic::catch_unwind(|| meow_common::traffic_ledger::set_interface(label));
+    }
     0
 }
 
@@ -664,12 +671,12 @@ pub extern "C" fn meow_cancel_proxy_probe(id: i64) {
     probe::cancel(id);
 }
 
-/// Free a string returned by `meow_probe_proxy`, `meow_lookup_ip` or
-/// `meow_logbook_read`. NULL is a no-op.
+/// Free a string returned by `meow_probe_proxy`, `meow_lookup_ip`,
+/// `meow_logbook_read` or `meow_traffic_read`. NULL is a no-op.
 ///
 /// # Safety
-/// `s` must be NULL or a pointer from `meow_probe_proxy`, `meow_lookup_ip` or
-/// `meow_logbook_read`, freed only once.
+/// `s` must be NULL or a pointer from `meow_probe_proxy`, `meow_lookup_ip`,
+/// `meow_logbook_read` or `meow_traffic_read`, freed only once.
 #[no_mangle]
 pub unsafe extern "C" fn meow_string_free(s: *mut c_char) {
     if !s.is_null() {
@@ -743,6 +750,92 @@ pub unsafe extern "C" fn meow_logbook_read(
     CString::new(answer)
         .unwrap_or_else(|_| CString::new("{}").unwrap())
         .into_raw()
+}
+
+// ---------------------------------------------------------------------------
+// Traffic page: the engine's traffic ledger
+// ---------------------------------------------------------------------------
+
+/// The traffic under the engine home `home` (the App Group config dir) of
+/// the local days `from..=to` (days since 1970-01-01), grouped `by` `host`,
+/// `policy` or `interface`, largest first, keeping the rows that match the
+/// non-empty filters `host` (as the report names it: a registrable domain,
+/// an IP address, or `*` for the IP addresses past the day's cap), `policy`
+/// and `interface`: `{"from": "2026-11-01", "to": "2026-11-30", "by":
+/// "host", "upload": n, "download": n, "requests": n, "rows": [{"name":
+/// "...", "upload": n, "download": n, "requests": n}]}`, or `{"error":
+/// "..."}`.
+///
+/// Runs in the calling process and needs no engine, so the app reads it
+/// while the VPN is down. Never returns NULL; free the answer with
+/// `meow_string_free`.
+///
+/// # Safety
+/// `home`, `by`, `host`, `policy` and `interface` must each be a
+/// NUL-terminated UTF-8 C string or NULL (read as empty).
+#[no_mangle]
+pub unsafe extern "C" fn meow_traffic_read(
+    home: *const c_char,
+    from: i32,
+    to: i32,
+    by: *const c_char,
+    host: *const c_char,
+    policy: *const c_char,
+    interface: *const c_char,
+) -> *mut c_char {
+    let home = cstr_to_str(home).unwrap_or_default();
+    let by = cstr_to_str(by).unwrap_or_default();
+    let filter = |s: *const c_char| cstr_to_str(s).filter(|s| !s.is_empty()).map(str::to_owned);
+    let filters = [filter(host), filter(policy), filter(interface)];
+    let answer = std::panic::catch_unwind(|| {
+        traffic::read_report(std::path::Path::new(home), from, to, by, filters)
+    })
+    .unwrap_or_else(|_| traffic::error_json("traffic read panicked"));
+    // serde_json escapes control characters, so the answer has no NUL.
+    CString::new(answer)
+        .unwrap_or_else(|_| CString::new("{}").unwrap())
+        .into_raw()
+}
+
+/// Delete everything in the traffic ledger under the engine home `home`;
+/// the daily totals the app keeps itself are not part of it. A running
+/// engine notices at its next write (at most a minute later) and drops what
+/// it counted until then instead of writing it over the clear.
+///
+/// Returns 0 on success, -1 when the ledger could not be cleared (see
+/// `meow_core_last_error`).
+///
+/// # Safety
+/// `home` must be a NUL-terminated UTF-8 C string or NULL (read as empty).
+#[no_mangle]
+pub unsafe extern "C" fn meow_traffic_clear(home: *const c_char) -> c_int {
+    let home = cstr_to_str(home).unwrap_or_default();
+    match std::panic::catch_unwind(|| traffic::clear(std::path::Path::new(home))) {
+        Ok(Ok(())) => 0,
+        Ok(Err(e)) => {
+            set_error(format!("clearing the traffic ledger: {e}"));
+            -1
+        }
+        Err(_) => {
+            set_error("clearing the traffic ledger panicked".to_owned());
+            -1
+        }
+    }
+}
+
+/// The device's time zone, which decides the day the traffic ledger counts
+/// traffic under: the UTC offset now, in seconds east of UTC, and its next
+/// change, at the Unix second `next_at` (0 for none known) to
+/// `next_offset`. UTC until set. The PacketTunnel sets it before
+/// `meow_engine_start` and again whenever the zone may have changed;
+/// setting the zone it already has is a no-op.
+#[no_mangle]
+pub extern "C" fn meow_traffic_set_time_zone(offset: i32, next_at: i64, next_offset: i32) {
+    let zone = meow_common::traffic_ledger::TimeZone {
+        offset,
+        next: (next_at > 0).then_some((next_at, next_offset)),
+    };
+    let _ = std::panic::catch_unwind(|| meow_common::traffic_ledger::set_time_zone(zone));
 }
 
 // ---------------------------------------------------------------------------
