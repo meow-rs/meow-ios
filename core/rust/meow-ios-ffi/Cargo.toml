@@ -114,9 +114,10 @@ lwip = { package = "meow-lwip", git = "https://github.com/meow-rs/meow-rs", tag 
 #   resolves DIRECT dials.
 # - Outbounds: Hysteria2 `obfs: gecko` (#818) and its faster QUIC driver,
 #   REALITY records on BoringSSL, v2ray-plugin `mux` on by default (#862),
-#   AnyTLS `fingerprint` / `alpn` / `name-cert-verify`. meow-proxy's
-#   defaults keep shadow-tls, restls, jls and kcptun (#836 split them into
-#   features) and add `gost-plugin` and `public-suffix`.
+#   AnyTLS `fingerprint` / `alpn` / `name-cert-verify`. The protocol
+#   set keeps shadow-tls, restls, jls and kcptun (#836 split them into
+#   features) and gains `gost-plugin`; meow-proxy's new `public-suffix`
+#   default is left out, see `meow-proxy` below.
 # - The routing log names a group's member: `using Proxy[HK-01]` (#895).
 #
 # Rev fa7a7d6d (meow-rs main, 2026-10-22) = tag v0.26.1 plus #788, for the
@@ -350,7 +351,21 @@ meow-dns = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.29.0" }
 meow-tunnel = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.29.0" }
 meow-listener = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.29.0", default-features = false, features = ["listener-mixed"] }
 meow-api = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.29.0" }
-meow-proxy = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.29.0" }
+# `default-features = false` leaves out one feature, `public-suffix`. The
+# protocol features all still arrive through meow-config's defaults, which
+# forward the same list (`cargo tree -e features -i meow-proxy`).
+#
+# With it on, the public-suffix lookup is compiled twice: once in meow-proxy
+# for load-balance `consistent-hashing`, once in meow-common for the traffic
+# ledger. Each copy is about 470 KB of arm64 code, and with both PacketTunnel
+# was 20.31 MB against the archive job's 20 MB gate. The ledger keeps its
+# copy, since a host row is a registrable domain.
+#
+# Without it a `consistent-hashing` group keys a domain on its last two
+# labels instead of its eTLD+1, as meow's `minimal` build does: one
+# destination still always maps to one member, but every `*.co.uk` host
+# shares a member. Turn it back on once meow-rs links one lookup for both.
+meow-proxy = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.29.0", default-features = false }
 # The probes' `https` requests (src/probe/http.rs) go through the engine's
 # own `TlsLayer`, as its latency test does. Already built for the outbounds
 # via meow-config's `boring-tls`; listed for the direct `use`.

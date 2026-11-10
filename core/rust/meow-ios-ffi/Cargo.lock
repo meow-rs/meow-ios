@@ -2158,7 +2158,6 @@ dependencies = [
  "meow-transport",
  "ml-kem",
  "parking_lot",
- "psl",
  "quiche",
  "rand 0.9.5",
  "serde_json",
