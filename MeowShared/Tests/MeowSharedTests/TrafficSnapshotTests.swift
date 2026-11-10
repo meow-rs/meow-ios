@@ -40,5 +40,12 @@ struct TrafficSnapshotTests {
         let snapshot = try Self.decode("{\(Self.counters)}")
         #expect(snapshot.downloadBytes == 1300)
         #expect(snapshot.interfaces == nil)
+        #expect(snapshot.requests == nil)
+    }
+
+    @Test
+    func `the request count decodes`() throws {
+        let snapshot = try Self.decode("{\(Self.counters), \"requests\": 1284}")
+        #expect(snapshot.requests == 1284)
     }
 }

@@ -137,6 +137,15 @@ int meow_engine_validate_config(const char *yaml, int len);
 int64_t meow_active_tcp_conns(void);
 
 /**
+ * Return how many requests the tunnel has handed to the engine since
+ * `meow_tun_start`: one per TCP connection and one per UDP session (a client
+ * socket, wherever it sends). DNS queries are not counted, nor what the
+ * tunnel drops before the engine sees it. The count of the last run until
+ * the next `meow_tun_start`; zero before the first.
+ */
+int64_t meow_tun_requests(void);
+
+/**
  * Write cumulative upload/download byte counters. Safe to call before
  * `meow_engine_start` — returns zero counters.
  *

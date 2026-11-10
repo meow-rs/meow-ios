@@ -456,6 +456,7 @@
 "tv.subscription.error.invalidURL" = "Hãy nhập URL gói đăng ký bắt đầu bằng http:// hoặc https://.";
 "tv.profiles.section" = "Tệp cấu hình";
 "tv.profiles.empty" = "Chưa có cấu hình nào. Hãy thêm URL gói đăng ký để bắt đầu.";
+"tv.statistics.requests" = "Yêu cầu";
 "tv.connect.hint.noProfile" = "Hãy thêm gói đăng ký để kết nối.";
 "tv.icloud.button" = "iCloud Drive";
 "tv.icloud.title" = "Nhập từ iCloud Drive";

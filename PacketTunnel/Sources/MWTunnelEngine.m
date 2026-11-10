@@ -422,6 +422,7 @@ static int MWNetworkKindForPath(nw_path_t path) {
     NSInteger heapUsedKB = (NSInteger)(ms.size_in_use / 1024);
     NSInteger heapFreeKB = (NSInteger)((ms.size_allocated - ms.size_in_use) / 1024);
     int64_t tcpConns = meow_active_tcp_conns();
+    int64_t requests = meow_tun_requests();
 
     NSString *memline = [NSString stringWithFormat:
         @"tick=%d footprint=%ldMB heap_used=%ldKB heap_free=%ldKB tcp_conns=%lld "
@@ -457,6 +458,7 @@ static int MWNetworkKindForPath(nw_path_t path) {
         @"heapUsedKB":     @(heapUsedKB),
         @"heapFreeKB":     @(heapFreeKB),
         @"tcpConns":       @(tcpConns),
+        @"requests":       @(requests),
         @"pumpTick":       @(_pumpTick),
         @"interfaces": @{
             @"wifiEthernet": @{@"upload": @(split.wifi_ethernet_upload),

@@ -55,6 +55,10 @@ public struct TrafficSnapshot: Codable, Sendable, Equatable {
     public var heapUsedKB: Int64
     public var heapFreeKB: Int64
     public var tcpConns: Int64
+    /// What the tunnel handed to the engine since it started: its TCP
+    /// connections and UDP sessions (`meow_tun_requests`). Nil from an
+    /// extension that predates the count.
+    public var requests: Int64?
     public var pumpTick: Int64
     /// The totals split by the kind of network they went out on. Nil from an
     /// extension that predates the split.
@@ -72,6 +76,7 @@ public struct TrafficSnapshot: Codable, Sendable, Equatable {
         heapUsedKB: Int64 = 0,
         heapFreeKB: Int64 = 0,
         tcpConns: Int64 = 0,
+        requests: Int64? = nil,
         pumpTick: Int64 = 0,
         interfaces: InterfaceTraffic? = nil,
     ) {
@@ -86,6 +91,7 @@ public struct TrafficSnapshot: Codable, Sendable, Equatable {
         self.heapUsedKB = heapUsedKB
         self.heapFreeKB = heapFreeKB
         self.tcpConns = tcpConns
+        self.requests = requests
         self.pumpTick = pumpTick
         self.interfaces = interfaces
     }

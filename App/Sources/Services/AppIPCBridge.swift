@@ -218,6 +218,7 @@ private extension AppIPCBridge {
             heapUsedKB: 19456,
             heapFreeKB: 8192,
             tcpConns: 24,
+            requests: 1284 + (tick * 3),
             pumpTick: tick,
             interfaces: InterfaceTraffic(
                 wifiEthernet: ByteTotals(

@@ -459,6 +459,7 @@
 "tv.subscription.error.invalidURL" = "Bir http:// veya https:// abonelik URL'si girin.";
 "tv.profiles.section" = "Profiller";
 "tv.profiles.empty" = "Henüz profil yok. Başlamak için bir abonelik URL'si ekleyin.";
+"tv.statistics.requests" = "İstekler";
 "tv.connect.hint.noProfile" = "Bağlanmak için bir abonelik ekleyin.";
 "tv.icloud.button" = "iCloud Drive";
 "tv.icloud.title" = "iCloud Drive'dan içe aktar";

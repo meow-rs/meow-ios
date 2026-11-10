@@ -3,7 +3,8 @@ import SwiftData
 import SwiftUI
 
 /// The whole tvOS app in one screen: title, connect button, route mode,
-/// subscription-URL field, profile list.
+/// subscription-URL field (while the tunnel runs, its statistics in that
+/// place), profile list.
 ///
 /// A re-implementation rather than a reuse of `ContentView`: everything under
 /// `App/Sources/Views` is iPhone-shaped (tab bar, sheets, swipe actions, the
@@ -116,6 +117,41 @@ struct TVContentView: View {
 
     private var subscriptionPanel: some View {
         VStack(alignment: .leading, spacing: 20) {
+            // A subscription is added with the tunnel down; while it runs,
+            // its statistics take the controls' place. The profile list
+            // stays, to switch profiles mid-session.
+            if isConnected {
+                TVStatisticsView()
+            } else {
+                subscriptionControls
+            }
+
+            Divider()
+
+            Text("tv.profiles.section")
+                .font(.title3.weight(.semibold))
+
+            if profiles.isEmpty {
+                Text("tv.profiles.empty")
+                    .font(.body)
+                    .foregroundStyle(.secondary)
+            } else {
+                // `List`, not a `ScrollView` of buttons: a clipping scroll
+                // view cut the focused row's lift off flat, and `List` rows
+                // get the system focus treatment with room to grow.
+                List(orderedProfiles) { profile in
+                    profileRow(profile)
+                }
+            }
+        }
+        .padding(40)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(.regularMaterial, in: .rect(cornerRadius: 24))
+        .focusSection()
+    }
+
+    private var subscriptionControls: some View {
+        VStack(alignment: .leading, spacing: 20) {
             Text("tv.subscription.section")
                 .font(.title3.weight(.semibold))
 
@@ -143,29 +179,7 @@ struct TVContentView: View {
                 }
                 .accessibilityIdentifier("tv.icloud.open")
             }
-
-            Divider()
-
-            Text("tv.profiles.section")
-                .font(.title3.weight(.semibold))
-
-            if profiles.isEmpty {
-                Text("tv.profiles.empty")
-                    .font(.body)
-                    .foregroundStyle(.secondary)
-            } else {
-                // `List`, not a `ScrollView` of buttons: a clipping scroll
-                // view cut the focused row's lift off flat, and `List` rows
-                // get the system focus treatment with room to grow.
-                List(orderedProfiles) { profile in
-                    profileRow(profile)
-                }
-            }
         }
-        .padding(40)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .background(.regularMaterial, in: .rect(cornerRadius: 24))
-        .focusSection()
     }
 
     private func profileRow(_ profile: Profile) -> some View {

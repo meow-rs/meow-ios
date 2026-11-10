@@ -21,6 +21,7 @@
 		0AF0B552932C3846A6BA3D55 /* LogbookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB2D2AB928A239AC09334A3 /* LogbookTests.swift */; };
 		0B13BCBE3F3A575D7E213399 /* TunnelLifecycleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB11E2BC5612E27CCE83B0DC /* TunnelLifecycleTests.swift */; };
 		0BDA436570A2C655E8210F0C /* TunnelSettingsLANExclusionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703008DEDF15E37B8C951A9A /* TunnelSettingsLANExclusionTests.swift */; };
+		0C9CDA77B93CD5C2095DA594 /* TVStatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA2CF7808D0B4D66E3D7954 /* TVStatisticsView.swift */; };
 		0D7669C4305C607B8C449A54 /* GeoAssetStagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8C1AC6AD4590D6827E6188 /* GeoAssetStagerTests.swift */; };
 		0E433B9C6F0193A405BF64B1 /* ProxyDetailModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5047C31C67B7D8B797A6BF /* ProxyDetailModelTests.swift */; };
 		0EDB73C6B2F3E4B06B4F1357 /* TrafficDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6CE6FDC56D15D6F222A2C1 /* TrafficDetailsView.swift */; };
@@ -476,6 +477,7 @@
 		729BDB9DF0375708DCD8F84E /* TrafficAccumulatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrafficAccumulatorTests.swift; sourceTree = "<group>"; };
 		7400FA6C4393A8AD8411EE49 /* my */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = my; path = my.lproj/Localizable.strings; sourceTree = "<group>"; };
 		797EA53C272DDA3EC6E73E6F /* MWDarwinBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MWDarwinBridge.h; sourceTree = "<group>"; };
+		7CA2CF7808D0B4D66E3D7954 /* TVStatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVStatisticsView.swift; sourceTree = "<group>"; };
 		7D8C1AC6AD4590D6827E6188 /* GeoAssetStagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoAssetStagerTests.swift; sourceTree = "<group>"; };
 		7D936CF5D2CCA1B2D180C2D6 /* AppShellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppShellTests.swift; sourceTree = "<group>"; };
 		819D62E17DBC5BC82869FA81 /* URLProtocolStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLProtocolStub.swift; sourceTree = "<group>"; };
@@ -1024,6 +1026,7 @@
 				FEF29010A8460CAFFDADE05F /* TVContentView.swift */,
 				1A40B1718E83428BED3BE842 /* TVICloudImportView.swift */,
 				45E1E35CCFD638685697D3AD /* TVRouteModeMenu.swift */,
+				7CA2CF7808D0B4D66E3D7954 /* TVStatisticsView.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -1712,6 +1715,7 @@
 				AA55A7FC9AEAEF9088925400 /* TVContentView.swift in Sources */,
 				8DD0F3A4C910723A754FB6C9 /* TVICloudImportView.swift in Sources */,
 				C5FFCEF428684D51B773EFAA /* TVRouteModeMenu.swift in Sources */,
+				0C9CDA77B93CD5C2095DA594 /* TVStatisticsView.swift in Sources */,
 				3FAE83DC16BC5B29F06CE356 /* UtilitySessionStore.swift in Sources */,
 				D3105503E3C203986F81B1FD /* VpnManager.swift in Sources */,
 				DDBD4AFBB8976F5983ABC89E /* WidgetReloader.swift in Sources */,
