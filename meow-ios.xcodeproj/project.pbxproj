@@ -238,6 +238,7 @@
 		C3D8E6DA3FF3FD5ADB35CB44 /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 0F003FBFB707CEEDEE53316F /* Yams */; };
 		C58EE1AF7B24B7192EB4E258 /* MWEngineLog.m in Sources */ = {isa = PBXBuildFile; fileRef = FA317DD319BE5DA6206036F1 /* MWEngineLog.m */; };
 		C5C3E779D3F8D11692184272 /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DA03AE8CBDF12804F48FC2 /* StatisticsView.swift */; };
+		C5FFCEF428684D51B773EFAA /* TVRouteModeMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E1E35CCFD638685697D3AD /* TVRouteModeMenu.swift */; };
 		C601A210D0697CA169C0E185 /* ExitIPLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4E4B345EC9483CC7250003 /* ExitIPLookup.swift */; };
 		C71CD8D06F2296636F8A8F17 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D0FAA1804EB1A35F47036A /* SectionHeader.swift */; };
 		C7B7EACD6297D7AA66065602 /* RulesYAMLEditorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BB9ECB4E5C46D70B0CE6B2 /* RulesYAMLEditorTests.swift */; };
@@ -421,6 +422,7 @@
 		43CB2FDDE14D4053A9015FBD /* ICloudExportGuideTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICloudExportGuideTests.swift; sourceTree = "<group>"; };
 		4493E14EFC5CF195F133B5AC /* VpnControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnControl.swift; sourceTree = "<group>"; };
 		459136B958385ACB511D5D14 /* PacketTunnel.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = PacketTunnel.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		45E1E35CCFD638685697D3AD /* TVRouteModeMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVRouteModeMenu.swift; sourceTree = "<group>"; };
 		468AB5369E33BCD92920CF52 /* MWPreferences.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MWPreferences.m; sourceTree = "<group>"; };
 		46B8F525EC80EC48DC803B97 /* WidgetReloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetReloader.swift; sourceTree = "<group>"; };
 		47CD1F1E7DD00599AF2A5238 /* clash_minimal.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = clash_minimal.yaml; sourceTree = "<group>"; };
@@ -999,6 +1001,7 @@
 				C6CD60CCEECD879D2873F26A /* MeowTVApp.swift */,
 				FEF29010A8460CAFFDADE05F /* TVContentView.swift */,
 				1A40B1718E83428BED3BE842 /* TVICloudImportView.swift */,
+				45E1E35CCFD638685697D3AD /* TVRouteModeMenu.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -1683,6 +1686,7 @@
 				573FC87E0903B4A00D8232D1 /* SubscriptionService.swift in Sources */,
 				AA55A7FC9AEAEF9088925400 /* TVContentView.swift in Sources */,
 				8DD0F3A4C910723A754FB6C9 /* TVICloudImportView.swift in Sources */,
+				C5FFCEF428684D51B773EFAA /* TVRouteModeMenu.swift in Sources */,
 				3FAE83DC16BC5B29F06CE356 /* UtilitySessionStore.swift in Sources */,
 				D3105503E3C203986F81B1FD /* VpnManager.swift in Sources */,
 				DDBD4AFBB8976F5983ABC89E /* WidgetReloader.swift in Sources */,

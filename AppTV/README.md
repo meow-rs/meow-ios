@@ -31,6 +31,8 @@ Apple TV needs instead:
 - `MeowTVApp.swift` — `@main`, identical service graph to `MeowApp`.
 - `TVContentView.swift` — title, connect button, subscription-URL field,
   profile list (long-press a row to refresh or delete it).
+- `TVRouteModeMenu.swift` — the row under the connect button: the running
+  engine's route mode (Rule / All / Direct) and a menu to switch it.
 - `TVICloudImportView.swift` — "Import from iCloud Drive": the configs the
   iPhone app relayed (see below).
 - `Assets.xcassets` — the tvOS accent and launch colors, copied from the iOS
@@ -40,7 +42,12 @@ Layout follows the tvOS HIG: no padding beyond the system TV safe area, one
 `focusSection()` per panel, focus lands on Connect at launch, the connect
 button is never `.disabled` (a disabled control can't take focus; with no
 profile it sends focus to the URL field instead), and errors are alerts
-rather than inline banners.
+rather than inline banners. The route mode is a menu, not the segmented
+picker iOS has: a tvOS segment is selected by focus moving onto it, so
+passing the control with the remote would switch modes, and a menu switches
+on a click. It is the running engine's mode, as on iOS — each engine start
+goes back to the profile's `mode:` — so the row is disabled while
+disconnected.
 
 The connect/disconnect sequencing in `TVContentView.toggle()` is a deliberate
 copy of `GlobalVpnSwitchBar.toggle()`; the IPC intent must be queued before
