@@ -423,12 +423,28 @@
 
 /* Traffic */
 "traffic.nav.title" = "ဒေတာ အသွားအလာ";
-"traffic.empty.title" = "ဒေတာ အသွားအလာ အချက်အလက် မရှိသေးပါ";
-"traffic.empty.description" = "အသုံးပြုမှုကို စတင်မှတ်တမ်းတင်ရန် VPN ကို စတင်ပါ။";
-"traffic.label.speed" = "အမြန်နှုန်း";
-"traffic.label.last7Days" = "ပြီးခဲ့သော ရက် 7";
 "traffic.tile.today" = "ယနေ့";
 "traffic.tile.thisMonth" = "ဤလ";
+"traffic.dataUsage" = "ဒေတာ အသုံးပြုမှု";
+"traffic.period.lastMonth" = "ပြီးခဲ့သောလ";
+"traffic.by.host" = "Host";
+"traffic.by.policy" = "မူဝါဒ";
+"traffic.by.network" = "ကွန်ရက်";
+"traffic.details.title" = "ဒေတာ အသွားအလာ အသေးစိတ်";
+"traffic.details.period" = "ကာလ";
+"traffic.details.groupBy" = "အုပ်စုဖွဲ့ပုံ";
+"traffic.details.empty" = "ဤကာလအတွက် မှတ်တမ်းတင်ထားသော ဒေတာ အသွားအလာ မရှိပါ";
+"traffic.details.error %@" = "ဒေတာ အသွားအလာ အသေးစိတ်ကို ဖတ်၍ မရပါ: %@";
+"traffic.details.footer" = "ဤစက်ပေါ်တွင် ၆၂ ရက် သိမ်းထားပြီး တစ်မိနစ်ခန့်တိုင်း အပ်ဒိတ်လုပ်သည်။";
+"traffic.details.clear" = "ဒေတာ အသွားအလာ အသေးစိတ်ကို ရှင်းရန်";
+"traffic.details.clearConfirm" = "လွန်ခဲ့သော ၆၂ ရက်အတွင်း Host၊ မူဝါဒ နှင့် ကွန်ရက် အလိုက် ဒေတာ အသွားအလာကို ဖျက်မလား။ နေ့စဉ် စုစုပေါင်းများကို ဆက်ထားမည်။";
+"traffic.details.clearFailed %@" = "ဒေတာ အသွားအလာ အသေးစိတ်ကို ရှင်း၍ မရပါ: %@";
+"traffic.details.unknown" = "မသိရ";
+"traffic.details.otherIPs" = "အခြား IP လိပ်စာများ";
+"traffic.details.otherIPsNote %lld" = "နေ့တိုင်း IP လိပ်စာ %lld ခုအထိ သီးခြားမှတ်တမ်းတင်သည်။ ထိုနေ့တွင် အခြား IP လိပ်စာများသို့ ဒေတာအသွားအလာကို ဤနေရာတွင် ရေတွက်သည်။";
+"traffic.network.wifi" = "Wi-Fi";
+"traffic.network.ethernet" = "Ethernet";
+"traffic.requests %lld" = "တောင်းဆိုမှု %lld ခု";
 
 
 /* tvOS home screen (TVContentView) — the tvOS target compiles App/Resources
@@ -544,16 +560,6 @@
 "subscriptions.row.a11y.editHint" = "YAML တည်းဖြတ်ကိရိယာကို ဖွင့်သည်";
 "subscriptions.row.a11y.refreshHint" = "အဝေးရှိ URL မှ နောက်ဆုံး Config ကို ရယူသည်";
 "subscriptions.editInfo.a11y.updateIntervalHint" = "ဤ Config ကို မည်မျှ မကြာခဏ ပြန်လည်ရယူမည်ကို ရွေးသည်";
-
-
-/* Accessibility — Traffic charts */
-"a11y.traffic.speedChart.value %@ %@" = "အပ်လုဒ် တစ်စက္ကန့်လျှင် %@၊ ဒေါင်းလုဒ် တစ်စက္ကန့်လျှင် %@";
-"a11y.traffic.historyChart.value %@ %@" = "စုစုပေါင်း အပ်လုဒ် %@၊ စုစုပေါင်း ဒေါင်းလုဒ် %@";
-"a11y.traffic.chart.axis.time" = "အချိန်";
-"a11y.traffic.chart.seconds %@" = "%@ စက္ကန့်";
-"a11y.traffic.chart.axis.speed" = "အမြန်နှုန်း";
-"a11y.traffic.chart.axis.day" = "ရက်";
-"a11y.traffic.chart.axis.data" = "ဒေတာ ပမာဏ";
 
 
 /* Accessibility — Settings */

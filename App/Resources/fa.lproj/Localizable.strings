@@ -429,12 +429,28 @@
 
 /* Traffic */
 "traffic.nav.title" = "ترافیک";
-"traffic.empty.title" = "هنوز دادهٔ ترافیکی وجود ندارد";
-"traffic.empty.description" = "برای شروع ثبت مصرف، VPN را وصل کنید.";
-"traffic.label.speed" = "سرعت";
-"traffic.label.last7Days" = "7 روز گذشته";
 "traffic.tile.today" = "امروز";
 "traffic.tile.thisMonth" = "این ماه";
+"traffic.dataUsage" = "مصرف داده";
+"traffic.period.lastMonth" = "ماه گذشته";
+"traffic.by.host" = "میزبان";
+"traffic.by.policy" = "سیاست";
+"traffic.by.network" = "شبکه";
+"traffic.details.title" = "جزئیات ترافیک";
+"traffic.details.period" = "بازه";
+"traffic.details.groupBy" = "گروه‌بندی";
+"traffic.details.empty" = "ترافیکی برای این بازه ثبت نشده است";
+"traffic.details.error %@" = "خواندن جزئیات ترافیک ممکن نشد: \U2068%@\U2069";
+"traffic.details.footer" = "۶۲ روز روی این دستگاه نگه داشته می‌شود و تقریباً هر دقیقه به‌روز می‌شود.";
+"traffic.details.clear" = "پاک کردن جزئیات ترافیک";
+"traffic.details.clearConfirm" = "ترافیک ۶۲ روز گذشته بر اساس میزبان، سیاست و شبکه حذف شود؟ مجموع‌های روزانه حفظ می‌شوند.";
+"traffic.details.clearFailed %@" = "پاک کردن جزئیات ترافیک ممکن نشد: \U2068%@\U2069";
+"traffic.details.unknown" = "نامشخص";
+"traffic.details.otherIPs" = "سایر نشانی‌های IP";
+"traffic.details.otherIPsNote %lld" = "هر روز حداکثر %lld نشانی IP جداگانه ثبت می‌شود. ترافیک نشانی‌های IP بیشتر در همان روز اینجا شمرده می‌شود.";
+"traffic.network.wifi" = "Wi-Fi";
+"traffic.network.ethernet" = "اترنت";
+"traffic.requests %lld" = "%lld درخواست";
 
 
 /* tvOS home screen (TVContentView) — the tvOS target compiles App/Resources
@@ -550,16 +566,6 @@
 "subscriptions.row.a11y.editHint" = "ویرایشگر YAML را باز می‌کند";
 "subscriptions.row.a11y.refreshHint" = "آخرین نسخهٔ پیکربندی را از لینک راه دور دریافت می‌کند";
 "subscriptions.editInfo.a11y.updateIntervalHint" = "تعیین می‌کند این پیکربندی هر چند وقت یک بار دوباره دریافت شود";
-
-
-/* Accessibility — Traffic charts */
-"a11y.traffic.speedChart.value %@ %@" = "آپلود %@ در ثانیه، دانلود %@ در ثانیه";
-"a11y.traffic.historyChart.value %@ %@" = "مجموع آپلود %@، مجموع دانلود %@";
-"a11y.traffic.chart.axis.time" = "زمان";
-"a11y.traffic.chart.seconds %@" = "%@ ثانیه";
-"a11y.traffic.chart.axis.speed" = "سرعت";
-"a11y.traffic.chart.axis.day" = "روز";
-"a11y.traffic.chart.axis.data" = "حجم داده";
 
 
 /* Accessibility — Settings */

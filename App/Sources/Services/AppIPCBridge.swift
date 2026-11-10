@@ -19,10 +19,6 @@ final class AppIPCBridge {
     private var reloadedObserver: DarwinObserver?
     private var mockTrafficTask: Task<Void, Never>?
 
-    /// Optional hook for long-lived consumers (e.g. the Utility traffic chart)
-    /// that must keep sampling while the Traffic screen is off-screen.
-    var onTrafficDidUpdate: ((TrafficSnapshot) -> Void)?
-
     /// Fired when the engine's config state was reset without a NEVPNStatus
     /// transition — either an in-place engine restart (a new `startedAt`
     /// generation while the stage stays `.connected`) or a hot config reload
@@ -100,7 +96,6 @@ final class AppIPCBridge {
         if let traffic = SharedStore.readTraffic() {
             currentTraffic = traffic
             relayMemstats(traffic)
-            onTrafficDidUpdate?(traffic)
         }
     }
 
@@ -138,7 +133,6 @@ private extension AppIPCBridge {
             try? SharedStore.writeState(currentState)
             currentTraffic = Self.mockTraffic(tick: 0)
             relayMemstats(currentTraffic)
-            onTrafficDidUpdate?(currentTraffic)
             configureMockTrafficTask()
             return
         }
@@ -153,11 +147,6 @@ private extension AppIPCBridge {
 
         currentTraffic = Self.shouldRunMockTraffic(for: currentState) ? Self.mockTraffic(tick: 0) : .init()
         relayMemstats(currentTraffic)
-        // Only chart live snapshots — a synthetic `.init()` reset would seed
-        // the Utility traffic chart and hide its fresh-install empty state.
-        if Self.shouldRunMockTraffic(for: currentState) {
-            onTrafficDidUpdate?(currentTraffic)
-        }
 
         configureMockTrafficTask()
     }
@@ -177,9 +166,6 @@ private extension AppIPCBridge {
         try? SharedStore.writeState(currentState)
         currentTraffic = Self.shouldRunMockTraffic(for: currentState) ? Self.mockTraffic(tick: 0) : .init()
         relayMemstats(currentTraffic)
-        if Self.shouldRunMockTraffic(for: currentState) {
-            onTrafficDidUpdate?(currentTraffic)
-        }
         configureMockTrafficTask()
     }
 
@@ -198,7 +184,6 @@ private extension AppIPCBridge {
                 guard let self else { return }
                 currentTraffic = Self.mockTraffic(tick: tick)
                 relayMemstats(currentTraffic)
-                onTrafficDidUpdate?(currentTraffic)
             }
         }
     }

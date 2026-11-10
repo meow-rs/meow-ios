@@ -17,7 +17,6 @@ final class AppModel {
     let ipcBridge: AppIPCBridge
     let dailyTrafficAccumulator: DailyTrafficAccumulator
     let profileAutoUpdater: ProfileAutoUpdater
-    let utilityTrafficChart: UtilityTrafficChartStore
     let utilityLogs: UtilityLogsStore
     /// Configs relayed from iCloud Drive via CloudKit; the Apple TV reads it.
     let iCloudRelayStore: ICloudRelayStore
@@ -67,7 +66,6 @@ final class AppModel {
             modelContext: AppModelContainer.shared.container.mainContext,
             service: subscriptionService,
         )
-        utilityTrafficChart = UtilityTrafficChartStore()
         utilityLogs = UtilityLogsStore()
         iCloudRelayStore = ICloudRelayStore()
         #if os(iOS)
@@ -75,9 +73,6 @@ final class AppModel {
             appIconStore = AppIconStore()
             metricKitReporter = MetricKitReporter()
         #endif
-        ipcBridge.onTrafficDidUpdate = { [utilityTrafficChart] snapshot in
-            utilityTrafficChart.ingest(snapshot)
-        }
     }
 
     func bootstrap() async {

@@ -427,12 +427,28 @@
 
 /* Traffic */
 "traffic.nav.title" = "Trafik";
-"traffic.empty.title" = "Henüz trafik verisi yok";
-"traffic.empty.description" = "Kullanımı kaydetmeye başlamak için VPN'i başlatın.";
-"traffic.label.speed" = "Hız";
-"traffic.label.last7Days" = "Son 7 gün";
 "traffic.tile.today" = "Bugün";
 "traffic.tile.thisMonth" = "Bu ay";
+"traffic.dataUsage" = "Veri kullanımı";
+"traffic.period.lastMonth" = "Geçen ay";
+"traffic.by.host" = "Ana makine";
+"traffic.by.policy" = "Politika";
+"traffic.by.network" = "Ağ";
+"traffic.details.title" = "Trafik ayrıntıları";
+"traffic.details.period" = "Dönem";
+"traffic.details.groupBy" = "Gruplama";
+"traffic.details.empty" = "Bu dönem için kaydedilmiş trafik yok";
+"traffic.details.error %@" = "Trafik ayrıntıları okunamadı: %@";
+"traffic.details.footer" = "Bu cihazda 62 gün saklanır, yaklaşık dakikada bir güncellenir.";
+"traffic.details.clear" = "Trafik ayrıntılarını temizle";
+"traffic.details.clearConfirm" = "Son 62 günün ana makineye, politikaya ve ağa göre trafiği silinsin mi? Günlük toplamlar korunur.";
+"traffic.details.clearFailed %@" = "Trafik ayrıntıları temizlenemedi: %@";
+"traffic.details.unknown" = "Bilinmiyor";
+"traffic.details.otherIPs" = "Diğer IP adresleri";
+"traffic.details.otherIPsNote %lld" = "Her gün en fazla %lld IP adresi ayrı tutulur. O gün diğer IP adreslerine giden trafik burada sayılır.";
+"traffic.network.wifi" = "Wi-Fi";
+"traffic.network.ethernet" = "Ethernet";
+"traffic.requests %lld" = "%lld istek";
 
 
 /* tvOS home screen (TVContentView) — the tvOS target compiles App/Resources
@@ -548,16 +564,6 @@
 "subscriptions.row.a11y.editHint" = "YAML düzenleyicisini açar";
 "subscriptions.row.a11y.refreshHint" = "En son yapılandırmayı uzak URL'den alır";
 "subscriptions.editInfo.a11y.updateIntervalHint" = "Bu yapılandırmanın ne sıklıkla yeniden alınacağını seçer";
-
-
-/* Accessibility — Traffic charts */
-"a11y.traffic.speedChart.value %@ %@" = "Yükleme saniyede %@, indirme saniyede %@";
-"a11y.traffic.historyChart.value %@ %@" = "Toplam yüklenen %@, toplam indirilen %@";
-"a11y.traffic.chart.axis.time" = "Zaman";
-"a11y.traffic.chart.seconds %@" = "%@ saniye";
-"a11y.traffic.chart.axis.speed" = "Hız";
-"a11y.traffic.chart.axis.day" = "Gün";
-"a11y.traffic.chart.axis.data" = "Veri miktarı";
 
 
 /* Accessibility — Settings */

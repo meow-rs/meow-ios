@@ -93,11 +93,32 @@ urlencoding = "2"
 # contract: one live stack generation per process; run_tun2socks awaits
 # NetStack::core_done() at teardown to enforce it. crates.io `lwip` 0.4.0
 # has none of this.
-lwip = { package = "meow-lwip", git = "https://github.com/meow-rs/meow-rs", rev = "fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6" }
+lwip = { package = "meow-lwip", git = "https://github.com/meow-rs/meow-rs", tag = "v0.29.0" }
 
 # Embedded meow-rs engine (formerly mihomo-rust, renamed upstream). Pinned
 # to a release tag normally; bump deliberately rather than tracking main.
 # Each crate is a workspace member of meow-rs/meow-rs.
+#
+# Tag v0.29.0 (de17693, 2026-11-05), back on a tag after the fa7a7d6d rev
+# pin; covers v0.27.0 → v0.29.0. engine.rs compiles unchanged against it.
+# - `tcp-idle-timeout` (#894, off unless the profile sets it): engine.rs
+#   now hands it to the tunnel at `start` and `reload`, as meow-app does,
+#   so a relay silent in both directions ends; TCP keepalive never reaches
+#   tun2socks flows.
+# - Config parsing moved to serde-saphyr (#802): a number-like proxy
+#   `password` such as `000000` must be quoted. Domain patterns follow
+#   mihomo everywhere (#795), and `nameserver-policy` keys apply in
+#   document order.
+# - DNS: DoT and DoH reuse their connections (#813), `#PROXY` / `?proxy=`
+#   nameservers resolve through the named proxy, `direct-nameserver`
+#   resolves DIRECT dials.
+# - Outbounds: Hysteria2 `obfs: gecko` (#818) and its faster QUIC driver,
+#   REALITY records on BoringSSL, v2ray-plugin `mux` on by default (#862),
+#   AnyTLS `fingerprint` / `alpn` / `name-cert-verify`. The protocol
+#   set keeps shadow-tls, restls, jls and kcptun (#836 split them into
+#   features) and gains `gost-plugin`; meow-proxy's new `public-suffix`
+#   default is left out, see `meow-proxy` below.
+# - The routing log names a group's member: `using Proxy[HK-01]` (#895).
 #
 # Rev fa7a7d6d (meow-rs main, 2026-10-22) = tag v0.26.1 plus #788, for the
 # Paw Print page. v0.26.1 only re-resolved meow-rs's own Cargo.lock, which
@@ -289,7 +310,14 @@ lwip = { package = "meow-lwip", git = "https://github.com/meow-rs/meow-rs", rev 
 # VMess AEAD interop fix. meow-dns runs in fake-ip mode: the FFI config
 # parser pins `enhanced-mode: fake-ip` with `fake-ip-range: 28.0.0.0/8`
 # (the 2026-07-17 redir-host/DoT switch was reverted in PR #321).
-meow-common = { git = "https://github.com/meow-rs/meow-rs", rev = "fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6", features = ["logbook"] }
+# - Traffic ledger (meow-rs #875, `traffic-ledger`): every day's traffic by
+#   host, policy and network for 62 days under `<home>/traffic/`, on the
+#   same system libsqlite3 as the logbook. engine.rs opens it with the
+#   logbook (`traffic_ledger::apply`, never with `apps`: see
+#   `engine::traffic_ledger`) and writes it out at `stop`; the extension
+#   labels the network and sets the time zone, and the app reads and
+#   clears it in its own process (`meow_traffic_*`, traffic.rs).
+meow-common = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.29.0", features = ["logbook", "traffic-ledger"] }
 # `boring-tls` activates BoringSSL-backed TLS in meow-transport so ECH
 # (RFC 9460 SVCB / HTTPS ECHConfigList) and uTLS fingerprinting work for
 # proxy outbound. Without it, any proxy entry with `ech-opts:` set is
@@ -318,16 +346,30 @@ meow-common = { git = "https://github.com/meow-rs/meow-rs", rev = "fa7a7d6dc94e8
 # shadowsocks-crypto ^0.8 (the pinned merge commit was on 0.7), so the AEAD
 # stack moved again; re-test Shadowsocks throughput and all three cipher
 # families on device after touching this.
-meow-config = { git = "https://github.com/meow-rs/meow-rs", rev = "fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6", features = ["boring-tls", "anytls"] }
-meow-dns = { git = "https://github.com/meow-rs/meow-rs", rev = "fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6" }
-meow-tunnel = { git = "https://github.com/meow-rs/meow-rs", rev = "fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6" }
-meow-listener = { git = "https://github.com/meow-rs/meow-rs", rev = "fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6", default-features = false, features = ["listener-mixed"] }
-meow-api = { git = "https://github.com/meow-rs/meow-rs", rev = "fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6" }
-meow-proxy = { git = "https://github.com/meow-rs/meow-rs", rev = "fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6" }
+meow-config = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.29.0", features = ["boring-tls", "anytls"] }
+meow-dns = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.29.0" }
+meow-tunnel = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.29.0" }
+meow-listener = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.29.0", default-features = false, features = ["listener-mixed"] }
+meow-api = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.29.0" }
+# `default-features = false` leaves out one feature, `public-suffix`. The
+# protocol features all still arrive through meow-config's defaults, which
+# forward the same list (`cargo tree -e features -i meow-proxy`).
+#
+# With it on, the public-suffix lookup is compiled twice: once in meow-proxy
+# for load-balance `consistent-hashing`, once in meow-common for the traffic
+# ledger. Each copy is about 470 KB of arm64 code, and with both PacketTunnel
+# was 20.31 MB against the archive job's 20 MB gate. The ledger keeps its
+# copy, since a host row is a registrable domain.
+#
+# Without it a `consistent-hashing` group keys a domain on its last two
+# labels instead of its eTLD+1, as meow's `minimal` build does: one
+# destination still always maps to one member, but every `*.co.uk` host
+# shares a member. Turn it back on once meow-rs links one lookup for both.
+meow-proxy = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.29.0", default-features = false }
 # The probes' `https` requests (src/probe/http.rs) go through the engine's
 # own `TlsLayer`, as its latency test does. Already built for the outbounds
 # via meow-config's `boring-tls`; listed for the direct `use`.
-meow-transport = { git = "https://github.com/meow-rs/meow-rs", rev = "fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6", default-features = false, features = ["tls"] }
+meow-transport = { git = "https://github.com/meow-rs/meow-rs", tag = "v0.29.0", default-features = false, features = ["tls"] }
 
 [build-dependencies]
 cbindgen = "0.29"
@@ -338,6 +380,9 @@ cbindgen = "0.29"
 # now a regular dependency for `ip_info`) to prove the env-derived path
 # resolves correctly.
 tempfile = "3"
+# traffic.rs's tests write the ledger with `traffic_ledger::add`, which
+# takes meow-common's `SmolStr` (already in the graph through it).
+smol_str = "0.3"
 # The probe tests' fake UDP relays implement meow-common's async-trait
 # `ProxyPacketConn`.
 async-trait = "0.1"

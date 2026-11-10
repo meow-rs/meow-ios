@@ -17,11 +17,19 @@
  */
 #define MEOW_NETWORK_KIND_NONE 0
 
+/**
+ * Wi-Fi. The split counts Ethernet with it, the traffic ledger apart.
+ */
 #define MEOW_NETWORK_KIND_WIFI_ETHERNET 1
 
 #define MEOW_NETWORK_KIND_CELLULAR 2
 
 #define MEOW_NETWORK_KIND_OTHER 3
+
+/**
+ * A wired network: the split's `wifi_ethernet`, the ledger's `Ethernet`.
+ */
+#define MEOW_NETWORK_KIND_ETHERNET 4
 
 /**
  * One engine run's bytes by the kind of network they went out on.
@@ -141,8 +149,11 @@ void meow_engine_traffic(int64_t *out_upload, int64_t *out_download);
  * Report the kind of network the engine's sockets now go out on, one of the
  * `MEOW_NETWORK_KIND_*` constants (`MEOW_NETWORK_KIND_NONE` while there is
  * none). What the totals gained since the last report is charged to the
- * previous kind; see `meow_engine_interface_traffic`. Safe to call before
- * `meow_engine_start`: the kind carries over to the runs that follow.
+ * previous kind; see `meow_engine_interface_traffic`. The traffic ledger
+ * files what flows carry from now on under the new network (`Wi-Fi`,
+ * `Ethernet`, `Cellular`, `Other`); no network leaves its label as it was.
+ * Safe to call before `meow_engine_start`: the kind carries over to the
+ * runs that follow.
  *
  * Returns 0 on success, -1 on an unknown kind.
  */
@@ -251,12 +262,12 @@ char *meow_probe_proxy(int64_t id, const char *proxy, const char *kind, const ch
 void meow_cancel_proxy_probe(int64_t id);
 
 /**
- * Free a string returned by `meow_probe_proxy`, `meow_lookup_ip` or
- * `meow_logbook_read`. NULL is a no-op.
+ * Free a string returned by `meow_probe_proxy`, `meow_lookup_ip`,
+ * `meow_logbook_read` or `meow_traffic_read`. NULL is a no-op.
  *
  * # Safety
- * `s` must be NULL or a pointer from `meow_probe_proxy`, `meow_lookup_ip` or
- * `meow_logbook_read`, freed only once.
+ * `s` must be NULL or a pointer from `meow_probe_proxy`, `meow_lookup_ip`,
+ * `meow_logbook_read` or `meow_traffic_read`, freed only once.
  */
 void meow_string_free(char *s);
 
@@ -299,6 +310,57 @@ char *meow_logbook_read(const char *home,
                         int limit,
                         const char *level,
                         const char *kind);
+
+/**
+ * The traffic under the engine home `home` (the App Group config dir) of
+ * the local days `from..=to` (days since 1970-01-01), grouped `by` `host`,
+ * `policy` or `interface`, largest first, keeping the rows that match the
+ * non-empty filters `host` (as the report names it: a registrable domain,
+ * an IP address, or `*` for the IP addresses past the day's cap), `policy`
+ * and `interface`: `{"from": "2026-11-01", "to": "2026-11-30", "by":
+ * "host", "upload": n, "download": n, "requests": n, "rows": [{"name":
+ * "...", "upload": n, "download": n, "requests": n}]}`, or `{"error":
+ * "..."}`.
+ *
+ * Runs in the calling process and needs no engine, so the app reads it
+ * while the VPN is down. Never returns NULL; free the answer with
+ * `meow_string_free`.
+ *
+ * # Safety
+ * `home`, `by`, `host`, `policy` and `interface` must each be a
+ * NUL-terminated UTF-8 C string or NULL (read as empty).
+ */
+char *meow_traffic_read(const char *home,
+                        int32_t from,
+                        int32_t to,
+                        const char *by,
+                        const char *host,
+                        const char *policy,
+                        const char *interface);
+
+/**
+ * Delete everything in the traffic ledger under the engine home `home`;
+ * the daily totals the app keeps itself are not part of it. A running
+ * engine notices at its next write (at most a minute later) and drops what
+ * it counted until then instead of writing it over the clear.
+ *
+ * Returns 0 on success, -1 when the ledger could not be cleared (see
+ * `meow_core_last_error`).
+ *
+ * # Safety
+ * `home` must be a NUL-terminated UTF-8 C string or NULL (read as empty).
+ */
+int meow_traffic_clear(const char *home);
+
+/**
+ * The device's time zone, which decides the day the traffic ledger counts
+ * traffic under: the UTC offset now, in seconds east of UTC, and its next
+ * change, at the Unix second `next_at` (0 for none known) to
+ * `next_offset`. UTC until set. The PacketTunnel sets it before
+ * `meow_engine_start` and again whenever the zone may have changed;
+ * setting the zone it already has is a no-op.
+ */
+void meow_traffic_set_time_zone(int32_t offset, int64_t next_at, int32_t next_offset);
 
 /**
  * Patch a Clash YAML config for iOS: strips `subscriptions`; keeps the

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>traffic.requests %lld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@requests@</string>
+		<key>requests</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lld</string>
+			<key>one</key>
+			<string>%lld запрос</string>
+			<key>few</key>
+			<string>%lld запроса</string>
+			<key>many</key>
+			<string>%lld запросов</string>
+			<key>other</key>
+			<string>%lld запроса</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

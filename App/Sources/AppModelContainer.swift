@@ -118,8 +118,8 @@ enum AppModelContainer {
             yamlContent: screenshotDemoYAML,
             lastUpdated: Date(timeIntervalSinceNow: -2 * 86400),
         ))
-        // Non-uniform but deterministic per-day bytes so the 7-day chart has
-        // visible shape in every capture.
+        // Non-uniform but deterministic per-day bytes, so the Traffic page's
+        // Today and This Month tiles show different totals in every capture.
         let txMB: [Int64] = [148, 212, 96, 324, 187, 259, 173]
         let rxMB: [Int64] = [1120, 1730, 640, 2410, 1490, 2050, 1310]
         for i in 0 ..< 7 {

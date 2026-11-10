@@ -14,7 +14,6 @@ struct MeowApp: App {
                 .environment(appModel.meowAPI)
                 .environment(appModel.subscriptionService)
                 .environment(appModel.ipcBridge)
-                .environment(appModel.utilityTrafficChart)
                 .environment(appModel.utilityLogs)
                 .environment(appModel.iCloudRelayStore)
                 .environment(appModel.appIconStore)

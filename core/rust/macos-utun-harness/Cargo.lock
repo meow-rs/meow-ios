@@ -93,6 +93,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "annotate-snippets"
+version = "0.12.17"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b2a5b0a5ab8561c603f16c3b78c24a386b1f70e7fc1b1b1e8c15738828e4a176"
+dependencies = [
+ "anstyle",
+ "memchr",
+ "unicode-width",
+]
+
+[[package]]
 name = "anstream"
 version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -159,6 +170,12 @@ dependencies = [
  "cpufeatures 0.2.17",
  "password-hash",
 ]
+
+[[package]]
+name = "arraydeque"
+version = "0.5.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7d902e3d592a523def97af8f317b08ce16b7ab854c1985a0c671e6f15cebc236"
 
 [[package]]
 name = "arrayvec"
@@ -671,6 +688,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "773648b94d0e5d620f64f280777445740e61fe701025087ec8b57f45c791888b"
 
 [[package]]
+name = "core_detect"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7f8f80099a98041a3d1622845c271458a2d73e688351bf3cb999266764b81d48"
+
+[[package]]
 name = "cpubits"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -714,25 +737,6 @@ name = "crossbeam-channel"
 version = "0.5.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "98b0cc327b5bc766e7fda9c9260cc0fa81b43a8e240440422dff70788e3f9ef1"
-dependencies = [
- "crossbeam-utils",
-]
-
-[[package]]
-name = "crossbeam-deque"
-version = "0.8.8"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "622f3fc73690be383c7214310406f28a90e6edeadc3cea882f9d71e495b9711a"
-dependencies = [
- "crossbeam-epoch",
- "crossbeam-utils",
-]
-
-[[package]]
-name = "crossbeam-epoch"
-version = "0.9.21"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dc74980687109a3b14c72fd458107bf0baa1da1a1a805e178d15501ba9b86d9d"
 dependencies = [
  "crossbeam-utils",
 ]
@@ -975,6 +979,29 @@ name = "either"
 version = "1.19.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0e9c71c2167ca323c882b99918929403426e2373ea17242ff5653e0d5e1058be"
+
+[[package]]
+name = "encoding_rs"
+version = "0.8.44"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "89253175e704ab869b04f9db224d38630e0211a53841a79181deae0889e169f5"
+dependencies = [
+ "cfg-if",
+ "core_detect",
+ "multiversion_no_op",
+ "rustversion",
+ "scopeguard",
+ "simdutf8",
+]
+
+[[package]]
+name = "encoding_rs_io"
+version = "0.1.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "fba3fe847045ecff794b9c138293a80db914678c453ad63fbf0c6a9eb6e00b22"
+dependencies = [
+ "encoding_rs",
+]
 
 [[package]]
 name = "enum-as-inner"
@@ -1267,6 +1294,16 @@ name = "glob"
 version = "0.3.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e4eba85ea1d0a966a983acd07deee566e67395d2d96b6fb39e62b5a833f1eb0b"
+
+[[package]]
+name = "granit-parser"
+version = "2.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "05f05586d4d4df3d47123207826c40b252728b438a1a07bad3c01ee6bea401df"
+dependencies = [
+ "arraydeque",
+ "smallvec",
+]
 
 [[package]]
 name = "h2"
@@ -1586,6 +1623,8 @@ checksum = "cc4e190f5d26ca7051642629da2c52fc03bde85a03197c99408dcd291734c855"
 dependencies = [
  "equivalent",
  "hashbrown 0.17.1",
+ "serde",
+ "serde_core",
 ]
 
 [[package]]
@@ -1936,8 +1975,8 @@ dependencies = [
 
 [[package]]
 name = "meow-anytls"
-version = "0.26.1"
-source = "git+https://github.com/meow-rs/meow-rs?rev=fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6#fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6"
+version = "0.29.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.29.0#de176935fedf00c98c6580109cd0034bf67801a8"
 dependencies = [
  "anyhow",
  "bytes",
@@ -1959,8 +1998,8 @@ dependencies = [
 
 [[package]]
 name = "meow-api"
-version = "0.26.1"
-source = "git+https://github.com/meow-rs/meow-rs?rev=fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6#fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6"
+version = "0.29.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.29.0#de176935fedf00c98c6580109cd0034bf67801a8"
 dependencies = [
  "anyhow",
  "axum",
@@ -1979,7 +2018,6 @@ dependencies = [
  "prometheus-client",
  "serde",
  "serde_json",
- "serde_yaml",
  "smol_str",
  "subtle",
  "sysinfo",
@@ -1994,8 +2032,8 @@ dependencies = [
 
 [[package]]
 name = "meow-common"
-version = "0.26.1"
-source = "git+https://github.com/meow-rs/meow-rs?rev=fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6#fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6"
+version = "0.29.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.29.0#de176935fedf00c98c6580109cd0034bf67801a8"
 dependencies = [
  "async-trait",
  "bytes",
@@ -2004,6 +2042,7 @@ dependencies = [
  "libc",
  "libproc",
  "parking_lot",
+ "psl",
  "rusqlite",
  "serde",
  "serde_json",
@@ -2019,8 +2058,8 @@ dependencies = [
 
 [[package]]
 name = "meow-config"
-version = "0.26.1"
-source = "git+https://github.com/meow-rs/meow-rs?rev=fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6#fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6"
+version = "0.29.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.29.0#de176935fedf00c98c6580109cd0034bf67801a8"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -2028,6 +2067,7 @@ dependencies = [
  "dashmap 6.2.1",
  "hickory-proto",
  "httparse",
+ "indexmap",
  "ipnet",
  "libc",
  "maxminddb",
@@ -2040,7 +2080,8 @@ dependencies = [
  "parking_lot",
  "regex",
  "serde",
- "serde_yaml",
+ "serde-saphyr",
+ "serde_json",
  "smol_str",
  "tokio",
  "tracing",
@@ -2049,8 +2090,8 @@ dependencies = [
 
 [[package]]
 name = "meow-dns"
-version = "0.26.1"
-source = "git+https://github.com/meow-rs/meow-rs?rev=fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6#fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6"
+version = "0.29.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.29.0#de176935fedf00c98c6580109cd0034bf67801a8"
 dependencies = [
  "async-trait",
  "dashmap 6.2.1",
@@ -2070,6 +2111,7 @@ dependencies = [
  "smol_str",
  "thiserror 2.0.21",
  "tokio",
+ "tokio-boring",
  "tracing",
 ]
 
@@ -2112,8 +2154,8 @@ dependencies = [
 
 [[package]]
 name = "meow-listener"
-version = "0.26.1"
-source = "git+https://github.com/meow-rs/meow-rs?rev=fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6#fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6"
+version = "0.29.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.29.0#de176935fedf00c98c6580109cd0034bf67801a8"
 dependencies = [
  "base64 0.22.1",
  "libc",
@@ -2123,14 +2165,15 @@ dependencies = [
  "parking_lot",
  "smallvec",
  "smol_str",
+ "socket2 0.5.10",
  "tokio",
  "tracing",
 ]
 
 [[package]]
 name = "meow-lwip"
-version = "0.26.1"
-source = "git+https://github.com/meow-rs/meow-rs?rev=fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6#fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6"
+version = "0.29.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.29.0#de176935fedf00c98c6580109cd0034bf67801a8"
 dependencies = [
  "bindgen",
  "bytes",
@@ -2144,8 +2187,8 @@ dependencies = [
 
 [[package]]
 name = "meow-proxy"
-version = "0.26.1"
-source = "git+https://github.com/meow-rs/meow-rs?rev=fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6#fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6"
+version = "0.29.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.29.0#de176935fedf00c98c6580109cd0034bf67801a8"
 dependencies = [
  "aes 0.8.4",
  "argon2",
@@ -2170,7 +2213,6 @@ dependencies = [
  "meow-transport",
  "ml-kem",
  "parking_lot",
- "psl",
  "quiche",
  "rand 0.9.5",
  "serde_json",
@@ -2190,8 +2232,8 @@ dependencies = [
 
 [[package]]
 name = "meow-rules"
-version = "0.26.1"
-source = "git+https://github.com/meow-rs/meow-rs?rev=fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6#fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6"
+version = "0.29.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.29.0#de176935fedf00c98c6580109cd0034bf67801a8"
 dependencies = [
  "ipnet",
  "maxminddb",
@@ -2206,8 +2248,8 @@ dependencies = [
 
 [[package]]
 name = "meow-transport"
-version = "0.26.1"
-source = "git+https://github.com/meow-rs/meow-rs?rev=fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6#fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6"
+version = "0.29.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.29.0#de176935fedf00c98c6580109cd0034bf67801a8"
 dependencies = [
  "aes 0.9.3",
  "aes-gcm 0.10.3",
@@ -2252,17 +2294,18 @@ dependencies = [
 
 [[package]]
 name = "meow-trie"
-version = "0.26.1"
-source = "git+https://github.com/meow-rs/meow-rs?rev=fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6#fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6"
+version = "0.29.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.29.0#de176935fedf00c98c6580109cd0034bf67801a8"
 
 [[package]]
 name = "meow-tunnel"
-version = "0.26.1"
-source = "git+https://github.com/meow-rs/meow-rs?rev=fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6#fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6"
+version = "0.29.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.29.0#de176935fedf00c98c6580109cd0034bf67801a8"
 dependencies = [
  "async-trait",
  "dashmap 6.2.1",
  "ipnet",
+ "libc",
  "meow-common",
  "meow-dns",
  "meow-proxy",
@@ -2337,6 +2380,12 @@ dependencies = [
  "hybrid-array",
  "num-traits",
 ]
+
+[[package]]
+name = "multiversion_no_op"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "743fb55ba31b18fb1ecef6bdc9aa2743314978ac084044301a7eee33fb99a20d"
 
 [[package]]
 name = "nix"
@@ -2808,26 +2857,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "63b8176103e19a2643978565ca18b50549f6101881c443590420e4dc998a3c69"
 
 [[package]]
-name = "rayon"
-version = "1.12.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fb39b166781f92d482534ef4b4b1b2568f42613b53e5b6c160e24cfbfa30926d"
-dependencies = [
- "either",
- "rayon-core",
-]
-
-[[package]]
-name = "rayon-core"
-version = "1.13.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "22e18b0f0062d30d4230b2e85ff77fdfe4326feb054b9783a3460d8435c8ab91"
-dependencies = [
- "crossbeam-deque",
- "crossbeam-utils",
-]
-
-[[package]]
 name = "redox_syscall"
 version = "0.5.18"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3010,6 +3039,23 @@ checksum = "4148590afebada386688f18773da617792bf2ef03ffc1e4cbd2b1d45b023e0ba"
 dependencies = [
  "serde_core",
  "serde_derive",
+]
+
+[[package]]
+name = "serde-saphyr"
+version = "2.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a253edfdea34032da21af84e16fcc94f4c7a6ba237f9f3bc2dbf43cea8535c44"
+dependencies = [
+ "annotate-snippets",
+ "base64 0.22.1",
+ "encoding_rs_io",
+ "granit-parser",
+ "nohash-hasher",
+ "num-traits",
+ "serde_core",
+ "smallvec",
+ "zmij",
 ]
 
 [[package]]
@@ -3411,7 +3457,6 @@ dependencies = [
  "libc",
  "memchr",
  "ntapi",
- "rayon",
  "windows",
 ]
 
@@ -3912,6 +3957,12 @@ checksum = "75cd3fb03d5288b3ba9a1ee103ac7e9cbb59f0b03d64f8ddfcc04dd42758a85d"
 dependencies = [
  "tinyvec",
 ]
+
+[[package]]
+name = "unicode-width"
+version = "0.2.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ca718471876992059f251e33aafc334346ada08042b7661dd1fe313a9bced557"
 
 [[package]]
 name = "universal-hash"
@@ -4515,18 +4566,18 @@ checksum = "29666d0abbfad1e3dc4dcf6144730dd3a3ab225bbbdac83319345b1b44ccfc1b"
 
 [[package]]
 name = "zstd"
-version = "0.13.3"
+version = "0.14.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e91ee311a569c327171651566e07972200e76fcfe2242a4fa446149a3881c08a"
+checksum = "db3ae9bf90af6e40197bef767eeefc46ad6397420fe873830bd85e5fbbfb3c70"
 dependencies = [
  "zstd-safe",
 ]
 
 [[package]]
 name = "zstd-safe"
-version = "7.3.0"
+version = "8.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "64d80649ab6db9d9f6f9c80a40becd948eda4714a0a5ac8c4d157a32231c7882"
+checksum = "ded520f16b29e1a9b771c722221b2b0a0398c2316d9bb3c42b458a5414d7434b"
 dependencies = [
  "zstd-sys",
 ]

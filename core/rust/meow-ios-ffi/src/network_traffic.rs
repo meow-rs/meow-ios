@@ -10,15 +10,21 @@
 //! The same meter as meow-android's `NetworkTrafficMeter`. The kind outlives
 //! engine runs (the path monitor reports changes, not the state at each
 //! start); the split restarts with the totals on every `engine::start`.
+//!
+//! The kind also labels the network in the traffic ledger (see
+//! [`ledger_label`]), which keeps Wi-Fi and Ethernet apart.
 
 use parking_lot::Mutex;
 use std::os::raw::c_int;
 
 /// The network kinds `meow_engine_set_network_kind` takes; `0` is none.
 pub const MEOW_NETWORK_KIND_NONE: c_int = 0;
+/// Wi-Fi. The split counts Ethernet with it, the traffic ledger apart.
 pub const MEOW_NETWORK_KIND_WIFI_ETHERNET: c_int = 1;
 pub const MEOW_NETWORK_KIND_CELLULAR: c_int = 2;
 pub const MEOW_NETWORK_KIND_OTHER: c_int = 3;
+/// A wired network: the split's `wifi_ethernet`, the ledger's `Ethernet`.
+pub const MEOW_NETWORK_KIND_ETHERNET: c_int = 4;
 
 /// One engine run's bytes by the kind of network they went out on.
 #[repr(C)]
@@ -44,11 +50,27 @@ impl Kind {
     pub(crate) fn from_c(kind: c_int) -> Result<Option<Self>, ()> {
         match kind {
             MEOW_NETWORK_KIND_NONE => Ok(None),
-            MEOW_NETWORK_KIND_WIFI_ETHERNET => Ok(Some(Self::WifiEthernet)),
+            MEOW_NETWORK_KIND_WIFI_ETHERNET | MEOW_NETWORK_KIND_ETHERNET => {
+                Ok(Some(Self::WifiEthernet))
+            }
             MEOW_NETWORK_KIND_CELLULAR => Ok(Some(Self::Cellular)),
             MEOW_NETWORK_KIND_OTHER => Ok(Some(Self::Other)),
             _ => Err(()),
         }
+    }
+}
+
+/// The traffic ledger's label for a known network kind, as meow-android
+/// labels them; `None` for no network, which leaves the label as it was:
+/// what flows still carry then is the tail of the last network's traffic.
+/// The app names the labels in its own language (`TrafficNetwork`).
+pub(crate) fn ledger_label(kind: c_int) -> Option<&'static str> {
+    match kind {
+        MEOW_NETWORK_KIND_WIFI_ETHERNET => Some("Wi-Fi"),
+        MEOW_NETWORK_KIND_ETHERNET => Some("Ethernet"),
+        MEOW_NETWORK_KIND_CELLULAR => Some("Cellular"),
+        MEOW_NETWORK_KIND_OTHER => Some("Other"),
+        _ => None,
     }
 }
 
@@ -223,7 +245,7 @@ mod tests {
 
     #[test]
     fn the_setter_rejects_unknown_kinds() {
-        assert_eq!(crate::meow_engine_set_network_kind(4), -1);
+        assert_eq!(crate::meow_engine_set_network_kind(5), -1);
         assert_eq!(
             crate::meow_engine_set_network_kind(super::MEOW_NETWORK_KIND_NONE),
             0
@@ -236,7 +258,18 @@ mod tests {
         assert_eq!(Kind::from_c(1), Ok(Some(Kind::WifiEthernet)));
         assert_eq!(Kind::from_c(2), Ok(Some(Kind::Cellular)));
         assert_eq!(Kind::from_c(3), Ok(Some(Kind::Other)));
-        assert_eq!(Kind::from_c(4), Err(()));
+        assert_eq!(Kind::from_c(4), Ok(Some(Kind::WifiEthernet)));
+        assert_eq!(Kind::from_c(5), Err(()));
         assert_eq!(Kind::from_c(-1), Err(()));
+    }
+
+    #[test]
+    fn the_ledger_keeps_wifi_and_ethernet_apart() {
+        use super::ledger_label;
+        assert_eq!(ledger_label(0), None);
+        assert_eq!(ledger_label(1), Some("Wi-Fi"));
+        assert_eq!(ledger_label(2), Some("Cellular"));
+        assert_eq!(ledger_label(3), Some("Other"));
+        assert_eq!(ledger_label(4), Some("Ethernet"));
     }
 }

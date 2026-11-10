@@ -445,8 +445,8 @@ dependencies = [
 
 [[package]]
 name = "meow-common"
-version = "0.26.1"
-source = "git+https://github.com/meow-rs/meow-rs?rev=fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6#fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6"
+version = "0.29.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.29.0#de176935fedf00c98c6580109cd0034bf67801a8"
 dependencies = [
  "async-trait",
  "bytes",
@@ -469,8 +469,8 @@ dependencies = [
 
 [[package]]
 name = "meow-rules"
-version = "0.26.1"
-source = "git+https://github.com/meow-rs/meow-rs?rev=fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6#fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6"
+version = "0.29.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.29.0#de176935fedf00c98c6580109cd0034bf67801a8"
 dependencies = [
  "ipnet",
  "maxminddb",
@@ -485,8 +485,8 @@ dependencies = [
 
 [[package]]
 name = "meow-trie"
-version = "0.26.1"
-source = "git+https://github.com/meow-rs/meow-rs?rev=fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6#fa7a7d6dc94e886ae0bc43eeb0227082ae5bf2e6"
+version = "0.29.0"
+source = "git+https://github.com/meow-rs/meow-rs?tag=v0.29.0#de176935fedf00c98c6580109cd0034bf67801a8"
 
 [[package]]
 name = "minimal-lexical"
@@ -1360,18 +1360,18 @@ checksum = "29666d0abbfad1e3dc4dcf6144730dd3a3ab225bbbdac83319345b1b44ccfc1b"
 
 [[package]]
 name = "zstd"
-version = "0.13.3"
+version = "0.14.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e91ee311a569c327171651566e07972200e76fcfe2242a4fa446149a3881c08a"
+checksum = "db3ae9bf90af6e40197bef767eeefc46ad6397420fe873830bd85e5fbbfb3c70"
 dependencies = [
  "zstd-safe",
 ]
 
 [[package]]
 name = "zstd-safe"
-version = "7.3.0"
+version = "8.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "64d80649ab6db9d9f6f9c80a40becd948eda4714a0a5ac8c4d157a32231c7882"
+checksum = "ded520f16b29e1a9b771c722221b2b0a0398c2316d9bb3c42b458a5414d7434b"
 dependencies = [
  "zstd-sys",
 ]
