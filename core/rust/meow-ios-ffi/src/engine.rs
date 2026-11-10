@@ -416,6 +416,10 @@ pub fn start(config_path: &str) -> Result<()> {
     tunnel.set_dialer_registry(cfg.provider_dialer_registry.clone());
     tunnel.set_mode(cfg.general.mode);
     tunnel.set_connection_notes(cfg.general.connection_notes);
+    // The profile's `tcp-idle-timeout` (off unless set): ends relays silent
+    // in both directions, which tun2socks flows need since TCP keepalive
+    // never reaches them.
+    tunnel.set_tcp_idle_timeout(cfg.general.tcp_idle_timeout);
     tunnel.update_routing(cfg.proxies, cfg.rules, cfg.dialer_registry);
 
     // Start the tunnel's background tasks — the UDP NAT sweeper, which evicts
@@ -673,6 +677,8 @@ pub fn reload(config_path: &str) -> Result<()> {
     let strict = raw.strict.unwrap_or(false);
     let mode = raw_mode(&raw)?;
     let connection_notes = raw.connection_notes.unwrap_or(false);
+    // Checked against the ceiling `start` enforces, before anything changes.
+    let tcp_idle_timeout = meow_config::resolve_tcp_idle_timeout(&raw)?;
     let cache_dir = meow_config::resource_cache_dir_for_config_path(config_path);
     // Clone the handles out instead of holding the slot lock: the rebuild
     // can fetch rule providers, and `traffic()` polls this lock every second.
@@ -725,6 +731,7 @@ pub fn reload(config_path: &str) -> Result<()> {
 
         live.tunnel.set_mode(mode);
         live.tunnel.set_connection_notes(connection_notes);
+        live.tunnel.set_tcp_idle_timeout(tcp_idle_timeout);
         live.tunnel.update_routing(proxies, rules, dialer_registry);
         // Commit point: the routed groups and rules already reference these
         // provider objects. Both calls also reconcile the refresh loops and
