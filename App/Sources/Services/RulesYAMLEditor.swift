@@ -24,8 +24,7 @@ enum RulesYAMLEditor {
     /// a sequence). Throws on YAML parse errors.
     static func load(from sourceYAML: String) throws -> [EditableRule] {
         let loaded = try Yams.load(yaml: sourceYAML)
-        guard let root = loaded as? [String: Any] else { return [] }
-        guard let raw = root["rules"] as? [Any] else { return [] }
+        guard let root = loaded as? [String: Any], let raw = root["rules"] as? [Any] else { return [] }
         // SwiftData re-encodes `Yams` integer scalars as `Int`s and string
         // scalars as `String`s. A rule line is always a string in valid
         // Clash YAML; coerce defensively and skip anything else.

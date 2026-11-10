@@ -22,16 +22,10 @@ struct SubscriptionDeepLink: Equatable {
     /// `file://`, `data:` etc. would let a crafted link read arbitrary
     /// local paths or inject inline YAML, so they're rejected outright.
     static func parse(_ deepLink: URL) -> SubscriptionDeepLink? {
-        guard deepLink.scheme == "meow", deepLink.host == "connect" else {
-            return nil
-        }
-        guard let components = URLComponents(url: deepLink, resolvingAgainstBaseURL: false),
-              let items = components.queryItems
-        else {
-            return nil
-        }
-
-        guard let rawURL = items.first(where: { $0.name == "url" })?.value,
+        guard deepLink.scheme == "meow", deepLink.host == "connect",
+              let components = URLComponents(url: deepLink, resolvingAgainstBaseURL: false),
+              let items = components.queryItems,
+              let rawURL = items.first(where: { $0.name == "url" })?.value,
               let subscriptionURL = URL(string: rawURL),
               let scheme = subscriptionURL.scheme?.lowercased(),
               scheme == "http" || scheme == "https",
