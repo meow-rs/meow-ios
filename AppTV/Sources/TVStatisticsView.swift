@@ -91,11 +91,20 @@ private struct TVStatisticCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Label(title, systemImage: systemImage)
-                .font(.callout)
-                .foregroundStyle(.secondary)
+            // The symbol over a fixed inset rather than a `Label`: the
+            // symbols differ in height, and a `Label` row takes the taller
+            // of symbol and text, which left the numbers of a row uneven.
+            Text(title)
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
+                .padding(.leading, 50)
+                .overlay(alignment: .leading) {
+                    Image(systemName: systemImage)
+                        .frame(width: 36)
+                        .accessibilityHidden(true)
+                }
+                .font(.callout)
+                .foregroundStyle(.secondary)
             // Digits of one width, so a ticking number does not shift.
             Text(value)
                 .font(.title3.weight(.semibold))
