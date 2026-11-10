@@ -14,6 +14,7 @@ record, one price, both platform binaries.
 | Models | `App/Sources/Models` | yes |
 | Services | `App/Sources/Services` | yes |
 | App composition | `App/Sources/AppModel.swift`, `AppModelContainer.swift` | yes |
+| Brand palette | `App/Sources/Theme` (`AppTheme`) | yes |
 | Strings, GeoIP data | `App/Resources` (minus `Assets.xcassets`) | yes |
 | Views | `App/Sources/Views` | **no** — replaced by `AppTV/Sources` |
 
@@ -38,8 +39,9 @@ Apple TV needs instead:
   engine's route mode (Rule / All / Direct) and a menu to switch it.
 - `TVICloudImportView.swift` — "Import from iCloud Drive": the configs the
   iPhone app relayed (see below).
-- `Assets.xcassets` — the tvOS accent and launch colors, copied from the iOS
-  catalog. The Brand Assets stack belongs here too.
+- `Assets.xcassets` — the tvOS accent and launch colors and the mascot
+  (`AppMark`, `AppMarkConnected`), copied from the iOS catalog. The Brand
+  Assets stack belongs here too.
 
 Layout follows the tvOS HIG: no padding beyond the system TV safe area, one
 `focusSection()` per panel, focus lands on Connect at launch, the connect
@@ -61,6 +63,13 @@ and the request count from the snapshot it publishes twice a second
 (`TrafficSnapshot.requests` is `meow_tun_requests`: each TCP connection and
 UDP session tun2socks handed to the engine, DNS queries left out). They hold
 nothing to focus.
+
+The screen wears the iPhone app's colors (`AppTheme`, light and dark): the
+sky-blue canvas, both panels as white cards edged in blue (the iPhone's
+`GlassCard` at TV scale), the mascot over the connect button with the iPhone
+status bar's stage dot, and the statistics symbols in the iPhone traffic
+tiles' tints. Button labels keep the system colors: a focused tvOS button is
+a white platter that darkens its label, which a set color would undo.
 
 The connect/disconnect sequencing in `TVContentView.toggle()` is a deliberate
 copy of `GlobalVpnSwitchBar.toggle()`; the IPC intent must be queued before

@@ -115,7 +115,7 @@ struct TVContentView: View {
 
             TVRouteModeMenu()
         }
-        .tvPanel(alignment: .top)
+        .tvPanel(alignment: .center)
     }
 
     private var subscriptionPanel: some View {

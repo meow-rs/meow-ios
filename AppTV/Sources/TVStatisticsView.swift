@@ -106,7 +106,10 @@ private struct TVStatisticCard: View {
                 .font(.headline)
                 .foregroundStyle(tint)
                 .frame(width: 64, height: 64)
+                // The wash over white: straight on the card's blue, the
+                // orange of upload turned muddy.
                 .background(tint.opacity(0.14), in: Circle())
+                .background(AppTheme.panel, in: Circle())
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 2) {
                 Text(title)
