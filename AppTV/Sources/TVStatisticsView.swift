@@ -25,6 +25,7 @@ struct TVStatisticsView: View {
                     TVStatisticCard(
                         title: "statistics.uptime",
                         systemImage: "clock",
+                        tint: AppTheme.connected,
                         value: uptime(at: context.date),
                     )
                     .accessibilityIdentifier("tv.statistics.uptime")
@@ -32,6 +33,7 @@ struct TVStatisticsView: View {
                 TVStatisticCard(
                     title: "tv.statistics.requests",
                     systemImage: "arrow.left.arrow.right",
+                    tint: AppTheme.accent,
                     value: traffic.requests.map { Int($0).formatted(.number.locale(locale)) } ?? "\u{2014}",
                 )
                 .accessibilityIdentifier("tv.statistics.requests")
@@ -41,12 +43,14 @@ struct TVStatisticsView: View {
                 TVStatisticCard(
                     title: "home.traffic.upload",
                     systemImage: "arrow.up",
+                    tint: AppTheme.warning,
                     value: Self.bytes(traffic.uploadBytes),
                 )
                 .accessibilityIdentifier("tv.statistics.upload")
                 TVStatisticCard(
                     title: "home.traffic.download",
                     systemImage: "arrow.down",
+                    tint: AppTheme.accent,
                     value: Self.bytes(traffic.downloadBytes),
                 )
                 .accessibilityIdentifier("tv.statistics.download")
@@ -83,38 +87,45 @@ struct TVStatisticsView: View {
     }
 }
 
-/// One card of `TVStatisticsView`: what it counts, then the number.
+/// One card of `TVStatisticsView`: its symbol in a tinted disc, then what
+/// it counts over the number. The iPhone's traffic tiles in the brand palette
+/// (`AppTheme`), with their tints: green for time, orange for upload, blue
+/// for the rest.
 private struct TVStatisticCard: View {
     let title: LocalizedStringKey
     let systemImage: String
+    let tint: Color
     let value: String
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            // The symbol over a fixed inset rather than a `Label`: the
-            // symbols differ in height, and a `Label` row takes the taller
-            // of symbol and text, which left the numbers of a row uneven.
-            Text(title)
-                .lineLimit(1)
-                .minimumScaleFactor(0.7)
-                .padding(.leading, 50)
-                .overlay(alignment: .leading) {
-                    Image(systemName: systemImage)
-                        .frame(width: 36)
-                        .accessibilityHidden(true)
-                }
-                .font(.callout)
-                .foregroundStyle(.secondary)
-            // Digits of one width, so a ticking number does not shift.
-            Text(value)
-                .font(.title3.weight(.semibold))
-                .monospacedDigit()
-                .lineLimit(1)
-                .minimumScaleFactor(0.6)
+        HStack(spacing: 18) {
+            // A disc of one size whatever the symbol: the symbols differ in
+            // height, and sized by their own bounds the cards of a row came
+            // out uneven.
+            Image(systemName: systemImage)
+                .font(.headline)
+                .foregroundStyle(tint)
+                .frame(width: 64, height: 64)
+                .background(tint.opacity(0.14), in: Circle())
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(.callout)
+                    .foregroundStyle(AppTheme.mutedText)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+                // Digits of one width, so a ticking number does not shift.
+                Text(value)
+                    .font(.title3.weight(.semibold))
+                    .foregroundStyle(AppTheme.ink)
+                    .monospacedDigit()
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.6)
+            }
         }
         .padding(20)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .background(.quaternary, in: .rect(cornerRadius: 16))
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+        .background(AppTheme.panelRaised, in: .rect(cornerRadius: 20, style: .continuous))
         .accessibilityElement(children: .combine)
     }
 }

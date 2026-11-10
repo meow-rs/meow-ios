@@ -19,6 +19,12 @@ import SwiftUI
 /// the one that gets the focus lift and parallax, which is what a remote
 /// control needs; `.bordered` / `.borderedProminent` only arrived in tvOS 17
 /// and buy nothing here.
+///
+/// The colors are the iPhone app's (`AppTheme`): its sky-blue canvas, white
+/// cards edged in blue, the mascot for the tunnel's state. Only the screen's
+/// own text and surfaces take them, never a button's label: a focused tvOS
+/// button turns into a white platter and darkens its label to match, which
+/// a color set on the label would undo.
 struct TVContentView: View {
     @Environment(VpnManager.self) private var vpnManager
     @Environment(AppIPCBridge.self) private var ipcBridge
@@ -50,6 +56,7 @@ struct TVContentView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(AppTheme.screenBackground, ignoresSafeAreaEdges: .all)
         .defaultFocus($focusedField, .toggle)
         // An alert rather than an inline banner: tvOS errors that need
         // acknowledging are modal, and a banner pushed every control down
@@ -70,9 +77,10 @@ struct TVContentView: View {
         VStack(alignment: .leading, spacing: 6) {
             Text("home.nav.title")
                 .font(.largeTitle.weight(.bold))
+                .foregroundStyle(AppTheme.ink)
             Text(profileName)
                 .font(.title3)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(AppTheme.mutedText)
                 .lineLimit(1)
                 .accessibilityIdentifier("vpn.profile.name")
         }
@@ -80,13 +88,11 @@ struct TVContentView: View {
 
     private var connectionPanel: some View {
         VStack(spacing: 24) {
-            Image(systemName: isConnected ? "power.circle.fill" : "power.circle")
-                .font(.system(size: 96))
-                .foregroundStyle(isConnected ? Color.green : Color.secondary)
-                .accessibilityHidden(true)
+            TVStageGlyph(stage: vpnManager.stage)
 
             Text(stageBadgeText)
                 .font(.title2.weight(.semibold))
+                .foregroundStyle(AppTheme.ink)
                 .accessibilityIdentifier("vpn.status")
 
             // Never `.disabled`: a disabled control can't take focus on
@@ -103,16 +109,13 @@ struct TVContentView: View {
             if needsProfile {
                 Text("tv.connect.hint.noProfile")
                     .font(.callout)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppTheme.mutedText)
                     .multilineTextAlignment(.center)
             }
 
             TVRouteModeMenu()
         }
-        .padding(40)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(.regularMaterial, in: .rect(cornerRadius: 24))
-        .focusSection()
+        .tvPanel(alignment: .top)
     }
 
     private var subscriptionPanel: some View {
@@ -126,15 +129,17 @@ struct TVContentView: View {
                 subscriptionControls
             }
 
-            Divider()
+            AppTheme.border
+                .frame(height: 2)
 
             Text("tv.profiles.section")
                 .font(.title3.weight(.semibold))
+                .foregroundStyle(AppTheme.ink)
 
             if profiles.isEmpty {
                 Text("tv.profiles.empty")
                     .font(.body)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppTheme.mutedText)
             } else {
                 // `List`, not a `ScrollView` of buttons: a clipping scroll
                 // view cut the focused row's lift off flat, and `List` rows
@@ -144,16 +149,14 @@ struct TVContentView: View {
                 }
             }
         }
-        .padding(40)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .background(.regularMaterial, in: .rect(cornerRadius: 24))
-        .focusSection()
+        .tvPanel(alignment: .topLeading)
     }
 
     private var subscriptionControls: some View {
         VStack(alignment: .leading, spacing: 20) {
             Text("tv.subscription.section")
                 .font(.title3.weight(.semibold))
+                .foregroundStyle(AppTheme.ink)
 
             TextField("tv.subscription.field.url", text: $subscriptionURL)
                 .keyboardType(.URL)
@@ -428,5 +431,64 @@ private extension TVContentView {
     func reloadIfConnected(_ profile: Profile) {
         guard isConnected else { return }
         ipcBridge.send(.reload, profileID: profile.id)
+    }
+}
+
+// MARK: - Styling
+
+private extension View {
+    /// One of the screen's two panels, in the iPhone app's card look
+    /// (`GlassCard`) at TV scale: white, edged in blue, on a soft shadow. A
+    /// focus section of its own, so the remote moves across the screen
+    /// between panels rather than between the nearest controls.
+    func tvPanel(alignment: Alignment) -> some View {
+        padding(40)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: alignment)
+            .background {
+                // The shadow on the card's shape, not its content, which
+                // would shadow every line of text in it.
+                let shape = RoundedRectangle(cornerRadius: 28, style: .continuous)
+                shape
+                    .fill(AppTheme.panel)
+                    .overlay { shape.strokeBorder(AppTheme.border, lineWidth: 2) }
+                    .shadow(color: AppTheme.navy.opacity(0.10), radius: 30, y: 14)
+            }
+            .focusSection()
+    }
+}
+
+/// The mascot over the connect button, as the iPhone's status bar shows it
+/// (`VpnStatusGlyph`): over the wall while connected, with a dot in the
+/// stage's color.
+private struct TVStageGlyph: View {
+    let stage: VpnStage
+
+    var body: some View {
+        Image(stage == .connected ? "AppMarkConnected" : "AppMark")
+            .resizable()
+            .scaledToFit()
+            .frame(width: 160, height: 160)
+            // The icon's lower half is white like the panel under it: a
+            // shadow keeps its outline.
+            .shadow(color: AppTheme.navy.opacity(0.18), radius: 14, y: 6)
+            .overlay(alignment: .bottomTrailing) {
+                Circle()
+                    .fill(dotColor)
+                    .frame(width: 30, height: 30)
+                    .shadow(color: dotColor.opacity(0.6), radius: 8)
+                    // Cut out of the mascot by a ring of the panel's color.
+                    .padding(5)
+                    .background(AppTheme.panel, in: Circle())
+            }
+            .accessibilityHidden(true)
+    }
+
+    private var dotColor: Color {
+        switch stage {
+        case .idle, .stopped: .secondary
+        case .preparing, .connecting, .stopping: AppTheme.warning
+        case .connected: AppTheme.connected
+        case .error: AppTheme.danger
+        }
     }
 }

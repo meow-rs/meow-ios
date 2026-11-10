@@ -19,8 +19,9 @@ struct TVICloudImportView: View {
         }
         // A full-screen cover, not a `.sheet`: tvOS sheets are a narrow card
         // that truncates the title and leaves no room for a file list. A
-        // cover's content is transparent, so it needs its own backdrop.
-        .background(.thickMaterial, ignoresSafeAreaEdges: .all)
+        // cover's content is transparent, so it needs its own backdrop: the
+        // main screen's canvas.
+        .background(AppTheme.screenBackground, ignoresSafeAreaEdges: .all)
         .task { await store.reload() }
         // First visit: show how configs get here before the (likely empty)
         // list. The TV has no Settings screen, so `guideButton` replays it.
@@ -32,7 +33,7 @@ struct TVICloudImportView: View {
         }
         .fullScreenCover(isPresented: $showingGuide, onDismiss: markGuideSeen) {
             ICloudExportGuideView()
-                .background(.thickMaterial, ignoresSafeAreaEdges: .all)
+                .background(AppTheme.screenBackground, ignoresSafeAreaEdges: .all)
         }
     }
 
