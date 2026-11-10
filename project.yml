@@ -324,6 +324,8 @@ targets:
       - path: App/Sources/AppModelContainer.swift
       # The iCloud Drive export guide is plain SwiftUI shared by both apps.
       - path: App/Sources/Guides
+      # The brand palette (`AppTheme`): the TV screen wears the iPhone's colors.
+      - path: App/Sources/Theme
       # tvOS's own catalog: the accent and launch colors (copies of the iOS
       # ones) and, once it ships, the Brand Assets stack.
       - path: AppTV/Assets.xcassets

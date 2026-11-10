@@ -458,6 +458,7 @@
 "tv.subscription.error.invalidURL" = "أدخِل عنوان URL للاشتراك يبدأ بـ http:// أو https://.";
 "tv.profiles.section" = "ملفات التعريف";
 "tv.profiles.empty" = "لا توجد ملفات تعريف بعد. أضِف عنوان URL لاشتراك للبدء.";
+"tv.statistics.requests" = "الطلبات";
 "tv.connect.hint.noProfile" = "أضِف اشتراكًا للاتصال.";
 "tv.icloud.button" = "iCloud Drive";
 "tv.icloud.title" = "استيراد من iCloud Drive";

@@ -14,6 +14,7 @@ record, one price, both platform binaries.
 | Models | `App/Sources/Models` | yes |
 | Services | `App/Sources/Services` | yes |
 | App composition | `App/Sources/AppModel.swift`, `AppModelContainer.swift` | yes |
+| Brand palette | `App/Sources/Theme` (`AppTheme`) | yes |
 | Strings, GeoIP data | `App/Resources` (minus `Assets.xcassets`) | yes |
 | Views | `App/Sources/Views` | **no** — replaced by `AppTV/Sources` |
 
@@ -31,12 +32,16 @@ Apple TV needs instead:
 - `MeowTVApp.swift` — `@main`, identical service graph to `MeowApp`.
 - `TVContentView.swift` — title, connect button, subscription-URL field,
   profile list (long-press a row to refresh or delete it).
+- `TVStatisticsView.swift` — while the tunnel runs, four cards in the
+  subscription controls' place: uptime, requests, upload and download since
+  the tunnel started.
 - `TVRouteModeMenu.swift` — the row under the connect button: the running
   engine's route mode (Rule / All / Direct) and a menu to switch it.
 - `TVICloudImportView.swift` — "Import from iCloud Drive": the configs the
   iPhone app relayed (see below).
-- `Assets.xcassets` — the tvOS accent and launch colors, copied from the iOS
-  catalog. The Brand Assets stack belongs here too.
+- `Assets.xcassets` — the tvOS accent and launch colors and the mascot
+  (`AppMark`, `AppMarkConnected`), copied from the iOS catalog. The Brand
+  Assets stack belongs here too.
 
 Layout follows the tvOS HIG: no padding beyond the system TV safe area, one
 `focusSection()` per panel, focus lands on Connect at launch, the connect
@@ -48,6 +53,23 @@ passing the control with the remote would switch modes, and a menu switches
 on a click. It is the running engine's mode, as on iOS — each engine start
 goes back to the profile's `mode:` — so the row is disabled while
 disconnected.
+
+While the tunnel runs, the right panel trades the subscription controls for
+its statistics: a TV has the room for one or the other, and a subscription
+can be added once it is down. The profile list stays below, so a profile is
+still switched mid-session. The cards read the tunnel's own figures, which
+start over with it: the start from `currentState.startedAt`, the byte totals
+and the request count from the snapshot it publishes twice a second
+(`TrafficSnapshot.requests` is `meow_tun_requests`: each TCP connection and
+UDP session tun2socks handed to the engine, DNS queries left out). They hold
+nothing to focus.
+
+The screen wears the iPhone app's colors (`AppTheme`, light and dark): the
+sky-blue canvas, both panels as white cards edged in blue (the iPhone's
+`GlassCard` at TV scale), the mascot over the connect button with the iPhone
+status bar's stage dot, and the statistics symbols in the iPhone traffic
+tiles' tints. Button labels keep the system colors: a focused tvOS button is
+a white platter that darkens its label, which a set color would undo.
 
 The connect/disconnect sequencing in `TVContentView.toggle()` is a deliberate
 copy of `GlobalVpnSwitchBar.toggle()`; the IPC intent must be queued before

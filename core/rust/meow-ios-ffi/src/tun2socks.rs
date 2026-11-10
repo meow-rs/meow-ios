@@ -103,6 +103,18 @@ static TUN2SOCKS_RUNNING: AtomicBool = AtomicBool::new(false);
 static TUN2SOCKS_GEN: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(0);
 pub(crate) static ACTIVE_TCP_CONNS: std::sync::atomic::AtomicI64 =
     std::sync::atomic::AtomicI64::new(0);
+/// What this instance handed to the engine since `start()`: one per TCP
+/// connection and one per UDP session (a client socket, wherever it sends).
+/// DNS queries are not counted, nor what the tunnel drops before the engine
+/// sees it (TCP/53, P2P swarm ports, blocked HTTP/3, a full UDP cap).
+/// `start()` zeroes it, so it runs alongside the byte totals of the engine
+/// started with it.
+static REQUESTS: AtomicU64 = AtomicU64::new(0);
+
+/// See [`REQUESTS`].
+pub fn requests() -> u64 {
+    REQUESTS.load(Ordering::Relaxed)
+}
 
 /// JoinHandle of the current (or most recent) run task. The next `start()`
 /// takes it and awaits its teardown (bounded) before building a new lwip
@@ -557,6 +569,7 @@ pub fn start(ctx: *mut c_void, cb: WritePacketFn) -> Result<(), String> {
 
     let my_gen = TUN2SOCKS_GEN.fetch_add(1, Ordering::SeqCst) + 1;
     info!("tun2socks starting (direct-callback ingest, gen {my_gen})");
+    REQUESTS.store(0, Ordering::Relaxed);
 
     let (ingress_tx, ingress_rx) = mpsc::channel::<Vec<u8>>(256);
     *ingress_slot().lock() = Some(ingress_tx);
@@ -1004,6 +1017,7 @@ async fn run_tun2socks(
             // dev diagnosis without paying the bytes on prod runs.
             trace!("tun2socks: TCP {} -> {}", local_addr, remote_addr);
 
+            REQUESTS.fetch_add(1, Ordering::Relaxed);
             let flow_id = TCP_FLOW_ID_SEQ.fetch_add(1, Ordering::Relaxed);
             let state = Arc::new(FlowState {
                 last_active_ms: AtomicU64::new(now_ms()),
@@ -1626,6 +1640,9 @@ async fn dispatch_udp(
         return;
     };
 
+    // The source's new session, counted as a TCP flow is: once it reached
+    // the tunnel, whether or not the engine then gets it through.
+    REQUESTS.fetch_add(1, Ordering::Relaxed);
     let Some(mixed_addr) = crate::engine::mixed_dial_addr() else {
         logging::bridge_log("tun2socks: mixed listener not running, dropping UDP datagram");
         nat.fail_open_src(src);
@@ -2978,6 +2995,71 @@ mod tests {
         );
 
         // Idempotent: a second call with nothing to join is a no-op.
+        stop_blocking();
+    }
+
+    /// A raw IPv4/UDP frame, as one arrives on the TUN. UDP checksum 0
+    /// (legal for IPv4).
+    fn udp_frame(src: SocketAddr, dst: SocketAddr, payload: &[u8]) -> Vec<u8> {
+        let (SocketAddr::V4(src), SocketAddr::V4(dst)) = (src, dst) else {
+            panic!("IPv4 only");
+        };
+        let total_len = (20 + 8 + payload.len()) as u16;
+        let mut pkt = vec![0x45, 0x00];
+        pkt.extend_from_slice(&total_len.to_be_bytes());
+        pkt.extend_from_slice(&[0, 0, 0x40, 0x00, 64, 17, 0, 0]);
+        pkt.extend_from_slice(&src.ip().octets());
+        pkt.extend_from_slice(&dst.ip().octets());
+        let cksum = ipv4_header_checksum(&pkt[0..20]);
+        pkt[10..12].copy_from_slice(&cksum.to_be_bytes());
+        pkt.extend_from_slice(&src.port().to_be_bytes());
+        pkt.extend_from_slice(&dst.port().to_be_bytes());
+        pkt.extend_from_slice(&((8 + payload.len()) as u16).to_be_bytes());
+        pkt.extend_from_slice(&[0, 0]);
+        pkt.extend_from_slice(payload);
+        pkt
+    }
+
+    /// The request count takes the session a UDP source opens, but not a
+    /// DNS query nor what the tunnel drops before the engine, and the next
+    /// instance starts from zero. Builds a real lwip netstack with no engine
+    /// behind it, so the session never opens: each datagram asks again.
+    #[test]
+    fn requests_count_udp_sessions_from_start() {
+        let _guard = lifecycle_test_guard();
+
+        unsafe extern "C" fn noop_write(
+            _ctx: *mut std::os::raw::c_void,
+            _data: *const u8,
+            _len: usize,
+        ) {
+        }
+
+        let client = SocketAddr::from((Ipv4Addr::new(172, 19, 0, 1), 50_000));
+        let at = |port| SocketAddr::from((Ipv4Addr::new(203, 0, 113, 7), port));
+        let wait_for = |count: u64| {
+            let deadline = std::time::Instant::now() + std::time::Duration::from_secs(3);
+            while requests() != count && std::time::Instant::now() < deadline {
+                std::thread::sleep(std::time::Duration::from_millis(10));
+            }
+            requests()
+        };
+
+        start(std::ptr::null_mut(), noop_write).expect("start");
+        assert_eq!(requests(), 0);
+        // In order through the stack: once the third datagram is counted,
+        // the first two have been passed over.
+        assert_eq!(ingest(&udp_frame(client, at(53), b"dns")), 0);
+        assert_eq!(ingest(&udp_frame(client, at(P2P_UDP_DROP_PORTS[0]), b"p2p")), 0);
+        assert_eq!(ingest(&udp_frame(client, at(5000), b"app")), 0);
+        assert_eq!(wait_for(1), 1, "one UDP session, without the DNS query and the P2P drop");
+        assert_eq!(ingest(&udp_frame(client, at(5001), b"app")), 0);
+        assert_eq!(wait_for(2), 2, "the source asks for a session again");
+        stop_blocking();
+        assert_eq!(requests(), 2, "the count outlives the instance until the next one");
+
+        start(std::ptr::null_mut(), noop_write).expect("restart");
+        assert_eq!(requests(), 0, "a new instance counts from zero");
         stop_blocking();
     }
 

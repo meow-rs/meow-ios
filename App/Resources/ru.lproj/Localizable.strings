@@ -458,6 +458,7 @@
 "tv.subscription.error.invalidURL" = "Введите URL подписки, начинающийся с http:// или https://.";
 "tv.profiles.section" = "Профили";
 "tv.profiles.empty" = "Профилей пока нет. Добавьте URL подписки, чтобы начать.";
+"tv.statistics.requests" = "Запросы";
 "tv.connect.hint.noProfile" = "Добавьте подписку, чтобы подключиться.";
 "tv.icloud.button" = "iCloud Drive";
 "tv.icloud.title" = "Импорт из iCloud Drive";

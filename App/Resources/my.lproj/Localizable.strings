@@ -455,6 +455,7 @@
 "tv.subscription.error.invalidURL" = "http:// သို့မဟုတ် https:// ဖြင့် စသော စာရင်းသွင်းမှု URL ကို ထည့်ပါ။";
 "tv.profiles.section" = "ပရိုဖိုင်များ";
 "tv.profiles.empty" = "ပရိုဖိုင် မရှိသေးပါ။ စတင်ရန် စာရင်းသွင်းမှု URL တစ်ခု ထည့်ပါ။";
+"tv.statistics.requests" = "တောင်းဆိုမှုများ";
 "tv.connect.hint.noProfile" = "ချိတ်ဆက်ရန် စာရင်းသွင်းမှု တစ်ခု ထည့်ပါ။";
 "tv.icloud.button" = "iCloud Drive";
 "tv.icloud.title" = "iCloud Drive မှ တင်သွင်းရန်";

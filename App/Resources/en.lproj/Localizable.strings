@@ -445,6 +445,7 @@
 "tv.subscription.error.invalidURL" = "Enter an http:// or https:// subscription URL.";
 "tv.profiles.section" = "Profiles";
 "tv.profiles.empty" = "No profiles yet. Add a subscription URL to get started.";
+"tv.statistics.requests" = "Requests";
 "tv.connect.hint.noProfile" = "Add a subscription to connect.";
 "tv.icloud.button" = "iCloud Drive";
 "tv.icloud.title" = "Import from iCloud Drive";

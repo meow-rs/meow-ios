@@ -28,7 +28,7 @@ changelogs.
 
 **Apple TV** — the same config, relayed from your iPhone through iCloud:
 
-<img src="docs/screenshots/apple-tv-home.png" alt="meow on Apple TV: connected, with the Meow Cloud and Home Lab configs" width="800">
+<img src="docs/screenshots/apple-tv-home.png" alt="meow on Apple TV: connected, with the session's uptime, requests, upload and download, and the Meow Cloud and Home Lab configs" width="800">
 
 **iPhone Duo** — the outer display keeps the phone layout; unfolded, the inner
 display lays Configs, Engine and Proxy Groups out in two columns that reflow

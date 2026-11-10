@@ -461,6 +461,7 @@
 "tv.subscription.error.invalidURL" = "یک لینک اشتراک http:// یا https:// وارد کنید.";
 "tv.profiles.section" = "پروفایل‌ها";
 "tv.profiles.empty" = "هنوز پروفایلی وجود ندارد. برای شروع، یک لینک اشتراک اضافه کنید.";
+"tv.statistics.requests" = "درخواست‌ها";
 "tv.connect.hint.noProfile" = "برای اتصال، یک اشتراک اضافه کنید.";
 "tv.icloud.button" = "iCloud Drive";
 "tv.icloud.title" = "وارد کردن از iCloud Drive";
