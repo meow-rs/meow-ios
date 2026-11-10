@@ -51,7 +51,7 @@ struct ConnectionDetailModelTests {
                     switch failure.value {
                     case .offline: throw URLError(.cannotConnectToHost)
                     case .server: throw MeowAPIError.http(status: 500)
-                    case nil: return listed.value
+                    case nil: listed.value
                     }
                 },
                 rules: { ruleList() },
